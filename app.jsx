@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import DeckGL from '@deck.gl/react';
 
@@ -32,12 +32,12 @@ const BUILDINGS =
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json';
 
 const INITIAL_VIEW_STATE = {
-  latitude: 40.7,
-  longitude: -74,
-  zoom: 12,
+  latitude: 40.71,
+  longitude: -73.99,
+  zoom: 14,
   maxZoom: 16,
-  pitch: 50,
-  bearing: 0
+  pitch: 100,
+  bearing: -50
 };
 
 const ambientLight = new AmbientLight({
@@ -64,7 +64,7 @@ const generatePath = (start, end, heights) => {
   }))
 }
 
-const paths = generatePath([-73.97380, 40.78510], [-73.98100, 40.73100], [130, 900, 600, 500, 500, 500, 400, 300, 200, 200, 180])
+const paths = generatePath([-73.97380, 40.78510], [-73.98100, 40.73100], Array.from({ length: 500 }, (_, index) => Math.round(2000 * Math.pow(0.05, index / 100))))
 
 const material = {
   ambient: 0.9,
@@ -93,7 +93,10 @@ function getTooltip({ object }) {
 }
 
 export default function App() {
+  const [currentPosition, setCurrentPosition] = useState(0)
   const [selectedDrone, setSelectedDrone] = useState(null)
+  const intervalRef = useRef();
+
   const [drones, setDrones] = useState([
     {
       id: 1,
@@ -111,6 +114,24 @@ export default function App() {
       orientation: [0, -80, -10],
     }
   ])
+
+  useEffect(() => {
+    if (!selectedDrone?.id) return
+    setDrones([
+      ...drones.filter((drone) => drone.id !== selectedDrone.id),
+      {
+        id: selectedDrone.id,
+        position: paths[currentPosition].start,
+        orientation: selectedDrone.orientation
+      }
+    ])
+  }, [currentPosition])
+
+  const updateDrone = () => {
+    intervalRef.current = setInterval(() => {
+      setCurrentPosition(prev => (prev + 1) % 499)
+    }, 15)
+  }
 
   const layers = [
     //https://deck.gl/docs/api-reference/mesh-layers/simple-mesh-layer
@@ -139,7 +160,7 @@ export default function App() {
       opacity: 0.8,
       getSourcePosition: d => d.start,
       getTargetPosition: d => d.end,
-      getColor: d => [255, 0, 0, 155],
+      getColor: d => [0, 200, 200, 125],
       getWidth: d => 5,
       pickable: false
     }),
@@ -167,6 +188,8 @@ export default function App() {
           <h3>Orientation</h3>
           Direction: {selectedDrone.orientation[1]}<br />
           Slope: {selectedDrone.orientation[2]}<br />
+          <h3>Drone management</h3>
+          <button onClick={() => updateDrone(selectedDrone)}>Update location</button>
         </div>}
       </div>
       <DeckGL
