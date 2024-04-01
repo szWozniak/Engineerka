@@ -18,7 +18,7 @@ import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
 
 
-import { Map } from 'react-map-gl';
+import Map, { Source, Layer } from 'react-map-gl';
 import maplibregl from 'maplibre-gl';
 
 // Add the loaders that handle your mesh format here
@@ -35,7 +35,7 @@ const INITIAL_VIEW_STATE = {
   latitude: 40.71,
   longitude: -73.99,
   zoom: 14,
-  maxZoom: 16,
+  maxZoom: 20,
   pitch: 100,
   bearing: -50
 };
@@ -96,6 +96,7 @@ export default function App() {
   const [currentPosition, setCurrentPosition] = useState(0)
   const [selectedDrone, setSelectedDrone] = useState(null)
   const intervalRef = useRef();
+  const mapRef = useRef();
 
   const [drones, setDrones] = useState([
     {
@@ -114,6 +115,15 @@ export default function App() {
       orientation: [0, -80, -10],
     }
   ])
+
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.setConfigProperty('basemap', 'showPlaceLabels', false);
+      mapRef.current.setConfigProperty('basemap', 'showRoadLabels', false);
+      mapRef.current.setConfigProperty('basemap', 'showPointOfInterestLabels', false);
+      mapRef.current.setConfigProperty('basemap', 'showTransitLabels', false);
+    }
+  }, [mapRef.current])
 
   useEffect(() => {
     if (!selectedDrone?.id) return
@@ -164,22 +174,17 @@ export default function App() {
       getWidth: d => 5,
       pickable: false
     }),
-    new PolygonLayer({
-      id: 'buildings',
-      data: BUILDINGS,
-      extruded: true,
-      wireframe: false,
-      opacity: 1,
-      getPolygon: f => f.polygon,
-      getElevation: f => f.height,
-      getFillColor: theme.buildingColor,
-      material: theme.material
-    }),
   ];
 
   return (
     <div>
       <div className="panel">
+        <h3>Map options</h3>
+        <button onClick={() => {
+          console.log(mapRef.current)
+        }}>
+          Map debug
+        </button>
         {selectedDrone && <div>
           <h2>Selected drone: {selectedDrone.id}</h2>
           <h3>Position</h3>
@@ -200,7 +205,20 @@ export default function App() {
         effects={[lightingEffect]}
         getTooltip={getTooltip}
       >
-        <Map reuseMaps mapLib={maplibregl} mapStyle={MAP_STYLE} preventStyleDiffing={true} />
+        <Map
+          ref={mapRef}
+          onLoad={() => {
+            console.log("Map loaded")
+            mapRef.current.setConfigProperty('basemap', 'showPlaceLabels', false);
+            mapRef.current.setConfigProperty('basemap', 'showRoadLabels', false);
+            mapRef.current.setConfigProperty('basemap', 'showPointOfInterestLabels', false);
+            mapRef.current.setConfigProperty('basemap', 'showTransitLabels', false);
+          }}
+          maxPitch={85}
+          mapStyle="mapbox://styles/mapbox/standard"
+          mapboxAccessToken={"pk.eyJ1Ijoic3p3b3puaWFrIiwiYSI6ImNsdWg1dXFtdzFxYW0yanBrZGZ4Mm8yd2MifQ.LPRSA5OB7Zts77Zpt9GsDw"}
+        >
+        </Map>
       </DeckGL>
     </div>
   );
