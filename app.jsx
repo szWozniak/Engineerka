@@ -91,6 +91,8 @@ function getTooltip({ object }) {
   );
 }
 
+
+
 export default function App() {
   const [currentPosition, setCurrentPosition] = useState(0)
   const [selectedDrone, setSelectedDrone] = useState(null)
@@ -113,7 +115,16 @@ export default function App() {
       position: [19.9207, 50.0712, 40],
       orientation: [30, 150, 90],
     }
-  ]);
+  ])
+
+  const handleMouseClick = (info, event) => { 
+    if (info && info.object){
+      console.log(info.object)
+      const drone = drones.find(d => d.id === info.object.id)
+      console.log(drone)
+      setSelectedDrone(drone)
+    }
+  }
 
   useEffect(() => {
     if (mapRef.current) {
@@ -141,14 +152,12 @@ export default function App() {
 
   const layers = [
     //https://deck.gl/docs/api-reference/mesh-layers/simple-mesh-layer
-    ...drones.map((drone) => new SimpleMeshLayer({
-      id: `drone-${drone.id}`,
-      data: [
-        {
-          ...drone,
-          color: drone?.id === selectedDrone?.id ? [255, 0, 0] : [215, 80, 80],
-        }
-      ],
+    new SimpleMeshLayer({
+      // id: `drone-${drone.id}`,
+      data: drones.map((drone) => {
+        return {...drone,
+        color: drone === selectedDrone ? [255, 0, 0] : [215, 80, 80]}
+      }),
       mesh: MESH_URL,
       getPosition: d => d.position,
       getColor: d => d.color,
@@ -156,11 +165,9 @@ export default function App() {
       material: theme.material,
       sizeScale: 0.05,
       pickable: true,
-      onClick: () => {
-        console.log(`Clicked on drone: ${drone.id}`)
-        setSelectedDrone(drone)
-      }
-    })),
+      onClick: handleMouseClick
+      
+    }),
     new LineLayer({
       id: 'flight-paths',
       data: paths,
@@ -201,10 +208,13 @@ export default function App() {
         pickingRadius={5}
         effects={[lightingEffect]}
         getTooltip={getTooltip}
+        // onClick={handleMouseClick}
+        // pickObject={() => console.log("dupa")}
       >
         <Map
           reuseMaps={true}
           ref={mapRef}
+
           onLoad={() => {
             console.log("Map loaded")
           }}
