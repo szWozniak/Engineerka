@@ -1,34 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
+import React, { useRef, useState, useEffect } from 'react';
+//DeckGL
 import DeckGL from '@deck.gl/react';
-
 import {
-  COORDINATE_SYSTEM,
-  OrbitView,
   DirectionalLight,
   LightingEffect,
   AmbientLight
 } from '@deck.gl/core';
-import { PolygonLayer, LineLayer, GeoJsonLayer } from '@deck.gl/layers';
 import { SimpleMeshLayer } from '@deck.gl/mesh-layers';
-
+import { LineLayer } from '@deck.gl/layers';
+//Map
+import Map from 'react-map-gl';
+//Loaders
 import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
 
-
-import Map, { Source, Layer } from 'react-map-gl';
-import maplibregl from 'maplibre-gl';
-
-// Add the loaders that handle your mesh format here
 registerLoaders([OBJLoader]);
 
-//const MESH_URL = 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/mesh/minicooper.obj';
-const MESH_URL = '/drone.obj';
-
-const BUILDINGS =
-  'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/buildings.json'
-
-//const MAP_STYLE = '	https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
+//From PUBLIC folder
+const MESH_URL = 'assets/drone.obj';
 
 const INITIAL_VIEW_STATE = {
   latitude: 50.0637,
@@ -52,12 +41,12 @@ const dirLight = new DirectionalLight({
 
 const lightingEffect = new LightingEffect({ ambientLight, dirLight });
 
-const generatePath = (start, end, heights) => {
+const generatePath = (start: any, end: any, heights: any) => {
   const num = heights?.length
   const distanceX = ((end[0] - start[0]) / (num - 1))
   const distanceY = (end[1] - start[1]) / (num - 1)
 
-  return heights.slice(0, num - 1).map((_, index) => ({
+  return heights.slice(0, num - 1).map((_: any, index: any) => ({
     start: [start[0] + distanceX * index, start[1] + distanceY * index, heights[index]],
     end: [start[0] + distanceX * (index + 1), start[1] + distanceY * (index + 1), heights[index + 1]],
   }))
@@ -72,7 +61,7 @@ const material = {
   specularColor: [60, 64, 70]
 };
 
-const theme = {
+const theme: any = {
   buildingColor: [160, 170, 180],
   trailColor0: [253, 128, 93],
   trailColor1: [23, 184, 190],
@@ -80,7 +69,7 @@ const theme = {
   effects: [lightingEffect]
 };
 
-function getTooltip({ object }) {
+function getTooltip({ object }: any) {
   return (
     object &&
     `\
@@ -91,13 +80,11 @@ function getTooltip({ object }) {
   );
 }
 
-
-
-export default function App() {
+const App = () => {
   const [currentPosition, setCurrentPosition] = useState(0)
-  const [selectedDrone, setSelectedDrone] = useState(null)
-  const intervalRef = useRef();
-  const mapRef = useRef();
+  const [selectedDrone, setSelectedDrone] = useState<any>(null)
+  const intervalRef: any = useRef();
+  const mapRef: any = useRef();
 
   const [drones, setDrones] = useState([
     {
@@ -117,8 +104,8 @@ export default function App() {
     }
   ])
 
-  const handleMouseClick = (info, event) => { 
-    if (info && info.object){
+  const handleMouseClick = (info: any, event: any) => {
+    if (info && info.object) {
       console.log(info.object)
       const drone = drones.find(d => d.id === info.object.id)
       console.log(drone)
@@ -135,7 +122,7 @@ export default function App() {
   useEffect(() => {
     if (!selectedDrone?.id) return
     setDrones([
-      ...drones.filter((drone) => drone.id !== selectedDrone.id),
+      ...drones.filter((drone: any) => drone.id !== selectedDrone.id),
       {
         id: selectedDrone.id,
         position: paths[currentPosition].start,
@@ -146,7 +133,7 @@ export default function App() {
 
   const updateDrone = () => {
     intervalRef.current = setInterval(() => {
-      setCurrentPosition(prev => (prev + 1) % 199)
+      setCurrentPosition((prev: number) => (prev + 1) % 199)
     }, 15)
   }
 
@@ -154,9 +141,11 @@ export default function App() {
     //https://deck.gl/docs/api-reference/mesh-layers/simple-mesh-layer
     new SimpleMeshLayer({
       // id: `drone-${drone.id}`,
-      data: drones.map((drone) => {
-        return {...drone,
-        color: drone === selectedDrone ? [255, 0, 0] : [215, 80, 80]}
+      data: drones.map((drone: any) => {
+        return {
+          ...drone,
+          color: drone === selectedDrone ? [255, 0, 0] : [215, 80, 80]
+        }
       }),
       mesh: MESH_URL,
       getPosition: d => d.position,
@@ -166,7 +155,7 @@ export default function App() {
       sizeScale: 0.05,
       pickable: true,
       onClick: handleMouseClick
-      
+
     }),
     new LineLayer({
       id: 'flight-paths',
@@ -198,7 +187,7 @@ export default function App() {
           Direction: {selectedDrone.orientation[1]}<br />
           Slope: {selectedDrone.orientation[2]}<br />
           <h3>Drone management</h3>
-          <button onClick={() => updateDrone(selectedDrone)}>Update location</button>
+          <button onClick={() => updateDrone()}>Update location</button>
         </div>}
       </div>
       <DeckGL
@@ -208,8 +197,8 @@ export default function App() {
         pickingRadius={5}
         effects={[lightingEffect]}
         getTooltip={getTooltip}
-        // onClick={handleMouseClick}
-        // pickObject={() => console.log("dupa")}
+      // onClick={handleMouseClick}
+      // pickObject={() => console.log("dupa")}
       >
         <Map
           reuseMaps={true}
@@ -221,7 +210,6 @@ export default function App() {
           maxPitch={85}
           //mapStyle={MAP_STYLE}
           mapStyle={"mapbox://styles/mapbox/dark-v11"}
-          preventStyleDiffing={true}
           mapboxAccessToken={"pk.eyJ1Ijoic3p3b3puaWFrIiwiYSI6ImNsdWg1dXFtdzFxYW0yanBrZGZ4Mm8yd2MifQ.LPRSA5OB7Zts77Zpt9GsDw"}
         >
         </Map>
@@ -230,6 +218,4 @@ export default function App() {
   );
 }
 
-export function renderToDOM(container) {
-  createRoot(container).render(<App />);
-}
+export default App;

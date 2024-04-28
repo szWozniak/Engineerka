@@ -1,0 +1,27 @@
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.panel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 260px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.6);
+  z-index: 40;
+  font-size: 20px;
+}
+
+button {
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 23px;
+}
