@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import DeckGL from '@deck.gl/react';
 
-import GL from '@luma.gl/constants';
-
 import {
   COORDINATE_SYSTEM,
   OrbitView,
@@ -11,7 +9,7 @@ import {
   LightingEffect,
   AmbientLight
 } from '@deck.gl/core';
-import { PolygonLayer, LineLayer } from '@deck.gl/layers';
+import { PolygonLayer, LineLayer, GeoJsonLayer } from '@deck.gl/layers';
 import { SimpleMeshLayer } from '@deck.gl/mesh-layers';
 
 import { OBJLoader } from '@loaders.gl/obj';
@@ -24,20 +22,21 @@ import maplibregl from 'maplibre-gl';
 // Add the loaders that handle your mesh format here
 registerLoaders([OBJLoader]);
 
-const MESH_URL =
-  'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/mesh/minicooper.obj';
+//const MESH_URL = 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/mesh/minicooper.obj';
+const MESH_URL = '/drone.obj';
+
 const BUILDINGS =
   'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/buildings.json'
 
-const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json';
+//const MAP_STYLE = '	https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
 
 const INITIAL_VIEW_STATE = {
-  latitude: 40.71,
-  longitude: -73.99,
-  zoom: 14,
+  latitude: 50.0637,
+  longitude: 19.9050,
+  zoom: 15,
   maxZoom: 20,
   pitch: 100,
-  bearing: -50
+  bearing: 30
 };
 
 const ambientLight = new AmbientLight({
@@ -64,7 +63,7 @@ const generatePath = (start, end, heights) => {
   }))
 }
 
-const paths = generatePath([-73.97380, 40.78510], [-73.98100, 40.73100], Array.from({ length: 500 }, (_, index) => Math.round(2000 * Math.pow(0.05, index / 100))))
+const paths = generatePath([19.92, 50.0592], [19.9, 50.0671], Array.from({ length: 200 }, (_, index) => Math.round(200 * Math.pow(0.3, index / 100) + 20)))
 
 const material = {
   ambient: 0.9,
@@ -101,27 +100,24 @@ export default function App() {
   const [drones, setDrones] = useState([
     {
       id: 1,
-      position: [-73.981, 40.731, 150],
-      orientation: [0, -5, 20]
+      position: [19.9317, 50.0671, 50],
+      orientation: [0, 130, 90]
     },
     {
       id: 2,
-      position: [-73.991, 40.731, 200],
-      orientation: [0, -40, 0],
+      position: [19.9276, 50.0685, 60],
+      orientation: [0, 180, 90],
     },
     {
       id: 3,
-      position: [-74, 40.75, 400],
-      orientation: [0, -80, -10],
+      position: [19.9207, 50.0712, 40],
+      orientation: [30, 150, 90],
     }
-  ])
+  ]);
 
   useEffect(() => {
     if (mapRef.current) {
-      mapRef.current.setConfigProperty('basemap', 'showPlaceLabels', false);
-      mapRef.current.setConfigProperty('basemap', 'showRoadLabels', false);
-      mapRef.current.setConfigProperty('basemap', 'showPointOfInterestLabels', false);
-      mapRef.current.setConfigProperty('basemap', 'showTransitLabels', false);
+
     }
   }, [mapRef.current])
 
@@ -139,7 +135,7 @@ export default function App() {
 
   const updateDrone = () => {
     intervalRef.current = setInterval(() => {
-      setCurrentPosition(prev => (prev + 1) % 499)
+      setCurrentPosition(prev => (prev + 1) % 199)
     }, 15)
   }
 
@@ -158,6 +154,7 @@ export default function App() {
       getColor: d => d.color,
       getOrientation: d => d.orientation,
       material: theme.material,
+      sizeScale: 0.05,
       pickable: true,
       onClick: () => {
         console.log(`Clicked on drone: ${drone.id}`)
@@ -173,7 +170,7 @@ export default function App() {
       getColor: d => [0, 200, 200, 125],
       getWidth: d => 5,
       pickable: false
-    }),
+    })
   ];
 
   return (
@@ -206,16 +203,15 @@ export default function App() {
         getTooltip={getTooltip}
       >
         <Map
+          reuseMaps={true}
           ref={mapRef}
           onLoad={() => {
             console.log("Map loaded")
-            mapRef.current.setConfigProperty('basemap', 'showPlaceLabels', false);
-            mapRef.current.setConfigProperty('basemap', 'showRoadLabels', false);
-            mapRef.current.setConfigProperty('basemap', 'showPointOfInterestLabels', false);
-            mapRef.current.setConfigProperty('basemap', 'showTransitLabels', false);
           }}
           maxPitch={85}
-          mapStyle="mapbox://styles/mapbox/standard"
+          //mapStyle={MAP_STYLE}
+          mapStyle={"mapbox://styles/mapbox/dark-v11"}
+          preventStyleDiffing={true}
           mapboxAccessToken={"pk.eyJ1Ijoic3p3b3puaWFrIiwiYSI6ImNsdWg1dXFtdzFxYW0yanBrZGZ4Mm8yd2MifQ.LPRSA5OB7Zts77Zpt9GsDw"}
         >
         </Map>
