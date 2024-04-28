@@ -1,14 +1,7 @@
 import { Color, Position } from "deck.gl"
-import { useState } from "react"
-interface Drone{
-    id: number,
-    position: Position
-    orientation: [number, number, number]
-  }
-
-export interface MapDrone extends Drone{ //to be moved
-    color: Color
-}
+import { useEffect, useRef, useState } from "react"
+import { Drone, MapDrone } from "../drones/types"
+import { paths } from "../map/configuration/pathConfiguration"
 
 const DEFAULT_COLOR: Color = [215, 80, 80]
 const SELECTED_COLOR: Color = [255, 0, 0]
@@ -34,12 +27,33 @@ const useDrones = () => {
 
     const [selectedDrone, setSelectedDrone] = useState<MapDrone | null>(null)
 
+    const [currentPosition, setCurrentPosition] = useState(0)
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+      if (!selectedDrone?.id) return
+      setDrones([
+        ...drones.filter((drone: any) => drone.id !== selectedDrone.id),
+        {
+          id: selectedDrone.id,
+          position: paths[currentPosition].start,
+          orientation: selectedDrone.orientation
+        }
+      ])
+  }, [currentPosition])
+
+  const startSimulation = () => {
+    intervalRef.current = setInterval(() => {
+      setCurrentPosition((prev: number) => (prev + 1) % 199)
+    }, 15)
+  }
+
     const mappedDrones: MapDrone[] = drones.map(d => ({
         ...d,
         color: d.id === selectedDrone?.id ? SELECTED_COLOR : DEFAULT_COLOR
     }))
 
-    return {drones: mappedDrones, setSelectedDrone, selectedDrone}
+    return {drones: mappedDrones, setSelectedDrone, selectedDrone, startSimulation}
 }
 
 export default useDrones

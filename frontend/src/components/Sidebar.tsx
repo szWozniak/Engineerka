@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapDrone } from '../hooks/useDrones';
+import { MapDrone } from '../drones/types';
 
 interface props{
     selectedDrone: MapDrone | null,
