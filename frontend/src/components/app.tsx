@@ -41,7 +41,7 @@ const App = () => {
   const handleMouseClick = (info: PickingInfo, _event: any) => {
     if (info && info.object) {
       const drone = drones.find(d => d.id === info.object.id)
-      if (drone){
+      if (drone) {
         setSelectedDrone(drone)
       }
     }
@@ -67,7 +67,7 @@ const App = () => {
       getColor: d => d.color,
       getOrientation: d => d.orientation,
       material: theme.material,
-      sizeScale: 1,
+      sizeScale: 3,
       pickable: true,
       onClick: handleMouseClick
     }),

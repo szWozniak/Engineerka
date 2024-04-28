@@ -1,0 +1,44 @@
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.closeButton {
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+  background: none;
+  border: none;
+  color: $secondary;
+
+  &:hover {
+    color: $primary;
+    cursor: pointer;
+  }
+
+  svg {
+    fill: currentColor;
+  }
+}
+
+.menuDropdown {
+  color: $secondary;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  &:hover {
+    color: $primary;
+    cursor: pointer;
+  }
+
+  svg {
+    fill: currentColor;
+  }
+}
