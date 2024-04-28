@@ -1,0 +1,45 @@
+import { Color, Position } from "deck.gl"
+import { useState } from "react"
+interface Drone{
+    id: number,
+    position: Position
+    orientation: [number, number, number]
+  }
+
+export interface MapDrone extends Drone{ //to be moved
+    color: Color
+}
+
+const DEFAULT_COLOR: Color = [215, 80, 80]
+const SELECTED_COLOR: Color = [255, 0, 0]
+
+const useDrones = () => {
+    const [drones, setDrones] = useState<Drone[]>([
+        {
+          id: 1,
+          position: [19.9317, 50.0671, 50],
+          orientation: [0, 130, 90]
+        },
+        {
+          id: 2,
+          position: [19.9276, 50.0685, 60],
+          orientation: [0, 180, 90],
+        },
+        {
+          id: 3,
+          position: [19.9207, 50.0712, 40],
+          orientation: [30, 150, 90],
+        }
+    ])
+
+    const [selectedDrone, setSelectedDrone] = useState<MapDrone | null>(null)
+
+    const mappedDrones: MapDrone[] = drones.map(d => ({
+        ...d,
+        color: d.id === selectedDrone?.id ? SELECTED_COLOR : DEFAULT_COLOR
+    }))
+
+    return {drones: mappedDrones, setSelectedDrone, selectedDrone}
+}
+
+export default useDrones

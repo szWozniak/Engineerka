@@ -13,11 +13,15 @@ import Map from 'react-map-gl';
 //Loaders
 import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
+import useDrones, { MapDrone } from '../hooks/useDrones';
+
+import {Color, PickingInfo} from "deck.gl"
+import Sidebar from './Sidebar';
 
 registerLoaders([OBJLoader]);
 
 //From PUBLIC folder
-const MESH_URL = 'assets/drone.obj';
+const MESH_URL = 'assets/dronik.obj';
 
 const INITIAL_VIEW_STATE = {
   latitude: 50.0637,
@@ -82,54 +86,37 @@ function getTooltip({ object }: any) {
 
 const App = () => {
   const [currentPosition, setCurrentPosition] = useState(0)
-  const [selectedDrone, setSelectedDrone] = useState<any>(null)
-  const intervalRef: any = useRef();
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const mapRef: any = useRef();
 
-  const [drones, setDrones] = useState([
-    {
-      id: 1,
-      position: [19.9317, 50.0671, 50],
-      orientation: [0, 130, 90]
-    },
-    {
-      id: 2,
-      position: [19.9276, 50.0685, 60],
-      orientation: [0, 180, 90],
-    },
-    {
-      id: 3,
-      position: [19.9207, 50.0712, 40],
-      orientation: [30, 150, 90],
-    }
-  ])
+  const {drones, setSelectedDrone, selectedDrone} = useDrones();
 
-  const handleMouseClick = (info: any, event: any) => {
+  const handleMouseClick = (info: PickingInfo, _event: any) => {
     if (info && info.object) {
-      console.log(info.object)
       const drone = drones.find(d => d.id === info.object.id)
-      console.log(drone)
-      setSelectedDrone(drone)
+      if (drone){
+        setSelectedDrone(drone)
+      }
     }
   }
 
-  useEffect(() => {
-    if (mapRef.current) {
+  // useEffect(() => {
+  //   if (mapRef.current) {
 
-    }
-  }, [mapRef.current])
+  //   }
+  // }, [mapRef.current])
 
-  useEffect(() => {
-    if (!selectedDrone?.id) return
-    setDrones([
-      ...drones.filter((drone: any) => drone.id !== selectedDrone.id),
-      {
-        id: selectedDrone.id,
-        position: paths[currentPosition].start,
-        orientation: selectedDrone.orientation
-      }
-    ])
-  }, [currentPosition])
+  // useEffect(() => {
+  //   if (!selectedDrone?.id) return
+  //   setDrones([
+  //     ...drones.filter((drone: any) => drone.id !== selectedDrone.id),
+  //     {
+  //       id: selectedDrone.id,
+  //       position: paths[currentPosition].start,
+  //       orientation: selectedDrone.orientation
+  //     }
+  //   ])
+  // }, [currentPosition])
 
   const updateDrone = () => {
     intervalRef.current = setInterval(() => {
@@ -139,23 +126,17 @@ const App = () => {
 
   const layers = [
     //https://deck.gl/docs/api-reference/mesh-layers/simple-mesh-layer
-    new SimpleMeshLayer({
-      // id: `drone-${drone.id}`,
-      data: drones.map((drone: any) => {
-        return {
-          ...drone,
-          color: drone === selectedDrone ? [255, 0, 0] : [215, 80, 80]
-        }
-      }),
+    new SimpleMeshLayer<MapDrone>({
+      id: "default-drones",
+      data: drones,
       mesh: MESH_URL,
       getPosition: d => d.position,
       getColor: d => d.color,
       getOrientation: d => d.orientation,
       material: theme.material,
-      sizeScale: 0.05,
+      sizeScale: 1,
       pickable: true,
       onClick: handleMouseClick
-
     }),
     new LineLayer({
       id: 'flight-paths',
@@ -163,33 +144,23 @@ const App = () => {
       opacity: 0.8,
       getSourcePosition: d => d.start,
       getTargetPosition: d => d.end,
-      getColor: d => [0, 200, 200, 125],
-      getWidth: d => 5,
+      getColor: _d => [0, 200, 200, 125],
+      getWidth: _d => 5,
       pickable: false
     })
   ];
 
+  
+
   return (
     <div>
-      <div className="panel">
-        <h3>Map options</h3>
-        <button onClick={() => {
+      <Sidebar
+        onDebugClick={() => {
           console.log(mapRef.current)
-        }}>
-          Map debug
-        </button>
-        {selectedDrone && <div>
-          <h2>Selected drone: {selectedDrone.id}</h2>
-          <h3>Position</h3>
-          Latitude: {selectedDrone.position[0]}<br />
-          Longtitude: {selectedDrone.position[1]}<br />
-          <h3>Orientation</h3>
-          Direction: {selectedDrone.orientation[1]}<br />
-          Slope: {selectedDrone.orientation[2]}<br />
-          <h3>Drone management</h3>
-          <button onClick={() => updateDrone()}>Update location</button>
-        </div>}
-      </div>
+        }}
+        onUpdateClick={updateDrone}
+        selectedDrone={selectedDrone}
+      />
       <DeckGL
         layers={layers}
         initialViewState={INITIAL_VIEW_STATE}
@@ -197,8 +168,6 @@ const App = () => {
         pickingRadius={5}
         effects={[lightingEffect]}
         getTooltip={getTooltip}
-      // onClick={handleMouseClick}
-      // pickObject={() => console.log("dupa")}
       >
         <Map
           reuseMaps={true}
@@ -219,3 +188,4 @@ const App = () => {
 }
 
 export default App;
+
