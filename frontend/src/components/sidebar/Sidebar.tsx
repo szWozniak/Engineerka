@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapDrone } from '../../hooks/useDrones';
+import { MapDrone } from '../../drones/types'
 import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
 

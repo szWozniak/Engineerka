@@ -26,23 +26,25 @@ const useDrones = () => {
     ])
 
     const [selectedDrone, setSelectedDrone] = useState<MapDrone | null>(null)
+    const [dronInSimulation, setDroneInSimulation] = useState<MapDrone | null>(null)
 
     const [currentPosition, setCurrentPosition] = useState(0)
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-    useEffect(() => {
-      if (!selectedDrone?.id) return
+  useEffect(() => {
+      if (!dronInSimulation?.id) return
       setDrones([
-        ...drones.filter((drone: any) => drone.id !== selectedDrone.id),
+        ...drones.filter((drone: any) => drone.id !== dronInSimulation.id),
         {
-          id: selectedDrone.id,
+          id: dronInSimulation.id,
           position: paths[currentPosition].start,
-          orientation: selectedDrone.orientation
+          orientation: dronInSimulation.orientation
         }
       ])
   }, [currentPosition])
 
   const startSimulation = () => {
+    setDroneInSimulation(selectedDrone)
     intervalRef.current = setInterval(() => {
       setCurrentPosition((prev: number) => (prev + 1) % 199)
     }, 15)

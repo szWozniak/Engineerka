@@ -10,11 +10,11 @@ import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
 
 import {PickingInfo} from "deck.gl"
-import Sidebar from './Sidebar';
 import { INITIAL_VIEW_STATE, lightingEffect, theme } from '../map/configuration/mapConfiguration';
 import { paths } from '../map/configuration/pathConfiguration';
 import { MapDrone } from '../drones/types';
 import useDrones from '../hooks/useDrones';
+import Sidebar from './sidebar/Sidebar';
 
 registerLoaders([OBJLoader]);
 
@@ -52,10 +52,6 @@ const App = () => {
 
   //   }
   // }, [mapRef.current])
-
-  
-
-  
 
   const layers = [
     //https://deck.gl/docs/api-reference/mesh-layers/simple-mesh-layer
