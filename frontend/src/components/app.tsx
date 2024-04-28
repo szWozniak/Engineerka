@@ -15,8 +15,8 @@ import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
 import useDrones, { MapDrone } from '../hooks/useDrones';
 
-import {Color, PickingInfo} from "deck.gl"
-import Sidebar from './Sidebar';
+import { Color, PickingInfo } from "deck.gl"
+import Sidebar from './sidebar/Sidebar';
 
 registerLoaders([OBJLoader]);
 
@@ -89,12 +89,12 @@ const App = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const mapRef: any = useRef();
 
-  const {drones, setSelectedDrone, selectedDrone} = useDrones();
+  const { drones, setSelectedDrone, selectedDrone } = useDrones();
 
   const handleMouseClick = (info: PickingInfo, _event: any) => {
     if (info && info.object) {
       const drone = drones.find(d => d.id === info.object.id)
-      if (drone){
+      if (drone) {
         setSelectedDrone(drone)
       }
     }
@@ -134,7 +134,7 @@ const App = () => {
       getColor: d => d.color,
       getOrientation: d => d.orientation,
       material: theme.material,
-      sizeScale: 1,
+      sizeScale: 3,
       pickable: true,
       onClick: handleMouseClick
     }),
@@ -150,7 +150,7 @@ const App = () => {
     })
   ];
 
-  
+
 
   return (
     <div>
