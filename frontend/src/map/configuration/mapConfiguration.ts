@@ -33,6 +33,5 @@ export const INITIAL_VIEW_STATE = {
     longitude: 19.9050,
     zoom: 15,
     maxZoom: 20,
-    pitch: 100,
     bearing: 30
   };

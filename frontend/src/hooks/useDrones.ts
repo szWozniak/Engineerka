@@ -1,4 +1,4 @@
-import { Color, Position } from "deck.gl"
+import { Color } from "deck.gl"
 import { useEffect, useRef, useState } from "react"
 import { Drone, MapDrone } from "../drones/types"
 import { paths } from "../map/configuration/pathConfiguration"
@@ -6,7 +6,7 @@ import { paths } from "../map/configuration/pathConfiguration"
 const DEFAULT_COLOR: Color = [215, 80, 80]
 const SELECTED_COLOR: Color = [255, 0, 0]
 
-const useDrones = () => {
+const useDrones = (selectedDrone : MapDrone | null) => {
     const [drones, setDrones] = useState<Drone[]>([
         {
           id: 1,
@@ -25,7 +25,6 @@ const useDrones = () => {
         }
     ])
 
-    const [selectedDrone, setSelectedDrone] = useState<MapDrone | null>(null)
     const [dronInSimulation, setDroneInSimulation] = useState<MapDrone | null>(null)
 
     const [currentPosition, setCurrentPosition] = useState(0)
@@ -55,7 +54,7 @@ const useDrones = () => {
         color: d.id === selectedDrone?.id ? SELECTED_COLOR : DEFAULT_COLOR
     }))
 
-    return {drones: mappedDrones, setSelectedDrone, selectedDrone, startSimulation}
+    return {drones: mappedDrones, startSimulation}
 }
 
 export default useDrones
