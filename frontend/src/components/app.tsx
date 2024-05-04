@@ -15,6 +15,7 @@ import lineLayer from './layers/demoMovingLineLayer';
 import allDrones3DLayer from './layers/allDrones3DLayer';
 import ViewMode from './layers/types/viewMode';
 import specificDroneLayer from './layers/specificDroneLayer';
+import allDronesTraceLayer from './layers/allDronesTraceLayer';
 
 registerLoaders([OBJLoader]);
 
@@ -35,7 +36,7 @@ function getTooltip({ object }: any) {
 
 const App = () => {
   const [selectedDrone, setSelectedDrone] = useState<MapDrone | null>(null)
-  const [CurrentView, setCurrentView] = useState<ViewMode>(ViewMode.ThreeDAll)
+  const [currentView, setCurrentView] = useState<ViewMode>(ViewMode.ThreeDAll)
 
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {
@@ -53,14 +54,18 @@ const App = () => {
   
   const allDronesLayer = allDrones3DLayer({
     drones: drones,
-    isVisible: CurrentView === ViewMode.ThreeDAll,
+    isVisible: currentView === ViewMode.ThreeDAll,
     onClick: setSelectedDrone
   });
 
   const oneDroneLayer = specificDroneLayer({ //to change name
     selectedDrone: selectedDrone,
-    isVisible: CurrentView === ViewMode.Specific
+    isVisible: currentView === ViewMode.Specific
   })
+
+  const droneTraces = allDronesTraceLayer({
+    isVisible: currentView === ViewMode.ThreeDAll
+  });
 
   const mapRef: any = useRef();
   // useEffect(() => {
@@ -71,8 +76,9 @@ const App = () => {
 
   const layers = [
     allDronesLayer,
-    lineLayer, //does not see this
-    oneDroneLayer
+    lineLayer, 
+    oneDroneLayer,
+    droneTraces
   ];
 
   return (
@@ -83,7 +89,7 @@ const App = () => {
         }}
         onUpdateClick={startSimulation}
         selectedDrone={selectedDrone}
-        currentView={CurrentView}
+        currentView={currentView}
         changeCurrentView={(view) => setCurrentView(view)}
       />
       <DeckGL
@@ -93,8 +99,10 @@ const App = () => {
         pickingRadius={5}
         effects={[lightingEffect]}
         getTooltip={getTooltip}
-
-        // onViewStateChange={(view) => console.log(view)}
+        // onViewStateChange={(view) => ({
+        //   ...view.viewState,
+        //   pitch: 0
+        // })}
       >
         <Map
           reuseMaps={true}

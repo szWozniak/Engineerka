@@ -1,4 +1,4 @@
-import { Color, Position } from "deck.gl"
+import { Color } from "deck.gl"
 import { useEffect, useRef, useState } from "react"
 import { Drone, MapDrone } from "../drones/types"
 import { paths } from "../map/configuration/pathConfiguration"

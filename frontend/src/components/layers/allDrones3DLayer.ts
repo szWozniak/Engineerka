@@ -20,7 +20,6 @@ const allDrones3DLayer = ({onClick, drones, isVisible} : props) => {
         }
       }
     
-
     return new SimpleMeshLayer<MapDrone>({
         id: "default-drones",
         data: drones,
@@ -29,7 +28,7 @@ const allDrones3DLayer = ({onClick, drones, isVisible} : props) => {
         getColor: d => d.color,
         getOrientation: d => d.orientation,
         material: theme.material,
-        sizeScale: 3,
+        sizeScale: 2,
         pickable: true,
         visible: isVisible,
         onClick: handleMouseClick
