@@ -1,25 +1,24 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 //DeckGL
 import DeckGL from '@deck.gl/react';
-import { SimpleMeshLayer } from '@deck.gl/mesh-layers';
-import { LineLayer } from '@deck.gl/layers';
 //Map
 import Map from 'react-map-gl';
 //Loaders
 import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
 
-import {PickingInfo} from "deck.gl"
-import { INITIAL_VIEW_STATE, lightingEffect, theme } from '../map/configuration/mapConfiguration';
-import { paths } from '../map/configuration/pathConfiguration';
+import { INITIAL_VIEW_STATE, lightingEffect } from '../map/configuration/mapConfiguration';
 import { MapDrone } from '../drones/types';
 import useDrones from '../hooks/useDrones';
 import Sidebar from './sidebar/Sidebar';
+import lineLayer from './layers/demoMovingLineLayer';
+import allDrones3DLayer from './layers/allDrones3DLayer';
+import ViewMode from './layers/types/viewMode';
 
 registerLoaders([OBJLoader]);
 
 //From PUBLIC folder
-const MESH_URL = 'assets/drone.obj';
+
 
 
 function getTooltip({ object }: any) {
@@ -34,19 +33,28 @@ function getTooltip({ object }: any) {
 }
 
 const App = () => {
-  const mapRef: any = useRef();
+  const [selectedDrone, setSelectedDrone] = useState<MapDrone | null>(null)
+  const [CurrentView, setCurrentView] = useState<ViewMode>(ViewMode.ThreeDAll)
 
-  const {drones, setSelectedDrone, selectedDrone, startSimulation} = useDrones();
-
-  const handleMouseClick = (info: PickingInfo, _event: any) => {
-    if (info && info.object) {
-      const drone = drones.find(d => d.id === info.object.id)
-      if (drone) {
-        setSelectedDrone(drone)
-      }
+  useEffect(() => {
+    const disableDefaultRightClick = (e: MouseEvent) => {
+      e.preventDefault();
     }
-  }
 
+    document.addEventListener("contextmenu", disableDefaultRightClick)
+
+    return () => document.removeEventListener("contextmenu", disableDefaultRightClick)
+  }, [])
+
+
+
+  const {drones, startSimulation} = useDrones(selectedDrone);
+  const allDronesLayer = allDrones3DLayer({
+    drones: drones,
+    isVisible: CurrentView === ViewMode.ThreeDAll,
+    onClick: setSelectedDrone
+  });
+  const mapRef: any = useRef();
   // useEffect(() => {
   //   if (mapRef.current) {
 
@@ -54,29 +62,8 @@ const App = () => {
   // }, [mapRef.current])
 
   const layers = [
-    //https://deck.gl/docs/api-reference/mesh-layers/simple-mesh-layer
-    new SimpleMeshLayer<MapDrone>({
-      id: "default-drones",
-      data: drones,
-      mesh: MESH_URL,
-      getPosition: d => d.position,
-      getColor: d => d.color,
-      getOrientation: d => d.orientation,
-      material: theme.material,
-      sizeScale: 3,
-      pickable: true,
-      onClick: handleMouseClick
-    }),
-    new LineLayer({
-      id: 'flight-paths',
-      data: paths,
-      opacity: 0.8,
-      getSourcePosition: d => d.start,
-      getTargetPosition: d => d.end,
-      getColor: _d => [0, 200, 200, 125],
-      getWidth: _d => 5,
-      pickable: false
-    })
+    allDronesLayer,
+    lineLayer
   ];
 
   return (
@@ -95,6 +82,8 @@ const App = () => {
         pickingRadius={5}
         effects={[lightingEffect]}
         getTooltip={getTooltip}
+
+        // onViewStateChange={(view) => console.log(view)}
       >
         <Map
           reuseMaps={true}
