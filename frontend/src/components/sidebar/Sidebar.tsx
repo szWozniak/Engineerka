@@ -2,17 +2,32 @@ import React, { useState } from 'react';
 import { MapDrone } from '../../drones/types'
 import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
+import ViewMode from '../layers/types/viewMode';
 
 interface props {
   selectedDrone: MapDrone | null,
   onDebugClick: () => void,
   onUpdateClick: () => void,
-
+  currentView: ViewMode,
+  changeCurrentView: (view: ViewMode) => void
 }
 
-const Sidebar: React.FC<props> = ({ selectedDrone, onDebugClick, onUpdateClick }) => {
+const Sidebar: React.FC<props> = ({ selectedDrone, onDebugClick, onUpdateClick, currentView, changeCurrentView }) => {
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
+
+  const renderViewChangeButtons = () => {
+    if (currentView === ViewMode.Specific){
+      return (<button onClick={() => changeCurrentView(ViewMode.ThreeDAll)}>Change to all drones view</button>)
+    }
+
+    if (currentView === ViewMode.ThreeDAll){
+      return (<button onClick={() => changeCurrentView(ViewMode.Specific)}>Change to specific drone view</button>)
+    }
+
+    return <></>
+  }
+
   return (
     <div className={`sidebar ${opened ? 'opened' : 'closed'}`}>
       <div className="header">
@@ -46,6 +61,7 @@ const Sidebar: React.FC<props> = ({ selectedDrone, onDebugClick, onUpdateClick }
           <div>Direction: <b>{selectedDrone.orientation[1]}</b></div>
           <div>Slope: <b>{selectedDrone.orientation[2]}</b></div>
           <button onClick={onUpdateClick}>Update location</button>
+          {renderViewChangeButtons()}
         </div>}
       </div>
       <div className="container">

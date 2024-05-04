@@ -14,6 +14,7 @@ import Sidebar from './sidebar/Sidebar';
 import lineLayer from './layers/demoMovingLineLayer';
 import allDrones3DLayer from './layers/allDrones3DLayer';
 import ViewMode from './layers/types/viewMode';
+import specificDroneLayer from './layers/specificDroneLayer';
 
 registerLoaders([OBJLoader]);
 
@@ -49,11 +50,18 @@ const App = () => {
 
 
   const {drones, startSimulation} = useDrones(selectedDrone);
+  
   const allDronesLayer = allDrones3DLayer({
     drones: drones,
     isVisible: CurrentView === ViewMode.ThreeDAll,
     onClick: setSelectedDrone
   });
+
+  const oneDroneLayer = specificDroneLayer({ //to change name
+    selectedDrone: selectedDrone,
+    isVisible: CurrentView === ViewMode.Specific
+  })
+
   const mapRef: any = useRef();
   // useEffect(() => {
   //   if (mapRef.current) {
@@ -63,7 +71,8 @@ const App = () => {
 
   const layers = [
     allDronesLayer,
-    lineLayer
+    lineLayer, //does not see this
+    oneDroneLayer
   ];
 
   return (
@@ -74,6 +83,8 @@ const App = () => {
         }}
         onUpdateClick={startSimulation}
         selectedDrone={selectedDrone}
+        currentView={CurrentView}
+        changeCurrentView={(view) => setCurrentView(view)}
       />
       <DeckGL
         layers={layers}

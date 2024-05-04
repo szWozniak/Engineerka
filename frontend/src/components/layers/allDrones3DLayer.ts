@@ -2,8 +2,7 @@ import { PickingInfo, SimpleMeshLayer } from 'deck.gl';
 import React from 'react';
 import { theme } from '../../map/configuration/mapConfiguration';
 import { MapDrone } from '../../drones/types';
-
-const MESH_URL = 'assets/drone.obj';
+import MESH_URL from '../../drones/constants';
 
 interface props{
   onClick: React.Dispatch<React.SetStateAction<MapDrone | null>>, 
