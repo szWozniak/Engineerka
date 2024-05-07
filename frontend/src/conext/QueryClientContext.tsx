@@ -1,5 +1,5 @@
 import React from 'react';
-import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const QueryClientContext = (props : any) => {
     const client = new QueryClient()

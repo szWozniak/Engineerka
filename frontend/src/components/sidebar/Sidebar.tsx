@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Drones } from '../../drones/types'
 import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
-import ViewMode from '../layers/types/viewMode';
+import ViewMode from '../../types/viewMode';
 
 interface props {
   selectedDrone?: Drones,
@@ -18,10 +18,10 @@ const Sidebar: React.FC<props> = ({ selectedDrone, onDebugClick, onUpdateClick, 
 
   const renderViewChangeButtons = () => {
     if (currentView === ViewMode.Specific){
-      return (<button onClick={() => changeCurrentView(ViewMode.ThreeDAll)}>Change to all drones view</button>)
+      return (<button onClick={() => changeCurrentView(ViewMode.Default)}>Change to all drones view</button>)
     }
 
-    if (currentView === ViewMode.ThreeDAll){
+    if (currentView === ViewMode.Default){
       return (<button onClick={() => changeCurrentView(ViewMode.Specific)}>Change to specific drone view</button>)
     }
 

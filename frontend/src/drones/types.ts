@@ -1,4 +1,4 @@
-import { Color, Position } from "deck.gl"
+import { Color } from "deck.gl"
 import { z } from "zod"
 
 const DroneSchema = z.object({
@@ -23,12 +23,6 @@ type Drone = z.infer<typeof DroneSchema>
 export const currentDroneListSchema = z.array(DroneSchema)
 
 export type Drones = z.infer<typeof DroneSchema>;
-
-export interface RoboczyDrone{
-    id: number,
-    position: Position
-    orientation: [number, number, number]
-  }
 
 export interface MapDrone extends Drone{
     color: Color

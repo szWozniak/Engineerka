@@ -1,3 +1,4 @@
+//TODO: basically remove when doing anything with lines
 const generatePath = (start: any, end: any, heights: any) => {
     const num = heights?.length
     const distanceX = ((end[0] - start[0]) / (num - 1))

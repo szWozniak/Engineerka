@@ -1,6 +1,6 @@
 enum ViewMode{
-    TwoDAll,
-    ThreeDAll,
+    DefaultWithTraces,
+    Default,
     Specific
 }
 

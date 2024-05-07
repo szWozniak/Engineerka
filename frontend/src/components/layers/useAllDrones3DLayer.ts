@@ -1,9 +1,9 @@
 import { PickingInfo, SimpleMeshLayer } from 'deck.gl';
 import React from 'react';
-import { theme } from '../../map/configuration/mapConfiguration';
 import { Drones, MapDrone } from '../../drones/types';
-import MESH_URL from '../../drones/constants';
-import { DEFAULT_COLOR, SELECTED_COLOR } from './constants';
+import MESH_URL, { DEFAULT_COLOR, SELECTED_COLOR } from '../../mapConfig/model';
+import { theme } from '../../mapConfig/theme';
+
 
 interface props{
   onClick: React.Dispatch<React.SetStateAction<string | null>>, 
