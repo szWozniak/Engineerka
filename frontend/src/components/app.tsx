@@ -7,22 +7,14 @@ import Map from 'react-map-gl';
 import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
 
-import { INITIAL_VIEW_STATE, lightingEffect, theme } from '../map/configuration/mapConfiguration';
-import { Drones, MapDrone } from '../drones/types';
-import useDrones from '../hooks/useDrones';
+import { INITIAL_VIEW_STATE, lightingEffect } from '../map/configuration/mapConfiguration';
 import Sidebar from './sidebar/Sidebar';
-import lineLayer from './layers/demoMovingLineLayer';
-import useAllDrones3DLayer from './layers/useAllDrones3DLayer';
 import ViewMode from './layers/types/viewMode';
-import specificDroneLayer from './layers/specificDroneLayer';
-import allDronesTraceLayer from './layers/allDronesTraceLayer';
-import { PickingInfo, SimpleMeshLayer } from 'deck.gl';
-import MESH_URL from '../drones/constants';
-import { DEFAULT_COLOR, SELECTED_COLOR } from './layers/constants';
+import useLayerManager from './layers/useLayerManager';
+
+
 
 registerLoaders([OBJLoader]);
-
-//From PUBLIC folder
 
 
 
@@ -38,7 +30,6 @@ function getTooltip({ object }: any) {
 }
 
 const App = () => {
-  const [selectedDrone, setSelectedDrone] = useState<string | null>(null)
   const [currentView, setCurrentView] = useState<ViewMode>(ViewMode.ThreeDAll)
 
   useEffect(() => {
@@ -51,44 +42,14 @@ const App = () => {
     return () => document.removeEventListener("contextmenu", disableDefaultRightClick)
   }, [])
 
-
-
-  const {drones, testDrones} = useDrones(currentView === ViewMode.ThreeDAll);
+  const {layers, getSelectedDrone} = useLayerManager(currentView, )
   
-  const allDronesLayer = useAllDrones3DLayer({
-    drones: testDrones,
-    isVisible: currentView === ViewMode.ThreeDAll,
-    onClick: setSelectedDrone,
-    selectedDrone: selectedDrone
-  });
-
-  // const oneDroneLayer = specificDroneLayer({ //to change name
-  //   selectedDrone: selectedDrone,
-  //   isVisible: currentView === ViewMode.Specific
-  // })
-
-  const droneTraces = allDronesTraceLayer({
-    isVisible: currentView === ViewMode.ThreeDAll
-  });
-
   const mapRef: any = useRef();
   // useEffect(() => {
   //   if (mapRef.current) {
 
   //   }
   // }, [mapRef.current])
-
-  const layers = [
-    allDronesLayer,
-    lineLayer, 
-    // oneDroneLayer,
-    droneTraces
-  ];
-
-  const getSelectedDrone = () => {
-    if (testDrones === undefined) return undefined
-    return testDrones.find(d => d.registrationNumber === selectedDrone)
-  }
 
   return (
     <div>
@@ -117,7 +78,6 @@ const App = () => {
         <Map
           reuseMaps={true}
           ref={mapRef}
-
           onLoad={() => {
             console.log("Map loaded")
           }}
