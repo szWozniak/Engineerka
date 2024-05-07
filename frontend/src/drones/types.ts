@@ -1,14 +1,14 @@
 import { Color, Position } from "deck.gl"
 import { z } from "zod"
 
-const currentDroneSchema = z.object({
+const DroneSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
   heading: z.number(),
   speed: z.number(),
   altitude: z.number(),
   country: z.string(),
-  operater: z.string(),
+  operator: z.string(),
   identification: z.number().min(1).max(16),
   identificationLabel: z.string(),
   model: z.string(),
@@ -18,11 +18,13 @@ const currentDroneSchema = z.object({
   fuel: z.number()
 })
 
-export const currentDroneListSchema = z.array(currentDroneSchema)
+type Drone = z.infer<typeof DroneSchema>
 
-export type CurrentDrones = z.infer<typeof currentDroneSchema>;
+export const currentDroneListSchema = z.array(DroneSchema)
 
-export interface Drone{
+export type Drones = z.infer<typeof DroneSchema>;
+
+export interface RoboczyDrone{
     id: number,
     position: Position
     orientation: [number, number, number]

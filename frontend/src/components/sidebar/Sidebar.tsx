@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { MapDrone } from '../../drones/types'
+import { Drones } from '../../drones/types'
 import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
 import ViewMode from '../layers/types/viewMode';
 
 interface props {
-  selectedDrone: MapDrone | null,
+  selectedDrone?: Drones,
   onDebugClick: () => void,
   onUpdateClick: () => void,
   currentView: ViewMode,
@@ -55,11 +55,11 @@ const Sidebar: React.FC<props> = ({ selectedDrone, onDebugClick, onUpdateClick, 
       </div>
       <div className="container">
         {selectedDrone && <div>
-          <div>Selected drone: {selectedDrone.id}</div>
-          <div>Latitude: <b>{selectedDrone.position[0]}</b></div>
-          <div>Longtitude: <b>{selectedDrone.position[1]}</b></div>
-          <div>Direction: <b>{selectedDrone.orientation[1]}</b></div>
-          <div>Slope: <b>{selectedDrone.orientation[2]}</b></div>
+          <div>Selected drone: {selectedDrone.registrationNumber}</div>
+          <div>Latitude: <b>{selectedDrone.latitude}</b></div>
+          <div>Longtitude: <b>{selectedDrone.longitude}</b></div>
+          <div>Direction: <b>{selectedDrone.heading}</b></div>
+          <div>Altitude: <b>{selectedDrone.altitude}</b></div>
           <button onClick={onUpdateClick}>Update location</button>
           {renderViewChangeButtons()}
         </div>}

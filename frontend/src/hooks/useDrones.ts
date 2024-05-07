@@ -1,19 +1,16 @@
-import { Color } from "deck.gl"
+
 import { useEffect, useRef, useState } from "react"
-import { Drone, MapDrone } from "../drones/types"
+import { RoboczyDrone, MapDrone } from "../drones/types"
 import { paths } from "../map/configuration/pathConfiguration"
 import { useQuery } from "react-query"
 import { getCurrentDrones } from "../drones/api/api"
 
-const DEFAULT_COLOR: Color = [215, 80, 80]
-const SELECTED_COLOR: Color = [255, 0, 0]
-
-const useDrones = (selectedDrone : MapDrone | null) => {
-    const [drones, setDrones] = useState<Drone[]>([
+const useDrones = (isEnabled: boolean) => {
+    const [drones, setDrones] = useState<RoboczyDrone[]>([
         {
           id: 1,
           position: [19.9317, 50.0671, 50],
-          orientation: [0, 130, 90]
+          orientation: [0, 0, 90]
         },
         {
           id: 2,
@@ -31,7 +28,8 @@ const useDrones = (selectedDrone : MapDrone | null) => {
       queryKey: ["current-drones"],
       queryFn: getCurrentDrones,
       keepPreviousData: true,
-      refetchInterval: 3000
+      refetchInterval: 3000,
+      enabled: isEnabled
     })
 
 
@@ -41,31 +39,26 @@ const useDrones = (selectedDrone : MapDrone | null) => {
     const [currentPosition, setCurrentPosition] = useState(0)
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-    useEffect(() => {
-        if (!dronInSimulation?.id) return
-        setDrones([
-          ...drones.filter((drone: any) => drone.id !== dronInSimulation.id),
-          {
-            id: dronInSimulation.id,
-            position: paths[currentPosition].start,
-            orientation: dronInSimulation.orientation
-          }
-        ])
-    }, [currentPosition])
+    // useEffect(() => {
+    //     if (!dronInSimulation?.id) return
+    //     setDrones([
+    //       ...drones.filter((drone: any) => drone.id !== dronInSimulation.id),
+    //       {
+    //         id: dronInSimulation.id,
+    //         position: paths[currentPosition].start,
+    //         orientation: dronInSimulation.orientation
+    //       }
+    //     ])
+    // }, [currentPosition])
 
-    const startSimulation = () => {
-      setDroneInSimulation(selectedDrone)
-      intervalRef.current = setInterval(() => {
-        setCurrentPosition((prev: number) => (prev + 1) % 199)
-      }, 15)
-    }
 
-      const mappedDrones: MapDrone[] = drones.map(d => ({
-          ...d,
-          color: d.id === selectedDrone?.id ? SELECTED_COLOR : DEFAULT_COLOR
-      }))
 
-      return {drones: mappedDrones, startSimulation}
+      // const mappedDrones: MapDrone[] = drones.map(d => ({
+      //     ...d,
+      //     color: d.id === selectedDrone?.id ? SELECTED_COLOR : DEFAULT_COLOR
+      // }))
+
+      return {drones: drones, testDrones: query.data}
 }
 
 export default useDrones

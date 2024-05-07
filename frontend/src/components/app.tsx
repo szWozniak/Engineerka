@@ -7,15 +7,18 @@ import Map from 'react-map-gl';
 import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
 
-import { INITIAL_VIEW_STATE, lightingEffect } from '../map/configuration/mapConfiguration';
-import { MapDrone } from '../drones/types';
+import { INITIAL_VIEW_STATE, lightingEffect, theme } from '../map/configuration/mapConfiguration';
+import { Drones, MapDrone } from '../drones/types';
 import useDrones from '../hooks/useDrones';
 import Sidebar from './sidebar/Sidebar';
 import lineLayer from './layers/demoMovingLineLayer';
-import allDrones3DLayer from './layers/allDrones3DLayer';
+import useAllDrones3DLayer from './layers/useAllDrones3DLayer';
 import ViewMode from './layers/types/viewMode';
 import specificDroneLayer from './layers/specificDroneLayer';
 import allDronesTraceLayer from './layers/allDronesTraceLayer';
+import { PickingInfo, SimpleMeshLayer } from 'deck.gl';
+import MESH_URL from '../drones/constants';
+import { DEFAULT_COLOR, SELECTED_COLOR } from './layers/constants';
 
 registerLoaders([OBJLoader]);
 
@@ -35,7 +38,7 @@ function getTooltip({ object }: any) {
 }
 
 const App = () => {
-  const [selectedDrone, setSelectedDrone] = useState<MapDrone | null>(null)
+  const [selectedDrone, setSelectedDrone] = useState<string | null>(null)
   const [currentView, setCurrentView] = useState<ViewMode>(ViewMode.ThreeDAll)
 
   useEffect(() => {
@@ -50,18 +53,19 @@ const App = () => {
 
 
 
-  const {drones, startSimulation} = useDrones(selectedDrone);
+  const {drones, testDrones} = useDrones(currentView === ViewMode.ThreeDAll);
   
-  const allDronesLayer = allDrones3DLayer({
-    drones: drones,
+  const allDronesLayer = useAllDrones3DLayer({
+    drones: testDrones,
     isVisible: currentView === ViewMode.ThreeDAll,
-    onClick: setSelectedDrone
+    onClick: setSelectedDrone,
+    selectedDrone: selectedDrone
   });
 
-  const oneDroneLayer = specificDroneLayer({ //to change name
-    selectedDrone: selectedDrone,
-    isVisible: currentView === ViewMode.Specific
-  })
+  // const oneDroneLayer = specificDroneLayer({ //to change name
+  //   selectedDrone: selectedDrone,
+  //   isVisible: currentView === ViewMode.Specific
+  // })
 
   const droneTraces = allDronesTraceLayer({
     isVisible: currentView === ViewMode.ThreeDAll
@@ -77,9 +81,14 @@ const App = () => {
   const layers = [
     allDronesLayer,
     lineLayer, 
-    oneDroneLayer,
+    // oneDroneLayer,
     droneTraces
   ];
+
+  const getSelectedDrone = () => {
+    if (testDrones === undefined) return undefined
+    return testDrones.find(d => d.registrationNumber === selectedDrone)
+  }
 
   return (
     <div>
@@ -87,8 +96,9 @@ const App = () => {
         onDebugClick={() => {
           console.log(mapRef.current)
         }}
-        onUpdateClick={startSimulation}
-        selectedDrone={selectedDrone}
+        // onUpdateClick={startSimulation}
+        onUpdateClick={() => {}}
+        selectedDrone={getSelectedDrone()}
         currentView={currentView}
         changeCurrentView={(view) => setCurrentView(view)}
       />
