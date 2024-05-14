@@ -39,12 +39,7 @@ const useAllDrones3DLayer = ({onClick, drones, isVisible, selectedDrone} : props
         transitions:{
           getPosition: {
             duration: 1000,
-            onEnd: () => console.log("GONWENOOO")
           },
-          "getOrientation":{
-            duration: 3000,
-            onEnd: () => console.log("Orientation transmition finished")
-          } 
         }
       })
 };
