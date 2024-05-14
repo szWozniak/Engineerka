@@ -3,12 +3,13 @@ import dotenv from "dotenv";
 import csv from 'csv-parser';
 import fs from 'fs';
 import { IDroneEntry } from "./interfaces/IDroneEntry";
-
+const cors = require("cors")
 
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+app.use(cors())
+const port = process.env.PORT || 8000;
 
 const csvData: { [key: string]: IDroneEntry[] } = {}
 let currentMoment: number = 0
@@ -35,26 +36,26 @@ function readCSVFile() {
       .pipe(csv({ separator: ";" }))
       .on('data', (data) => {
         const parsedData: IDroneEntry = {
-          CurrentMoment: Number(data?.CurrentMoment),
-          Latitude: Number(data?.Latitude),
-          Longitude: Number(data?.Longitude),
-          Heading: Number(data?.Heading),
-          Speed: Number(data?.Speed),
-          Altitude: Number(data?.Altitude),
-          Country: data?.Country,
-          Operator: data?.Operator,
-          Identification: Number(data.Identification),
-          IdentificationLabel: data?.IdentificationLabel,
-          Model: data?.Model,
-          RegistrationNumber: data?.RegistrationNumber,
-          Sign: data?.Sign,
-          IsAirborne: data?.IsAirborne === 'true',
-          Fuel: Number(data?.Fuel)
+          currentMoment: Number(data?.CurrentMoment),
+          latitude: Number(data?.Latitude),
+          longitude: Number(data?.Longitude),
+          heading: Number(data?.Heading),
+          speed: Number(data?.Speed),
+          altitude: Number(data?.Altitude),
+          country: data?.Country,
+          operator: data?.Operator,
+          identification: Number(data.Identification),
+          identificationLabel: data?.IdentificationLabel,
+          model: data?.Model,
+          registrationNumber: data?.RegistrationNumber,
+          sign: data?.Sign,
+          isAirborne: data?.IsAirborne === 'true',
+          fuel: Number(data?.Fuel)
         }
-        if (!csvData?.[parsedData.Identification]) {
-          csvData[parsedData.Identification] = []
+        if (!csvData?.[parsedData.identification]) {
+          csvData[parsedData.identification] = []
         }
-        csvData[parsedData.Identification].push(parsedData)
+        csvData[parsedData.identification].push(parsedData)
       })
       .on('end', () => {
         console.log('CSV file successfully loaded');
@@ -65,7 +66,7 @@ function readCSVFile() {
 readCSVFile();
 
 app.get("/drones", (req: Request, res: Response) => {
-  res.status(200).send(currentData);
+  res.status(200).send(Object.values(currentData));
 });
 
 app.listen(port, () => {

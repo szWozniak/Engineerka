@@ -11,7 +11,7 @@ const useLayerManager = (currentView: ViewMode) => {
         queryKey: ["current-drones"],
         queryFn: getCurrentDrones,
         keepPreviousData: true,
-        refetchInterval: 3000,
+        refetchInterval: 1000,
         enabled: currentView === ViewMode.Default
     })
 
