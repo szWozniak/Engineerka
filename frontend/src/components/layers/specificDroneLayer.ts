@@ -1,7 +1,7 @@
 import { SimpleMeshLayer } from "deck.gl";
 import { MapDrone } from "../../drones/types";
-import MESH_URL from "../../drones/constants";
-import { theme } from "../../map/configuration/mapConfiguration";
+import MESH_URL from "../../mapConfig/model";
+import { theme } from "../../mapConfig/theme";
 
 interface props{
     selectedDrone: MapDrone | null,
@@ -14,9 +14,9 @@ const specificDroneLayer = ({selectedDrone, isVisible} : props) => {
         id: "specific-drone",
         data: selectedDrone && [selectedDrone],
         mesh: MESH_URL,
-        getPosition: d => d && d.position,
-        getColor: d => d && d.color,
-        getOrientation: d => d && d.orientation,
+        getPosition: d => [d.longitude, d.latitude, d.altitude],
+        getColor: d => d.color,
+        getOrientation: d => [0, d.heading, 90],
         material: theme.material,
         sizeScale: 3,
         visible: isVisible,
@@ -24,4 +24,3 @@ const specificDroneLayer = ({selectedDrone, isVisible} : props) => {
 };
 
 export default specificDroneLayer
-

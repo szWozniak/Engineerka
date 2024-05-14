@@ -1,5 +1,5 @@
 import { Position } from "deck.gl";
-
+//TODO: to remove as soon as anything done with lines
 export interface droneTrace{
     id: number,
     start: Position,

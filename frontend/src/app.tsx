@@ -7,19 +7,15 @@ import Map from 'react-map-gl';
 import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
 
-import { INITIAL_VIEW_STATE, lightingEffect } from '../map/configuration/mapConfiguration';
-import { MapDrone } from '../drones/types';
-import useDrones from '../hooks/useDrones';
-import Sidebar from './sidebar/Sidebar';
-import lineLayer from './layers/demoMovingLineLayer';
-import allDrones3DLayer from './layers/allDrones3DLayer';
-import ViewMode from './layers/types/viewMode';
-import specificDroneLayer from './layers/specificDroneLayer';
-import allDronesTraceLayer from './layers/allDronesTraceLayer';
+import Sidebar from './components/sidebar/Sidebar';
+import ViewMode from './types/viewMode';
+import useLayerManager from './components/layers/useLayerManager';
+import { lightingEffect } from './mapConfig/effects';
+import { INITIAL_VIEW_STATE } from './mapConfig/initialView';
+
+
 
 registerLoaders([OBJLoader]);
-
-//From PUBLIC folder
 
 
 
@@ -35,8 +31,7 @@ function getTooltip({ object }: any) {
 }
 
 const App = () => {
-  const [selectedDrone, setSelectedDrone] = useState<MapDrone | null>(null)
-  const [currentView, setCurrentView] = useState<ViewMode>(ViewMode.ThreeDAll)
+  const [currentView, setCurrentView] = useState<ViewMode>(ViewMode.Default)
 
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {
@@ -48,25 +43,8 @@ const App = () => {
     return () => document.removeEventListener("contextmenu", disableDefaultRightClick)
   }, [])
 
-
-
-  const {drones, startSimulation} = useDrones(selectedDrone);
+  const {layers, getSelectedDrone} = useLayerManager(currentView, )
   
-  const allDronesLayer = allDrones3DLayer({
-    drones: drones,
-    isVisible: currentView === ViewMode.ThreeDAll,
-    onClick: setSelectedDrone
-  });
-
-  const oneDroneLayer = specificDroneLayer({ //to change name
-    selectedDrone: selectedDrone,
-    isVisible: currentView === ViewMode.Specific
-  })
-
-  const droneTraces = allDronesTraceLayer({
-    isVisible: currentView === ViewMode.ThreeDAll
-  });
-
   const mapRef: any = useRef();
   // useEffect(() => {
   //   if (mapRef.current) {
@@ -74,21 +52,15 @@ const App = () => {
   //   }
   // }, [mapRef.current])
 
-  const layers = [
-    allDronesLayer,
-    lineLayer, 
-    oneDroneLayer,
-    droneTraces
-  ];
-
   return (
     <div>
       <Sidebar
         onDebugClick={() => {
           console.log(mapRef.current)
         }}
-        onUpdateClick={startSimulation}
-        selectedDrone={selectedDrone}
+        // onUpdateClick={startSimulation}
+        onUpdateClick={() => {}}
+        selectedDrone={getSelectedDrone()}
         currentView={currentView}
         changeCurrentView={(view) => setCurrentView(view)}
       />
@@ -107,7 +79,6 @@ const App = () => {
         <Map
           reuseMaps={true}
           ref={mapRef}
-
           onLoad={() => {
             console.log("Map loaded")
           }}
