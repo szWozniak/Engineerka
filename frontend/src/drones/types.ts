@@ -2,6 +2,7 @@ import { Color } from "deck.gl"
 import { z } from "zod"
 
 const DroneSchema = z.object({
+  currentMoment: z.number(),
   latitude: z.number(),
   longitude: z.number(),
   heading: z.number(),
@@ -14,7 +15,7 @@ const DroneSchema = z.object({
   model: z.string(),
   registrationNumber: z.string(),
   sign: z.string(),
-  isAirbourne: z.boolean(),
+  isAirborne: z.boolean(),
   fuel: z.number()
 })
 
