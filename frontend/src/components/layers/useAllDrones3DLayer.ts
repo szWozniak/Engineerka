@@ -19,9 +19,9 @@ const useAllDrones3DLayer = ({onClick, drones, isVisible, selectedDrone} : props
         if (info && info.object) {
             console.log(info.object.registrationNumber)
             onClick(info.object.registrationNumber)
+          }
         }
-      }
-    
+
     return new SimpleMeshLayer<MapDrone>({
         id: "default-drones",
         data: drones?.map(
@@ -35,7 +35,17 @@ const useAllDrones3DLayer = ({onClick, drones, isVisible, selectedDrone} : props
         sizeScale: 2,
         pickable: true,
         visible: isVisible,
-        onClick: handleMouseClick
+        onClick: handleMouseClick,
+        transitions:{
+          getPosition: {
+            duration: 1000,
+            onEnd: () => console.log("GONWENOOO")
+          },
+          "getOrientation":{
+            duration: 3000,
+            onEnd: () => console.log("Orientation transmition finished")
+          } 
+        }
       })
 };
 

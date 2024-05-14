@@ -9,7 +9,6 @@ const checkForErrors = (res: Response) => {
 }
 
 export const getCurrentDrones = (): Promise<Drones[]> => {
-    console.log("dupa")
     return fetch("http://localhost:8000/drones", {
         method: "GET",
     })
