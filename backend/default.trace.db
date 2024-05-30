@@ -1,0 +1,33 @@
+2024-05-30 17:07:21.551014+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DRONE_ENTITY" not found (this database is empty); SQL statement:
+select de1_0.registration_number,de1_0.country,de1_0.fuel,de1_0.identification,de1_0.is_airbourne,de1_0.model,de1_0.operator,de1_0.sign,de1_0.type from drone_entity de1_0 [42104-224]
+2024-05-30 17:07:23.319525+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DRONE_ENTITY" not found (this database is empty); SQL statement:
+select de1_0.registration_number,de1_0.country,de1_0.fuel,de1_0.identification,de1_0.is_airbourne,de1_0.model,de1_0.operator,de1_0.sign,de1_0.type from drone_entity de1_0 [42104-224]
+2024-05-30 17:07:25.316309+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DRONE_ENTITY" not found (this database is empty); SQL statement:
+select de1_0.registration_number,de1_0.country,de1_0.fuel,de1_0.identification,de1_0.is_airbourne,de1_0.model,de1_0.operator,de1_0.sign,de1_0.type from drone_entity de1_0 [42104-224]
+2024-05-30 17:07:27.311205+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DRONE_ENTITY" not found (this database is empty); SQL statement:
+select de1_0.registration_number,de1_0.country,de1_0.fuel,de1_0.identification,de1_0.is_airbourne,de1_0.model,de1_0.operator,de1_0.sign,de1_0.type from drone_entity de1_0 [42104-224]
+2024-05-30 17:07:29.304420+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DRONE_ENTITY" not found (this database is empty); SQL statement:
+select de1_0.registration_number,de1_0.country,de1_0.fuel,de1_0.identification,de1_0.is_airbourne,de1_0.model,de1_0.operator,de1_0.sign,de1_0.type from drone_entity de1_0 [42104-224]
+2024-05-30 17:07:31.304460+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DRONE_ENTITY" not found (this database is empty); SQL statement:
+select de1_0.registration_number,de1_0.country,de1_0.fuel,de1_0.identification,de1_0.is_airbourne,de1_0.model,de1_0.operator,de1_0.sign,de1_0.type from drone_entity de1_0 [42104-224]
+2024-05-30 17:07:33.305203+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DRONE_ENTITY" not found (this database is empty); SQL statement:
+select de1_0.registration_number,de1_0.country,de1_0.fuel,de1_0.identification,de1_0.is_airbourne,de1_0.model,de1_0.operator,de1_0.sign,de1_0.type from drone_entity de1_0 [42104-224]
+2024-05-30 17:07:35.312435+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DRONE_ENTITY" not found (this database is empty); SQL statement:
+select de1_0.registration_number,de1_0.country,de1_0.fuel,de1_0.identification,de1_0.is_airbourne,de1_0.model,de1_0.operator,de1_0.sign,de1_0.type from drone_entity de1_0 [42104-224]
+2024-05-30 17:07:37.311283+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DRONE_ENTITY" not found (this database is empty); SQL statement:
+select de1_0.registration_number,de1_0.country,de1_0.fuel,de1_0.identification,de1_0.is_airbourne,de1_0.model,de1_0.operator,de1_0.sign,de1_0.type from drone_entity de1_0 [42104-224]
+2024-05-30 17:07:39.303143+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DRONE_ENTITY" not found (this database is empty); SQL statement:
+select de1_0.registration_number,de1_0.country,de1_0.fuel,de1_0.identification,de1_0.is_airbourne,de1_0.model,de1_0.operator,de1_0.sign,de1_0.type from drone_entity de1_0 [42104-224]
+2024-05-30 17:07:41.307996+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DRONE_ENTITY" not found (this database is empty); SQL statement:
+select de1_0.registration_number,de1_0.country,de1_0.fuel,de1_0.identification,de1_0.is_airbourne,de1_0.model,de1_0.operator,de1_0.sign,de1_0.type from drone_entity de1_0 [42104-224]

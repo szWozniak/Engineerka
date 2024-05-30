@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: backend
+  datasource:
+    url: "jdbc:h2:./default"
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+sharedfolder:
+  path: "dane.csv"
+  interval: 2000
