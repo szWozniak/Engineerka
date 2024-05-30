@@ -2,13 +2,14 @@ package com.example.backend.drone;
 
 import com.example.backend.drone.model.DroneToRegister;
 import com.example.backend.drone.model.envelope.RegistrationFlag;
+import com.example.backend.event.ICommandHandler;
 import com.example.backend.event.command.SaveDronesCommand;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class DroneService {
+public class DroneService implements ICommandHandler<SaveDronesCommand> {
     private final DroneRepository droneRepository;
 
     public DroneService(DroneRepository droneRepository){

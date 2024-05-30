@@ -8,14 +8,11 @@ import com.example.backend.scheduler.model.DroneReadmodel;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.SyntaxException;
 import org.springframework.stereotype.Component;
 
-import javax.print.attribute.URISyntax;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 

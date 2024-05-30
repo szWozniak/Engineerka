@@ -6,7 +6,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
+  h2:
+    console:
+      enabled: true
 sharedfolder:
   path: "dane.csv"
   interval: 2000
