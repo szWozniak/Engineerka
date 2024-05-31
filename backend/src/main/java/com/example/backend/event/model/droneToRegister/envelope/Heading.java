@@ -1,4 +1,4 @@
-package com.example.backend.position.model.envelope;
+package com.example.backend.event.model.droneToRegister.envelope;
 
 import lombok.Getter;
 
