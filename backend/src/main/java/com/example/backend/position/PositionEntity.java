@@ -27,6 +27,7 @@ public class PositionEntity {
     private int heading;
     private int speed;
     private int altitude;
+    private int fuel;
     public PositionEntity(){}
 
     public PositionEntity(PositionToRegister position) {
@@ -41,5 +42,6 @@ public class PositionEntity {
         this.heading = position.getHeading().getValue();
         this.speed = position.getSpeed();
         this.altitude = position.getAltitude();
+        this.fuel = position.getFuel();
     }
 }

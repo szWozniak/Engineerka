@@ -24,7 +24,6 @@ public class DroneEntity {
     private String model;
     private String sign;
     private String type;
-    private int fuel;
 
     @OneToMany
     private List<PositionEntity> positions;
@@ -45,7 +44,6 @@ public class DroneEntity {
         this.model = model;
         this.sign = sign;
         this.type = type;
-        this.fuel = fuel;
         this.positions = new ArrayList<>();
     }
 
@@ -58,7 +56,6 @@ public class DroneEntity {
         this.model = drone.getModel();
         this.sign = drone.getSign();
         this.type = drone.getType();
-        this.fuel = drone.getFuel();
         this.positions = new ArrayList<>();
     }
 

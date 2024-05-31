@@ -25,6 +25,7 @@ public class PositionToRegister {
     private int altitude;
     private Heading heading;
     private int speed;
+    private int fuel;
 
     public PositionToRegister(DroneReadmodel model) {
         this.filename = model.getFilename();
@@ -39,6 +40,7 @@ public class PositionToRegister {
         this.altitude = model.getAltitude();
         this.heading = new Heading(model.getHeading());
         this.speed = model.getSpeed();
+        this.fuel = model.getFuel();
     }
 
 }
