@@ -33,6 +33,9 @@ public class DroneReadmodel {
     @CsvBindByName(column = "Id")
     private String id;
 
+    @CsvBindByName(column = "IdExt")
+    private String idExt;
+
     //flight parameters
     @CsvBindByName(column = "Latitude")
     private String latitude;
