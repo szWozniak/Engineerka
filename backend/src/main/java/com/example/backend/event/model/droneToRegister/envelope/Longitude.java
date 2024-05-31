@@ -1,20 +1,21 @@
-package com.example.backend.position.model.envelope;
+package com.example.backend.event.model.droneToRegister.envelope;
 
 import lombok.Getter;
 
-public class Latitude {
+public class Longitude {
     @Getter
+
     private double value;
 
-    public Latitude(String value) throws IllegalArgumentException{
+    public Longitude(String value) throws IllegalArgumentException{
         var numericPart = value.substring(0, value.length()-1);
-        var parsedNumericPart = parseLatitude(numericPart);
+        var parsedNumericPart = parseLongitude(numericPart);
         this.value = adjustCoordinate(parsedNumericPart, value.charAt(value.length() - 1));
 
     }
 
-    private double parseLatitude(String latitude){
-        if (latitude.length() != 6) {throw new IllegalArgumentException("Latitude lenght must be 6 characters");};
+    private double parseLongitude(String latitude){
+        if (latitude.length() != 7) throw new IllegalArgumentException("Latitude lenght must be 6 characters");
         var builder = new StringBuilder(latitude);
         var preparedLatitued = builder.insert(2, '.').toString();
         return Double.parseDouble(preparedLatitued);
@@ -22,8 +23,8 @@ public class Latitude {
 
     private double adjustCoordinate(double coordinate, char direction){
         return switch (direction){
-            case 'N' -> coordinate;
-            case 'S' -> coordinate*-1;
+            case 'E' -> coordinate;
+            case 'W' -> coordinate*-1;
             default -> throw new IllegalArgumentException("Latitude should end with N or S character");
         };
     }

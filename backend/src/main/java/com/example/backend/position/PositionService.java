@@ -1,6 +1,5 @@
 package com.example.backend.position;
 
-import com.example.backend.position.model.PositionToRegister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

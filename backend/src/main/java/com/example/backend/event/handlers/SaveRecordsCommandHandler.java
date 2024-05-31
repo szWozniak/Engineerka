@@ -2,8 +2,8 @@ package com.example.backend.event.handlers;
 
 import com.example.backend.drone.DroneEntity;
 import com.example.backend.drone.DroneService;
-import com.example.backend.drone.model.DroneToRegister;
-import com.example.backend.drone.model.envelope.RegistrationFlag;
+import com.example.backend.event.model.droneToRegister.DroneToRegister;
+import com.example.backend.event.model.droneToRegister.envelope.RegistrationFlag;
 import com.example.backend.event.ICommandHandler;
 import com.example.backend.event.command.SaveRecordsCommand;
 import com.example.backend.position.PositionEntity;

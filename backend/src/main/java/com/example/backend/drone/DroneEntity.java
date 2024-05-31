@@ -1,7 +1,7 @@
 package com.example.backend.drone;
 
-import com.example.backend.drone.model.DroneToRegister;
-import com.example.backend.drone.model.envelope.RegistrationFlag;
+import com.example.backend.event.model.droneToRegister.DroneToRegister;
+import com.example.backend.event.model.droneToRegister.envelope.RegistrationFlag;
 import com.example.backend.position.PositionEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

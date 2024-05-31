@@ -1,10 +1,9 @@
-package com.example.backend.position.model;
+package com.example.backend.event.model.droneToRegister;
 
-import com.example.backend.drone.model.envelope.RegistrationFlag;
-import com.example.backend.position.PositionRepository;
-import com.example.backend.position.model.envelope.Heading;
-import com.example.backend.position.model.envelope.Latitude;
-import com.example.backend.position.model.envelope.Longitude;
+import com.example.backend.event.model.droneToRegister.envelope.RegistrationFlag;
+import com.example.backend.event.model.droneToRegister.envelope.Heading;
+import com.example.backend.event.model.droneToRegister.envelope.Latitude;
+import com.example.backend.event.model.droneToRegister.envelope.Longitude;
 import com.example.backend.scheduler.model.DroneReadmodel;
 import lombok.Data;
 
