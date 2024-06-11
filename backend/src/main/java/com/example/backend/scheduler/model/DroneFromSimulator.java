@@ -3,15 +3,12 @@ package com.example.backend.scheduler.model;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Data
-public class DroneReadmodel {
+public class DroneFromSimulator {
     //general
     @CsvBindByName(column = "Filename")
     private String filename;
@@ -32,6 +29,9 @@ public class DroneReadmodel {
 
     @CsvBindByName(column = "Id")
     private String id;
+
+    @CsvBindByName(column = "IdExt")
+    private String idExt;
 
     //flight parameters
     @CsvBindByName(column = "Latitude")

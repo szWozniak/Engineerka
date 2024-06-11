@@ -1,8 +1,7 @@
-package com.example.backend.drone.model;
+package com.example.backend.event.model.registration;
 
-import com.example.backend.drone.model.envelope.Identification;
-import com.example.backend.drone.model.envelope.RegistrationFlag;
-import com.example.backend.scheduler.model.DroneReadmodel;
+import com.example.backend.event.model.registration.envelope.Identification;
+import com.example.backend.scheduler.model.DroneFromSimulator;
 import lombok.Data;
 
 @Data
@@ -16,9 +15,9 @@ public class DroneToRegister{
     private final String sign;
     private final String type;
     private final int fuel;
-    private final RegistrationFlag flag;
+    private final PositionToRegister position;
 
-    public DroneToRegister(DroneReadmodel model){
+    public DroneToRegister(DroneFromSimulator model){
         this.country = model.getCountry();
         this.operator = model.getOperator();
         this.identification = new Identification(model.getIdentification());
@@ -27,6 +26,6 @@ public class DroneToRegister{
         this.sign = model.getSign();
         this.type = model.getType();
         this.fuel = model.getFuel();
-        this.flag = RegistrationFlag.valueOf(model.getFlag());
+        this.position = new PositionToRegister(model);
     }
 }

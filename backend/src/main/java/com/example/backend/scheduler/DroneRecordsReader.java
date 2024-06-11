@@ -1,10 +1,9 @@
 package com.example.backend.scheduler;
 
-import com.example.backend.drone.model.DroneToRegister;
 import com.example.backend.event.IMediator;
-import com.example.backend.event.command.SaveDronesCommand;
+import com.example.backend.event.command.SaveRecordsCommand;
 import com.example.backend.scheduler.configuration.SharedFolderConfig;
-import com.example.backend.scheduler.model.DroneReadmodel;
+import com.example.backend.scheduler.model.DroneFromSimulator;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -29,19 +28,17 @@ public class DroneRecordsReader {
 
     public void work(){
         var dronesFromCsv = readCsvRecord();
-        var parsedDrones = parseDrones(dronesFromCsv);
-        mediator.send(new SaveDronesCommand(parsedDrones));
+        mediator.send(new SaveRecordsCommand(dronesFromCsv));
     }
 
-    private List<DroneReadmodel> readCsvRecord(){
-        List<DroneReadmodel> drones = new ArrayList<>();
+    private List<DroneFromSimulator> readCsvRecord(){
+        List<DroneFromSimulator> drones = new ArrayList<>();
 
         var path = getClass().getClassLoader().getResource(config.getPath()).getPath();
-        System.out.println(path);
 
         try (Reader reader = new FileReader(path)){
-            CsvToBean<DroneReadmodel> csvToBean = new CsvToBeanBuilder<DroneReadmodel>(reader)
-                    .withType(DroneReadmodel.class)
+            CsvToBean<DroneFromSimulator> csvToBean = new CsvToBeanBuilder<DroneFromSimulator>(reader)
+                    .withType(DroneFromSimulator.class)
                     .withSeparator(',')
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
@@ -51,21 +48,6 @@ public class DroneRecordsReader {
             log.info("Correctly read previous drones records");
         }catch(IOException ex){
             log.error("Could not connect to shared folder. Reason: " + ex);
-        }
-
-        return drones;
-    }
-
-    private List<DroneToRegister> parseDrones(List<DroneReadmodel> dronesToParse){
-        List<DroneToRegister> drones = new ArrayList<>();
-
-        for (DroneReadmodel drone : dronesToParse){
-            try{
-                var parsedDrone = new DroneToRegister(drone);
-                drones.add(parsedDrone);
-            }catch (IllegalArgumentException ex){
-                log.error("Could not parse drone record from CSV. Reason: " + ex);
-            }
         }
 
         return drones;

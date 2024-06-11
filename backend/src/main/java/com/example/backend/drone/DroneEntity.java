@@ -1,8 +1,15 @@
 package com.example.backend.drone;
 
+import com.example.backend.event.model.registration.DroneToRegister;
+import com.example.backend.event.model.registration.envelope.RegistrationFlag;
+import com.example.backend.position.PositionEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,7 +24,9 @@ public class DroneEntity {
     private String model;
     private String sign;
     private String type;
-    private int fuel;
+
+    @OneToMany
+    private List<PositionEntity> positions;
 
     public DroneEntity(){}
 
@@ -34,7 +43,18 @@ public class DroneEntity {
         this.model = model;
         this.sign = sign;
         this.type = type;
-        this.fuel = fuel;
+        this.positions = new ArrayList<>();
     }
 
+    public DroneEntity(DroneToRegister drone){
+        this.registrationNumber = drone.getRegistrationNumber();
+        this.isAirbourne = RegistrationFlag.MapToAirbourne(drone.getPosition().getFlag());
+        this.country = drone.getCountry();
+        this.operator = drone.getOperator();
+        this.identification = drone.getIdentification().getValue();
+        this.model = drone.getModel();
+        this.sign = drone.getSign();
+        this.type = drone.getType();
+        this.positions = new ArrayList<>();
+    }
 }
