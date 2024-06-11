@@ -1,6 +1,6 @@
 package com.example.backend.position;
 
-import com.example.backend.event.model.droneToRegister.PositionToRegister;
+import com.example.backend.event.model.registration.PositionToRegister;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

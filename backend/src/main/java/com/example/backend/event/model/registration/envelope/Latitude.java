@@ -1,4 +1,4 @@
-package com.example.backend.event.model.droneToRegister.envelope;
+package com.example.backend.event.model.registration.envelope;
 
 import lombok.Getter;
 
@@ -14,7 +14,7 @@ public class Latitude {
     }
 
     private double parseLatitude(String latitude){
-        if (latitude.length() != 6) {throw new IllegalArgumentException("Latitude lenght must be 6 characters");};
+        if (latitude.length() != 6) throw new IllegalArgumentException("Latitude lenght must be 6 characters");
         var builder = new StringBuilder(latitude);
         var preparedLatitued = builder.insert(2, '.').toString();
         return Double.parseDouble(preparedLatitued);

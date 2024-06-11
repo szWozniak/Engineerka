@@ -1,10 +1,10 @@
-package com.example.backend.event.model.droneToRegister;
+package com.example.backend.event.model.registration;
 
-import com.example.backend.event.model.droneToRegister.envelope.RegistrationFlag;
-import com.example.backend.event.model.droneToRegister.envelope.Heading;
-import com.example.backend.event.model.droneToRegister.envelope.Latitude;
-import com.example.backend.event.model.droneToRegister.envelope.Longitude;
-import com.example.backend.scheduler.model.DroneReadmodel;
+import com.example.backend.event.model.registration.envelope.RegistrationFlag;
+import com.example.backend.event.model.registration.envelope.Heading;
+import com.example.backend.event.model.registration.envelope.Latitude;
+import com.example.backend.event.model.registration.envelope.Longitude;
+import com.example.backend.scheduler.model.DroneFromSimulator;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -26,7 +26,7 @@ public class PositionToRegister {
     private int speed;
     private int fuel;
 
-    public PositionToRegister(DroneReadmodel model) {
+    public PositionToRegister(DroneFromSimulator model) {
         this.filename = model.getFilename();
         this.serwer = model.getSerwer();
         this.time = model.getTime();
