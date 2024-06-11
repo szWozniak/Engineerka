@@ -1,7 +1,7 @@
 package com.example.backend.drone;
 
-import com.example.backend.event.model.droneToRegister.DroneToRegister;
-import com.example.backend.event.model.droneToRegister.envelope.RegistrationFlag;
+import com.example.backend.event.model.registration.DroneToRegister;
+import com.example.backend.event.model.registration.envelope.RegistrationFlag;
 import com.example.backend.position.PositionEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -27,7 +27,6 @@ public class DroneEntity {
 
     @OneToMany
     private List<PositionEntity> positions;
-
 
     public DroneEntity(){}
 
@@ -58,5 +57,4 @@ public class DroneEntity {
         this.type = drone.getType();
         this.positions = new ArrayList<>();
     }
-
 }

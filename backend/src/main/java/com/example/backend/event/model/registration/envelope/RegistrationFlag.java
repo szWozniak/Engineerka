@@ -1,4 +1,4 @@
-package com.example.backend.event.model.droneToRegister.envelope;
+package com.example.backend.event.model.registration.envelope;
 
 public enum RegistrationFlag {
     BEG,

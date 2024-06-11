@@ -2,13 +2,13 @@ package com.example.backend.event.handlers;
 
 import com.example.backend.drone.DroneEntity;
 import com.example.backend.drone.DroneService;
-import com.example.backend.event.model.droneToRegister.DroneToRegister;
-import com.example.backend.event.model.droneToRegister.envelope.RegistrationFlag;
+import com.example.backend.event.model.registration.DroneToRegister;
+import com.example.backend.event.model.registration.envelope.RegistrationFlag;
 import com.example.backend.event.ICommandHandler;
 import com.example.backend.event.command.SaveRecordsCommand;
 import com.example.backend.position.PositionEntity;
 import com.example.backend.position.PositionService;
-import com.example.backend.scheduler.model.DroneReadmodel;
+import com.example.backend.scheduler.model.DroneFromSimulator;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -47,10 +47,10 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
         this.droneService.updateDrones(entities.stream().map(record -> record.drone).toList());
 ;    }
 
-    private List<DroneToRegister> mapReadmodels(List<DroneReadmodel> drones){
+    private List<DroneToRegister> mapReadmodels(List<DroneFromSimulator> drones){
         List<DroneToRegister> validRecords = new ArrayList<>();
 
-        for(DroneReadmodel drone : drones){
+        for(DroneFromSimulator drone : drones){
             try{
                 validRecords.add(new DroneToRegister(drone));
             }catch(IllegalArgumentException ex){

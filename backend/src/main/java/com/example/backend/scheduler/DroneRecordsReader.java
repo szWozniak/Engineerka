@@ -3,7 +3,7 @@ package com.example.backend.scheduler;
 import com.example.backend.event.IMediator;
 import com.example.backend.event.command.SaveRecordsCommand;
 import com.example.backend.scheduler.configuration.SharedFolderConfig;
-import com.example.backend.scheduler.model.DroneReadmodel;
+import com.example.backend.scheduler.model.DroneFromSimulator;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -31,14 +31,14 @@ public class DroneRecordsReader {
         mediator.send(new SaveRecordsCommand(dronesFromCsv));
     }
 
-    private List<DroneReadmodel> readCsvRecord(){
-        List<DroneReadmodel> drones = new ArrayList<>();
+    private List<DroneFromSimulator> readCsvRecord(){
+        List<DroneFromSimulator> drones = new ArrayList<>();
 
         var path = getClass().getClassLoader().getResource(config.getPath()).getPath();
 
         try (Reader reader = new FileReader(path)){
-            CsvToBean<DroneReadmodel> csvToBean = new CsvToBeanBuilder<DroneReadmodel>(reader)
-                    .withType(DroneReadmodel.class)
+            CsvToBean<DroneFromSimulator> csvToBean = new CsvToBeanBuilder<DroneFromSimulator>(reader)
+                    .withType(DroneFromSimulator.class)
                     .withSeparator(',')
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();

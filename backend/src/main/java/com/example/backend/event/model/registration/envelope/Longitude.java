@@ -1,17 +1,15 @@
-package com.example.backend.event.model.droneToRegister.envelope;
+package com.example.backend.event.model.registration.envelope;
 
 import lombok.Getter;
 
 public class Longitude {
     @Getter
-
     private double value;
 
     public Longitude(String value) throws IllegalArgumentException{
         var numericPart = value.substring(0, value.length()-1);
         var parsedNumericPart = parseLongitude(numericPart);
         this.value = adjustCoordinate(parsedNumericPart, value.charAt(value.length() - 1));
-
     }
 
     private double parseLongitude(String latitude){
