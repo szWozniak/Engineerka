@@ -16,11 +16,11 @@ import java.util.List;
 public class DroneEntity {
     @Id
     private String registrationNumber;
-    private boolean isAirbourne;
+    private boolean isAirborne;
     private String country;
     private String operator;
     private int identification;
-//    private String identificationLabel; cokolwiek to jest
+    private String identificationLabel;
     private String model;
     private String sign;
     private String type;
@@ -31,15 +31,16 @@ public class DroneEntity {
     public DroneEntity(){}
 
     public DroneEntity(String registrationNumber,
-                       boolean isAirbourne, String country,
+                       boolean isAirborne, String country,
                        String operator, int identification,
-                       String model, String sign,
-                       String type, int fuel){
+                       String identificationLabel, String model, String sign,
+                       String type){
         this.registrationNumber = registrationNumber;
-        this.isAirbourne = isAirbourne;
+        this.isAirborne = isAirborne;
         this.country = country;
         this.operator = operator;
         this.identification = identification;
+        this.identificationLabel = identificationLabel;
         this.model = model;
         this.sign = sign;
         this.type = type;
@@ -48,10 +49,11 @@ public class DroneEntity {
 
     public DroneEntity(DroneToRegister drone){
         this.registrationNumber = drone.getRegistrationNumber();
-        this.isAirbourne = RegistrationFlag.MapToAirbourne(drone.getPosition().getFlag());
+        this.isAirborne = RegistrationFlag.MapToAirbourne(drone.getPosition().getFlag());
         this.country = drone.getCountry();
         this.operator = drone.getOperator();
         this.identification = drone.getIdentification().getValue();
+        this.identificationLabel = drone.getIdentificationLabel();
         this.model = drone.getModel();
         this.sign = drone.getSign();
         this.type = drone.getType();

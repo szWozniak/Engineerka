@@ -13,8 +13,8 @@ public class DroneFromSimulator {
     @CsvBindByName(column = "Filename")
     private String filename;
 
-    @CsvBindByName(column = "Serwer")
-    private String serwer;
+    @CsvBindByName(column = "Server")
+    private String server;
 
     @CsvBindByName(column = "Date")
     @CsvDate("ddMMyyyy")
@@ -31,7 +31,7 @@ public class DroneFromSimulator {
     private String id;
 
     @CsvBindByName(column = "IdExt")
-    private String idExt;
+    private int idExt;
 
     //flight parameters
     @CsvBindByName(column = "Latitude")
@@ -58,6 +58,9 @@ public class DroneFromSimulator {
 
     @CsvBindByName(column = "Identification")
     private int identification;
+
+    @CsvBindByName(column = "IdentificationLabel")
+    private String IdentificationLabel;
 
     @CsvBindByName(column = "Model")
     private String model;

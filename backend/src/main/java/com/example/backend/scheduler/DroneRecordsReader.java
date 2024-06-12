@@ -9,6 +9,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -34,7 +35,7 @@ public class DroneRecordsReader {
     private List<DroneFromSimulator> readCsvRecord(){
         List<DroneFromSimulator> drones = new ArrayList<>();
 
-        var path = getClass().getClassLoader().getResource(config.getPath()).getPath();
+        var path = new File(System.getProperty("user.dir")).getParent() + config.getPath();
 
         try (Reader reader = new FileReader(path)){
             CsvToBean<DroneFromSimulator> csvToBean = new CsvToBeanBuilder<DroneFromSimulator>(reader)
