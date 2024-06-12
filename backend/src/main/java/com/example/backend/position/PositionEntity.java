@@ -2,8 +2,6 @@ package com.example.backend.position;
 
 import com.example.backend.event.model.registration.PositionToRegister;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
@@ -14,10 +12,9 @@ import java.time.LocalTime;
 @Data
 public class PositionEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id; //TODO: change to id given from simulator after simulator gives random id (extID)
+    private String id;
     private String filename;
-    private String serwer;
+    private String server;
     private LocalDate date;
     private LocalTime time;
     private String flag;
@@ -31,8 +28,9 @@ public class PositionEntity {
     public PositionEntity(){}
 
     public PositionEntity(PositionToRegister position) {
+        this.id = position.getId();
         this.filename = position.getFilename();
-        this.serwer = position.getSerwer();
+        this.server = position.getServer();
         this.date = position.getDate();
         this.time = position.getTime();
         this.flag = position.getFlag().toString();

@@ -79,7 +79,7 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
 
         var positionEntity = new PositionEntity(drone.getPosition());
         droneEntity.getPositions().add(positionEntity);
-        droneEntity.setAirbourne(RegistrationFlag.MapToAirbourne(drone.getPosition().getFlag()));
+        droneEntity.setAirborne(RegistrationFlag.MapToAirbourne(drone.getPosition().getFlag()));
 
         return new DroneWithPositionEntity(droneEntity, positionEntity);
     }

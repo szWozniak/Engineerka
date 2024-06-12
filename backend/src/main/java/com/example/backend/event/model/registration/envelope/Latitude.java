@@ -16,8 +16,8 @@ public class Latitude {
     private double parseLatitude(String latitude){
         if (latitude.length() != 6) throw new IllegalArgumentException("Latitude lenght must be 6 characters");
         var builder = new StringBuilder(latitude);
-        var preparedLatitued = builder.insert(2, '.').toString();
-        return Double.parseDouble(preparedLatitued);
+        var preparedLatitude = builder.insert(2, '.').toString();
+        return Double.parseDouble(preparedLatitude);
     }
 
     private double adjustCoordinate(double coordinate, char direction){
