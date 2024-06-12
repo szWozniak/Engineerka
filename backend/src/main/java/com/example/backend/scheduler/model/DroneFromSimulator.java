@@ -31,7 +31,7 @@ public class DroneFromSimulator {
     private String id;
 
     @CsvBindByName(column = "IdExt")
-    private int idExt;
+    private String idExt;
 
     //flight parameters
     @CsvBindByName(column = "Latitude")

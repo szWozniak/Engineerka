@@ -18,7 +18,7 @@ public class PositionToRegister {
     private LocalDate date;
     private RegistrationFlag flag;
     private String systemId;
-    private int id;
+    private String id;
     private Latitude latitude;
     private Longitude longitude;
     private int altitude;

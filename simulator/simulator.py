@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 import time
+import uuid
 
 # Parametry okręgu
 center_lat = 50.0619
@@ -118,7 +119,7 @@ ext6 = "Parametr ext 6"
 
 while True:
     index = tick_number % points
-    file_name = "File"+str(tick_number)
+    file_name = "File"+str(uuid.uuid4())
     server = "Server1"
     now = datetime.now()
     day_date = now.strftime("%d%m%Y")
@@ -131,7 +132,7 @@ while True:
         "Time":day_time,
         "Flag":flag,
         "Id":"0000001",
-        "IdExt": tick_number*3,
+        "IdExt": str(uuid.uuid4()),
         "Latitude":circle_coords_dms[index][0],
         "Longitude":circle_coords_dms[index][1],
         "Heading":int(circle_headings[index]),
@@ -167,7 +168,7 @@ while True:
         "Time":day_time,
         "Flag":flag,
         "Id":"0000002",
-        "IdExt": (tick_number*3)+1,
+        "IdExt": str(uuid.uuid4()),
         "Latitude":square_coords_dms[index][0],
         "Longitude":square_coords_dms[index][1],
         "Heading":int(square_headings[index]),
@@ -203,7 +204,7 @@ while True:
         "Time":day_time,
         "Flag":flag,
         "Id":"0000003",
-        "IdExt": (tick_number*3)+2,
+        "IdExt": str(uuid.uuid4()),
         "Latitude":trapezoid_coords_dms[index][0],
         "Longitude":trapezoid_coords_dms[index][1],
         "Heading":int(trapezoid_headings[index]),

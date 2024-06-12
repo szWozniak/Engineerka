@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @Data
 public class PositionEntity {
     @Id
-    private int id;
+    private String id;
     private String filename;
     private String server;
     private LocalDate date;
