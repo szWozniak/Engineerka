@@ -15,7 +15,7 @@ public class Longitude {
     private double parseLongitude(String longitude){
         if (longitude.length() != 7) throw new IllegalArgumentException("longitude length must be 7 characters");
         var builder = new StringBuilder(longitude);
-        var preparedLongitude = builder.insert(2, '.').toString();
+        var preparedLongitude = builder.insert(3, '.').toString();
         return Double.parseDouble(preparedLongitude);
     }
 

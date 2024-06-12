@@ -18,8 +18,8 @@ const useLayerManager = (currentView: ViewMode) => {
     const drones = query.data
     
     const getSelectedDrone = () => {
-    if (drones === undefined) return undefined
-    return drones.find(d => d.registrationNumber === selectedDrone)
+        if (drones === undefined) return undefined
+        return drones.find(d => d.registrationNumber === selectedDrone)
     }
 
     const allDronesLayer = useAllDrones3DLayer({
@@ -35,7 +35,8 @@ const useLayerManager = (currentView: ViewMode) => {
     // })
 
     const droneTraces = allDronesTraceLayer({
-        isVisible: currentView === ViewMode.Default
+        isVisible: currentView === ViewMode.Default,
+        drones: drones
     });
 
     const layers = [

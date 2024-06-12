@@ -14,7 +14,7 @@ const specificDroneLayer = ({selectedDrone, isVisible} : props) => {
         id: "specific-drone",
         data: selectedDrone && [selectedDrone],
         mesh: MESH_URL,
-        getPosition: d => [d.longitude, d.latitude, d.altitude],
+        getPosition: d => [d.currentPosition.longitude, d.currentPosition.latitude, d.currentPosition.altitude],
         getColor: d => d.color,
         getOrientation: d => [0, d.heading, 90],
         material: theme.material,
