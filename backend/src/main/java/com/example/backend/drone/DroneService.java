@@ -1,9 +1,5 @@
 package com.example.backend.drone;
-
-import com.example.backend.position.PositionEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -25,8 +21,16 @@ public class DroneService {
     public List<DroneEntity> getAllCurrentlyFlyingDrones(){
         var drones = droneRepository.getDroneEntitiesByIsAirborneIsTrue();
 
-        drones = drones.stream().filter(drone -> drone.getPositions().size() != 0).toList();
+        var dronesWithPosition = filterDronesWithoutRegisteredPosition(drones);
 
+        return dronesWithLastThreePositionsIncluded(dronesWithPosition);
+    }
+
+    private List<DroneEntity> filterDronesWithoutRegisteredPosition(List<DroneEntity> drones){
+        return drones.stream().filter(drone -> drone.getPositions().size() != 0).toList();
+    }
+
+    private List<DroneEntity> dronesWithLastThreePositionsIncluded(List<DroneEntity> drones){
         for (var drone : drones){
             drone.getPositions().sort(new RecordTimestampsComparator());
             var positions = drone.getPositions();
