@@ -34,6 +34,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+
 application{
 	mainClass = 'com.example.backend.BackendApplication'
 }
@@ -41,5 +42,3 @@ application{
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-
