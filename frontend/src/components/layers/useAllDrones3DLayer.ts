@@ -35,11 +35,11 @@ const useAllDrones3DLayer = ({onClick, drones, isVisible, selectedDrone} : props
         pickable: true,
         visible: isVisible,
         onClick: handleMouseClick,
-        transitions:{
-          getPosition: {
-            duration: 3000,
-          },
-        }
+        // transitions:{
+        //   getPosition: {
+        //     duration: 3000,
+        //   },
+        // }
       })
 };
 

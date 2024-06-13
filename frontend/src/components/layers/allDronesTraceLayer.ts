@@ -1,23 +1,18 @@
 import { LineLayer } from "deck.gl"
 import { Drone } from "../../drones/types"
+import { droneTrace } from "./types/lines"
 
 interface props{
     isVisible: boolean
     drones: Drone[] | undefined
 }
 
-type Trace = {
-    id: number,
-    start: [number, number, number]
-    end: [number, number, number]
-}
-
 const allDronesTraceLayer = ({isVisible, drones} : props) => {
     
-    const mapPositionsToTraces = (): Trace[] => {
+    const mapPositionsToTraces = (): droneTrace[] => {
         if (drones === undefined) return [];
 
-        const traces: Trace[] = [];
+        const traces: droneTrace[] = [];
 
         drones.forEach((drone, index) => {
             const trace = drone.trace
@@ -50,14 +45,14 @@ const allDronesTraceLayer = ({isVisible, drones} : props) => {
         getWidth: _d => 5,
         pickable: false,
         visible: isVisible,
-        transitions: {
-            getSourcePosition:{
-                duration: 3000
-            },
-            getTargetPosition:{
-                duration: 3000
-            }
-        }
+        // transitions: {
+        //     getSourcePosition:{
+        //         duration: 3000
+        //     },
+        //     getTargetPosition:{
+        //         duration: 3000
+        //     }
+        // }
       })
 }
 
