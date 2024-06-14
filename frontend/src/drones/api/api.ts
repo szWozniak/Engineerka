@@ -10,7 +10,7 @@ const checkForErrors = (res: Response) => {
 }
 
 export const getCurrentDrones = (): Promise<Drone[]> => {
-    return fetch(`${defaultURL}drone`, {
+    return fetch(`${defaultURL}drones`, {
         method: "GET",
     })
     .then(checkForErrors)

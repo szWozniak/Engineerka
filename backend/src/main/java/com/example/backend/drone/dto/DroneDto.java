@@ -2,9 +2,11 @@ package com.example.backend.drone.dto;
 
 import com.example.backend.drone.DroneController;
 import com.example.backend.drone.DroneEntity;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 public class DroneDto {
     private final String registrationNumber;
     private final String country;
