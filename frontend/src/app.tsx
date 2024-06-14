@@ -59,7 +59,6 @@ const App = () => {
           console.log(mapRef.current)
         }}
         // onUpdateClick={startSimulation}
-        onUpdateClick={() => {}}
         selectedDrone={getSelectedDrone()}
         currentView={currentView}
         changeCurrentView={(view) => setCurrentView(view)}

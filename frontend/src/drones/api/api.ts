@@ -1,4 +1,5 @@
-import { Drones, currentDroneListSchema } from "../types";
+import { defaultURL } from "../../common/api/apiHelpers";
+import { Drone, DroneSchema } from "../types";
 
 const checkForErrors = (res: Response) => {
     if (res.status !== 200){
@@ -8,11 +9,11 @@ const checkForErrors = (res: Response) => {
     return res;
 }
 
-export const getCurrentDrones = (): Promise<Drones[]> => {
-    return fetch("http://localhost:8000/drones", {
+export const getCurrentDrones = (): Promise<Drone[]> => {
+    return fetch(`${defaultURL}drones`, {
         method: "GET",
     })
     .then(checkForErrors)
     .then(r => r.json())
-    .then(currentDroneListSchema.parse)
+    .then(DroneSchema.array().parse)
 }
