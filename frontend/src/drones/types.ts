@@ -25,6 +25,6 @@ export const DroneSchema = z.object({
 
 export type Drone = z.infer<typeof DroneSchema>;
 
-export interface MapDrone extends Drone{
-    color: Color
+export interface MapDrone extends Drone {
+  color: Color
 }

@@ -1,14 +1,15 @@
 import { LineLayer } from "deck.gl"
-import { Drone } from "../../drones/types"
 import { droneTrace } from "./types/lines"
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 
-interface props{
+interface props {
     isVisible: boolean
-    drones: Drone[] | undefined
 }
 
-const allDronesTraceLayer = ({isVisible, drones} : props) => {
-    
+const useAllTracesLayer = ({ isVisible }: props) => {
+    const { drones, selectedDrone } = useContext(AppContext)
+
     const mapPositionsToTraces = (): droneTrace[] => {
         if (drones === undefined) return [];
 
@@ -20,14 +21,14 @@ const allDronesTraceLayer = ({isVisible, drones} : props) => {
             traces.push({
                 id: index,
                 start: [drone.currentPosition.longitude, drone.currentPosition.latitude, drone.currentPosition.altitude],
-                end:  [trace[0].longitude, trace[0].latitude, trace[0].altitude]
+                end: [trace[0].longitude, trace[0].latitude, trace[0].altitude]
             })
 
-            for(let i=0; i<trace.length-1; i++){
+            for (let i = 0; i < trace.length - 1; i++) {
                 traces.push({
                     id: index,
                     start: [trace[i].longitude, trace[i].latitude, trace[i].altitude],
-                    end: [trace[i+1].longitude, trace[i+1].latitude, trace[i+1].altitude]
+                    end: [trace[i + 1].longitude, trace[i + 1].latitude, trace[i + 1].altitude]
                 })
             }
         });
@@ -45,15 +46,7 @@ const allDronesTraceLayer = ({isVisible, drones} : props) => {
         getWidth: _d => 5,
         pickable: false,
         visible: isVisible,
-        // transitions: {
-        //     getSourcePosition:{
-        //         duration: 3000
-        //     },
-        //     getTargetPosition:{
-        //         duration: 3000
-        //     }
-        // }
-      })
+    })
 }
 
-export default allDronesTraceLayer
+export default useAllTracesLayer

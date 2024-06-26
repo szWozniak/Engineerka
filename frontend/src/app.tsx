@@ -43,8 +43,8 @@ const App = () => {
     return () => document.removeEventListener("contextmenu", disableDefaultRightClick)
   }, [])
 
-  const {layers, getSelectedDrone} = useLayerManager(currentView, )
-  
+  const { layers } = useLayerManager(currentView,)
+
   const mapRef: any = useRef();
   // useEffect(() => {
   //   if (mapRef.current) {
@@ -58,8 +58,6 @@ const App = () => {
         onDebugClick={() => {
           console.log(mapRef.current)
         }}
-        // onUpdateClick={startSimulation}
-        selectedDrone={getSelectedDrone()}
         currentView={currentView}
         changeCurrentView={(view) => setCurrentView(view)}
       />
@@ -70,10 +68,10 @@ const App = () => {
         pickingRadius={5}
         effects={[lightingEffect]}
         getTooltip={getTooltip}
-        // onViewStateChange={(view) => ({
-        //   ...view.viewState,
-        //   pitch: 0
-        // })}
+      // onViewStateChange={(view) => ({
+      //   ...view.viewState,
+      //   pitch: 0
+      // })}
       >
         <Map
           reuseMaps={true}

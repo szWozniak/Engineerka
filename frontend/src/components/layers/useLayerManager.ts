@@ -1,51 +1,38 @@
-import { useState } from 'react';
-import { useQuery } from 'react-query';
-import { getCurrentDrones } from '../../drones/api/api';
-import useAllDrones3DLayer from './useAllDrones3DLayer';
-import allDronesTraceLayer from './allDronesTraceLayer';
+import { useContext } from 'react';
+import useAllDronesLayer from './useAllDronesLayer';
+import useAllTracesLayer from './useAllTracesLayer';
 import ViewMode from '../../types/viewMode';
+import { AppContext } from '../../context/AppContext';
+import useSpecificDroneLayer from './useSpecificDroneLayer';
+import useSpecificTraceLayer from './useSpecificTraceLayer';
 
 const useLayerManager = (currentView: ViewMode) => {
-    const [selectedDrone, setSelectedDrone] = useState<string | null>(null)
-    const query = useQuery({
-        queryKey: ["current-drones"],
-        queryFn: getCurrentDrones,
-        keepPreviousData: true,
-        refetchInterval: 1000,
-        enabled: currentView === ViewMode.Default
-    })
+    const { drones, selectedDrone } = useContext(AppContext)
 
-    const drones = query.data
-    
-    const getSelectedDrone = () => {
-        if (drones === undefined) return undefined
-        return drones.find(d => d.registrationNumber === selectedDrone)
-    }
-
-    const allDronesLayer = useAllDrones3DLayer({
-        drones: drones,
+    const allDronesLayer = useAllDronesLayer({
         isVisible: currentView === ViewMode.Default,
-        onClick: setSelectedDrone,
-        selectedDrone: selectedDrone
     });
 
-    // const oneDroneLayer = specificDroneLayer({ //to change name
-    //   selectedDrone: selectedDrone,
-    //   isVisible: currentView === ViewMode.Specific
-    // })
+    const oneDroneLayer = useSpecificDroneLayer({
+        isVisible: currentView === ViewMode.Specific
+    })
 
-    const droneTraces = allDronesTraceLayer({
-        isVisible: currentView === ViewMode.Default,
-        drones: drones
+    const allDroneTraces = useAllTracesLayer({
+        isVisible: currentView === ViewMode.Default
+    });
+
+    const oneDroneTrace = useSpecificTraceLayer({
+        isVisible: currentView === ViewMode.Specific
     });
 
     const layers = [
         allDronesLayer,
-        // oneDroneLayer,
-        droneTraces
-      ];
+        oneDroneLayer,
+        allDroneTraces,
+        oneDroneTrace
+    ];
 
-    return {layers, getSelectedDrone}
+    return { layers }
 };
 
 export default useLayerManager;

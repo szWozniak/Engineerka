@@ -40,7 +40,7 @@ public class DroneDto {
 
     public static DroneDto fromDroneEntity(DroneEntity entity){
         var positions = entity.getPositions();
-        var currentPosition = positions.get(0);
+        var currentPosition = positions.get(positions.size() - 1);
         var trace = positions
                 .subList(1 , positions.size())
                 .stream().map(position -> new PositionDto(position.getLatitude(),

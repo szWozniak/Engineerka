@@ -117,124 +117,127 @@ ext4 = "Parametr ext 4",
 ext5 = "Parametr ext 5",
 ext6 = "Parametr ext 6"
 
-while True:
-    index = tick_number % points
-    file_name = "File"+str(uuid.uuid4())
-    server = "Server1"
-    now = datetime.now()
-    day_date = now.strftime("%d%m%Y")
-    day_time = now.strftime("%H:%M:%S.%f")[:-2]
+if __name__ == "__main__":
+    print("Simulator started...")
 
-    df_circle = pd.DataFrame([{
-        "Filename":file_name,
-        "Server":server,
-        "Date":day_date,
-        "Time":day_time,
-        "Flag":flag,
-        "Id":"0000001",
-        "IdExt": str(uuid.uuid4()),
-        "Latitude":circle_coords_dms[index][0],
-        "Longitude":circle_coords_dms[index][1],
-        "Heading":int(circle_headings[index]),
-        "Speed":int(circle_speeds[index]),
-        "Altitude":int(circle_altitudes[index]),
-        "Country":"Poland",
-        "Operator":"UK",
-        "Identification":1,
-        "IdentificationLabel":"Dark Blue",
-        "Model":"DJI Air 2S",
-        "RegistrationNumber":"XDA123",
-        "Sign":"UKXDA123",
-        "Type":type,
-        "Fuel":int(circle_fuel[index]),
-        "Signal":signal,
-        "Frequency":frequency,
-        "SensorLat":sensor_lat,
-        "SensorLon":sensor_lon,
-        "SensorLabel":sensor_label,
-        "Notes":notes,
-        "Ext1":ext1,
-        "Ext2":ext2,
-        "Ext3":ext3,
-        "Ext4":ext4,
-        "Ext5":ext5,
-        "Ext6":ext6
-    }])
+    while True:
+        index = tick_number % points
+        file_name = "File"+str(uuid.uuid4())
+        server = "Server1"
+        now = datetime.now()
+        day_date = now.strftime("%d%m%Y")
+        day_time = now.strftime("%H:%M:%S.%f")[:-2]
 
-    df_square = pd.DataFrame([{
-        "Filename":file_name,
-        "Server":server,
-        "Date":day_date,
-        "Time":day_time,
-        "Flag":flag,
-        "Id":"0000002",
-        "IdExt": str(uuid.uuid4()),
-        "Latitude":square_coords_dms[index][0],
-        "Longitude":square_coords_dms[index][1],
-        "Heading":int(square_headings[index]),
-        "Speed":int(square_speeds[index]),
-        "Altitude":int(square_altitudes[index]),
-        "Country":"Poland",
-        "Operator":"US",
-        "Identification":2,
-        "IdentificationLabel":"Dark Green",
-        "Model":"DJI Mavic Air",
-        "RegistrationNumber":"YGB456",
-        "Sign":"USYGB456",
-        "Type":type,
-        "Fuel":int(square_fuel[index]),
-        "Signal":signal,
-        "Frequency":frequency,
-        "SensorLat":sensor_lat,
-        "SensorLon":sensor_lon,
-        "SensorLabel":sensor_label,
-        "Notes":notes,
-        "Ext1":ext1,
-        "Ext2":ext2,
-        "Ext3":ext3,
-        "Ext4":ext4,
-        "Ext5":ext5,
-        "Ext6":ext6
-    }])
+        df_circle = pd.DataFrame([{
+            "Filename":file_name,
+            "Server":server,
+            "Date":day_date,
+            "Time":day_time,
+            "Flag":flag,
+            "Id":"0000001",
+            "IdExt": str(uuid.uuid4()),
+            "Latitude":circle_coords_dms[index][0],
+            "Longitude":circle_coords_dms[index][1],
+            "Heading":int(circle_headings[index]),
+            "Speed":int(circle_speeds[index]),
+            "Altitude":int(circle_altitudes[index]),
+            "Country":"Poland",
+            "Operator":"UK",
+            "Identification":1,
+            "IdentificationLabel":"Dark Blue",
+            "Model":"DJI Air 2S",
+            "RegistrationNumber":"XDA123",
+            "Sign":"UKXDA123",
+            "Type":type,
+            "Fuel":int(circle_fuel[index]),
+            "Signal":signal,
+            "Frequency":frequency,
+            "SensorLat":sensor_lat,
+            "SensorLon":sensor_lon,
+            "SensorLabel":sensor_label,
+            "Notes":notes,
+            "Ext1":ext1,
+            "Ext2":ext2,
+            "Ext3":ext3,
+            "Ext4":ext4,
+            "Ext5":ext5,
+            "Ext6":ext6
+        }])
 
-    df_trapezoid = pd.DataFrame([{
-        "Filename":file_name,
-        "Server":server,
-        "Date":day_date,
-        "Time":day_time,
-        "Flag":flag,
-        "Id":"0000003",
-        "IdExt": str(uuid.uuid4()),
-        "Latitude":trapezoid_coords_dms[index][0],
-        "Longitude":trapezoid_coords_dms[index][1],
-        "Heading":int(trapezoid_headings[index]),
-        "Speed":int(trapezoid_speeds[index]),
-        "Altitude":int(trapezoid_altitudes[index]),
-        "Country":"Poland",
-        "Operator":"PL",
-        "Identification":3,
-        "IdentificationLabel":"Dark Aqua",
-        "Model":"DJI Phantom 4 Pro",
-        "RegistrationNumber":"WZB789",
-        "Sign":"PLWZB789",
-        "Type":type,
-        "Fuel":int(trapezoid_fuel[index]),
-        "Signal":signal,
-        "Frequency":frequency,
-        "SensorLat":sensor_lat,
-        "SensorLon":sensor_lon,
-        "SensorLabel":sensor_label,
-        "Notes":notes,
-        "Ext1":ext1,
-        "Ext2":ext2,
-        "Ext3":ext3,
-        "Ext4":ext4,
-        "Ext5":ext5,
-        "Ext6":ext6
-    }])
+        df_square = pd.DataFrame([{
+            "Filename":file_name,
+            "Server":server,
+            "Date":day_date,
+            "Time":day_time,
+            "Flag":flag,
+            "Id":"0000002",
+            "IdExt": str(uuid.uuid4()),
+            "Latitude":square_coords_dms[index][0],
+            "Longitude":square_coords_dms[index][1],
+            "Heading":int(square_headings[index]),
+            "Speed":int(square_speeds[index]),
+            "Altitude":int(square_altitudes[index]),
+            "Country":"Poland",
+            "Operator":"US",
+            "Identification":2,
+            "IdentificationLabel":"Dark Green",
+            "Model":"DJI Mavic Air",
+            "RegistrationNumber":"YGB456",
+            "Sign":"USYGB456",
+            "Type":type,
+            "Fuel":int(square_fuel[index]),
+            "Signal":signal,
+            "Frequency":frequency,
+            "SensorLat":sensor_lat,
+            "SensorLon":sensor_lon,
+            "SensorLabel":sensor_label,
+            "Notes":notes,
+            "Ext1":ext1,
+            "Ext2":ext2,
+            "Ext3":ext3,
+            "Ext4":ext4,
+            "Ext5":ext5,
+            "Ext6":ext6
+        }])
 
-    combined_data = pd.concat([df_circle, df_square, df_trapezoid])
-    combined_data.to_csv("../shared_directory/data.csv", sep=',', index=False)
-    tick_number += 1
+        df_trapezoid = pd.DataFrame([{
+            "Filename":file_name,
+            "Server":server,
+            "Date":day_date,
+            "Time":day_time,
+            "Flag":flag,
+            "Id":"0000003",
+            "IdExt": str(uuid.uuid4()),
+            "Latitude":trapezoid_coords_dms[index][0],
+            "Longitude":trapezoid_coords_dms[index][1],
+            "Heading":int(trapezoid_headings[index]),
+            "Speed":int(trapezoid_speeds[index]),
+            "Altitude":int(trapezoid_altitudes[index]),
+            "Country":"Poland",
+            "Operator":"PL",
+            "Identification":3,
+            "IdentificationLabel":"Dark Aqua",
+            "Model":"DJI Phantom 4 Pro",
+            "RegistrationNumber":"WZB789",
+            "Sign":"PLWZB789",
+            "Type":type,
+            "Fuel":int(trapezoid_fuel[index]),
+            "Signal":signal,
+            "Frequency":frequency,
+            "SensorLat":sensor_lat,
+            "SensorLon":sensor_lon,
+            "SensorLabel":sensor_label,
+            "Notes":notes,
+            "Ext1":ext1,
+            "Ext2":ext2,
+            "Ext3":ext3,
+            "Ext4":ext4,
+            "Ext5":ext5,
+            "Ext6":ext6
+        }])
 
-    time.sleep(2)
+        combined_data = pd.concat([df_circle, df_square, df_trapezoid])
+        combined_data.to_csv("../shared_directory/data.csv", sep=',', index=False)
+        tick_number += 1
+
+        time.sleep(2)

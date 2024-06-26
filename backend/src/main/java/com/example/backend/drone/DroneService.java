@@ -1,5 +1,7 @@
 package com.example.backend.drone;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,6 +28,16 @@ public class DroneService {
         return dronesWithLastThreePositionsIncluded(dronesWithPosition);
     }
 
+    public DroneEntity getDroneByIdentification(int identification) {
+        List<DroneEntity> drones = droneRepository.findByIdentification(identification);
+        
+        if (!drones.isEmpty()) {
+            return drones.get(0);
+        } else {
+            return null;
+        }
+    }
+
     private List<DroneEntity> filterDronesWithoutRegisteredPosition(List<DroneEntity> drones){
         return drones.stream().filter(drone -> drone.getPositions().size() != 0).toList();
     }
@@ -35,7 +47,9 @@ public class DroneService {
             drone.getPositions().sort(new RecordTimestampsComparator());
             var positions = drone.getPositions();
             var lastIndex = Math.min(3, positions.size());
-            drone.setPositions(positions.subList(0, lastIndex));
+            var lastPositions = positions.subList(0, lastIndex);
+            Collections.reverse(lastPositions);
+            drone.setPositions(lastPositions);
         }
 
         return drones;

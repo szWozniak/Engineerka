@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app';
 import './styles/index.scss';
-import QueryClientContext from './conext/QueryClientContext';
+import QueryClientContext from './context/QueryClientContext';
+import AppContextProvider from './context/AppContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -10,7 +11,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <QueryClientContext>
-      <App />
+      <AppContextProvider>
+        <App />
+      </AppContextProvider>
     </QueryClientContext>
   </React.StrictMode>
 );
