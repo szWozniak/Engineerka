@@ -12,10 +12,6 @@ interface props {
 const useSpecificDroneLayer = ({ isVisible }: props) => {
     const { drones, selectedDrone } = useContext(AppContext)
 
-    useEffect(() => {
-        console.log(selectedDrone)
-    }, [selectedDrone])
-
     const drone: MapDrone = {
         ...(selectedDrone as Drone),
         color: [255, 50, 50]
