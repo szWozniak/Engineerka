@@ -3,11 +3,7 @@ import { droneTrace } from "./types/lines"
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 
-interface props {
-    isVisible: boolean
-}
-
-const useAllTracesLayer = ({ isVisible }: props) => {
+const useTracesLayer = () => {
     const { drones, selectedDrone } = useContext(AppContext)
 
     const mapPositionsToTraces = (): droneTrace[] => {
@@ -15,18 +11,12 @@ const useAllTracesLayer = ({ isVisible }: props) => {
 
         const traces: droneTrace[] = [];
 
-        drones.forEach((drone, index) => {
-            const trace = drone.trace
-
-            traces.push({
-                id: index,
-                start: [drone.currentPosition.longitude, drone.currentPosition.latitude, drone.currentPosition.altitude],
-                end: [trace[0].longitude, trace[0].latitude, trace[0].altitude]
-            })
+        drones.forEach((drone) => {
+            const trace = (drone.registrationNumber === selectedDrone?.registrationNumber) ? selectedDrone.trace : drone.trace
 
             for (let i = 0; i < trace.length - 1; i++) {
                 traces.push({
-                    id: index,
+                    id: 0,
                     start: [trace[i].longitude, trace[i].latitude, trace[i].altitude],
                     end: [trace[i + 1].longitude, trace[i + 1].latitude, trace[i + 1].altitude]
                 })
@@ -45,8 +35,8 @@ const useAllTracesLayer = ({ isVisible }: props) => {
         getColor: _d => [0, 200, 200, 125],
         getWidth: _d => 5,
         pickable: false,
-        visible: isVisible,
+        visible: true,
     })
 }
 
-export default useAllTracesLayer
+export default useTracesLayer

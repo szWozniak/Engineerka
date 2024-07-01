@@ -28,8 +28,8 @@ public class DroneService {
         return dronesWithLastThreePositionsIncluded(dronesWithPosition);
     }
 
-    public DroneEntity getDroneByIdentification(int identification) {
-        List<DroneEntity> drones = droneRepository.findByIdentification(identification);
+    public DroneEntity getDroneWithTrace(String registration) {
+        List<DroneEntity> drones = droneRepository.findByRegistrationNumber(registration);
         
         if (!drones.isEmpty()) {
             return drones.get(0);

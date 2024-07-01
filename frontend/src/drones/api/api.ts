@@ -18,8 +18,8 @@ export const getCurrentDrones = (): Promise<Drone[]> => {
         .then(DroneSchema.array().parse)
 }
 
-export const getDroneById = (id: number): Promise<Drone> => {
-    return fetch(`${defaultURL}drones/${id}`, {
+export const getDroneByRegistration = (registration: string): Promise<Drone> => {
+    return fetch(`${defaultURL}drones/${registration}`, {
         method: "GET",
     })
         .then(checkForErrors)

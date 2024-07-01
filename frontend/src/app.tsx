@@ -8,7 +8,6 @@ import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
 
 import Sidebar from './components/sidebar/Sidebar';
-import ViewMode from './types/viewMode';
 import useLayerManager from './components/layers/useLayerManager';
 import { lightingEffect } from './mapConfig/effects';
 import { INITIAL_VIEW_STATE } from './mapConfig/initialView';
@@ -31,8 +30,6 @@ function getTooltip({ object }: any) {
 }
 
 const App = () => {
-  const [currentView, setCurrentView] = useState<ViewMode>(ViewMode.Default)
-
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {
       e.preventDefault();
@@ -43,24 +40,13 @@ const App = () => {
     return () => document.removeEventListener("contextmenu", disableDefaultRightClick)
   }, [])
 
-  const { layers } = useLayerManager(currentView,)
+  const { layers } = useLayerManager()
 
   const mapRef: any = useRef();
-  // useEffect(() => {
-  //   if (mapRef.current) {
-
-  //   }
-  // }, [mapRef.current])
 
   return (
     <div>
-      <Sidebar
-        onDebugClick={() => {
-          console.log(mapRef.current)
-        }}
-        currentView={currentView}
-        changeCurrentView={(view) => setCurrentView(view)}
-      />
+      <Sidebar />
       <DeckGL
         layers={layers}
         initialViewState={INITIAL_VIEW_STATE}

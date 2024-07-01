@@ -1,24 +1,28 @@
 import React, { ReactNode, Dispatch, SetStateAction, createContext, useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { getCurrentDrones, getDroneById } from '../drones/api/api';
+import { getCurrentDrones, getDroneByRegistration } from '../drones/api/api';
 import { Drone } from '../drones/types';
 
 type AppContextType = {
   drones: Drone[] | undefined
   selectedDrone: Drone | null
-  setSelectedDroneId: Dispatch<SetStateAction<number | null>>
+  setSelectedDroneRegistration: Dispatch<SetStateAction<string | null>>
 }
 
 export const AppContext = createContext<AppContextType>({
   drones: [],
   selectedDrone: null,
-  setSelectedDroneId: () => { }
+  setSelectedDroneRegistration: () => { }
 })
 
 const AppContextProvider = ({ children }: {
   children: ReactNode
 }) => {
-  const [selectedDroneId, setSelectedDroneId] = useState<number | null>(null)
+  const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
+
+  useEffect(() => {
+    console.log("Regi ", selectedDroneRegistration)
+  }, [selectedDroneRegistration])
 
   const { data: drones } = useQuery({
     queryKey: ["current-drones"],
@@ -28,8 +32,8 @@ const AppContextProvider = ({ children }: {
     enabled: true
   })
 
-  const { data: selectedDrone } = useQuery(['drone', selectedDroneId], () => {
-    return selectedDroneId ? getDroneById(selectedDroneId) : null
+  const { data: selectedDrone } = useQuery(['drone', selectedDroneRegistration], () => {
+    return selectedDroneRegistration ? getDroneByRegistration(selectedDroneRegistration) : null
   }, {
     keepPreviousData: true,
     refetchInterval: 1000,
@@ -37,7 +41,7 @@ const AppContextProvider = ({ children }: {
   })
 
   return (
-    <AppContext.Provider value={{ drones, selectedDrone: selectedDrone || null, setSelectedDroneId }}>
+    <AppContext.Provider value={{ drones, selectedDrone: selectedDrone || null, setSelectedDroneRegistration }}>
       {children}
     </AppContext.Provider>
   )

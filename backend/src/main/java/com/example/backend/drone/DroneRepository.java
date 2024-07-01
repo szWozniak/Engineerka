@@ -9,5 +9,5 @@ import java.util.List;
 public interface DroneRepository extends JpaRepository<DroneEntity, String> {
     List<DroneEntity> getDroneEntitiesByIsAirborneIsTrue();
 
-    List<DroneEntity> findByIdentification(int identification);
+    List<DroneEntity> findByRegistrationNumber(String registrationNumber);
 }

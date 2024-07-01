@@ -5,17 +5,12 @@ import MESH_URL, { DEFAULT_COLOR, SELECTED_COLOR } from '../../mapConfig/model';
 import { theme } from '../../mapConfig/theme';
 import { AppContext } from '../../context/AppContext';
 
-
-interface props {
-  isVisible: boolean
-}
-
-const useAllDronesLayer = ({ isVisible }: props) => {
-  const { drones, selectedDrone, setSelectedDroneId } = useContext(AppContext)
+const useDronesLayer = () => {
+  const { drones, selectedDrone, setSelectedDroneRegistration } = useContext(AppContext)
 
   const handleMouseClick = (info: PickingInfo, _event: any) => {
     if (info && info.object) {
-      setSelectedDroneId(info?.object?.identification)
+      setSelectedDroneRegistration(info?.object?.registrationNumber)
     }
   }
 
@@ -31,9 +26,9 @@ const useAllDronesLayer = ({ isVisible }: props) => {
     material: theme.material,
     sizeScale: 2,
     pickable: true,
-    visible: isVisible,
+    visible: true,
     onClick: handleMouseClick,
   })
 };
 
-export default useAllDronesLayer;
+export default useDronesLayer;

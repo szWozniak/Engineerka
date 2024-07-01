@@ -28,9 +28,10 @@ public class DroneController {
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
-    @GetMapping("/{identification}")
-    public ResponseEntity<DroneDto> getDroneByIdentification(@PathVariable int identification) {
-        DroneEntity drone = droneService.getDroneByIdentification(identification);
+    @GetMapping("/{registration}")
+    public ResponseEntity<DroneDto> getDroneWithTrace(@PathVariable String registration) {
+        System.out.println("getting for: " + registration);
+        DroneEntity drone = droneService.getDroneWithTrace(registration);
 
         DroneDto dto = DroneDto.fromDroneEntity(drone);
 
