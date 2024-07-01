@@ -32,6 +32,8 @@ public class DroneService {
         List<DroneEntity> drones = droneRepository.findByRegistrationNumber(registration);
         
         if (!drones.isEmpty()) {
+            var drone = drones.get(0);
+            drone.getPositions().sort(new RecordTimestampsComparator());
             return drones.get(0);
         } else {
             return null;
@@ -47,9 +49,7 @@ public class DroneService {
             drone.getPositions().sort(new RecordTimestampsComparator());
             var positions = drone.getPositions();
             var lastIndex = Math.min(3, positions.size());
-            var lastPositions = positions.subList(0, lastIndex);
-            Collections.reverse(lastPositions);
-            drone.setPositions(lastPositions);
+            drone.setPositions(positions.subList(0, lastIndex));
         }
 
         return drones;

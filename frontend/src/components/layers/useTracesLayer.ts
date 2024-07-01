@@ -11,12 +11,18 @@ const useTracesLayer = () => {
 
         const traces: droneTrace[] = [];
 
-        drones.forEach((drone) => {
+        drones.forEach((drone, index) => {
             const trace = (drone.registrationNumber === selectedDrone?.registrationNumber) ? selectedDrone.trace : drone.trace
+
+            traces.push({
+                id: index,
+                start: [drone.currentPosition.longitude, drone.currentPosition.latitude, drone.currentPosition.altitude],
+                end: [trace[0].longitude, trace[0].latitude, trace[0].altitude]
+            })
 
             for (let i = 0; i < trace.length - 1; i++) {
                 traces.push({
-                    id: 0,
+                    id: index,
                     start: [trace[i].longitude, trace[i].latitude, trace[i].altitude],
                     end: [trace[i + 1].longitude, trace[i + 1].latitude, trace[i + 1].altitude]
                 })
