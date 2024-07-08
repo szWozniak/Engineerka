@@ -8,7 +8,6 @@ import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
 
 import Sidebar from './components/sidebar/Sidebar';
-import ViewMode from './types/viewMode';
 import useLayerManager from './components/layers/useLayerManager';
 import { lightingEffect } from './mapConfig/effects';
 import { INITIAL_VIEW_STATE } from './mapConfig/initialView';
@@ -31,8 +30,6 @@ function getTooltip({ object }: any) {
 }
 
 const App = () => {
-  const [currentView, setCurrentView] = useState<ViewMode>(ViewMode.Default)
-
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {
       e.preventDefault();
@@ -43,26 +40,13 @@ const App = () => {
     return () => document.removeEventListener("contextmenu", disableDefaultRightClick)
   }, [])
 
-  const {layers, getSelectedDrone} = useLayerManager(currentView, )
-  
-  const mapRef: any = useRef();
-  // useEffect(() => {
-  //   if (mapRef.current) {
+  const { layers } = useLayerManager()
 
-  //   }
-  // }, [mapRef.current])
+  const mapRef: any = useRef();
 
   return (
     <div>
-      <Sidebar
-        onDebugClick={() => {
-          console.log(mapRef.current)
-        }}
-        // onUpdateClick={startSimulation}
-        selectedDrone={getSelectedDrone()}
-        currentView={currentView}
-        changeCurrentView={(view) => setCurrentView(view)}
-      />
+      <Sidebar />
       <DeckGL
         layers={layers}
         initialViewState={INITIAL_VIEW_STATE}
@@ -70,10 +54,10 @@ const App = () => {
         pickingRadius={5}
         effects={[lightingEffect]}
         getTooltip={getTooltip}
-        // onViewStateChange={(view) => ({
-        //   ...view.viewState,
-        //   pitch: 0
-        // })}
+      // onViewStateChange={(view) => ({
+      //   ...view.viewState,
+      //   pitch: 0
+      // })}
       >
         <Map
           reuseMaps={true}
