@@ -65,7 +65,7 @@ const Sidebar: React.FC = () => {
         </div>}
       </div>
       <div className="container">
-        Footer
+        DronHub.pl &copy; 2024
       </div>
     </div>
   );

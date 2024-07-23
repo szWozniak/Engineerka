@@ -11,6 +11,7 @@ import Sidebar from './components/sidebar/Sidebar';
 import useLayerManager from './components/layers/useLayerManager';
 import { lightingEffect } from './mapConfig/effects';
 import { INITIAL_VIEW_STATE } from './mapConfig/initialView';
+import BottomMenu from './components/bottomMenu/BottomMenu';
 
 
 
@@ -46,7 +47,10 @@ const App = () => {
 
   return (
     <div>
-      <Sidebar />
+      <div className="overlay">
+        <Sidebar />
+        <BottomMenu />
+      </div>
       <DeckGL
         layers={layers}
         initialViewState={INITIAL_VIEW_STATE}
