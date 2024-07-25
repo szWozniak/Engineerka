@@ -9,11 +9,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 public class RegistrationService {
     private final DroneRecordsReader reader;
-    private final SharedFolderConfig sharedFolderConfig;
 
-    public RegistrationService(DroneRecordsReader reader, SharedFolderConfig config){
+    public RegistrationService(DroneRecordsReader reader){
         this.reader = reader;
-        this.sharedFolderConfig = config;
     }
 
     @Scheduled(fixedRateString = "#{@sharedFolderConfig.getInterval()}")

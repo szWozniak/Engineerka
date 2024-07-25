@@ -1,6 +1,6 @@
-package com.example.backend.position;
+package com.example.backend.domain.position;
 
-import com.example.backend.event.model.registration.PositionToRegister;
+import com.example.backend.event.model.registration.FlightRecordToRegister;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.time.LocalTime;
 
 @Entity
 @Data
-public class PositionEntity {
+public class FlighRecordEntity {
     @Id
     private String id;
     private String filename;
@@ -25,9 +25,9 @@ public class PositionEntity {
     private int speed;
     private int altitude;
     private int fuel;
-    public PositionEntity(){}
+    public FlighRecordEntity(){}
 
-    public PositionEntity(PositionToRegister position) {
+    public FlighRecordEntity(FlightRecordToRegister position) {
         this.id = position.getId();
         this.filename = position.getFilename();
         this.server = position.getServer();

@@ -1,13 +1,13 @@
 package com.example.backend.event.handlers;
 
-import com.example.backend.drone.DroneEntity;
-import com.example.backend.drone.DroneService;
+import com.example.backend.domain.drone.DroneEntity;
+import com.example.backend.domain.drone.DroneService;
 import com.example.backend.event.model.registration.DroneToRegister;
 import com.example.backend.event.model.registration.envelope.RegistrationFlag;
 import com.example.backend.event.ICommandHandler;
 import com.example.backend.event.command.SaveRecordsCommand;
-import com.example.backend.position.PositionEntity;
-import com.example.backend.position.PositionService;
+import com.example.backend.domain.position.FlighRecordEntity;
+import com.example.backend.domain.position.FlightRecordService;
 import com.example.backend.scheduler.model.DroneFromSimulator;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -19,12 +19,12 @@ import java.util.List;
 @Component
 @Slf4j
 public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCommand> {
-    private final PositionService positionService;
+    private final FlightRecordService flightRecordService;
     private final DroneService droneService;
 
-    public SaveRecordsCommandHandler(PositionService positionService, DroneService droneService) {
+    public SaveRecordsCommandHandler(FlightRecordService flightRecordService, DroneService droneService) {
         this.droneService = droneService;
-        this.positionService = positionService;
+        this.flightRecordService = flightRecordService;
     }
 
     @Transactional
@@ -36,14 +36,14 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
             return;
         }
 
-        if (positionService.isRecordRegister(drones.get(0).getFilename())){
+        if (flightRecordService.isRecordRegister(drones.get(0).getFilename())){
             log.info("File already registered");
             return;
         }
 
         var validRecords = mapReadmodels(drones);
         var entities = mapToEntities(validRecords);
-        this.positionService.updatePositions(entities.stream().map(record -> record.position).toList());
+        this.flightRecordService.updatePositions(entities.stream().map(record -> record.position).toList());
         this.droneService.updateDrones(entities.stream().map(record -> record.drone).toList());
 ;    }
 
@@ -52,7 +52,7 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
 
         for(DroneFromSimulator drone : drones){
             try{
-                validRecords.add(new DroneToRegister(drone));
+                validRecords.add(DroneToRegister.fromDroneFromSimulator(drone));
             }catch(IllegalArgumentException ex){
                 log.error("Could not register a record. Reason: " + ex);
             }
@@ -77,12 +77,12 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
 
         DroneEntity droneEntity = searchedDrone.orElse(new DroneEntity(drone));
 
-        var positionEntity = new PositionEntity(drone.getPosition());
+        var positionEntity = new FlighRecordEntity(drone.getPosition());
         droneEntity.getPositions().add(positionEntity);
         droneEntity.setAirborne(RegistrationFlag.MapToAirbourne(drone.getPosition().getFlag()));
 
         return new DroneWithPositionEntity(droneEntity, positionEntity);
     }
 
-    private record DroneWithPositionEntity(DroneEntity drone, PositionEntity position){}
+    private record DroneWithPositionEntity(DroneEntity drone, FlighRecordEntity position){}
 }

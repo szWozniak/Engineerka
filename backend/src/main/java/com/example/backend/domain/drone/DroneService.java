@@ -1,7 +1,6 @@
-package com.example.backend.drone;
+package com.example.backend.domain.drone;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service

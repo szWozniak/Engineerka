@@ -7,7 +7,7 @@ public class Identification {
     private int value;
 
     public Identification(int value) throws IllegalArgumentException{
-        if (value < 0 || value > 16) throw new IllegalArgumentException("Not acceptable value for Identification");
+        if (value < 1 || value > 16) throw new IllegalArgumentException("Not acceptable value for Identification");
         this.value = value;
     }
 }

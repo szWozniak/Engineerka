@@ -1,12 +1,10 @@
-package com.example.backend.drone;
+package com.example.backend.domain.drone;
 
-import com.example.backend.drone.dto.DroneDto;
-import com.example.backend.event.model.registration.DroneToRegister;
+import com.example.backend.domain.drone.dto.DroneDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

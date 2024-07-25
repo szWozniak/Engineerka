@@ -15,17 +15,30 @@ public class DroneToRegister{
     private final String registrationNumber;
     private final String sign;
     private final String type;
-    private final PositionToRegister position;
+    private final FlightRecordToRegister position;
 
-    public DroneToRegister(DroneFromSimulator model){
-        this.country = model.getCountry();
-        this.operator = model.getOperator();
-        this.identification = new Identification(model.getIdentification());
-        this.identificationLabel = model.getIdentificationLabel();
-        this.model = model.getModel();
-        this.registrationNumber = model.getRegistrationNumber();
-        this.sign = model.getSign();
-        this.type = model.getType();
-        this.position = new PositionToRegister(model);
+    private DroneToRegister(String country, String operator, Identification identification, String identificationLabel,
+                            String model, String registrationNumber, String sign, String type, FlightRecordToRegister position){
+        this.country = country;
+        this.operator = operator;
+        this.identification = identification;
+        this.identificationLabel = identificationLabel;
+        this.model = model;
+        this.registrationNumber = registrationNumber;
+        this.sign = sign;
+        this.type = type;
+        this.position = position;
+    }
+
+    public static DroneToRegister fromDroneFromSimulator(DroneFromSimulator droneFromSimulator){
+        return new DroneToRegister(droneFromSimulator.getCountry(),
+                droneFromSimulator.getOperator(),
+                new Identification(droneFromSimulator.getIdentification()),
+                droneFromSimulator.getIdentificationLabel(),
+                droneFromSimulator.getModel(),
+                droneFromSimulator.getRegistrationNumber(),
+                droneFromSimulator.getSign(),
+                droneFromSimulator.getType(),
+                FlightRecordToRegister.fromDroneFromSimulator(droneFromSimulator));
     }
 }

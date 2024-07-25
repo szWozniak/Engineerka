@@ -1,8 +1,8 @@
-package com.example.backend.drone;
+package com.example.backend.domain.drone;
 
 import com.example.backend.event.model.registration.DroneToRegister;
 import com.example.backend.event.model.registration.envelope.RegistrationFlag;
-import com.example.backend.position.PositionEntity;
+import com.example.backend.domain.position.FlighRecordEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -26,7 +26,7 @@ public class DroneEntity {
     private String type;
 
     @OneToMany
-    private List<PositionEntity> positions;
+    private List<FlighRecordEntity> positions;
 
     public DroneEntity(){}
 

@@ -1,4 +1,4 @@
-package com.example.backend.drone;
+package com.example.backend.domain.drone;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

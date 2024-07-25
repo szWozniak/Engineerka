@@ -1,7 +1,6 @@
-package com.example.backend.drone.dto;
+package com.example.backend.domain.drone.dto;
 
-import com.example.backend.drone.DroneController;
-import com.example.backend.drone.DroneEntity;
+import com.example.backend.domain.drone.DroneEntity;
 import lombok.Data;
 
 import java.util.List;

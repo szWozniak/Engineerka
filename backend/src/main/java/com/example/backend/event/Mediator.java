@@ -14,7 +14,7 @@ public class Mediator implements IMediator {
     }
 
     @Override
-    public <T extends ICommand>void send(T command) {
+    public void send(ICommand command) {
         if (command instanceof SaveRecordsCommand){
             droneService.handle((SaveRecordsCommand) command);
         }
