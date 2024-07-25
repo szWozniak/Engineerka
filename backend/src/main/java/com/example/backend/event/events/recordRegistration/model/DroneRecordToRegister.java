@@ -1,11 +1,11 @@
-package com.example.backend.event.model.registration;
+package com.example.backend.event.events.recordRegistration.model;
 
-import com.example.backend.event.model.registration.envelope.Identification;
+import com.example.backend.event.events.recordRegistration.model.envelope.Identification;
 import com.example.backend.scheduler.model.DroneFromSimulator;
 import lombok.Data;
 
 @Data
-public class DroneToRegister{
+public class DroneRecordToRegister {
 
     private final String country;
     private final String operator;
@@ -15,10 +15,10 @@ public class DroneToRegister{
     private final String registrationNumber;
     private final String sign;
     private final String type;
-    private final FlightRecordToRegister position;
+    private final FlightRecordToRegister flightRecord;
 
-    private DroneToRegister(String country, String operator, Identification identification, String identificationLabel,
-                            String model, String registrationNumber, String sign, String type, FlightRecordToRegister position){
+    private DroneRecordToRegister(String country, String operator, Identification identification, String identificationLabel,
+                                  String model, String registrationNumber, String sign, String type, FlightRecordToRegister flightRecord){
         this.country = country;
         this.operator = operator;
         this.identification = identification;
@@ -27,11 +27,11 @@ public class DroneToRegister{
         this.registrationNumber = registrationNumber;
         this.sign = sign;
         this.type = type;
-        this.position = position;
+        this.flightRecord = flightRecord;
     }
 
-    public static DroneToRegister fromDroneFromSimulator(DroneFromSimulator droneFromSimulator){
-        return new DroneToRegister(droneFromSimulator.getCountry(),
+    public static DroneRecordToRegister fromDroneFromSimulator(DroneFromSimulator droneFromSimulator){
+        return new DroneRecordToRegister(droneFromSimulator.getCountry(),
                 droneFromSimulator.getOperator(),
                 new Identification(droneFromSimulator.getIdentification()),
                 droneFromSimulator.getIdentificationLabel(),

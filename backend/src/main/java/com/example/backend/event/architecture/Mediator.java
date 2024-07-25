@@ -1,6 +1,6 @@
-package com.example.backend.event;
+package com.example.backend.event.architecture;
 
-import com.example.backend.event.command.SaveRecordsCommand;
+import com.example.backend.event.events.recordRegistration.commands.SaveRecordsCommand;
 import org.springframework.stereotype.Component;
 
 

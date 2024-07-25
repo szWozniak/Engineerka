@@ -16,8 +16,4 @@ public class FlightRecordService {
         var record = flightRecordRepository.findFirstByFilename(filename);
         return record.isPresent();
     }
-
-    public void updatePositions(List<FlighRecordEntity> positions){
-        flightRecordRepository.saveAll(positions);
-    }
 }

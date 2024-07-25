@@ -1,7 +1,7 @@
 package com.example.backend.domain.drone;
 
-import com.example.backend.event.model.registration.DroneToRegister;
-import com.example.backend.event.model.registration.envelope.RegistrationFlag;
+import com.example.backend.event.events.recordRegistration.model.DroneRecordToRegister;
+import com.example.backend.event.events.recordRegistration.model.envelope.RegistrationFlag;
 import com.example.backend.domain.position.FlighRecordEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -26,7 +26,7 @@ public class DroneEntity {
     private String type;
 
     @OneToMany
-    private List<FlighRecordEntity> positions;
+    private List<FlighRecordEntity> flightRecords;
 
     public DroneEntity(){}
 
@@ -44,19 +44,18 @@ public class DroneEntity {
         this.model = model;
         this.sign = sign;
         this.type = type;
-        this.positions = new ArrayList<>();
+        this.flightRecords = new ArrayList<>();
     }
 
-    public DroneEntity(DroneToRegister drone){
-        this.registrationNumber = drone.getRegistrationNumber();
-        this.isAirborne = RegistrationFlag.MapToAirbourne(drone.getPosition().getFlag());
-        this.country = drone.getCountry();
-        this.operator = drone.getOperator();
-        this.identification = drone.getIdentification().getValue();
-        this.identificationLabel = drone.getIdentificationLabel();
-        this.model = drone.getModel();
-        this.sign = drone.getSign();
-        this.type = drone.getType();
-        this.positions = new ArrayList<>();
+    public static DroneEntity fromDroneToRegister(DroneRecordToRegister drone){
+        return new DroneEntity(drone.getRegistrationNumber(),
+                RegistrationFlag.MapToAirbourne(drone.getFlightRecord().getFlag()),
+                drone.getCountry(),
+                drone.getOperator(),
+                drone.getIdentification().getValue(),
+                drone.getIdentificationLabel(),
+                drone.getModel(),
+                drone.getSign(),
+                drone.getType());
     }
 }

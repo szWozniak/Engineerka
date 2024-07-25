@@ -38,7 +38,7 @@ public class DroneDto {
     }
 
     public static DroneDto fromDroneEntity(DroneEntity entity){
-        var positions = entity.getPositions();
+        var positions = entity.getFlightRecords();
         var currentPosition = positions.get(0);
         var trace = positions
                 .subList(1 , positions.size())

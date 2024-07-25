@@ -1,6 +1,6 @@
 package com.example.backend.domain.position;
 
-import com.example.backend.event.model.registration.FlightRecordToRegister;
+import com.example.backend.event.events.recordRegistration.model.FlightRecordToRegister;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
