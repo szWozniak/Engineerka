@@ -15,9 +15,12 @@ public class Latitude {
 
     private double parseLatitude(String latitude){
         if (latitude.length() != 6) throw new IllegalArgumentException("Latitude lenght must be 6 characters");
-        var builder = new StringBuilder(latitude);
-        var preparedLatitude = builder.insert(2, '.').toString();
-        return Double.parseDouble(preparedLatitude);
+
+        int degrees = Integer.parseInt(latitude.substring(0, 2));
+        int minutes = Integer.parseInt(latitude.substring(2, 4));
+        int seconds = Integer.parseInt(latitude.substring(4, 6));
+
+        return degrees + (double) minutes /60 + (double) seconds /3600;
     }
 
     private double adjustCoordinate(double coordinate, char direction){

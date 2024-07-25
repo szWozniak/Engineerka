@@ -1,78 +1,57 @@
 import numpy as np
 import pandas as pd
 from datetime import datetime
+import functions as f
+import random
+import string
 import time
 import uuid
 
-# Parametry okręgu
-center_lat = 50.0619
-center_lon = 19.9369
-radius = 0.01  # Promień w stopniach (około 1 km)
-points = 48  # Liczba punktów na każdą ścieżkę
-angles = np.linspace(0, 2 * np.pi, points, endpoint=False)  # Kąty w radianach
+EARTH_RADIUS = 6371.0
+CENTER_LATITUDE = 50.0619
+CENTER_LONGITUDE = 19.9369
+FLIGHT_FUNCTIONS = f.get_all_functions()
+NUMBER_OF_POINTS = 100
+NUMBER_OF_DRONES = 10
+COUNTRIES = ["Poland", "Germany", "France", "Spain"]
+OPERATORS = ["PL", "DE", "FR", "ES"]
+IDENTIFICATION_LABELS = ["Dark Red", "Red", "Gold", "Yellow", "Dark Green", "Green", "Aqua", "Dark Aqua", "Dark Blue", "Blue", "Light Purple", "Dark Purple", "White", "Gray", "Dark Gray", "Black"]
+MODELS = ["DJI Mini 4 Pro", "DJI Mini 3", "DJI Air 3", "DJI Mavic 3 Pro", "DJI Air 2S rival", "DJI Mavic 3 Classic"]
 
-# Generowanie współrzędnych geograficznych dla okręgu
-circle_latitudes = center_lat + (radius * np.sin(angles))
+def generate_random_registration_number():
+    letters = random.choices(string.ascii_uppercase, k=3)
+    digits = random.choices(string.digits, k=3)
 
-circle_longitudes = center_lon + (radius * np.cos(angles))
-circle_headings = (angles * 180 / np.pi + 90) % 360  # Konwersja radianów na stopnie, przesunięcie o 90 stopni
+    random_string = letters + digits
 
-# Parametry kwadratu
-square_latitudes = []
-square_longitudes = []
-square_headings = []
-side_length = 0.02  # Długość boku kwadratu w stopniach (około 2 km)
-for i in range(4):
-    for j in range(points // 4):
-        if i == 0:
-            square_latitudes.append(center_lat - side_length / 2 + (side_length / (points // 4)) * j )
-            square_longitudes.append(center_lon - side_length / 2 )
-            square_headings.append(90)
-        elif i == 1:
-            square_latitudes.append(center_lat + side_length / 2)
-            square_longitudes.append(center_lon - side_length / 2 + (side_length / (points // 4)) * j)
-            square_headings.append(0)
-        elif i == 2:
-            square_latitudes.append(center_lat + side_length / 2 - (side_length / (points // 4)) * j)
-            square_longitudes.append(center_lon + side_length / 2)
-            square_headings.append(270)
-        elif i == 3:
-            square_latitudes.append(center_lat - side_length / 2)
-            square_longitudes.append(center_lon + side_length / 2 - (side_length / (points // 4)) * j)
-            square_headings.append(180)
+    return ''.join(random_string)
 
-# Parametry trapezu
-trapezoid_latitudes = []
-trapezoid_longitudes = []
-trapezoid_headings = []
-base_length = 0.02
-top_length = 0.01
-height = 0.01
-for i in range(4):
-    for j in range(points // 4):
-        if i == 0:
-            trapezoid_latitudes.append(center_lat - height / 2 + (height / (points // 4)) * j)
-            trapezoid_longitudes.append(center_lon - base_length / 2)
-            trapezoid_headings.append(90)
-        elif i == 1:
-            trapezoid_latitudes.append(center_lat + height / 2)
-            trapezoid_longitudes.append(center_lon - base_length / 2 + ((base_length - top_length) / 2 + top_length / (points // 4)) * j)
-            trapezoid_headings.append(0)
-        elif i == 2:
-            trapezoid_latitudes.append(center_lat + height / 2 - (height / (points // 4)) * j)
-            trapezoid_longitudes.append(center_lon + base_length / 2)
-            trapezoid_headings.append(270)
-        elif i == 3:
-            trapezoid_latitudes.append(center_lat - height / 2)
-            trapezoid_longitudes.append(center_lon + base_length / 2 - ((base_length - top_length) / 2 + top_length / (points // 4)) * j)
-            trapezoid_headings.append(180)
+def generate_drone_data(drones_data):
+    country = random.choice(COUNTRIES)
+    operator = random.choice(OPERATORS)
+    identification = random.randint(1, 16)
+    identification_label = IDENTIFICATION_LABELS[identification-1]
+    model = random.choice(MODELS)
+    registration_number = generate_random_registration_number()
+    sign = operator + registration_number
 
-def generate_additional_data(points, start_altitude=100, end_altitude=150, start_fuel=100, end_fuel=50):
-    altitudes = np.linspace(start_altitude, end_altitude, points)
-    fuel_levels = np.linspace(start_fuel, end_fuel, points)
-    speeds = np.random.uniform(25, 35, points)
-    current_moments = np.arange(points)
-    return altitudes, fuel_levels, speeds, current_moments
+    drones_data.append({'country': country, 'operator': operator, 'identification': identification, 'identification_label': identification_label, 'model': model, 'registration_number': registration_number, 'sign': sign})
+
+def calculate_heading(latitude_before, longitude_before, latitude_after, longitude_after):
+    latitude_before_radians = np.radians(latitude_before)
+    latitude_after_radians = np.radians(latitude_after)
+
+    longitude_difference_radians = np.radians(longitude_after - longitude_before)
+
+    x = np.sin(longitude_difference_radians) * np.cos(latitude_after_radians)
+    y = np.cos(latitude_before_radians) * np.sin(latitude_after_radians) - (np.sin(latitude_before_radians) * np.cos(latitude_after_radians) * np.cos(longitude_difference_radians))
+
+    initial_heading = np.arctan2(x, y)
+    initial_heading = np.degrees(initial_heading)
+
+    compass_heading = (initial_heading + 360) % 360
+
+    return compass_heading
 
 def convert_to_dms(lat, lon):
     lat_deg = int(lat)
@@ -91,152 +70,116 @@ def convert_to_dms(lat, lon):
 
     return lat_str, lon_str
 
-# Generowanie pozostałych danych
-circle_altitudes, circle_fuel, circle_speeds, circle_moments = generate_additional_data(points)
-square_altitudes, square_fuel, square_speeds, square_moments = generate_additional_data(points)
-trapezoid_altitudes, trapezoid_fuel, trapezoid_speeds, trapezoid_moments = generate_additional_data(points)
+def generate_points_for_function(starting_latitude: float, starting_longitude: float, function):
+    t_min = 0
+    t_max = 2 * np.pi
 
-# Konwersja współrzędnych do formatu DMS
-circle_coords_dms = [convert_to_dms(lat, lon) for lat, lon in zip(circle_latitudes, circle_longitudes)]
-square_coords_dms = [convert_to_dms(lat, lon) for lat, lon in zip(square_latitudes, square_longitudes)]
-trapezoid_coords_dms = [convert_to_dms(lat, lon) for lat, lon in zip(trapezoid_latitudes, trapezoid_longitudes)]
+    latitudes = []
+    longitudes = []
+    headings = []
+    altitudes = np.linspace(100, 150, NUMBER_OF_POINTS)
+    fuel = np.linspace(100, 50, NUMBER_OF_POINTS)
+    speeds = np.random.uniform(25, 35, NUMBER_OF_POINTS)
+    lat_old = starting_latitude
+    lon_old = starting_longitude
+
+    for i in range(NUMBER_OF_POINTS):
+        t = t_min + (t_max - t_min) * i / NUMBER_OF_POINTS
+
+        x, y = function(t)
+
+        delta_lon = x * (180 / np.pi) / EARTH_RADIUS / np.cos(np.radians(starting_latitude))
+        delta_lat = y * (180 / np.pi) / EARTH_RADIUS
+
+        lat_new = starting_latitude + delta_lat
+        lon_new = starting_longitude + delta_lon
+
+        lat_lon_dms = convert_to_dms(round(lat_new,4), round(lon_new,4))
+
+        latitudes.append(lat_lon_dms[0])
+        longitudes.append(lat_lon_dms[1])
+        headings.append(calculate_heading(lat_old, lon_old, lat_new, lon_new))
+
+        lat_old = lat_new
+        lon_old = lon_old
+
+    return latitudes, longitudes, headings, altitudes, fuel, speeds
+
+def generate_drone_flight_data(drones_flights_data):
+    starting_latitude = CENTER_LATITUDE + random.uniform(-0.01, 0.01)
+    starting_longitude = CENTER_LONGITUDE + random.uniform(-0.01, 0.01)
+    random_function = random.choice(FLIGHT_FUNCTIONS)
+
+    latitudes, longitudes, headings, altitudes, fuel, speeds = generate_points_for_function(starting_latitude, starting_longitude, random_function)
+
+    drones_flights_data.append({'latitudes': latitudes, 'longitudes': longitudes, 'headings': headings, 'speeds': speeds, 'altitudes': altitudes, 'fuel': fuel})
+
+def generate_drones_and_flights():
+    flights_data = []
+    drones_data = []
+
+    for _ in range(NUMBER_OF_DRONES):
+        generate_drone_flight_data(flights_data)
+        generate_drone_data(drones_data)
+
+    return drones_data, flights_data
+
+def generate_single_flight_tick(index, drone_data, flight_data, file_name, day_date, day_time):
+
+    return pd.DataFrame([{
+            "Filename":file_name,
+            "Server":"Server1",
+            "Date":day_date,
+            "Time":day_time,
+            "Flag":"UPD",
+            "Id":"0000001",
+            "IdExt": str(uuid.uuid4()),
+            "Latitude":flight_data['latitudes'][index],
+            "Longitude":flight_data['longitudes'][index],
+            "Heading":int(flight_data['headings'][index]),
+            "Speed":int(flight_data['speeds'][index]),
+            "Altitude":int(flight_data['altitudes'][index]),
+            "Country":drone_data['country'],
+            "Operator":drone_data['operator'],
+            "Identification":int(drone_data['identification']),
+            "IdentificationLabel":drone_data['identification_label'],
+            "Model":drone_data['model'],
+            "RegistrationNumber":drone_data['registration_number'],
+            "Sign":drone_data['sign'],
+            "Type":"Airborne",
+            "Fuel":int(flight_data['fuel'][index]),
+            "Signal":"Mode S",
+            "Frequency":1000,
+            "SensorLat":"500342N",
+            "SensorLon":"195614E",
+            "SensorLabel":"Krakow1",
+            "Notes":"Notatka numer 1",
+            "Ext1":"Parametr ext 1",
+            "Ext2":"Parametr ext 2",
+            "Ext3":"Parametr ext 3",
+            "Ext4":"Parametr ext 4",
+            "Ext5":"Parametr ext 5",
+            "Ext6":"Parametr ext 6"
+        }])
 
 tick_number = 0
-flag = "UPD"
-type = "Airborne"
-signal = "Mode S"
-frequency = 1000
-sensor_lat = "500342N"
-sensor_lon = "195614E"
-sensor_label = "Krakow1"
-notes = "Notatka numer 1"
-ext1 = "Parametr ext 1",
-ext2 = "Parametr ext 2",
-ext3 = "Parametr ext 3",
-ext4 = "Parametr ext 4",
-ext5 = "Parametr ext 5",
-ext6 = "Parametr ext 6"
+drones_data, flights_data = generate_drones_and_flights()
 
 if __name__ == "__main__":
     print("Simulator started...")
 
     while True:
-        index = tick_number % points
+        index = tick_number % NUMBER_OF_POINTS
         file_name = "File"+str(uuid.uuid4())
-        server = "Server1"
         now = datetime.now()
         day_date = now.strftime("%d%m%Y")
         day_time = now.strftime("%H:%M:%S.%f")[:-2]
+        drones_dfs = []
 
-        df_circle = pd.DataFrame([{
-            "Filename":file_name,
-            "Server":server,
-            "Date":day_date,
-            "Time":day_time,
-            "Flag":flag,
-            "Id":"0000001",
-            "IdExt": str(uuid.uuid4()),
-            "Latitude":circle_coords_dms[index][0],
-            "Longitude":circle_coords_dms[index][1],
-            "Heading":int(circle_headings[index]),
-            "Speed":int(circle_speeds[index]),
-            "Altitude":int(circle_altitudes[index]),
-            "Country":"Poland",
-            "Operator":"UK",
-            "Identification":1,
-            "IdentificationLabel":"Dark Blue",
-            "Model":"DJI Air 2S",
-            "RegistrationNumber":"XDA123",
-            "Sign":"UKXDA123",
-            "Type":type,
-            "Fuel":int(circle_fuel[index]),
-            "Signal":signal,
-            "Frequency":frequency,
-            "SensorLat":sensor_lat,
-            "SensorLon":sensor_lon,
-            "SensorLabel":sensor_label,
-            "Notes":notes,
-            "Ext1":ext1,
-            "Ext2":ext2,
-            "Ext3":ext3,
-            "Ext4":ext4,
-            "Ext5":ext5,
-            "Ext6":ext6
-        }])
+        for i in range(NUMBER_OF_DRONES):
+            drones_dfs.append(generate_single_flight_tick(index, drones_data[i], flights_data[i], file_name, day_date, day_time))
 
-        df_square = pd.DataFrame([{
-            "Filename":file_name,
-            "Server":server,
-            "Date":day_date,
-            "Time":day_time,
-            "Flag":flag,
-            "Id":"0000002",
-            "IdExt": str(uuid.uuid4()),
-            "Latitude":square_coords_dms[index][0],
-            "Longitude":square_coords_dms[index][1],
-            "Heading":int(square_headings[index]),
-            "Speed":int(square_speeds[index]),
-            "Altitude":int(square_altitudes[index]),
-            "Country":"Poland",
-            "Operator":"US",
-            "Identification":2,
-            "IdentificationLabel":"Dark Green",
-            "Model":"DJI Mavic Air",
-            "RegistrationNumber":"YGB456",
-            "Sign":"USYGB456",
-            "Type":type,
-            "Fuel":int(square_fuel[index]),
-            "Signal":signal,
-            "Frequency":frequency,
-            "SensorLat":sensor_lat,
-            "SensorLon":sensor_lon,
-            "SensorLabel":sensor_label,
-            "Notes":notes,
-            "Ext1":ext1,
-            "Ext2":ext2,
-            "Ext3":ext3,
-            "Ext4":ext4,
-            "Ext5":ext5,
-            "Ext6":ext6
-        }])
-
-        df_trapezoid = pd.DataFrame([{
-            "Filename":file_name,
-            "Server":server,
-            "Date":day_date,
-            "Time":day_time,
-            "Flag":flag,
-            "Id":"0000003",
-            "IdExt": str(uuid.uuid4()),
-            "Latitude":trapezoid_coords_dms[index][0],
-            "Longitude":trapezoid_coords_dms[index][1],
-            "Heading":int(trapezoid_headings[index]),
-            "Speed":int(trapezoid_speeds[index]),
-            "Altitude":int(trapezoid_altitudes[index]),
-            "Country":"Poland",
-            "Operator":"PL",
-            "Identification":3,
-            "IdentificationLabel":"Dark Aqua",
-            "Model":"DJI Phantom 4 Pro",
-            "RegistrationNumber":"WZB789",
-            "Sign":"PLWZB789",
-            "Type":type,
-            "Fuel":int(trapezoid_fuel[index]),
-            "Signal":signal,
-            "Frequency":frequency,
-            "SensorLat":sensor_lat,
-            "SensorLon":sensor_lon,
-            "SensorLabel":sensor_label,
-            "Notes":notes,
-            "Ext1":ext1,
-            "Ext2":ext2,
-            "Ext3":ext3,
-            "Ext4":ext4,
-            "Ext5":ext5,
-            "Ext6":ext6
-        }])
-
-        combined_data = pd.concat([df_circle, df_square, df_trapezoid])
+        combined_data = pd.concat(drones_dfs)
         combined_data.to_csv("../shared_directory/data.csv", sep=',', index=False)
         tick_number += 1
 

@@ -14,9 +14,12 @@ public class Longitude {
 
     private double parseLongitude(String longitude){
         if (longitude.length() != 7) throw new IllegalArgumentException("longitude length must be 7 characters");
-        var builder = new StringBuilder(longitude);
-        var preparedLongitude = builder.insert(3, '.').toString();
-        return Double.parseDouble(preparedLongitude);
+
+        int degrees = Integer.parseInt(longitude.substring(0, 3));
+        int minutes = Integer.parseInt(longitude.substring(3, 5));
+        int seconds = Integer.parseInt(longitude.substring(5, 7));
+
+        return degrees + (double) minutes /60 + (double) seconds /3600;
     }
 
     private double adjustCoordinate(double coordinate, char direction){
