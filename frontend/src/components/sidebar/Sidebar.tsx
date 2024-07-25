@@ -1,27 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Drone } from '../../drones/types'
 import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
-import ViewMode from '../../types/viewMode';
+import { AppContext } from '../../context/AppContext';
 
-interface props {
-  selectedDrone?: Drone,
-  onDebugClick: () => void,
-  currentView: ViewMode,
-  changeCurrentView: (view: ViewMode) => void
-}
+const Sidebar: React.FC = () => {
 
-const Sidebar: React.FC<props> = ({ selectedDrone, onDebugClick, currentView, changeCurrentView }) => {
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
+  const { drones, selectedDrone, setSelectedDroneRegistration } = useContext(AppContext)
 
   const renderViewChangeButtons = () => {
-    if (currentView === ViewMode.Specific){
-      return (<button onClick={() => changeCurrentView(ViewMode.Default)}>Change to all drones view</button>)
-    }
-
-    if (currentView === ViewMode.Default){
-      return (<button onClick={() => changeCurrentView(ViewMode.Specific)}>Change to specific drone view</button>)
+    if (selectedDrone) {
+      return (<button className="sidebarButton" onClick={() => setSelectedDroneRegistration(null)}>Reset selection</button>)
     }
 
     return <></>
@@ -30,7 +21,7 @@ const Sidebar: React.FC<props> = ({ selectedDrone, onDebugClick, currentView, ch
   return (
     <div className={`sidebar ${opened ? 'opened' : 'closed'}`}>
       <div className="header">
-        <img className="logo" src={`assets/logo${!opened ? 'Small' : ''}.png`} onClick={() => !opened && setOpened(true)} />
+        <img className="logo" alt="logo" src={`assets/logo${!opened ? 'Small' : ''}.png`} onClick={() => !opened && setOpened(true)} />
         <button className="closeButton" onClick={() => setOpened(prev => !prev)}>
           <CloseIcon />
         </button>
@@ -51,6 +42,17 @@ const Sidebar: React.FC<props> = ({ selectedDrone, onDebugClick, currentView, ch
             opened ? setOpenedMenu(2) : setOpenedMenu(null)
           }}
         />
+        {openedMenu === 2 && <div className="droneEntries">
+          {drones?.map((drone: Drone, index) => (
+            <div key={index} className="droneEntry" onClick={() => {
+              setSelectedDroneRegistration(drone.registrationNumber)
+            }}>
+              <span>{drone.identification}. </span>
+              <span>{drone.registrationNumber} </span>
+              <span className="extraLabel">{drone.type}</span>
+            </div>
+          ))}
+        </div>}
       </div>
       <div className="container">
         {selectedDrone && <div>
