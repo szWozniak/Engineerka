@@ -1,0 +1,79 @@
+.bottomMenu {
+  z-index: 50;
+  float: left;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+
+  transform: translateY(250px);
+
+  transition: all 0.5s ease-in-out;
+
+  &.opened {
+    transform: translateY(0);
+  }
+
+  & .shadowArea {
+    box-shadow: rgba(0, 0, 0, 0.9) 0px -40px 36px -28px inset;
+    height: 250px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  & .content {
+    height: 230px;
+    background-color: $dark-grey;
+    width: calc(100% - 21px);
+    border-left: 1px solid $grey;
+    font-size: 20px;
+    color: $secondary;
+    font-family: Righteous;
+    padding: 10px;
+    pointer-events: all;
+    overflow-y: auto;
+  }
+
+  svg {
+    fill: currentColor;
+    color: white;
+    margin-bottom: 20px;
+    scale: 1.5;
+    color: #ccc;
+    pointer-events: all;
+
+    &:hover {
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  & .droneTable {
+    font-size: 18px;
+    color: $light-grey;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+    & th {
+      letter-spacing: 2px;
+      font-weight: 500;
+      font-size: 20px;
+    }
+
+    & td,th {
+      text-align: center;
+    }
+
+    & tr:nth-child(odd) {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    & tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.075);
+    }
+  }
+}
