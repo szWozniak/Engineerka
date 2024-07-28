@@ -1,7 +1,7 @@
 package com.example.backend.scheduler;
 
-import com.example.backend.event.IMediator;
-import com.example.backend.event.command.SaveRecordsCommand;
+import com.example.backend.simulatorIntegration.architecture.IMediator;
+import com.example.backend.simulatorIntegration.events.recordRegistration.commands.SaveRecordsCommand;
 import com.example.backend.scheduler.configuration.SharedFolderConfig;
 import com.example.backend.scheduler.model.DroneFromSimulator;
 import com.opencsv.bean.CsvToBean;
