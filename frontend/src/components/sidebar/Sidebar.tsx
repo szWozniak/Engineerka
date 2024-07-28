@@ -57,8 +57,8 @@ const Sidebar: React.FC = () => {
       <div className="container">
         {selectedDrone && <div>
           <div>Selected drone: {selectedDrone.registrationNumber}</div>
-          <div>Latitude: <b>{selectedDrone.currentPosition.latitude}</b></div>
-          <div>Longtitude: <b>{selectedDrone.currentPosition.longitude}</b></div>
+          <div>Latitude: <b>{selectedDrone.currentPosition.latitude.toFixed(4)}</b></div>
+          <div>Longtitude: <b>{selectedDrone.currentPosition.longitude.toFixed(4)}</b></div>
           <div>Direction: <b>{selectedDrone.heading}</b></div>
           <div>Altitude: <b>{selectedDrone.currentPosition.altitude}</b></div>
           {renderViewChangeButtons()}
