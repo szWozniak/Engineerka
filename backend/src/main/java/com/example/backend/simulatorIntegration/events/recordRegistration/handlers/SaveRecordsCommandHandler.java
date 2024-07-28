@@ -42,7 +42,7 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
             return;
         }
 
-        var validRecords = mapReadmodels(drones);
+        var validRecords = mapDronesFromSimulator(drones);
 
         this.droneService.UpsertDronesRecords(validRecords);
 
@@ -60,7 +60,7 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
         }
     }
 
-    private List<DroneRecordToRegister> mapReadmodels(List<DroneFromSimulator> drones){
+    private List<DroneRecordToRegister> mapDronesFromSimulator(List<DroneFromSimulator> drones){
         List<DroneRecordToRegister> validRecords = new ArrayList<>();
 
         for(DroneFromSimulator drone : drones){
