@@ -31,16 +31,21 @@ public class DroneService {
         return dronesWithLastThreePositionsIncluded(dronesWithPosition);
     }
 
-    public DroneEntity getDroneWithTrace(String registration) {
-        List<DroneEntity> drones = droneRepository.findByRegistrationNumber(registration);
-        
-        if (!drones.isEmpty()) {
-            var drone = drones.get(0);
-            drone.getFlightRecords().sort(new RecordTimestampsComparator());
-            return drones.get(0);
-        } else {
+    public DroneEntity getDroneWithCurrentFlightTrace(String registration) {
+        var foundDrone = droneRepository.findByRegistrationNumber(registration);
+
+        if (foundDrone.isEmpty()){
             return null;
         }
+
+        var drone = foundDrone.get();
+        var recordsFromCurrentFlight = drone.getFlightRecords()
+                .stream().filter(r -> r.getFlight() == null)
+                .sorted(new RecordTimestampsComparator())
+                .toList();
+
+        drone.setFlightRecords(recordsFromCurrentFlight);
+        return drone;
     }
 
     public void UpsertDronesRecords(List<DroneRecordToRegister> drones){
