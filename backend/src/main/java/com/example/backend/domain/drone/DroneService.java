@@ -6,6 +6,7 @@ import com.example.backend.simulatorIntegration.events.recordRegistration.model.
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DroneService {
@@ -31,11 +32,11 @@ public class DroneService {
         return dronesWithLastThreeRecordsFromCurrentFlightIncluded(dronesWithPosition);
     }
 
-    public DroneEntity getDroneWithCurrentFlightTrace(String registration) {
+    public Optional<DroneEntity> getDroneWithCurrentFlightTrace(String registration) {
         var foundDrone = droneRepository.findByRegistrationNumber(registration);
 
         if (foundDrone.isEmpty()){
-            return null;
+            return Optional.empty();
         }
 
         var drone = foundDrone.get();
@@ -45,7 +46,7 @@ public class DroneService {
                 .toList();
 
         drone.setFlightRecords(recordsFromCurrentFlight);
-        return drone;
+        return Optional.of(drone);
     }
 
     public void UpsertDronesRecords(List<DroneRecordToRegister> drones){

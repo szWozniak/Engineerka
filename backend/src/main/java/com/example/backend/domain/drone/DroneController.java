@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/drones")
@@ -28,9 +29,13 @@ public class DroneController {
 
     @GetMapping("/{registration}")
     public ResponseEntity<DroneDto> getDroneWithTrace(@PathVariable String registration) {
-        DroneEntity drone = droneService.getDroneWithCurrentFlightTrace(registration);
+        Optional<DroneEntity> drone = droneService.getDroneWithCurrentFlightTrace(registration);
 
-        DroneDto dto = DroneDto.fromDroneEntity(drone);
+        if (drone.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        DroneDto dto = DroneDto.fromDroneEntity(drone.get());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
