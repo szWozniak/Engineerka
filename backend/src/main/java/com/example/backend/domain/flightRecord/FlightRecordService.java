@@ -1,8 +1,6 @@
-package com.example.backend.domain.position;
+package com.example.backend.domain.flightRecord;
 
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class FlightRecordService {

@@ -1,4 +1,4 @@
-package com.example.backend.event.events.recordRegistration.model.envelope;
+package com.example.backend.simulatorIntegration.events.recordRegistration.model.envelope;
 
 public enum RegistrationFlag {
     BEG,

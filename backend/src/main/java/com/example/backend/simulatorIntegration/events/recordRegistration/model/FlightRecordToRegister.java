@@ -1,9 +1,9 @@
-package com.example.backend.event.events.recordRegistration.model;
+package com.example.backend.simulatorIntegration.events.recordRegistration.model;
 
-import com.example.backend.event.events.recordRegistration.model.envelope.RegistrationFlag;
-import com.example.backend.event.events.recordRegistration.model.envelope.Heading;
-import com.example.backend.event.events.recordRegistration.model.envelope.Latitude;
-import com.example.backend.event.events.recordRegistration.model.envelope.Longitude;
+import com.example.backend.simulatorIntegration.events.recordRegistration.model.envelope.RegistrationFlag;
+import com.example.backend.simulatorIntegration.events.recordRegistration.model.envelope.Heading;
+import com.example.backend.simulatorIntegration.events.recordRegistration.model.envelope.Latitude;
+import com.example.backend.simulatorIntegration.events.recordRegistration.model.envelope.Longitude;
 import com.example.backend.scheduler.model.DroneFromSimulator;
 import lombok.Data;
 

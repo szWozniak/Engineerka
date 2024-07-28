@@ -1,6 +1,6 @@
-package com.example.backend.event.events.recordRegistration.commands;
+package com.example.backend.simulatorIntegration.events.recordRegistration.commands;
 
-import com.example.backend.event.architecture.ICommand;
+import com.example.backend.simulatorIntegration.architecture.ICommand;
 import com.example.backend.scheduler.model.DroneFromSimulator;
 
 import java.util.List;

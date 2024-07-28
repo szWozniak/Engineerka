@@ -1,9 +1,9 @@
 package com.example.backend.domain.drone.mappers;
 
 import com.example.backend.domain.drone.DroneEntity;
-import com.example.backend.domain.position.FlighRecordEntity;
-import com.example.backend.event.events.recordRegistration.model.DroneRecordToRegister;
-import com.example.backend.event.events.recordRegistration.model.envelope.RegistrationFlag;
+import com.example.backend.domain.flightRecord.FlightRecordEntity;
+import com.example.backend.simulatorIntegration.events.recordRegistration.model.DroneRecordToRegister;
+import com.example.backend.simulatorIntegration.events.recordRegistration.model.envelope.RegistrationFlag;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -31,11 +31,13 @@ public class DroneToRegisterMapper {
 
         DroneEntity droneEntity = searchedDrone.orElse(DroneEntity.fromDroneToRegister(drone));
 
-        var positionEntity = new FlighRecordEntity(drone.getFlightRecord());
-        droneEntity.getFlightRecords().add(positionEntity);
+        var flightRecordEntity = new FlightRecordEntity(drone.getFlightRecord());
+        flightRecordEntity.setDrone(droneEntity);
+
+        droneEntity.getFlightRecords().add(flightRecordEntity);
         droneEntity.setAirborne(RegistrationFlag.MapToAirbourne(drone.getFlightRecord().getFlag()));
 
-        return new DroneEntityWithFlightRecordEntity(droneEntity, positionEntity);
+        return new DroneEntityWithFlightRecordEntity(droneEntity, flightRecordEntity);
     }
 }
 

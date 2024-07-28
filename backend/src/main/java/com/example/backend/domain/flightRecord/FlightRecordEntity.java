@@ -1,8 +1,11 @@
-package com.example.backend.domain.position;
+package com.example.backend.domain.flightRecord;
 
-import com.example.backend.event.events.recordRegistration.model.FlightRecordToRegister;
+import com.example.backend.domain.drone.DroneEntity;
+import com.example.backend.domain.flight.FlightEntity;
+import com.example.backend.simulatorIntegration.events.recordRegistration.model.FlightRecordToRegister;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -10,7 +13,7 @@ import java.time.LocalTime;
 
 @Entity
 @Data
-public class FlighRecordEntity {
+public class FlightRecordEntity {
     @Id
     private String id;
     private String filename;
@@ -25,9 +28,15 @@ public class FlighRecordEntity {
     private int speed;
     private int altitude;
     private int fuel;
-    public FlighRecordEntity(){}
 
-    public FlighRecordEntity(FlightRecordToRegister position) {
+    @ManyToOne
+    private DroneEntity drone;
+
+    @ManyToOne
+    private FlightEntity flight;
+    public FlightRecordEntity(){}
+
+    public FlightRecordEntity(FlightRecordToRegister position) {
         this.id = position.getId();
         this.filename = position.getFilename();
         this.server = position.getServer();

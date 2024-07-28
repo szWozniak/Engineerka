@@ -1,8 +1,8 @@
 package com.example.backend.domain.drone;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.drone.mappers.DroneEntityWithFlightRecordEntity;
-import com.example.backend.domain.position.FlightRecordRepository;
-import com.example.backend.event.events.recordRegistration.model.DroneRecordToRegister;
+import com.example.backend.domain.flightRecord.FlightRecordRepository;
+import com.example.backend.simulatorIntegration.events.recordRegistration.model.DroneRecordToRegister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class DroneService {
 
         this.flightRecordRepository.saveAll(entitiesToSave
                 .stream()
-                .map(DroneEntityWithFlightRecordEntity::position)
+                .map(DroneEntityWithFlightRecordEntity::flightRecord)
                 .toList());
         this.droneRepository
                 .saveAll(entitiesToSave

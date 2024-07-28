@@ -1,12 +1,12 @@
 package com.example.backend.domain.drone;
 
-import com.example.backend.domain.position.FlighRecordEntity;
+import com.example.backend.domain.flightRecord.FlightRecordEntity;
 
 import java.util.Comparator;
 
-public class RecordTimestampsComparator implements Comparator<FlighRecordEntity> {
+public class RecordTimestampsComparator implements Comparator<FlightRecordEntity> {
     @Override
-    public int compare(FlighRecordEntity o1, FlighRecordEntity o2) {
+    public int compare(FlightRecordEntity o1, FlightRecordEntity o2) {
         var date1 = o1.getDate();
         var date2 = o2.getDate();
 

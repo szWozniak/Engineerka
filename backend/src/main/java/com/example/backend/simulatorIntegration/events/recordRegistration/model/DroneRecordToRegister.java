@@ -1,6 +1,6 @@
-package com.example.backend.event.events.recordRegistration.model;
+package com.example.backend.simulatorIntegration.events.recordRegistration.model;
 
-import com.example.backend.event.events.recordRegistration.model.envelope.Identification;
+import com.example.backend.simulatorIntegration.events.recordRegistration.model.envelope.Identification;
 import com.example.backend.scheduler.model.DroneFromSimulator;
 import lombok.Data;
 
