@@ -48,11 +48,9 @@ public class FlightService {
     }
 
     private List<FlightRecordEntity> getAllDroneRecordsFromCurrentFlight(String registrationNumber){
-        System.out.println(registrationNumber);
         var recordsFromCurrentFlight = flightRecordRepository
                 .findAllByDrone_RegistrationNumberAndFlight_IdIsNull(registrationNumber);
 
-        System.out.println(recordsFromCurrentFlight.size());
         return recordsFromCurrentFlight;
     }
 }

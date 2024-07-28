@@ -28,7 +28,6 @@ public class DroneController {
 
     @GetMapping("/{registration}")
     public ResponseEntity<DroneDto> getDroneWithTrace(@PathVariable String registration) {
-        System.out.println("getting for: " + registration);
         DroneEntity drone = droneService.getDroneWithCurrentFlightTrace(registration);
 
         DroneDto dto = DroneDto.fromDroneEntity(drone);
