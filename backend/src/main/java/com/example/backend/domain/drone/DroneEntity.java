@@ -6,26 +6,46 @@ import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
 public class DroneEntity {
     @Id
+    @Getter
+    @Setter
     private String registrationNumber;
+    @Getter
+    @Setter
     private boolean isAirborne;
+    @Getter
+    @Setter
     private String country;
+    @Getter
+    @Setter
     private String operator;
+    @Getter
+    @Setter
     private int identification;
+    @Getter
+    @Setter
     private String identificationLabel;
+    @Getter
+    @Setter
     private String model;
+    @Getter
+    @Setter
     private String sign;
+    @Getter
+    @Setter
     private String type;
 
     @OneToMany
+    @Getter
+    @Setter
     private List<FlightRecordEntity> flightRecords;
 
     public DroneEntity(){}

@@ -6,33 +6,63 @@ import com.example.backend.simulatorIntegration.events.recordRegistration.model.
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Data
 public class FlightRecordEntity {
     @Id
+    @Getter
+    @Setter
     private String id;
+    @Getter
+    @Setter
     private String filename;
+    @Getter
+    @Setter
     private String server;
+    @Getter
+    @Setter
     private LocalDate date;
+    @Getter
+    @Setter
     private LocalTime time;
+    @Getter
+    @Setter
     private String flag;
+    @Getter
+    @Setter
     private String systemId;
+    @Getter
+    @Setter
     private double latitude;
+    @Getter
+    @Setter
     private double longitude;
+    @Getter
+    @Setter
     private int heading;
+    @Getter
+    @Setter
     private int speed;
+    @Getter
+    @Setter
     private int altitude;
+    @Getter
+    @Setter
     private int fuel;
 
     @ManyToOne
+    @Getter
+    @Setter
     private DroneEntity drone;
 
     @ManyToOne
+    @Getter
+    @Setter
     private FlightEntity flight;
     public FlightRecordEntity(){}
 
