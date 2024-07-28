@@ -51,18 +51,35 @@ public class DroneService {
     public void UpsertDronesRecords(List<DroneRecordToRegister> drones){
         var dronesToRegisterRegistrationNumbers = drones.stream().map(DroneRecordToRegister::getRegistrationNumber).toList();
         var curDrones = getAllByIds(dronesToRegisterRegistrationNumbers);
-;
+
         var entitiesToSave = this.droneToRegisterMapper.mapToEntities(drones, curDrones);
+
+
+        var droneEntites = entitiesToSave
+                .stream()
+                .map(DroneEntityWithFlightRecordEntity::drone)
+                .toList();
+        var flightRecordEntites = entitiesToSave
+                .stream()
+                .map(DroneEntityWithFlightRecordEntity::flightRecord)
+                .toList();
+
+        //blad idzikowy
+        this.flightRecordRepository.saveAll(flightRecordEntites);
+        this.droneRepository
+                .saveAll(droneEntites);
+
+        for (var droneWithFlightRecordEntity : entitiesToSave){
+            var droneEntity = droneWithFlightRecordEntity.drone();
+            var flightRecordEntity = droneWithFlightRecordEntity.flightRecord();
+
+            flightRecordEntity.setDrone(droneEntity);
+        }
 
         this.flightRecordRepository.saveAll(entitiesToSave
                 .stream()
                 .map(DroneEntityWithFlightRecordEntity::flightRecord)
                 .toList());
-        this.droneRepository
-                .saveAll(entitiesToSave
-                        .stream()
-                        .map(DroneEntityWithFlightRecordEntity::drone)
-                        .toList());
     }
 
     private List<DroneEntity> filterDronesWithoutRegisteredPosition(List<DroneEntity> drones){

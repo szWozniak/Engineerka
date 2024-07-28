@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface FlightRecordRepository extends JpaRepository<FlightRecordEntity, String> {
     public Optional<FlightRecordEntity> findFirstByFilename(String filename);
 
-    public List<FlightRecordEntity> findFlightRecordEntitiesByDrone_RegistrationNumberAndFlightIsNull(String registrationNumber);
+    public List<FlightRecordEntity> findAllByDrone_RegistrationNumberAndFlight_IdIsNull(String registrationNumber);
 }

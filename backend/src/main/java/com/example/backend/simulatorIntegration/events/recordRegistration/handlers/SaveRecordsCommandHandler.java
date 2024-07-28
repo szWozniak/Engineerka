@@ -52,7 +52,8 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
     private void handleDronesThatFinishedFlight(List<DroneRecordToRegister> drones){
         var dronesThatFlightEnded = drones
                 .stream()
-                .filter(record -> record.getFlightRecord().getFlag().equals(RegistrationFlag.DROP)).toList();
+                .filter(record -> record.getFlightRecord().getFlag().equals(RegistrationFlag.DROP))
+                .toList();
 
         if (dronesThatFlightEnded.size() > 0){
             flightService.CreateFlights(dronesThatFlightEnded);
