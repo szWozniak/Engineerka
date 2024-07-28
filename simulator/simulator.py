@@ -77,7 +77,7 @@ def generate_points_for_function(starting_latitude: float, starting_longitude: f
     latitudes = []
     longitudes = []
     headings = []
-    altitudes = np.linspace(100, 150, NUMBER_OF_POINTS)
+    altitudes = np.linspace(random.randint(10, 100), random.randint(100, 300), NUMBER_OF_POINTS)
     fuel = np.linspace(100, 50, NUMBER_OF_POINTS)
     speeds = np.random.uniform(25, 35, NUMBER_OF_POINTS)
     lat_old = starting_latitude
@@ -114,24 +114,30 @@ def generate_drone_flight_data(drones_flights_data):
     
     drones_flights_data.append({'latitudes': latitudes, 'longitudes': longitudes, 'headings': headings, 'speeds': speeds, 'altitudes': altitudes, 'fuel': fuel})
 
-def generate_drones_and_flights():
+def generate_flights():
     flights_data = []
-    drones_data = []
 
     for _ in range(NUMBER_OF_DRONES):
         generate_drone_flight_data(flights_data)
+    
+    return flights_data
+
+def generate_drones():
+    drones_data = []
+
+    for _ in range(NUMBER_OF_DRONES):
         generate_drone_data(drones_data)
     
-    return drones_data, flights_data
+    return drones_data
 
-def generate_single_flight_tick(index, drone_data, flight_data, file_name, day_date, day_time):
+def generate_single_flight_tick(index, drone_data, flight_data, file_name, day_date, day_time, flag):
 
     return pd.DataFrame([{
             "Filename":file_name,
             "Server":"Server1",
             "Date":day_date,
             "Time":day_time,
-            "Flag":"UPD",
+            "Flag":flag,
             "Id":"0000001",
             "IdExt": str(uuid.uuid4()),
             "Latitude":flight_data['latitudes'][index],
@@ -163,7 +169,8 @@ def generate_single_flight_tick(index, drone_data, flight_data, file_name, day_d
         }])
 
 tick_number = 0
-drones_data, flights_data = generate_drones_and_flights()
+drones_data = generate_drones()
+flights_data = []
 
 if __name__ == "__main__":
     print("Simulator started...")
@@ -175,12 +182,25 @@ if __name__ == "__main__":
         day_date = now.strftime("%d%m%Y")
         day_time = now.strftime("%H:%M:%S.%f")[:-2]
         drones_dfs = []
+        
+        flag = "UPD"
+
+        if index == 0:
+            flag = "BEG"
+            flights_data = generate_flights()
+        elif index == NUMBER_OF_POINTS - 1:
+            flag = "DROP"
 
         for i in range(NUMBER_OF_DRONES):
-            drones_dfs.append(generate_single_flight_tick(index, drones_data[i], flights_data[i], file_name, day_date, day_time))
+            drones_dfs.append(generate_single_flight_tick(index, drones_data[i], flights_data[i], file_name, day_date, day_time, flag))
 
         combined_data = pd.concat(drones_dfs)
         combined_data.to_csv("../shared_directory/data.csv", sep=',', index=False)
         tick_number += 1
+
+        print("New data saved to /shared_directory/data.csv")
+
+        if flag == "DROP":
+            time.sleep(4)
 
         time.sleep(2)
