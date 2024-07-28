@@ -7,12 +7,15 @@ const useTracesLayer = () => {
     const { drones, selectedDrone } = useContext(AppContext)
 
     const mapPositionsToTraces = (): droneTrace[] => {
+        console.log(drones)
         if (drones === undefined) return [];
 
         const traces: droneTrace[] = [];
 
         drones.forEach((drone, index) => {
             const trace = (drone.registrationNumber === selectedDrone?.registrationNumber) ? selectedDrone.trace : drone.trace
+
+            if (trace.length === 0) { return []}
 
             traces.push({
                 id: index,
