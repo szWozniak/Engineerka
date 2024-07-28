@@ -28,7 +28,7 @@ public class DroneService {
 
         var dronesWithPosition = filterDronesWithoutRegisteredPosition(drones);
 
-        return dronesWithLastThreePositionsIncluded(dronesWithPosition);
+        return dronesWithLastThreeRecordsFromCurrentFlightIncluded(dronesWithPosition);
     }
 
     public DroneEntity getDroneWithCurrentFlightTrace(String registration) {
@@ -86,12 +86,14 @@ public class DroneService {
         return drones.stream().filter(drone -> drone.getFlightRecords().size() != 0).toList();
     }
 
-    private List<DroneEntity> dronesWithLastThreePositionsIncluded(List<DroneEntity> drones){
+    private List<DroneEntity> dronesWithLastThreeRecordsFromCurrentFlightIncluded(List<DroneEntity> drones){
         for (var drone : drones){
-            drone.getFlightRecords().sort(new RecordTimestampsComparator());
-            var positions = drone.getFlightRecords();
-            var lastIndex = Math.min(3, positions.size());
-            drone.setFlightRecords(positions.subList(0, lastIndex));
+            var sortedAndFilteredRecords = drone.getFlightRecords().stream()
+                    .filter(fr -> fr.getFlight() == null)
+                    .sorted(new RecordTimestampsComparator()).toList();
+
+            var lastIndex = Math.min(3, sortedAndFilteredRecords.size());
+            drone.setFlightRecords(sortedAndFilteredRecords.subList(0, lastIndex));
         }
 
         return drones;
