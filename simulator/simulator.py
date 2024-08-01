@@ -6,12 +6,13 @@ import string
 import time
 import uuid
 
-EARTH_RADIUS = 6371.0
 CENTER_LATITUDE = 50.0619
 CENTER_LONGITUDE = 19.9369
 NUMBER_OF_DRONES = 10
 MIN_NUMBER_OF_POINTS = 50
 MAX_NUMBER_OF_POINTS = 200
+MIN_STOP_TICKS = 5
+MAX_STOP_TICKS = 20
 MAX_FLIGHT_ALT = 120
 COUNTRIES = ["Poland", "Germany", "France", "Spain"]
 OPERATORS = ["PL", "DE", "FR", "ES"]
@@ -188,7 +189,7 @@ if __name__ == "__main__":
             elif index == drones[i]['flight']['number_of_points'] - 1:
                 flag = "DROP"
                 drones_tick_indexes[i] = 0
-                drones_stop_ticks[i] = random.randint(5,20)
+                drones_stop_ticks[i] = random.randint(MIN_STOP_TICKS, MAX_STOP_TICKS)
 
             drones_dfs.append(prepare_single_flight_tick(index, drones[i], drones[i]['flight'], file_name, day_date, day_time, flag))
 
