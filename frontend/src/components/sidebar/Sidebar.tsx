@@ -3,12 +3,13 @@ import { Drone } from '../../drones/types'
 import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
 import { AppContext } from '../../context/AppContext';
+import { FlyToInterpolator, MapViewState } from 'deck.gl';
 
 const Sidebar: React.FC = () => {
 
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
-  const { drones, selectedDrone, setSelectedDroneRegistration } = useContext(AppContext)
+  const { drones, selectedDrone, setSelectedDroneRegistration, mapViewState, setMapViewState } = useContext(AppContext)
 
   const renderViewChangeButtons = () => {
     if (selectedDrone) {
@@ -47,6 +48,15 @@ const Sidebar: React.FC = () => {
               </div>
             ))}
           </div>}
+          <button onClick={() => {
+            setMapViewState({
+              latitude: 50.0619,
+              longitude: 19.9369,
+              zoom: 13,
+              transitionInterpolator: new FlyToInterpolator({speed: 2}),
+              transitionDuration: 'auto'
+            })
+          }}>Test!</button>
         </div>
         <div className="container">
           {selectedDrone && <div>
