@@ -27,16 +27,26 @@ public class DroneRecordsReader {
         this.mediator = mediator;
     }
 
-    public void work(String filename){
-        var dronesFromCsv = readCsvRecord(filename);
+    public void processFile(String filename){
+        var dronesFromCsv = readCSV(filename);
         mediator.send(new SaveRecordsCommand(dronesFromCsv));
-        removeCSVRecord(filename);
+        removeCSV(filename);
     }
 
-    private List<DroneFromSimulator> readCsvRecord(String filename){
+    private String getFilePath(String filename){
+        StringBuilder filePath = new StringBuilder();
+
+        filePath.append(new File(System.getProperty("user.dir")).getParent());
+        filePath.append(config.getPath());
+        filePath.append(filename);
+
+        return filePath.toString();
+    }
+
+    private List<DroneFromSimulator> readCSV(String filename){
         List<DroneFromSimulator> drones = new ArrayList<>();
 
-        var path = new File(System.getProperty("user.dir")).getParent() + config.getPath() + filename;
+        var path = getFilePath(filename);
 
         try (Reader reader = new FileReader(path)){
             CsvToBean<DroneFromSimulator> csvToBean = new CsvToBeanBuilder<DroneFromSimulator>(reader)
@@ -55,13 +65,11 @@ public class DroneRecordsReader {
         return drones;
     }
 
-    private void removeCSVRecord(String filename){
-        var path = new File(System.getProperty("user.dir")).getParent() + config.getPath() + filename;
+    private void removeCSV(String filename){
+        var path = getFilePath(filename);
         File file = new File(path);
 
-        boolean isDeleted = file.delete();
-
-        if (isDeleted)
+        if (file.delete())
             log.info("Deleted file: " + path);
         else
             log.info("Failed to delete file: " + path);

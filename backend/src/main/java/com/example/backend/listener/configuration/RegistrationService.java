@@ -15,9 +15,9 @@ public class RegistrationService {
     }
 
     @RabbitListener(queues = {"fileQueue"})
-    public void onFileCreation(String message){
-        log.info("Received file creation: " + message);
-        reader.work(message);
+    public void onFileCreation(String filename){
+        log.info("Received file creation: " + filename);
+        reader.processFile(filename);
     }
 
 }
