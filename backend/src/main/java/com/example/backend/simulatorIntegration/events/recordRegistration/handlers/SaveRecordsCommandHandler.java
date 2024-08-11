@@ -7,7 +7,7 @@ import com.example.backend.simulatorIntegration.architecture.ICommandHandler;
 import com.example.backend.simulatorIntegration.events.recordRegistration.commands.SaveRecordsCommand;
 import com.example.backend.domain.flightRecord.FlightRecordService;
 import com.example.backend.simulatorIntegration.events.recordRegistration.model.envelope.RegistrationFlag;
-import com.example.backend.scheduler.model.DroneFromSimulator;
+import com.example.backend.listener.model.DroneFromSimulator;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

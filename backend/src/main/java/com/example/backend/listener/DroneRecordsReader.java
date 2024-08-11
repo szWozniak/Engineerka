@@ -1,9 +1,9 @@
-package com.example.backend.scheduler;
+package com.example.backend.listener;
 
 import com.example.backend.simulatorIntegration.architecture.IMediator;
 import com.example.backend.simulatorIntegration.events.recordRegistration.commands.SaveRecordsCommand;
-import com.example.backend.scheduler.configuration.SharedFolderConfig;
-import com.example.backend.scheduler.model.DroneFromSimulator;
+import com.example.backend.listener.configuration.SharedFolderConfig;
+import com.example.backend.listener.model.DroneFromSimulator;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -27,15 +27,16 @@ public class DroneRecordsReader {
         this.mediator = mediator;
     }
 
-    public void work(){
-        var dronesFromCsv = readCsvRecord();
+    public void work(String filename){
+        var dronesFromCsv = readCsvRecord(filename);
         mediator.send(new SaveRecordsCommand(dronesFromCsv));
+        removeCSVRecord(filename);
     }
 
-    private List<DroneFromSimulator> readCsvRecord(){
+    private List<DroneFromSimulator> readCsvRecord(String filename){
         List<DroneFromSimulator> drones = new ArrayList<>();
 
-        var path = new File(System.getProperty("user.dir")).getParent() + config.getPath();
+        var path = new File(System.getProperty("user.dir")).getParent() + config.getPath() + filename;
 
         try (Reader reader = new FileReader(path)){
             CsvToBean<DroneFromSimulator> csvToBean = new CsvToBeanBuilder<DroneFromSimulator>(reader)
@@ -52,5 +53,17 @@ public class DroneRecordsReader {
         }
 
         return drones;
+    }
+
+    private void removeCSVRecord(String filename){
+        var path = new File(System.getProperty("user.dir")).getParent() + config.getPath() + filename;
+        File file = new File(path);
+
+        boolean isDeleted = file.delete();
+
+        if (isDeleted)
+            log.info("Deleted file: " + path);
+        else
+            log.info("Failed to delete file: " + path);
     }
 }

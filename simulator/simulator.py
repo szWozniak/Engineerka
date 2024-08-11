@@ -5,6 +5,7 @@ import random
 import string
 import time
 import uuid
+import pika
 
 CENTER_LATITUDE = 50.0619
 CENTER_LONGITUDE = 19.9369
@@ -160,11 +161,31 @@ def prepare_single_flight_tick(index, drone_data, flight_data, file_name, day_da
             "Ext6":"Parametr ext 6"
         }])
 
+def init_connection():
+    global channel
+
+    credentials = pika.PlainCredentials('guest','guest')
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', credentials=credentials))
+    channel = connection.channel()
+
+    channel.exchange_declare('fileExchange', durable=True, exchange_type='topic')
+
+    channel.queue_declare(queue='fileQueue')
+    channel.queue_bind(queue='fileQueue', exchange='fileExchange', routing_key='fileCreation')
+
+def close_connection():
+    global channel
+
+    channel.close()
+
+channel = None
 drones = generate_drones()
 drones_stop_ticks = [0 for _ in range(NUMBER_OF_DRONES)]
 drones_tick_indexes = [-1 for _ in range(NUMBER_OF_DRONES)]
 
 if __name__ == "__main__":
+    init_connection()
+
     print("Simulator started...")
 
     while True:
@@ -194,8 +215,11 @@ if __name__ == "__main__":
             drones_dfs.append(prepare_single_flight_tick(index, drones[i], drones[i]['flight'], file_name, day_date, day_time, flag))
 
         combined_data = pd.concat(drones_dfs)
-        combined_data.to_csv("../shared_directory/data.csv", sep=',', index=False)
+        combined_data.to_csv(f"../shared_directory/{file_name}.csv", sep=',', index=False)
+        channel.basic_publish(exchange='fileExchange', routing_key='fileCreation', body=f"{file_name}.csv")
 
-        print("New data saved to /shared_directory/data.csv")
+        print(f"New data saved to /shared_directory/{file_name}.csv")
 
         time.sleep(2)
+    
+    close_connection()
