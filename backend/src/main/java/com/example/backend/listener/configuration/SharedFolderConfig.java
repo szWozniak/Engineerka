@@ -1,4 +1,4 @@
-package com.example.backend.scheduler.configuration;
+package com.example.backend.listener.configuration;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,8 +10,4 @@ public class SharedFolderConfig {
     @Getter
     @Setter
     private String path;
-
-    @Getter
-    @Setter
-    private long interval;
 }

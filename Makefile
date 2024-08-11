@@ -34,5 +34,10 @@ start-database:	stop-database create-volume
 	docker run -d -e POSTGRES_PASSWORD=zaq12wsx -e POSTGRES_USER=dronhub -e POSTGRES_DB=dronhub -v postgres_db_volume:/var/lib/postgresql/data \
         --name dronhub_db -p 5432:5432 postgres:latest
 
-all: start-database
+start-rabbitmq: 
+	docker pull rabbitmq:3-management
+
+	docker run -d --name dronhub_rabbitmq -p 5672:5672 -p 5673:5673 -p 15672:15672 rabbitmq:3-management
+
+all: start-rabbitmq
 	cd backend && $(GRADLE) run
