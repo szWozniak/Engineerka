@@ -20,10 +20,6 @@ public class DroneService {
         this.droneToRegisterMapper = droneToRegisterMapper;
     }
 
-    public List<DroneEntity> getAllByIds(List<String> ids){
-        return droneRepository.findAllById(ids);
-    }
-
     public List<DroneEntity> getAllCurrentlyFlyingDrones(){
         var drones = droneRepository.getDroneEntitiesByIsAirborneIsTrue();
 
@@ -77,6 +73,10 @@ public class DroneService {
         }
 
         this.flightRecordRepository.saveAll(flightRecordEntites);
+    }
+
+    private List<DroneEntity> getAllByIds(List<String> ids){
+        return droneRepository.findAllById(ids);
     }
 
     private List<DroneEntity> filterDronesWithoutRegisteredPosition(List<DroneEntity> drones){

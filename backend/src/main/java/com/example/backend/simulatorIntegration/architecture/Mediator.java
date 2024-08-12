@@ -7,16 +7,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class Mediator implements IMediator {
 
-    private final ICommandHandler<SaveRecordsCommand> droneService;
+    private final ICommandHandler<SaveRecordsCommand> SaveRecordsCommandHandler;
 
-    public Mediator(ICommandHandler<SaveRecordsCommand> droneService) {
-        this.droneService = droneService;
+    public Mediator(ICommandHandler<SaveRecordsCommand> SaveRecordsCommandHandler) {
+        this.SaveRecordsCommandHandler = SaveRecordsCommandHandler;
     }
 
     @Override
     public void send(ICommand command) {
         if (command instanceof SaveRecordsCommand){
-            droneService.handle((SaveRecordsCommand) command);
+            SaveRecordsCommandHandler.handle((SaveRecordsCommand) command);
         }
     }
 }
