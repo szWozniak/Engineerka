@@ -1,6 +1,6 @@
 package com.example.backend.simulatorIntegration.architecture;
 
-import com.example.backend.DroneFromSimulatorFixture;
+import com.example.backend.DroneFromSimulatorFixtureBuilder;
 import com.example.backend.simulatorIntegration.events.recordRegistration.commands.SaveRecordsCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,8 @@ public class MediatorTests {
 
     @Test
     public void ShouldCallSaveRecordsCommandHandler_WhenReceivesSaveRecordsCommand(){
-        var dronesFromSimulator = List.of(DroneFromSimulatorFixture.DefaultDrone);
+        var drone = new DroneFromSimulatorFixtureBuilder().build();
+        var dronesFromSimulator = List.of(drone);
         SaveRecordsCommand command = new SaveRecordsCommand(dronesFromSimulator);
 
         sut.send(command);
