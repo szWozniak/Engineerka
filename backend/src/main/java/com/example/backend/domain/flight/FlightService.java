@@ -3,7 +3,7 @@ package com.example.backend.domain.flight;
 import com.example.backend.domain.drone.DroneRepository;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
-import com.example.backend.simulatorIntegration.events.recordRegistration.model.DroneRecordToRegister;
+import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

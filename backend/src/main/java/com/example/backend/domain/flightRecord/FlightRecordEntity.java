@@ -2,7 +2,7 @@ package com.example.backend.domain.flightRecord;
 
 import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.flight.FlightEntity;
-import com.example.backend.simulatorIntegration.events.recordRegistration.model.FlightRecordToRegister;
+import com.example.backend.events.recordRegistration.model.FlightRecordToRegister;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
