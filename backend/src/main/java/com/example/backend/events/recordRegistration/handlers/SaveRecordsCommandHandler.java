@@ -4,7 +4,7 @@ import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.flight.FlightService;
 import com.example.backend.events.recordRegistration.commands.SaveRecordsCommand;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
-import com.example.backend.events.architecture.ICommandHandler;
+import com.example.backend.events.mediator.ICommandHandler;
 import com.example.backend.domain.flightRecord.FlightRecordService;
 import com.example.backend.events.recordRegistration.model.envelope.RegistrationFlag;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;

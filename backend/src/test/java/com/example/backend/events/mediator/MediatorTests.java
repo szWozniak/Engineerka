@@ -1,4 +1,4 @@
-package com.example.backend.events.architecture;
+package com.example.backend.events.mediator;
 
 import com.example.backend.simulatorIntegration.model.DroneFromSimulatorFixtureBuilder;
 import com.example.backend.events.recordRegistration.commands.SaveRecordsCommand;

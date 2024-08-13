@@ -1,4 +1,4 @@
-package com.example.backend.events.architecture;
+package com.example.backend.events.mediator;
 
 public interface IMediator {
     public void  send(ICommand command);
