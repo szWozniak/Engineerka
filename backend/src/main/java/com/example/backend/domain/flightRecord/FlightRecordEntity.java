@@ -66,19 +66,38 @@ public class FlightRecordEntity {
     private FlightEntity flight;
     public FlightRecordEntity(){}
 
-    public FlightRecordEntity(FlightRecordToRegister position) {
-        this.id = position.getId();
-        this.filename = position.getFilename();
-        this.server = position.getServer();
-        this.date = position.getDate();
-        this.time = position.getTime();
-        this.flag = position.getFlag().toString();
-        this.systemId = position.getSystemId();
-        this.latitude = position.getLatitude().getValue();
-        this.longitude = position.getLongitude().getValue();
-        this.heading = position.getHeading().getValue();
-        this.speed = position.getSpeed();
-        this.altitude = position.getAltitude();
-        this.fuel = position.getFuel();
+    public FlightRecordEntity(String id, String filename, String server, LocalDate date, LocalTime time, String flag, String systemId,
+                              double latitude, double longitude, int heading, int speed, int altitude, int fuel) {
+        this.id = id;
+        this.filename = filename;
+        this.server = server;
+        this.date = date;
+        this.time = time;
+        this.flag = flag;
+        this.systemId = systemId;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.heading = heading;
+        this.speed = speed;
+        this.altitude = altitude;
+        this.fuel = fuel;
+    }
+
+    public static FlightRecordEntity FromFlightRecordToRegister(FlightRecordToRegister flightRecord){
+        return new FlightRecordEntity(
+            flightRecord.getId(),
+            flightRecord.getFilename(),
+            flightRecord.getServer(),
+            flightRecord.getDate(),
+            flightRecord.getTime(),
+            flightRecord.getFlag().toString(),
+            flightRecord.getSystemId(),
+            flightRecord.getLatitude().getValue(),
+            flightRecord.getLongitude().getValue(),
+            flightRecord.getHeading().getValue(),
+            flightRecord.getSpeed(),
+            flightRecord.getAltitude(),
+            flightRecord.getFuel()
+        );
     }
 }

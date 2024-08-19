@@ -63,4 +63,9 @@ public class DroneFromSimulatorFixtureBuilder {
         drone.setFlag(flag);
         return this;
     }
+
+    public DroneFromSimulatorFixtureBuilder WithRegistrationNumber(String regNumber){
+        drone.setRegistrationNumber(regNumber);
+        return this;
+    }
 }
