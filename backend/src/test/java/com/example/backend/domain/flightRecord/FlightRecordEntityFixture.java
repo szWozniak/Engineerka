@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class FlightRecordEntityFixture {
-    public static FlightRecordEntity GetFlightRecordEntityFrom(String id, LocalDate date, LocalTime time){
+    public static FlightRecordEntity GetFlightRecordEntityFrom(String id,
+                                                               LocalDate date,
+                                                               LocalTime time){
         return new FlightRecordEntity(
                 id,
                 "filename",
