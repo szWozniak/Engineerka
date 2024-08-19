@@ -93,11 +93,32 @@ public class DroneFromSimulator {
     @CsvBindByName(column = "SensorLabel")
     private String sensorLabel;
 
-    public DroneFromSimulator(String filename, String server, LocalDate date, LocalTime time, String flag,
-                              String id, String idExt, String latitude, String longitude, int heading, int speed,
-                              int altitude, String country, String operator, int identification, String identificationLabel,
-                              String model, String registrationNumber, String sign, String type, int fuel,
-                              String signal, String frequency, String sensorLat, String sensorLon, String sensorLabel) {
+    public DroneFromSimulator(String filename,
+                              String server,
+                              LocalDate date,
+                              LocalTime time,
+                              String flag,
+                              String id,
+                              String idExt,
+                              String latitude,
+                              String longitude,
+                              int heading,
+                              int speed,
+                              int altitude,
+                              String country,
+                              String operator,
+                              int identification,
+                              String identificationLabel,
+                              String model,
+                              String registrationNumber,
+                              String sign,
+                              String type,
+                              int fuel,
+                              String signal,
+                              String frequency,
+                              String sensorLat,
+                              String sensorLon,
+                              String sensorLabel) {
         this.filename = filename;
         this.server = server;
         this.date = date;
