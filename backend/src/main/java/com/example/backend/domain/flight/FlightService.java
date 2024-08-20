@@ -11,13 +11,11 @@ import java.util.List;
 
 @Service
 public class FlightService {
-    private final DroneRepository droneRepository;
     private final FlightRepository flightRepository;
     private final FlightRecordRepository flightRecordRepository;
 
-    public FlightService(FlightRepository flightRepository, DroneRepository droneRepository, FlightRecordRepository flightRecordRepository) {
+    public FlightService(FlightRepository flightRepository, FlightRecordRepository flightRecordRepository) {
         this.flightRepository = flightRepository;
-        this.droneRepository = droneRepository;
         this.flightRecordRepository = flightRecordRepository;
     }
 
