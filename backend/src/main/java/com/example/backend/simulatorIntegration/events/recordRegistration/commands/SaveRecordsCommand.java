@@ -1,7 +1,7 @@
 package com.example.backend.simulatorIntegration.events.recordRegistration.commands;
 
 import com.example.backend.simulatorIntegration.architecture.ICommand;
-import com.example.backend.scheduler.model.DroneFromSimulator;
+import com.example.backend.listener.model.DroneFromSimulator;
 
 import java.util.List;
 

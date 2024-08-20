@@ -22,8 +22,12 @@ run-simulator:
 	echo "Starting simulator. Watch out, Pythons can bite."
 	cd simulator && python3 simulator.py
 
-develop: run-backend-develop run-frontend run-simulator
+start-rabbitmq:
+	docker pull rabbitmq:3-management
+	docker run -d --name dronhub_rabbitmq -p 5672:5672 -p 5673:5673 -p 15672:15672 rabbitmq:3-management
+
+develop: start-rabbitmq run-backend-develop run-frontend run-simulator
 	echo "Started application in development mode."
 
-all: run-backend run-frontend run-simulator
+all: start-rabbitmq run-backend run-frontend run-simulator
 	echo "Started application in production mode."

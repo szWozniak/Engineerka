@@ -4,7 +4,7 @@ import com.example.backend.simulatorIntegration.events.recordRegistration.model.
 import com.example.backend.simulatorIntegration.events.recordRegistration.model.envelope.Heading;
 import com.example.backend.simulatorIntegration.events.recordRegistration.model.envelope.Latitude;
 import com.example.backend.simulatorIntegration.events.recordRegistration.model.envelope.Longitude;
-import com.example.backend.scheduler.model.DroneFromSimulator;
+import com.example.backend.listener.model.DroneFromSimulator;
 import lombok.Data;
 
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.example.backend.scheduler.model;
+package com.example.backend.listener.model;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;

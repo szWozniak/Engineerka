@@ -38,5 +38,10 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
 ---
 sharedfolder:
-  path: "/shared_directory/data.csv"
-  interval: 2000
+  path: "/shared_directory/"
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
