@@ -6,14 +6,12 @@ import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootTest
 public class DroneToRegisterMapperTests {
     private DroneToRegisterMapper sut;
 

@@ -4,13 +4,11 @@ import com.example.backend.domain.flightRecord.FlightRecordEntityFixture;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@SpringBootTest
 public class RecordTimestampsComparatorTests {
     private RecordTimestampsComparator sut;
 

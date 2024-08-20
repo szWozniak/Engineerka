@@ -1,7 +1,5 @@
 package com.example.backend.events.recordRegistration.model;
 
-import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
-import com.example.backend.events.recordRegistration.model.FlightRecordToRegister;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulatorFixtureBuilder;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
 import com.example.backend.events.recordRegistration.model.envelope.Heading;
@@ -11,12 +9,10 @@ import com.example.backend.events.recordRegistration.model.envelope.Longitude;
 import com.example.backend.events.recordRegistration.model.envelope.RegistrationFlag;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@SpringBootTest
 public class DroneRecordToRegisterTests {
 
     @Test

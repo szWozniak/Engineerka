@@ -1,6 +1,5 @@
 package com.example.backend.domain.flight;
 import com.example.backend.domain.drone.DroneEntity;
-import com.example.backend.domain.drone.DroneEntityFixture;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
@@ -12,14 +11,11 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-
-@SpringBootTest
 @DataJpaTest
 public class FlightServiceTests {
     private FlightRepository flightRepository;
