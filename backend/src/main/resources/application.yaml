@@ -24,7 +24,7 @@ spring:
     activate:
       on-profile: prod
   application:
-    name: backend
+    name: dronhub_backend
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
