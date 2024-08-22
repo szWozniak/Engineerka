@@ -1,5 +1,6 @@
-package com.example.backend.simulatorIntegration;
+package com.example.backend.unit.simulatorIntegration;
 
+import com.example.backend.simulatorIntegration.DroneRecordsCsvReader;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

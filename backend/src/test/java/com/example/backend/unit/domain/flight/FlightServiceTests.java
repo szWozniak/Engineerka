@@ -1,5 +1,8 @@
-package com.example.backend.domain.flight;
+package com.example.backend.unit.domain.flight;
 import com.example.backend.domain.drone.DroneEntity;
+import com.example.backend.domain.flight.FlightEntity;
+import com.example.backend.domain.flight.FlightRepository;
+import com.example.backend.domain.flight.FlightService;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;

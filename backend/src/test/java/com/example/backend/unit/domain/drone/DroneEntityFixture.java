@@ -1,5 +1,6 @@
-package com.example.backend.domain.drone;
+package com.example.backend.unit.domain.drone;
 
+import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 
 import java.util.List;

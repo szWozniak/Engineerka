@@ -1,6 +1,8 @@
-package com.example.backend.domain.drone.mappers;
+package com.example.backend.unit.domain.drone.mappers;
 
 import com.example.backend.domain.drone.DroneEntity;
+import com.example.backend.domain.drone.mappers.DroneEntityWithFlightRecordEntity;
+import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
 import org.junit.jupiter.api.Assertions;

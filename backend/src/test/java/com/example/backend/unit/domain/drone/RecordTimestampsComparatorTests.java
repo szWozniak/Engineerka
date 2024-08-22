@@ -1,6 +1,7 @@
-package com.example.backend.domain.drone;
+package com.example.backend.unit.domain.drone;
 
-import com.example.backend.domain.flightRecord.FlightRecordEntityFixture;
+import com.example.backend.domain.drone.RecordTimestampsComparator;
+import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixture;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

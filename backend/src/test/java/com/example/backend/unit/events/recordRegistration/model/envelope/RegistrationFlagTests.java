@@ -1,5 +1,6 @@
-package com.example.backend.events.recordRegistration.model.envelope;
+package com.example.backend.unit.events.recordRegistration.model.envelope;
 
+import com.example.backend.events.recordRegistration.model.envelope.RegistrationFlag;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

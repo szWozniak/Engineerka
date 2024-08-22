@@ -1,4 +1,6 @@
-package com.example.backend.domain.flightRecord;
+package com.example.backend.unit.domain.flightRecord;
+
+import com.example.backend.domain.flightRecord.FlightRecordEntity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

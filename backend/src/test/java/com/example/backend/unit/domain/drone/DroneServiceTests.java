@@ -1,15 +1,17 @@
-package com.example.backend.domain.drone;
+package com.example.backend.unit.domain.drone;
 
+import com.example.backend.domain.drone.DroneEntity;
+import com.example.backend.domain.drone.DroneRepository;
+import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
-import com.example.backend.domain.flightRecord.FlightRecordEntityFixture;
+import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixture;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

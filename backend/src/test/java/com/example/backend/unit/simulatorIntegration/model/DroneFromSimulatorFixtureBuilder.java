@@ -1,6 +1,6 @@
-package com.example.backend.simulatorIntegration.model;
+package com.example.backend.unit.simulatorIntegration.model;
 
-import com.example.backend.events.recordRegistration.model.envelope.RegistrationFlag;
+import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

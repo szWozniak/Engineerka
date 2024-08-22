@@ -1,13 +1,13 @@
-package com.example.backend.events.mediator;
+package com.example.backend.unit.events.mediator;
 
+import com.example.backend.events.mediator.ICommandHandler;
+import com.example.backend.events.mediator.Mediator;
 import com.example.backend.events.recordRegistration.handlers.SaveRecordsCommandHandler;
-import com.example.backend.simulatorIntegration.model.DroneFromSimulatorFixtureBuilder;
+import com.example.backend.unit.simulatorIntegration.model.DroneFromSimulatorFixtureBuilder;
 import com.example.backend.events.recordRegistration.commands.SaveRecordsCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 

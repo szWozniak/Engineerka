@@ -1,6 +1,8 @@
-package com.example.backend.events.recordRegistration.model;
+package com.example.backend.unit.events.recordRegistration.model;
 
-import com.example.backend.simulatorIntegration.model.DroneFromSimulatorFixtureBuilder;
+import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
+import com.example.backend.events.recordRegistration.model.FlightRecordToRegister;
+import com.example.backend.unit.simulatorIntegration.model.DroneFromSimulatorFixtureBuilder;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
 import com.example.backend.events.recordRegistration.model.envelope.Heading;
 import com.example.backend.events.recordRegistration.model.envelope.Identification;

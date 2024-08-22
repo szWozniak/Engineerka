@@ -1,5 +1,7 @@
-package com.example.backend.domain.flightRecord;
+package com.example.backend.unit.domain.flightRecord;
 
+import com.example.backend.domain.flightRecord.FlightRecordRepository;
+import com.example.backend.domain.flightRecord.FlightRecordService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
