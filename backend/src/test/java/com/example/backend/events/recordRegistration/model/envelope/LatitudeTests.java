@@ -10,12 +10,12 @@ public class LatitudeTests {
     
     @ParameterizedTest
     @CsvSource({
-            "21376N, 2137.42",
-            "31242S, -4213.21"
+            "213763N, 21.634166666666665",
+            "312423S, -31.406388888888888"
     })
     public void ShouldReturnCorrectLatitude_GivenCorrectArgument(String latToParse, double expectedRes){
         var result = new Latitude(latToParse);
-        Assertions.assertEquals(result.getValue(), expectedRes); //to check
+        Assertions.assertEquals(result.getValue(), expectedRes);
     }
 
     @ParameterizedTest
