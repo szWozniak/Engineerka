@@ -26,8 +26,8 @@ public class DroneRecordToRegisterTests {
                 "DROP",
                 "id",
                 "idExt",
-                "50042N",
-                "119572E",
+                "500423N",
+                "1195732E",
                 90,
                 100,
                 50,
@@ -64,10 +64,10 @@ public class DroneRecordToRegisterTests {
         Assertions.assertEquals(flight.getTime(), curTime);
         Assertions.assertEquals(flight.getDate(), LocalDate.now());
         Assertions.assertEquals(flight.getFlag(), RegistrationFlag.DROP);
-        Assertions.assertEquals(flight.getSystemId(), "idExt");
-        Assertions.assertEquals(flight.getId(), "id");
-        Assertions.assertEquals(flight.getLatitude(), new Latitude("50042N"));
-        Assertions.assertEquals(flight.getLongitude(), new Longitude("119572E"));
+        Assertions.assertEquals(flight.getSystemId(), "id");
+        Assertions.assertEquals(flight.getId(), "idExt");
+        Assertions.assertEquals(flight.getLatitude(), new Latitude("500423N"));
+        Assertions.assertEquals(flight.getLongitude(), new Longitude("1195732E"));
         Assertions.assertEquals(flight.getAltitude(), 50);
         Assertions.assertEquals(flight.getHeading(), new Heading(90));
         Assertions.assertEquals(flight.getSpeed(), 100);

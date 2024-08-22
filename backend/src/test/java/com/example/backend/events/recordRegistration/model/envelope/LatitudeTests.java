@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class LatitudeTests {
     
-    @Test
+    @ParameterizedTest
     @CsvSource({
             "21376N, 2137.42",
             "31242S, -4213.21"

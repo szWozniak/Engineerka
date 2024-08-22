@@ -2,6 +2,8 @@ package com.example.backend.events.recordRegistration.model.envelope;
 
 import lombok.Getter;
 
+import java.util.Objects;
+
 public class Latitude {
     @Getter
     private double value;
@@ -29,5 +31,18 @@ public class Latitude {
             case 'S' -> coordinate*-1;
             default -> throw new IllegalArgumentException("Latitude should end with N or S character");
         };
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Latitude latitude = (Latitude) obj;
+        return Objects.equals(value, latitude.value);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(value);
     }
 }

@@ -31,8 +31,8 @@ public class DroneToRegisterMapperTests {
                         "UPD",
                         "id",
                         "idExt",
-                        "50042N",
-                        "119572E",
+                        "500423N",
+                        "1195723E",
                         90,
                         100,
                         50,
@@ -78,12 +78,11 @@ public class DroneToRegisterMapperTests {
         Assertions.assertEquals(flightRecordEntity.getTime(), LocalTime.of(2, 2, 2, 2));
         Assertions.assertEquals(flightRecordEntity.getFlag(), "UPD");
         Assertions.assertEquals(flightRecordEntity.getSystemId(), "id");
-        Assertions.assertEquals(flightRecordEntity.getLatitude(), 69.69);
-        Assertions.assertEquals(flightRecordEntity.getLatitude(), 69.69);
+        Assertions.assertEquals(flightRecordEntity.getLatitude(), 50.073055555555555);
+        Assertions.assertEquals(flightRecordEntity.getLongitude(), 119.9563888888889);
         Assertions.assertEquals(flightRecordEntity.getHeading(), 90);
         Assertions.assertEquals(flightRecordEntity.getAltitude(), 50);
         Assertions.assertEquals(flightRecordEntity.getFuel(), 69);
-
     }
 
     @Test
@@ -104,8 +103,8 @@ public class DroneToRegisterMapperTests {
                         "UPD",
                         "id",
                         "idExt",
-                        "50042N",
-                        "119572E",
+                        "500423N",
+                        "1195723E",
                         90,
                         100,
                         50,
@@ -126,8 +125,8 @@ public class DroneToRegisterMapperTests {
                 )
         );
 
-        var existingDrone = new DroneEntity("98765",
-                false,
+        var existingDrone = new DroneEntity("12345",
+                true,
                 "filipiny",
                 "operatorAleInny",
                 2,
@@ -143,8 +142,8 @@ public class DroneToRegisterMapperTests {
 
         var droneEntity = result.get(0).drone();
 
-        Assertions.assertEquals(droneEntity.getRegistrationNumber(), "98765");
-        Assertions.assertFalse(droneEntity.isAirborne());
+        Assertions.assertEquals(droneEntity.getRegistrationNumber(), "12345");
+        Assertions.assertTrue(droneEntity.isAirborne());
         Assertions.assertEquals(droneEntity.getCountry(), "filipiny");
         Assertions.assertEquals(droneEntity.getOperator(), "operatorAleInny");
         Assertions.assertEquals(droneEntity.getIdentification(), 2);
@@ -161,8 +160,8 @@ public class DroneToRegisterMapperTests {
         Assertions.assertEquals(flightRecordEntity.getTime(), LocalTime.of(2, 2, 2, 2));
         Assertions.assertEquals(flightRecordEntity.getFlag(), "UPD");
         Assertions.assertEquals(flightRecordEntity.getSystemId(), "id");
-        Assertions.assertEquals(flightRecordEntity.getLatitude(), 69.69);
-        Assertions.assertEquals(flightRecordEntity.getLatitude(), 69.69);
+        Assertions.assertEquals(flightRecordEntity.getLatitude(), 50.073055555555555);
+        Assertions.assertEquals(flightRecordEntity.getLongitude(), 119.9563888888889);
         Assertions.assertEquals(flightRecordEntity.getHeading(), 90);
         Assertions.assertEquals(flightRecordEntity.getAltitude(), 50);
         Assertions.assertEquals(flightRecordEntity.getFuel(), 69);

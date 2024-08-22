@@ -87,8 +87,8 @@ public class FlightServiceTests {
                 "DROP",
                 "id",
                 "idExt",
-                "50042N",
-                "119572E",
+                "500423N",
+                "1195723E",
                 90,
                 100,
                 50,
@@ -112,11 +112,11 @@ public class FlightServiceTests {
         sut.CreateFlights(List.of(droneToRegister));
 
         //assert
-        var flightRecordFromDb = flightRecordRepository.findById("1");
+        var flightRecordFromDb = flightRecordRepositoryForAssertions.findById("1");
         Assertions.assertTrue(flightRecordFromDb.isPresent());
         Assertions.assertNotNull(flightRecordFromDb.get().getFlight());
 
-        var flightFromDb = flightRepository.findAll().get(0);
+        var flightFromDb = flightRepositoryForAssertions.findAll().get(0);
         Assertions.assertEquals(flightFromDb.getFlightRecords().get(0), existingFlightRecord);
     }
 

@@ -9,8 +9,8 @@ public class LongitudeTests {
 
     @Test
     public void ShouldReturnCorrectLongitude_GivenCorrectArgument(){
-        var result = new Longitude("213769E");
-        Assertions.assertEquals(result.getValue(), 2137.42); //to check
+        var result = new Longitude("2137693E");
+        Assertions.assertEquals(214.29250000000002, result.getValue()); //to check
     }
 
     @ParameterizedTest
