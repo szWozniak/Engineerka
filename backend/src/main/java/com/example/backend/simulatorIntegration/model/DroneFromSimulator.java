@@ -147,4 +147,5 @@ public class DroneFromSimulator {
         this.sensorLabel = sensorLabel;
     }
 
+    public DroneFromSimulator(){}
 }
