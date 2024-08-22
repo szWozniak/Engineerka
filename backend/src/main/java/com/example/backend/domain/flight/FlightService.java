@@ -23,6 +23,8 @@ public class FlightService {
         List<FlightEntity> flightsToSave = new ArrayList<>();
         List<FlightRecordEntity> flightRecordsToUpdate = new ArrayList<>();
 
+        System.out.println(droneRecords);
+
         for (var droneRecord : droneRecords){
             var flight = new FlightEntity();
             flightRepository.save(flight);
