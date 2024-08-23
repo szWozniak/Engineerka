@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class FlightRecordEntityFixture {
-    public static FlightRecordEntity GetFlightRecordEntityFrom(String id,
+    public static FlightRecordEntity getFlightRecordEntityFrom(String id,
                                                                LocalDate date,
                                                                LocalTime time){
         return new FlightRecordEntity(

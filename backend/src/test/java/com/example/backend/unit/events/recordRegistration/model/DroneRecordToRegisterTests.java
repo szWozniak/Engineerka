@@ -37,7 +37,7 @@ public class DroneRecordToRegisterTests {
                 "operator",
                 7,
                 "Magenta",
-                "Twoj_Stary",
+                "Belmondo",
                 "420-69-2137",
                 "sign",
                 "type",
@@ -54,7 +54,7 @@ public class DroneRecordToRegisterTests {
         Assertions.assertEquals(result.getOperator(), "operator");
         Assertions.assertEquals(result.getIdentification(), new Identification(7));
         Assertions.assertEquals(result.getIdentificationLabel(), "Magenta");
-        Assertions.assertEquals(result.getModel(), "Twoj_Stary");
+        Assertions.assertEquals(result.getModel(), "Belmondo");
         Assertions.assertEquals(result.getRegistrationNumber(), "420-69-2137");
         Assertions.assertEquals(result.getSign(), "sign");
         Assertions.assertEquals(result.getType(), "type");

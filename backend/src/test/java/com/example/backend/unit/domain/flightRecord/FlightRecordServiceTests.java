@@ -27,8 +27,8 @@ public class FlightRecordServiceTests {
 
     @Test
     public void ShouldReturnTrue_IfRecordAlreadyRegistered(){
-        var flightRecord = FlightRecordEntityFixture.GetFlightRecordEntityFrom(
-                "dupa",
+        var flightRecord = FlightRecordEntityFixture.getFlightRecordEntityFrom(
+                "krokodyl",
                 LocalDate.now(),
                 LocalTime.now()
         );
@@ -44,8 +44,8 @@ public class FlightRecordServiceTests {
 
     @Test
     public void ShouldReturnFalse_IfRecordNotRegister(){
-        var flightRecord = FlightRecordEntityFixture.GetFlightRecordEntityFrom(
-                "dupa",
+        var flightRecord = FlightRecordEntityFixture.getFlightRecordEntityFrom(
+                "krokodyl",
                 LocalDate.now(),
                 LocalTime.now()
         );

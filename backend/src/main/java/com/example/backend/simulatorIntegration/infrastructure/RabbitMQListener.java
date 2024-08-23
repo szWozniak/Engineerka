@@ -19,5 +19,4 @@ public class RabbitMQListener {
         log.info("Received file creation: " + filename);
         service.ProcessIncomingFile(filename);
     }
-
 }

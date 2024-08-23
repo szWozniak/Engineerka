@@ -42,7 +42,7 @@ public class DroneToRegisterMapperTests {
                         "operator",
                         7,
                         "Magenta",
-                        "Twoj_Stary",
+                        "Belmondo",
                         "6969669",
                         "sign",
                         "type",
@@ -68,7 +68,7 @@ public class DroneToRegisterMapperTests {
         Assertions.assertEquals(droneEntity.getOperator(), "operator");
         Assertions.assertEquals(droneEntity.getIdentification(), 7);
         Assertions.assertEquals(droneEntity.getIdentificationLabel(), "Magenta");
-        Assertions.assertEquals(droneEntity.getModel(), "Twoj_Stary");
+        Assertions.assertEquals(droneEntity.getModel(), "Belmondo");
         Assertions.assertEquals(droneEntity.getSign(), "sign");
         Assertions.assertEquals(droneEntity.getType(), "type");
 
@@ -114,7 +114,7 @@ public class DroneToRegisterMapperTests {
                         "operator",
                         7,
                         "Magenta",
-                        "Twoj_Stary",
+                        "Belmondo",
                         "12345",
                         "sign",
                         "type",
@@ -133,11 +133,11 @@ public class DroneToRegisterMapperTests {
                 "operatorAleInny",
                 2,
                 "czarny",
-                "zajebisty",
+                "fajny",
                 "znak",
                 "spokokolo");
 
-        var result = sut.mapToEntities(List.of(droneToRegister),
+        List<DroneEntityWithFlightRecordEntity> result = sut.mapToEntities(List.of(droneToRegister),
                 List.of(existingDrone));
 
         Assertions.assertEquals(result.size(), 1);
@@ -150,7 +150,7 @@ public class DroneToRegisterMapperTests {
         Assertions.assertEquals(droneEntity.getOperator(), "operatorAleInny");
         Assertions.assertEquals(droneEntity.getIdentification(), 2);
         Assertions.assertEquals(droneEntity.getIdentificationLabel(), "czarny");
-        Assertions.assertEquals(droneEntity.getModel(), "zajebisty");
+        Assertions.assertEquals(droneEntity.getModel(), "fajny");
         Assertions.assertEquals(droneEntity.getSign(), "znak");
         Assertions.assertEquals(droneEntity.getType(), "spokokolo");
 

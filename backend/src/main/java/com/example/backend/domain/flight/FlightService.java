@@ -1,6 +1,5 @@
 package com.example.backend.domain.flight;
 
-import com.example.backend.domain.drone.DroneRepository;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
@@ -19,11 +18,9 @@ public class FlightService {
         this.flightRecordRepository = flightRecordRepository;
     }
 
-    public void CreateFlights(List<DroneRecordToRegister> droneRecords){
+    public void createFlights(List<DroneRecordToRegister> droneRecords){
         List<FlightEntity> flightsToSave = new ArrayList<>();
         List<FlightRecordEntity> flightRecordsToUpdate = new ArrayList<>();
-
-        System.out.println(droneRecords);
 
         for (var droneRecord : droneRecords){
             var flight = new FlightEntity();

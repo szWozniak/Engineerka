@@ -7,7 +7,6 @@ import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -99,7 +98,7 @@ public class FlightServiceTests {
                 "operator",
                 7,
                 "Magenta",
-                "Twoj_Stary",
+                "Belmondo",
                 registrationNumber,
                 "sign",
                 "type",
@@ -112,7 +111,7 @@ public class FlightServiceTests {
         ));
 
         //act
-        sut.CreateFlights(List.of(droneToRegister));
+        sut.createFlights(List.of(droneToRegister));
 //
 //        //assert
 //        var flightRecordFromDb = flightRecordRepositoryForAssertions.findById("1");

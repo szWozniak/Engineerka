@@ -14,7 +14,6 @@ public class DroneService {
     private final FlightRecordRepository flightRecordRepository;
     private final DroneToRegisterMapper droneToRegisterMapper;
 
-
     public DroneService(DroneRepository droneRepository, FlightRecordRepository flightRecordRepository, DroneToRegisterMapper droneToRegisterMapper) {
         this.droneRepository = droneRepository;
         this.flightRecordRepository = flightRecordRepository;

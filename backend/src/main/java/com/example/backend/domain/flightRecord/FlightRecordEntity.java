@@ -83,7 +83,7 @@ public class FlightRecordEntity {
         this.fuel = fuel;
     }
 
-    public static FlightRecordEntity FromFlightRecordToRegister(FlightRecordToRegister flightRecord){
+    public static FlightRecordEntity fromFlightRecordToRegister(FlightRecordToRegister flightRecord){
         return new FlightRecordEntity(
             flightRecord.getId(),
             flightRecord.getFilename(),

@@ -56,7 +56,7 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
                 .toList();
 
         if (dronesThatFlightEnded.size() > 0){
-            flightService.CreateFlights(dronesThatFlightEnded);
+            flightService.createFlights(dronesThatFlightEnded);
         }
     }
 

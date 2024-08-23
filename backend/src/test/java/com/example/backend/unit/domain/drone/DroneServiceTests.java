@@ -32,6 +32,7 @@ public class DroneServiceTests {
         droneToRegisterMapper = Mockito.mock(DroneToRegisterMapper.class);
         sut = new DroneService(droneRepository, flightRecordRepository, droneToRegisterMapper);
     }
+
     @Test
     public void ShouldReturnAllCurrentlyFlyingDrones_WithOnlyThreeLastPositions(){
         //prepare
@@ -95,20 +96,20 @@ public class DroneServiceTests {
                 .thenReturn(Optional.of(drone));
 
         //act
-        var result = sut.getDroneWithCurrentFlightTrace("dupa");
+        var result = sut.getDroneWithCurrentFlightTrace("krokodyl");
 
         //assert
         Assertions.assertTrue(result.isPresent());
 
-        var droneWithTrace = result.get();
+        var droneWithFlightRecords = result.get();
 
-        Assertions.assertEquals(droneWithTrace.getFlightRecords().size(), 5);
+        Assertions.assertEquals(droneWithFlightRecords.getFlightRecords().size(), 5);
     }
 
     @Test
     public void ShouldNotReturnFlightRecords_FromPreviousFlights(){
         //prepare
-        var flightRecord = FlightRecordEntityFixture.GetFlightRecordEntityFrom("10",
+        var flightRecord = FlightRecordEntityFixture.getFlightRecordEntityFrom("10",
                 LocalDate.now(),
                 LocalTime.now());
         flightRecord.setFlight(new FlightEntity(
@@ -120,7 +121,7 @@ public class DroneServiceTests {
                 .thenReturn(Optional.of(drone));
 
         //act
-        var result = sut.getDroneWithCurrentFlightTrace("dupa");
+        var result = sut.getDroneWithCurrentFlightTrace("krokodyl");
 
         //assert
         Assertions.assertTrue(result.isPresent());
@@ -134,30 +135,30 @@ public class DroneServiceTests {
         Mockito.when(droneRepository.findByRegistrationNumber(Mockito.any()))
                 .thenReturn(Optional.empty());
 
-        var result = sut.getDroneWithCurrentFlightTrace("dupsko");
+        var result = sut.getDroneWithCurrentFlightTrace("krokodylisko");
 
         Assertions.assertTrue(result.isEmpty());
     }
 
     private DroneEntity getDroneEntityWithMultipleFlightRecords(){
-        List<FlightRecordEntity> flightRecords = List.of(
-                FlightRecordEntityFixture.GetFlightRecordEntityFrom("1",
+        var flightRecords = List.of(
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
                         LocalDate.of(2012, 3, 3),
                         LocalTime.of(3, 3, 3, 3)),
 
-                FlightRecordEntityFixture.GetFlightRecordEntityFrom("1",
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
                         LocalDate.of(2012, 2, 3),
                         LocalTime.of(3, 3, 3, 3)),
 
-                FlightRecordEntityFixture.GetFlightRecordEntityFrom("1",
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
                         LocalDate.of(2012, 7, 3),
                         LocalTime.of(3, 3, 3, 3)),
 
-                FlightRecordEntityFixture.GetFlightRecordEntityFrom("1",
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
                         LocalDate.of(2012, 1, 3),
                         LocalTime.of(3, 3, 3, 3)),
 
-                FlightRecordEntityFixture.GetFlightRecordEntityFrom("1",
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
                         LocalDate.of(2012, 5, 3),
                         LocalTime.of(3, 3, 3, 3))
         );

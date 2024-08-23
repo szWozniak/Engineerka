@@ -23,7 +23,7 @@ public class DroneFromSimulatorFixtureBuilder {
             "operator",
             7,
             "Magenta",
-            "Twoj_Stary",
+            "Belmondo",
             "420-69-2137",
             "sign",
             "type",

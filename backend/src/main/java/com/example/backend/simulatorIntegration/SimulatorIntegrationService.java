@@ -34,6 +34,6 @@ public class SimulatorIntegrationService {
         if (file.delete())
             log.info("Deleted file: " + path);
         else
-            log.info("Failed to delete file: " + path);
+            log.error("Failed to delete file: " + path);
     }
 }

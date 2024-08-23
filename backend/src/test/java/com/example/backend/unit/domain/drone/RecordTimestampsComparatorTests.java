@@ -20,13 +20,13 @@ public class RecordTimestampsComparatorTests {
 
     @Test
     public void ShouldSortFlightRecordEntities_BasedOnDate_AndIfEqualBasedOnTime(){
-        var flightOne = FlightRecordEntityFixture.GetFlightRecordEntityFrom("3",
+        var flightOne = FlightRecordEntityFixture.getFlightRecordEntityFrom("3",
                 LocalDate.of(2012, 2, 2),
                 LocalTime.of(5, 5, 5, 5));
-        var flightTwo = FlightRecordEntityFixture.GetFlightRecordEntityFrom("1",
+        var flightTwo = FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
                 LocalDate.of(2024, 2, 2),
                 LocalTime.of(3, 3, 3, 3));
-        var flightThree = FlightRecordEntityFixture.GetFlightRecordEntityFrom("2",
+        var flightThree = FlightRecordEntityFixture.getFlightRecordEntityFrom("2",
                 LocalDate.of(2012, 2, 2),
                 LocalTime.of(7, 7, 7, 7));
         var listToSort = List.of(flightOne, flightTwo, flightThree);
