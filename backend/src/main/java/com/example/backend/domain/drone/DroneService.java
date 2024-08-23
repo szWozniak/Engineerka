@@ -2,7 +2,7 @@ package com.example.backend.domain.drone;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.drone.mappers.DroneEntityWithFlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
-import com.example.backend.simulatorIntegration.events.recordRegistration.model.DroneRecordToRegister;
+import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +18,6 @@ public class DroneService {
         this.droneRepository = droneRepository;
         this.flightRecordRepository = flightRecordRepository;
         this.droneToRegisterMapper = droneToRegisterMapper;
-    }
-
-    public List<DroneEntity> getAllByIds(List<String> ids){
-        return droneRepository.findAllById(ids);
     }
 
     public List<DroneEntity> getAllCurrentlyFlyingDrones(){
@@ -77,6 +73,10 @@ public class DroneService {
         }
 
         this.flightRecordRepository.saveAll(flightRecordEntites);
+    }
+
+    private List<DroneEntity> getAllByIds(List<String> ids){
+        return droneRepository.findAllById(ids);
     }
 
     private List<DroneEntity> filterDronesWithoutRegisteredPosition(List<DroneEntity> drones){
