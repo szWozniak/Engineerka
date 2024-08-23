@@ -27,11 +27,11 @@ public class FlightService {
 
         for (var droneRecord : droneRecords){
             var flight = new FlightEntity();
-            flightRepository.save(flight);
-
             var registrationNumber = droneRecord.getRegistrationNumber();
-
             var flightRecordsForFlight = getAllDroneRecordsFromCurrentFlight(registrationNumber);
+
+            flight.summarizeFlight(flightRecordsForFlight);
+            flightRepository.save(flight);
 
             for (var flightRecordEntity : flightRecordsForFlight){
                 flightRecordEntity.setFlight(flight);

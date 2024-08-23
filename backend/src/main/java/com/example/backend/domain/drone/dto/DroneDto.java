@@ -20,7 +20,7 @@ public class DroneDto {
     private final PositionDto currentPosition;
     private final List<PositionDto> trace;
 
-    public DroneDto(String registrationNumber, String country, String operator, int identification, String model,
+    private DroneDto (String registrationNumber, String country, String operator, int identification, String model,
                     String sign, String type, int heading, int speed, int fuel,
                     PositionDto currentPosition, List<PositionDto> trace) {
         this.registrationNumber = registrationNumber;

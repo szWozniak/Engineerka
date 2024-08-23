@@ -44,7 +44,7 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
 
         var validRecords = mapDronesFromSimulator(drones);
 
-        this.droneService.UpsertDronesRecords(validRecords);
+        this.droneService.upsertDronesRecords(validRecords);
 
         handleDronesThatFinishedFlight(validRecords);
 ;    }
