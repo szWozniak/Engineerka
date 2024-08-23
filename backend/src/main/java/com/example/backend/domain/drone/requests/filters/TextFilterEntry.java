@@ -1,3 +1,14 @@
 package com.example.backend.domain.drone.requests.filters;
 
-public record TextFilterEntry(String parameter, String value, String comparisonType){}
+import jakarta.validation.constraints.NotNull;
+
+public record TextFilterEntry(
+        @NotNull(message = "filter parameter cannot be null")
+        String parameter,
+
+        @NotNull(message = "filter value cannot be null")
+        String value,
+
+        @NotNull(message = "filter comparison type cannot be null")
+        String comparisonType
+){}

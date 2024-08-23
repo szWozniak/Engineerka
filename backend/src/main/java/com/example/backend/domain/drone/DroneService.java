@@ -1,8 +1,11 @@
 package com.example.backend.domain.drone;
+import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
+import com.example.backend.domain.drone.filtering.infrastructure.SpecificationHelper;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.drone.mappers.DroneEntityWithFlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +23,12 @@ public class DroneService {
         this.droneToRegisterMapper = droneToRegisterMapper;
     }
 
-    public List<DroneEntity> getAllCurrentlyFlyingDrones(){
-        var drones = droneRepository.getDroneEntitiesByIsAirborneIsTrue();
+    public List<DroneEntity> getAllCurrentlyFlyingDrones(List<IDroneFilter> filters){
+        List<Specification<DroneEntity>> specifications = filters.stream().map(IDroneFilter::toSpecification).toList();
+
+        var drones = droneRepository.getDroneEntitiesByIsAirborneIsTrue(
+                SpecificationHelper.combine(specifications)
+        );
 
         var dronesWithPosition = filterDronesWithoutRegisteredPosition(drones);
 
