@@ -18,8 +18,8 @@ public class DroneController {
     }
 
 
-    @GetMapping("")
-    public ResponseEntity<List<DroneDto>> get(){
+    @PostMapping("")
+    public ResponseEntity<List<DroneDto>> getCurrentlyFlyingDrones(@RequestBody GetCurrentlyFlyingDronesRequest request){
         var flyingDrones = droneService.getAllCurrentlyFlyingDrones();
 
         var dtos = flyingDrones.stream().map(DroneDto::fromDroneEntity).toList();
