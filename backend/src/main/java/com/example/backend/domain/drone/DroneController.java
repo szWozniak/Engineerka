@@ -1,6 +1,8 @@
 package com.example.backend.domain.drone;
 
 import com.example.backend.domain.drone.dto.DroneDto;
+import com.example.backend.domain.drone.dto.FlightSummaryDto;
+import com.example.backend.domain.flight.FlightEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +40,14 @@ public class DroneController {
         DroneDto dto = DroneDto.fromDroneEntity(drone.get());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/flights")
+    public ResponseEntity<List<FlightSummaryDto>> getFlights(@PathVariable String id) {
+        List<FlightEntity> flights = droneService.getDroneFinishedFlights(id);
+
+        List<FlightSummaryDto> flightSummaryDtos = flights.stream().map(FlightSummaryDto::fromFlightEntity).toList();
+
+        return new ResponseEntity<>(flightSummaryDtos, HttpStatus.OK);
     }
 }

@@ -10,8 +10,8 @@ import pika
 CENTER_LATITUDE = 50.0619
 CENTER_LONGITUDE = 19.9369
 NUMBER_OF_DRONES = 10
-MIN_NUMBER_OF_POINTS = 50
-MAX_NUMBER_OF_POINTS = 200
+MIN_NUMBER_OF_POINTS = 10
+MAX_NUMBER_OF_POINTS = 15
 MIN_STOP_TICKS = 5
 MAX_STOP_TICKS = 20
 MAX_FLIGHT_ALT = 120
@@ -181,7 +181,7 @@ def close_connection():
 channel = None
 drones = generate_drones()
 drones_stop_ticks = [0 for _ in range(NUMBER_OF_DRONES)]
-drones_tick_indexes = [-1 for _ in range(NUMBER_OF_DRONES)]
+drones_tick_indexes = [0 for _ in range(NUMBER_OF_DRONES)]
 
 if __name__ == "__main__":
     init_connection()
@@ -200,8 +200,8 @@ if __name__ == "__main__":
                 drones_stop_ticks[i] -= 1
                 continue
             
-            drones_tick_indexes[i] += 1
             index = drones_tick_indexes[i]
+            drones_tick_indexes[i] += 1
             flag = "UPD"
 
             if index == 0:
@@ -214,12 +214,13 @@ if __name__ == "__main__":
 
             drones_dfs.append(prepare_single_flight_tick(index, drones[i], drones[i]['flight'], file_name, day_date, day_time, flag))
 
-        combined_data = pd.concat(drones_dfs)
-        combined_data.to_csv(f"../shared_directory/{file_name}.csv", sep=',', index=False)
-        channel.basic_publish(exchange='fileExchange', routing_key='fileCreation', body=f"{file_name}.csv")
+        if(len(drones_dfs) > 0):
+            combined_data = pd.concat(drones_dfs)
+            combined_data.to_csv(f"../shared_directory/{file_name}.csv", sep=',', index=False)
+            channel.basic_publish(exchange='fileExchange', routing_key='fileCreation', body=f"{file_name}.csv")
 
-        print(f"New data saved to /shared_directory/{file_name}.csv")
+            print(f"New data saved to /shared_directory/{file_name}.csv")
 
-        time.sleep(2)
+            time.sleep(2)
     
     close_connection()
