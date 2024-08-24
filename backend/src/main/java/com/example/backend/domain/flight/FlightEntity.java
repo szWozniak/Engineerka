@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class FlightEntity {
@@ -42,12 +43,12 @@ public class FlightEntity {
     public void summarizeFlight(List<FlightRecordEntity> flightRecords) {
         this.flightRecords = flightRecords;
 
-        flightRecords.sort(new RecordTimestampsComparator());
+        var sortedFlightRecords = flightRecords.stream().sorted().toList();
 
-        var startDate = flightRecords.get(flightRecords.size()-1).getDate();
-        var startTime = flightRecords.get(flightRecords.size()-1).getTime();
-        var endDate = flightRecords.get(0).getDate();
-        var endTime = flightRecords.get(0).getTime();
+        var startDate = sortedFlightRecords.get(sortedFlightRecords.size()-1).getDate();
+        var startTime = sortedFlightRecords.get(sortedFlightRecords.size()-1).getTime();
+        var endDate = sortedFlightRecords.get(0).getDate();
+        var endTime = sortedFlightRecords.get(0).getTime();
 
         setFlightTimeBoundariesWithDuration(startDate, startTime, endDate, endTime);
     }
