@@ -1,43 +1,33 @@
 PROJECT_PATH = $(abspath .)
 GRADLE = ./gradlew
-stop-database:
-	@if docker container ls | grep "dronhub" ; then \
-		docker container stop dronhub_db; \
-		docker container rm dronhub_db; \
-		echo "Container stopped"; \
-	else \
-		echo "Container stopped"; \
-	fi
 
-create-volume:
-	@if docker volume ls | grep "postgres_db_volume" ; then\
-		echo "Volume already exists"; \
-	else \
-		echo "Creating volume for Postgres database"; \
-		docker volume create postgres_db_volume;\
-		echo "Created volume for postgres";\
-	fi
+build-frontend:
+	echo "Building frontend..."
+	cd frontend && npm run build
+	echo "Frontend built :)"
 
-clear-volume: stop-database
-	@if docker volume ls | grep postgres_db_volume; then\
-		docker volume rm postgres_db_volume;\
-		docker volume create postgres_db_volume;\
-	else \
-		echo "Creating volume for Postgres database";\
-		docker volume create postgres_db_volume;\
-		echo "Created volume for postgres";\
-	fi
+run-frontend: build-frontend
+	echo "Starting frontend"
+	cd frontend && npx serve -s build -l 80 &
 
-start-database:	stop-database create-volume
-	docker pull postgres:latest
-	
-	docker run -d -e POSTGRES_PASSWORD=zaq12wsx -e POSTGRES_USER=dronhub -e POSTGRES_DB=dronhub -v postgres_db_volume:/var/lib/postgresql/data \
-        --name dronhub_db -p 5432:5432 postgres:latest
+run-backend-develop:
+	echo "Starting backend in development mode. Have fun :D "
+	cd backend && $(GRADLE) run --args='--spring.profiles.active=develop' &
 
-start-rabbitmq: 
+run-backend:
+	echo "Starting backend in production mode. Behold the power of DronHub <3"
+	cd backend && $(GRADLE) run --args='--spring.profiles.active=prod' &
+
+run-simulator:
+	echo "Starting simulator. Watch out, Pythons can bite."
+	cd simulator && python3 simulator.py
+
+start-rabbitmq:
 	docker pull rabbitmq:3-management
-
 	docker run -d --name dronhub_rabbitmq -p 5672:5672 -p 5673:5673 -p 15672:15672 rabbitmq:3-management
 
-all: start-rabbitmq
-	cd backend && $(GRADLE) run
+develop: start-rabbitmq run-backend-develop run-frontend run-simulator
+	echo "Started application in development mode."
+
+all: start-rabbitmq run-backend run-frontend run-simulator
+	echo "Started application in production mode."
