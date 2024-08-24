@@ -6,19 +6,38 @@ import string
 import time
 import uuid
 import pika
+import constans as const
 
-CENTER_LATITUDE = 50.0619
-CENTER_LONGITUDE = 19.9369
-NUMBER_OF_DRONES = 10
-MIN_NUMBER_OF_POINTS = 10
-MAX_NUMBER_OF_POINTS = 15
-MIN_STOP_TICKS = 5
-MAX_STOP_TICKS = 20
-MAX_FLIGHT_ALT = 120
-COUNTRIES = ["Poland", "Germany", "France", "Spain"]
-OPERATORS = ["PL", "DE", "FR", "ES"]
-IDENTIFICATION_LABELS = ["Dark Red", "Red", "Gold", "Yellow", "Dark Green", "Green", "Aqua", "Dark Aqua", "Dark Blue", "Blue", "Light Purple", "Dark Purple", "White", "Gray", "Dark Gray", "Black"]
-MODELS = ["DJI Mini 4 Pro", "DJI Mini 3", "DJI Air 3", "DJI Mavic 3 Pro", "DJI Air 2S rival", "DJI Mavic 3 Classic"]
+def parse_config_file(file):
+    config = const.DEFAULT_CONFIG.copy()
+
+    file_context = file.read()
+    lines = file_context.splitlines()
+
+    for line in lines:
+        line = line.replace(" ", "")
+
+        if len(line) == 0 or "=" not in line:
+            continue
+
+        parameter_name, parameter_value = line.split("=")
+        parameter_value = int(parameter_value)
+
+        if parameter_name not in const.CONFIG_CONSTRAINTS:
+            raise Exception(f"{parameter_name} is invalid parameter")
+
+        if parameter_value < const.CONFIG_CONSTRAINTS[parameter_name]['min_value'] or parameter_value > const.CONFIG_CONSTRAINTS[parameter_name]['max_value']:
+            raise Exception(f"Value for {parameter_name} should be between {const.CONFIG_CONSTRAINTS[parameter_name]['min_value']} and {const.CONFIG_CONSTRAINTS[parameter_name]['max_value']}")
+
+        config[parameter_name] = parameter_value
+    
+    if const.DEFAULT_CONFIG['MAXIMUM_FLIGHT_LENGTH'] < const.DEFAULT_CONFIG['MINIMUM_FLIGHT_LENGTH']:
+        raise Exception("MINIMUM_FLIGHT_LENGTH cannot be greater then MAXIMUM_FLIGHT_LENGTH")
+    
+    if const.DEFAULT_CONFIG['MAXIMUM_FLIGHT_STOP_LENGTH'] < const.DEFAULT_CONFIG['MINIMUM_FLIGHT_STOP_LENGTH']:
+        raise Exception("MINIMUM_FLIGHT_STOP_LENGTH cannot be greater then MAXIMUM_FLIGHT_STOP_LENGTH")
+    
+    return config
 
 def generate_random_registration_number():
     letters = random.choices(string.ascii_uppercase, k=3)
@@ -29,11 +48,11 @@ def generate_random_registration_number():
     return ''.join(random_string)
 
 def generate_drone_data(i, drones_data):
-    country = random.choice(COUNTRIES)
-    operator = random.choice(OPERATORS)
+    country = random.choice(const.COUNTRIES)
+    operator = random.choice(const.OPERATORS)
     identification = random.randint(1, 16)
-    identification_label = IDENTIFICATION_LABELS[identification-1]
-    model = random.choice(MODELS)
+    identification_label = const.IDENTIFICATION_LABELS[identification-1]
+    model = random.choice(const.MODELS)
     registration_number = generate_random_registration_number()
     sign = operator + registration_number
 
@@ -73,7 +92,7 @@ def convert_to_dms(lat, lon):
     return lat_str, lon_str
 
 def generate_flight_ticks(starting_latitude, starting_longitude):
-    number_of_points = random.randint(MIN_NUMBER_OF_POINTS, MAX_NUMBER_OF_POINTS)
+    number_of_points = random.randint(CONFIG['MINIMUM_FLIGHT_LENGTH'], CONFIG['MAXIMUM_FLIGHT_LENGTH'])
     latitudes = [0 for _ in range(number_of_points)]
     longitudes = [0 for _ in range(number_of_points)]
     headings = np.zeros(number_of_points)
@@ -96,7 +115,7 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
         
         latitudes[i] = lat_before + step_length * np.cos(theta) * scale_factor_geo
         longitudes[i] = lon_before + step_length * np.sin(theta) * scale_factor_geo
-        altitudes[i] = min(alt_before + np.abs(step_length * shaping_factor[i]), MAX_FLIGHT_ALT)
+        altitudes[i] = min(alt_before + np.abs(step_length * shaping_factor[i]), const.MAX_FLIGHT_ALT)
         headings[i-1] = calculate_heading(lat_before, lon_before, latitudes[i], longitudes[i]) 
 
         lat_before = latitudes[i]
@@ -107,23 +126,37 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
 
     return number_of_points, latitudes, longitudes, headings, altitudes, fuel, speeds
 
+def random_point_in_sensor_range(sensor_lat, sensor_lon):
+    theta = random.uniform(0, 2 * np.pi)
+    
+    r = const.SENSOR_RANGE * np.sqrt(random.uniform(0, 1))
+    
+    delta_latitude = r * np.cos(theta)
+    delta_longitude = r * np.sin(theta) / np.cos(np.radians(sensor_lat))
+    
+    new_latitude = sensor_lat + delta_latitude
+    new_longitude = sensor_lon + delta_longitude
+    
+    return new_latitude, new_longitude
+
 def generate_drone_flight_data():
-    starting_latitude = CENTER_LATITUDE + random.uniform(-0.01, 0.01)
-    starting_longitude = CENTER_LONGITUDE + random.uniform(-0.01, 0.01)
+    sensor = random.choice(SENSORS)
+    starting_latitude, starting_longitude = random_point_in_sensor_range(sensor['latitude'], sensor['longitude'])
 
     number_of_points, latitudes, longitudes, headings, altitudes, fuel, speeds = generate_flight_ticks(starting_latitude, starting_longitude)
     
-    return {'number_of_points': number_of_points, 'latitudes': latitudes, 'longitudes': longitudes, 'headings': headings, 'speeds': speeds, 'altitudes': altitudes, 'fuel': fuel}
+    return {'number_of_points': number_of_points, 'sensor': sensor, 'latitudes': latitudes, 'longitudes': longitudes, 'headings': headings, 'speeds': speeds, 'altitudes': altitudes, 'fuel': fuel}
 
 def generate_drones():
-    drones_data = [None for _ in range(NUMBER_OF_DRONES)]
+    drones_data = [None for _ in range(CONFIG['NUMBER_OF_DRONES'])]
 
-    for i in range(NUMBER_OF_DRONES):
+    for i in range(CONFIG['NUMBER_OF_DRONES']):
         generate_drone_data(i, drones_data)
     
     return drones_data
 
 def prepare_single_flight_tick(index, drone_data, flight_data, file_name, day_date, day_time, flag):
+    sensor_lat, sensor_lon = convert_to_dms(flight_data['sensor']['latitude'],flight_data['sensor']['longitude'])
 
     return pd.DataFrame([{
             "Filename":file_name,
@@ -149,9 +182,9 @@ def prepare_single_flight_tick(index, drone_data, flight_data, file_name, day_da
             "Fuel":int(flight_data['fuel'][index]),
             "Signal":"Mode S",
             "Frequency":1000,
-            "SensorLat":"500342N",
-            "SensorLon":"195614E",
-            "SensorLabel":"Krakow1",
+            "SensorLat":sensor_lat,
+            "SensorLon":sensor_lon,
+            "SensorLabel":flight_data['sensor']['label'],
             "Notes":"Notatka numer 1",
             "Ext1":"Parametr ext 1",
             "Ext2":"Parametr ext 2",
@@ -178,15 +211,34 @@ def close_connection():
 
     channel.close()
 
-channel = None
-drones = generate_drones()
-drones_stop_ticks = [0 for _ in range(NUMBER_OF_DRONES)]
-drones_tick_indexes = [0 for _ in range(NUMBER_OF_DRONES)]
-
 if __name__ == "__main__":
+    try:
+        file = open("config.txt")
+
+        CONFIG = parse_config_file(file)
+        print("Loaded custom conifg")
+
+        file.close()
+    except OSError as ex:
+        print(f"Failed to load custom config: {ex}")
+        print("Using default config instead")
+        CONFIG = const.DEFAULT_CONFIG
+    except Exception as ex:
+        print(f"Failed to load custom config: {ex}")
+        print("Using default config instead")
+        CONFIG = const.DEFAULT_CONFIG
+        file.close()
+
+    channel = None
+
     init_connection()
 
     print("Simulator started...")
+
+    drones = generate_drones()
+    drones_stop_ticks = [0 for _ in range(CONFIG['NUMBER_OF_DRONES'])]
+    drones_tick_indexes = [0 for _ in range(CONFIG['NUMBER_OF_DRONES'])]
+    SENSORS = random.choices(const.ALL_SENSORS, k=CONFIG['NUMBER_OF_SENSORS'])
 
     while True:
         file_name = "File"+str(uuid.uuid4())
@@ -195,7 +247,7 @@ if __name__ == "__main__":
         day_time = now.strftime("%H:%M:%S.%f")[:-2]
         drones_dfs = []
 
-        for i in range(NUMBER_OF_DRONES):
+        for i in range(CONFIG['NUMBER_OF_DRONES']):
             if drones_stop_ticks[i] != 0:
                 drones_stop_ticks[i] -= 1
                 continue
@@ -210,7 +262,7 @@ if __name__ == "__main__":
             elif index == drones[i]['flight']['number_of_points'] - 1:
                 flag = "DROP"
                 drones_tick_indexes[i] = 0
-                drones_stop_ticks[i] = random.randint(MIN_STOP_TICKS, MAX_STOP_TICKS)
+                drones_stop_ticks[i] = random.randint(CONFIG['MINIMUM_FLIGHT_STOP_LENGTH'], CONFIG['MAXIMUM_FLIGHT_STOP_LENGTH'])
 
             drones_dfs.append(prepare_single_flight_tick(index, drones[i], drones[i]['flight'], file_name, day_date, day_time, flag))
 
