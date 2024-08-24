@@ -1,5 +1,5 @@
 import { defaultURL } from "../../common/api/apiHelpers";
-import { Filter } from "../../context/AppContext";
+import { Filter } from "../../filters/types";
 import { Drone, DroneSchema } from "../types";
 import mapFilters from "./mappers";
 

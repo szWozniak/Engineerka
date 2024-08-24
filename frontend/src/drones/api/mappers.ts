@@ -1,4 +1,5 @@
-import { Filter, FilterType, NumberFilter, TextFilter } from "../../context/AppContext";
+import { Filter, FilterType, NumberFilter, TextFilter } from "../../filters/types";
+
 
 interface SeperatedFilters {
     textFilters: TextFilter[],
@@ -13,12 +14,6 @@ const mapFilters = (filters: Filter[]): SeperatedFilters => {
     return {
         textFilters,
         numberFilters
-    }
-}
-
-const test = (filter: Filter) => {
-    if (filter.type === FilterType.Text){
-        console.log(filter)
     }
 }
 
