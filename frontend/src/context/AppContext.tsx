@@ -4,10 +4,12 @@ import { getCurrentDrones, getDroneByRegistration } from '../drones/api/api';
 import { Drone } from '../drones/types';
 
 type AppContextType = {
-  drones: Drone[] | undefined
-  selectedDrone: Drone | null
-  setSelectedDroneRegistration: Dispatch<SetStateAction<string | null>>
-  applyFilters: (filters: Filter[]) => void
+  drones: Drone[] | undefined;
+  selectedDrone: Drone | null;
+  areFiltersOpened: boolean;
+  setSelectedDroneRegistration: Dispatch<SetStateAction<string | null>>;
+  applyFilters: (filters: Filter[]) => void;
+  toggleFilters: () => void
 }
 
 type ComparisonType = "Equals" | "GreaterThan" | "LesserThan" 
@@ -38,28 +40,33 @@ export type Filter = TextFilter | NumberFilter;
 export const AppContext = createContext<AppContextType>({
   drones: [],
   selectedDrone: null,
+  areFiltersOpened: false,
   setSelectedDroneRegistration: () => { },
-  applyFilters: (f) => {}
+  applyFilters: (f) => {},
+  toggleFilters: () => {}
 })
 
 const AppContextProvider = ({ children }: {
   children: ReactNode
 }) => {
   const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
-  const [filtersState, setFiltersState] = useState<Filter[]>([])
+  const [filters, setFilters] = useState<Filter[]>([])
+  const [filtersState, setFiltersState] = useState<boolean>(false);
 
   useEffect(() => {
     console.log("Regi ", selectedDroneRegistration)
   }, [selectedDroneRegistration])
 
-  const applyFilters = (curFilters: Filter[]) => setFiltersState(curFilters
+  const applyFilters = (curFilters: Filter[]) => setFilters(curFilters
     .filter(f => f.value !== "")
     .map(f => structuredClone(f))
   )
 
+  const toggleFilters = () => setFiltersState(prev => !prev);
+
   const { data: drones } = useQuery({
-    queryKey: ["current-drones", filtersState],
-    queryFn: () => getCurrentDrones(filtersState),
+    queryKey: ["current-drones", filters],
+    queryFn: () => getCurrentDrones(filters),
     keepPreviousData: true,
     refetchInterval: 1000,
     enabled: true
@@ -76,7 +83,13 @@ const AppContextProvider = ({ children }: {
   })
 
   return (
-    <AppContext.Provider value={{ drones, selectedDrone: selectedDrone || null, setSelectedDroneRegistration, applyFilters }}>
+    <AppContext.Provider value={{ 
+        drones,
+        selectedDrone: selectedDrone || null,
+        setSelectedDroneRegistration, 
+        applyFilters,
+        areFiltersOpened: filtersState,
+        toggleFilters }}>
       {children}
     </AppContext.Provider>
   )

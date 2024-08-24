@@ -7,14 +7,14 @@ import FilterSection from './filters/FilterSection';
 
 const BottomMenu = () => {
   const [isOpened, setIsOpened] = useState(false)
-  const { drones } = useContext(AppContext)
+  const { drones, areFiltersOpened } = useContext(AppContext)
 
   return (
-    <div className={`bottomMenu ${isOpened && 'opened'}`}>
+    <div className={`bottomMenu ${isOpened && 'opened'}`} style={{"zIndex": 10}}>
       <div className="shadowArea" onClick={() => setIsOpened(prev => !prev)}>
         {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>
-      <FilterSection/>
+      {areFiltersOpened && <FilterSection isOpen={areFiltersOpened}/>}
       <BigTable drones={drones}/>
       
     </div>

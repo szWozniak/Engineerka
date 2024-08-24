@@ -11,7 +11,11 @@ const DefaultFiltersState: Filter[] = [
     }
 ]
 
-const FilterSection: React.FC = () => {
+interface props{
+    isOpen: boolean
+}
+
+const FilterSection: React.FC<props> = ({ isOpen }) => {
     const [filtersState, SetFiltersState] = useState<Filter[]>(DefaultFiltersState);
 
     const {applyFilters} = useContext(AppContext);
@@ -40,11 +44,10 @@ const FilterSection: React.FC = () => {
             }
             return f;
         }))
-
     }
 
     return(
-        <div className='content' style={{"height": "180px"}}>
+        <div className={`content filterSection ${isOpen && 'opened'}`} style={{"height": "180px", "zIndex": 1}}>
             Filtry
             <div className="filters">
                 <TextFilterField label="Registration Number"

@@ -8,7 +8,7 @@ const Sidebar: React.FC = () => {
 
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
-  const { drones, selectedDrone, setSelectedDroneRegistration } = useContext(AppContext)
+  const { drones, selectedDrone, setSelectedDroneRegistration, toggleFilters } = useContext(AppContext)
 
   const renderViewChangeButtons = () => {
     if (selectedDrone) {
@@ -31,9 +31,7 @@ const Sidebar: React.FC = () => {
         <MenuDropdown
           label={"Filtry"}
           opened={openedMenu === 1}
-          setOpened={(opened) => {
-            opened ? setOpenedMenu(1) : setOpenedMenu(null)
-          }}
+          setOpened={toggleFilters}
         />
         <MenuDropdown
           label={"Moje Drony"}
