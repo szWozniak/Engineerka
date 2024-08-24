@@ -5,6 +5,7 @@ import com.example.backend.domain.drone.DroneRepository;
 import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.flight.FlightEntity;
+import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixture;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
@@ -22,6 +23,7 @@ public class DroneServiceTests {
     private DroneService sut;
     private DroneRepository droneRepository;
     private FlightRecordRepository flightRecordRepository;
+    private FlightRepository flightRepository;
     private DroneToRegisterMapper droneToRegisterMapper;
 
     @BeforeEach
@@ -30,7 +32,8 @@ public class DroneServiceTests {
         droneRepository = Mockito.mock(DroneRepository.class);
         flightRecordRepository = Mockito.mock(FlightRecordRepository.class);
         droneToRegisterMapper = Mockito.mock(DroneToRegisterMapper.class);
-        sut = new DroneService(droneRepository, flightRecordRepository, droneToRegisterMapper);
+        flightRepository = Mockito.mock(FlightRepository.class);
+        sut = new DroneService(droneRepository, flightRecordRepository, droneToRegisterMapper, flightRepository);
     }
 
     @Test

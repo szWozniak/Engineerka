@@ -3,6 +3,8 @@ import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
 import com.example.backend.domain.drone.filtering.infrastructure.SpecificationHelper;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.drone.mappers.DroneEntityWithFlightRecordEntity;
+import com.example.backend.domain.flight.FlightEntity;
+import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,11 +18,13 @@ public class DroneService {
     private final DroneRepository droneRepository;
     private final FlightRecordRepository flightRecordRepository;
     private final DroneToRegisterMapper droneToRegisterMapper;
+    private final FlightRepository flightRepository;
 
-    public DroneService(DroneRepository droneRepository, FlightRecordRepository flightRecordRepository, DroneToRegisterMapper droneToRegisterMapper) {
+    public DroneService(DroneRepository droneRepository, FlightRecordRepository flightRecordRepository, DroneToRegisterMapper droneToRegisterMapper, FlightRepository flightRepository) {
         this.droneRepository = droneRepository;
         this.flightRecordRepository = flightRecordRepository;
         this.droneToRegisterMapper = droneToRegisterMapper;
+        this.flightRepository = flightRepository;
     }
 
     public List<DroneEntity> getAllCurrentlyFlyingDrones(List<IDroneFilter> filters){
@@ -52,7 +56,7 @@ public class DroneService {
         return Optional.of(drone);
     }
 
-    public void UpsertDronesRecords(List<DroneRecordToRegister> drones){
+    public void upsertDronesRecords(List<DroneRecordToRegister> drones){
         var dronesToRegisterRegistrationNumbers = drones.stream().map(DroneRecordToRegister::getRegistrationNumber).toList();
         var curDrones = getAllByIds(dronesToRegisterRegistrationNumbers);
 
@@ -101,5 +105,9 @@ public class DroneService {
         }
 
         return drones;
+    }
+
+    public List<FlightEntity> getDroneFinishedFlights(String id){
+        return flightRepository.findDistinctByFlightRecords_Drone_RegistrationNumberAndFlightRecords_FlightIsNotNull(id);
     }
 }

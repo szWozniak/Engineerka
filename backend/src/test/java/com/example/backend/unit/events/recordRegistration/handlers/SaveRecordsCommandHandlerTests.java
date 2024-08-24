@@ -47,7 +47,7 @@ public class SaveRecordsCommandHandlerTests {
         var expectedResultOne = DroneRecordToRegister.fromDroneFromSimulator(droneOne);
         var expectedResultTwo = DroneRecordToRegister.fromDroneFromSimulator(droneTwo);
 
-        Mockito.verify(droneService).UpsertDronesRecords(List.of(expectedResultOne, expectedResultTwo));
+        Mockito.verify(droneService).upsertDronesRecords(List.of(expectedResultOne, expectedResultTwo));
         Mockito.verify(flightService).createFlights(List.of(expectedResultOne));
     }
 
@@ -61,7 +61,7 @@ public class SaveRecordsCommandHandlerTests {
 
         sut.handle(command);
 
-        Mockito.verify(droneService, Mockito.never()).UpsertDronesRecords(Mockito.any());
+        Mockito.verify(droneService, Mockito.never()).upsertDronesRecords(Mockito.any());
         Mockito.verify(flightService, Mockito.never()).createFlights(Mockito.any());
     }
 
@@ -73,7 +73,7 @@ public class SaveRecordsCommandHandlerTests {
 
         sut.handle(command);
 
-        Mockito.verify(droneService, Mockito.never()).UpsertDronesRecords(List.of());
+        Mockito.verify(droneService, Mockito.never()).upsertDronesRecords(List.of());
         Mockito.verify(flightService, Mockito.never()).createFlights(List.of());
     }
 
@@ -87,7 +87,7 @@ public class SaveRecordsCommandHandlerTests {
 
         sut.handle(command);
 
-        Mockito.verify(droneService).UpsertDronesRecords(List.of());
+        Mockito.verify(droneService).upsertDronesRecords(List.of());
         Mockito.verify(flightService, Mockito.never()).createFlights(List.of());
     }
 }

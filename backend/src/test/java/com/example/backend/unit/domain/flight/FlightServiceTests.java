@@ -7,6 +7,7 @@ import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -80,6 +81,9 @@ public class FlightServiceTests {
         fakeDb.persistAndFlush(existingDroneEntity);
         fakeDb.persistAndFlush(existingFlightRecord);
 
+        Mockito.when(flightRecordRepository.findAllByDrone_RegistrationNumberAndFlight_IdIsNull(Mockito.any()))
+                .thenReturn(List.of(existingFlightRecord));
+
         //prepare droneRecordToRegister
         var droneToRegister = DroneRecordToRegister.fromDroneFromSimulator(new DroneFromSimulator(
                 "filename",
@@ -112,14 +116,14 @@ public class FlightServiceTests {
 
         //act
         sut.createFlights(List.of(droneToRegister));
-//
-//        //assert
-//        var flightRecordFromDb = flightRecordRepositoryForAssertions.findById("1");
-//        Assertions.assertTrue(flightRecordFromDb.isPresent());
-//        Assertions.assertNotNull(flightRecordFromDb.get().getFlight());
-//
-//        var flightFromDb = flightRepositoryForAssertions.findAll().get(0);
-//        Assertions.assertEquals(flightFromDb.getFlightRecords().get(0), existingFlightRecord);
+
+        //assert
+        var flightRecordFromDb = flightRecordRepositoryForAssertions.findById("1");
+        Assertions.assertTrue(flightRecordFromDb.isPresent());
+        Assertions.assertNotNull(flightRecordFromDb.get().getFlight());
+
+        var flightFromDb = flightRepositoryForAssertions.findAll().get(0);
+        Assertions.assertEquals(flightFromDb.getFlightRecords().get(0), existingFlightRecord);
     }
 
     private void setUpMockedRepositories(){
