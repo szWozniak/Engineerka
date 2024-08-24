@@ -1,4 +1,4 @@
-import React, { ReactNode, Dispatch, SetStateAction, createContext, useState, useEffect } from 'react';
+import React, { ReactNode, Dispatch, SetStateAction, createContext, useState, useEffect, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { getCurrentDrones, getDroneByRegistration } from '../drones/api/api';
 import { Drone } from '../drones/types';
@@ -17,16 +17,18 @@ export enum FilterType{
   Number
 }
 
+export type DroneParameter = keyof Drone
+
 export type TextFilter = {
   type: FilterType.Text
-  parameter: string,
+  parameter: DroneParameter,
   value: string,
   comparisonType: ComparisonType
 }
 
 export type NumberFilter = {
   type: FilterType.Number
-  parameter: string,
+  parameter: DroneParameter,
   value: number,
   comparisonType: ComparisonType
 }
@@ -44,17 +46,20 @@ const AppContextProvider = ({ children }: {
   children: ReactNode
 }) => {
   const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
-  const [filters, setFilters] = useState<Filter[]>([])
+  const [filtersState, setFiltersState] = useState<Filter[]>([])
 
   useEffect(() => {
     console.log("Regi ", selectedDroneRegistration)
   }, [selectedDroneRegistration])
 
-  const applyFilters = (curFilters: Filter[]) => setFilters(curFilters)
+  const applyFilters = (curFilters: Filter[]) => setFiltersState(curFilters
+    .filter(f => f.value !== "")
+    .map(f => structuredClone(f))
+  )
 
   const { data: drones } = useQuery({
-    queryKey: ["current-drones", filters],
-    queryFn: () => getCurrentDrones(filters),
+    queryKey: ["current-drones", filtersState],
+    queryFn: () => getCurrentDrones(filtersState),
     keepPreviousData: true,
     refetchInterval: 1000,
     enabled: true
