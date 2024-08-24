@@ -3,6 +3,7 @@ import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
 import com.example.backend.domain.drone.filtering.infrastructure.SpecificationHelper;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.drone.mappers.DroneEntityWithFlightRecordEntity;
+import com.example.backend.domain.drone.requests.currentlyFlyingDrones.CurrentlyFlyingDronesQuery;
 import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DroneService {
@@ -28,11 +30,11 @@ public class DroneService {
     }
 
     public List<DroneEntity> getAllCurrentlyFlyingDrones(List<IDroneFilter> filters){
-        List<Specification<DroneEntity>> specifications = filters.stream().map(IDroneFilter::toSpecification).toList();
+        List<Specification<DroneEntity>> specifications = filters.stream()
+                .map(IDroneFilter::toSpecification)
+                .collect(Collectors.toList());
 
-        var drones = droneRepository.getDroneEntitiesByIsAirborneIsTrue(
-                SpecificationHelper.combine(specifications)
-        );
+        var drones = new CurrentlyFlyingDronesQuery(droneRepository).execute(specifications);
 
         var dronesWithPosition = filterDronesWithoutRegisteredPosition(drones);
 
