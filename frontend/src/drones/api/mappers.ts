@@ -6,12 +6,19 @@ interface SeperatedFilters {
 }
 
 const mapFilters = (filters: Filter[]): SeperatedFilters => {
-    const textFilters = filters.filter(f => f.type === FilterType.Text);
-    const numberFilters = filters.filter(f => f.type === FilterType.Number);
+    //ok so webpack has some bug probably or something and it does not recognize discriminated unions
+    const textFilters: TextFilter[] = filters.filter(f => f.type === FilterType.Text) as TextFilter[];
+    const numberFilters: NumberFilter[] = filters.filter(f => f.type === FilterType.Number) as NumberFilter[];
 
     return {
         textFilters,
         numberFilters
+    }
+}
+
+const test = (filter: Filter) => {
+    if (filter.type === FilterType.Text){
+        console.log(filter)
     }
 }
 

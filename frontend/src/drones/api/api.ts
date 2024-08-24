@@ -14,6 +14,9 @@ const checkForErrors = (res: Response) => {
 export const getCurrentDrones = (filters: Filter[]): Promise<Drone[]> => {
     return fetch(`${defaultURL}/drones`, {
         method: "POST",
+        headers: {
+            "Content-type": "application/json" 
+        },
         body: JSON.stringify(mapFilters(filters))
     })
         .then(checkForErrors)

@@ -17,14 +17,14 @@ export enum FilterType{
   Number
 }
 
-export interface TextFilter{
+export type TextFilter = {
   type: FilterType.Text
   parameter: string,
   value: string,
   comparisonType: ComparisonType
 }
 
-export interface NumberFilter{
+export type NumberFilter = {
   type: FilterType.Number
   parameter: string,
   value: number,
