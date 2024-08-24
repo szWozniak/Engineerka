@@ -22,6 +22,7 @@ public class TextFilter implements IDroneFilter {
         this.comparisonType = comparisonType;
     }
 
+    //basically untestable
     @Override
     public Specification<DroneEntity> toSpecification() {
         return (Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {

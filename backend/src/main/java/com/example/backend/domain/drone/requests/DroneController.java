@@ -8,9 +8,11 @@ import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
 import com.example.backend.domain.drone.requests.currentlyFlyingDrones.GetCurrentlyFlyingDronesRequest;
 import com.example.backend.domain.drone.requests.currentlyFlyingDrones.mappers.DroneFiltersMapper;
+import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +29,7 @@ public class DroneController {
 
 
     @PostMapping("")
-    public ResponseEntity<List<DroneDto>> getCurrentlyFlyingDrones(@RequestBody GetCurrentlyFlyingDronesRequest request) throws BadRequestException{
+    public ResponseEntity<List<DroneDto>> getCurrentlyFlyingDrones(@Valid @RequestBody GetCurrentlyFlyingDronesRequest request) throws BadRequestException{
         List<IDroneFilter> mappedFilters;
         try{
             mappedFilters = DroneFiltersMapper.map(request.textFilters(), request.numberFilters());
