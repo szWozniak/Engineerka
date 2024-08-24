@@ -45,7 +45,7 @@ public class DroneServiceTests {
         );
 
         //act
-        var result = sut.getAllCurrentlyFlyingDrones(new ArrayList<>());
+        var result = sut.getCurrentlyFlyingDrones(new ArrayList<>());
 
         //assert
 
@@ -71,7 +71,7 @@ public class DroneServiceTests {
         );
 
         //act
-        var result = sut.getAllCurrentlyFlyingDrones(new ArrayList<>());
+        var result = sut.getCurrentlyFlyingDrones(new ArrayList<>());
 
         //assert
         Assertions.assertEquals(result.size(), 1);
@@ -87,7 +87,7 @@ public class DroneServiceTests {
                 new ArrayList<>()
         );
 
-        var result = sut.getAllCurrentlyFlyingDrones(new ArrayList<>());
+        var result = sut.getCurrentlyFlyingDrones(new ArrayList<>());
 
         Assertions.assertEquals(result.size(), 0);
     }

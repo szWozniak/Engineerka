@@ -12,7 +12,6 @@ import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class DroneController {
             throw new BadRequestException(ex.getMessage());
         }
 
-        var flyingDrones = droneService.getAllCurrentlyFlyingDrones(mappedFilters);
+        var flyingDrones = droneService.getCurrentlyFlyingDrones(mappedFilters);
 
         var dtos = flyingDrones.stream().map(DroneDto::fromDroneEntity).toList();
 

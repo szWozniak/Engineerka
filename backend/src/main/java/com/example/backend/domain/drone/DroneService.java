@@ -1,6 +1,5 @@
 package com.example.backend.domain.drone;
 import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
-import com.example.backend.domain.drone.filtering.infrastructure.SpecificationHelper;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.drone.mappers.DroneEntityWithFlightRecordEntity;
 import com.example.backend.domain.drone.requests.currentlyFlyingDrones.CurrentlyFlyingDronesQuery;
@@ -29,7 +28,7 @@ public class DroneService {
         this.flightRepository = flightRepository;
     }
 
-    public List<DroneEntity> getAllCurrentlyFlyingDrones(List<IDroneFilter> filters){
+    public List<DroneEntity> getCurrentlyFlyingDrones(List<IDroneFilter> filters){
         List<Specification<DroneEntity>> specifications = filters.stream()
                 .map(IDroneFilter::toSpecification)
                 .collect(Collectors.toList());
