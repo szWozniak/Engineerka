@@ -10,7 +10,7 @@ const BottomMenu = () => {
   const { drones, areFiltersOpened } = useContext(AppContext)
 
   return (
-    <div className={`bottomMenu ${isOpened && 'opened'}`} style={{"zIndex": 10}}>
+    <div className={`bottomMenu ${isOpened && 'opened'}`}>
       <div className="shadowArea" onClick={() => setIsOpened(prev => !prev)}>
         {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>

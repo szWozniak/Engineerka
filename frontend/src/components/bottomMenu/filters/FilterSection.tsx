@@ -48,11 +48,11 @@ const FilterSection: React.FC<props> = ({ isOpen }) => {
     }
 
     return(
-        <div className={`content filterSection ${isOpen && 'opened'}`} style={{"height": "180px", "zIndex": 1}}>
+        <div className={`content filterSection ${isOpen && 'opened'}`} style={{"height": "180px"}}>
             Filtry
             <div className="filters">
                 <TextFilterField label="Registration Number"
-                property="registrationNumber"
+                parameter="registrationNumber"
                 onChange={onTextFilterChange}
                 value={getTextFilter("registrationNumber").value}/>
             </div>

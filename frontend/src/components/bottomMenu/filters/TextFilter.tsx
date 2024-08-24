@@ -1,15 +1,17 @@
+import { DroneParameter } from "../../../filters/types";
+
 interface props{
     label: string
-    property: string, //change to be a key of Drone
+    parameter: DroneParameter,
     value: string,
     onChange: (property: string, value: string) => void,
 }
 
-const TextFilterField: React.FC<props> = ({label, property, value, onChange}) => {
+const TextFilterField: React.FC<props> = ({label, parameter, value, onChange}) => {
     return(
         <div className="filterContent">
             {label}
-            <input type="text" onChange={(e) => onChange(property, e.target.value)} value={value} className="textFilter"/>
+            <input type="text" onChange={(e) => onChange(parameter, e.target.value)} value={value} className="textFilter"/>
         </div>
     )
 }
