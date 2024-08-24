@@ -9,7 +9,7 @@ const TextFilterField: React.FC<props> = ({label, property, value, onChange}) =>
     return(
         <div className="filterContent">
             {label}
-            <input type="text" onChange={(e) => onChange(property, e.target.value)} value={value}/>
+            <input type="text" onChange={(e) => onChange(property, e.target.value)} value={value} className="textFilter"/>
         </div>
     )
 }
