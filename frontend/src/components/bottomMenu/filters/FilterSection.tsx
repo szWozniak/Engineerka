@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
-import { AppContext, Filter, FilterType, NumberFilter, TextFilter } from "../../../context/AppContext"
+import { AppContext } from "../../../context/AppContext"
 import TextFilterField from "./TextFilter"
+import { Filter, FilterType, NumberFilter, TextFilter } from "../../../filters/types";
 
 const DefaultFiltersState: Filter[] = [
     {
