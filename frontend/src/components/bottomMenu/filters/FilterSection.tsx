@@ -17,13 +17,13 @@ interface props{
 }
 
 const FilterSection: React.FC<props> = ({ isOpen }) => {
-    const [filtersState, SetFiltersState] = useState<Filter[]>(DefaultFiltersState);
-
     const {applyFilters} = useContext(AppContext);
+    
+    const [filtersState, SetFiltersState] = useState<Filter[]>(DefaultFiltersState);
 
     const getTextFilter = (parameter: string): TextFilter => {
         const searchedFilter = filtersState.find(f => f.parameter === parameter);
-        if (searchedFilter === undefined || searchedFilter.type !== FilterType.Text){
+        if (searchedFilter?.type !== FilterType.Text){
             throw new Error("Invalid parameter")
         }
 
@@ -32,7 +32,7 @@ const FilterSection: React.FC<props> = ({ isOpen }) => {
 
     const getNumberFilter = (parameter: string): NumberFilter => {
         const searchedFilter = filtersState.find(f => f.parameter === parameter);
-        if (searchedFilter === undefined || searchedFilter.type !== FilterType.Number){
+        if (searchedFilter?.type !== FilterType.Number){
             throw new Error("Invalid parameter")
         }
 
