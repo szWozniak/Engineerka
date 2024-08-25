@@ -1,0 +1,64 @@
+import { useContext, useState } from "react";
+import { AppContext } from "../../../context/AppContext"
+import TextFilterField from "./TextFilter"
+import { Filter, FilterType, NumberFilter, TextFilter } from "../../../filters/types";
+
+const DefaultFiltersState: Filter[] = [
+    {
+        type: FilterType.Text,
+        parameter: "registrationNumber",
+        value: "",
+        comparisonType: "Equals"
+    }
+]
+
+interface props{
+    isOpen: boolean
+}
+
+const FilterSection: React.FC<props> = ({ isOpen }) => {
+    const {applyFilters} = useContext(AppContext);
+    
+    const [filtersState, SetFiltersState] = useState<Filter[]>(DefaultFiltersState);
+
+    const getTextFilter = (parameter: string): TextFilter => {
+        const searchedFilter = filtersState.find(f => f.parameter === parameter);
+        if (searchedFilter?.type !== FilterType.Text){
+            throw new Error("Invalid parameter")
+        }
+
+        return searchedFilter;
+    }
+
+    const getNumberFilter = (parameter: string): NumberFilter => {
+        const searchedFilter = filtersState.find(f => f.parameter === parameter);
+        if (searchedFilter?.type !== FilterType.Number){
+            throw new Error("Invalid parameter")
+        }
+
+        return searchedFilter;
+    }
+    const onTextFilterChange = (parameter: string, value: string) => {
+        SetFiltersState(prev => prev.map(f => {
+            if (f.parameter === parameter && f.type === FilterType.Text){
+                f.value = value
+            }
+            return f;
+        }))
+    }
+
+    return(
+        <div className={`content filterSection ${isOpen && 'opened'}`} style={{"height": "180px"}}>
+            Filtry
+            <div className="filters">
+                <TextFilterField label="Registration Number"
+                parameter="registrationNumber"
+                onChange={onTextFilterChange}
+                value={getTextFilter("registrationNumber").value}/>
+            </div>
+            <button className="apply" onClick={() => applyFilters(filtersState)}>Zastosuj</button>
+        </div>
+    )
+}
+
+export default FilterSection

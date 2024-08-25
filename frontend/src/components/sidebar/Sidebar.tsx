@@ -9,7 +9,7 @@ const Sidebar: React.FC = () => {
 
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
-  const { drones, selectedDrone, setSelectedDroneRegistration, mapViewState, setMapViewState } = useContext(AppContext)
+  const { drones, selectedDrone, setSelectedDroneRegistration, toggleFiltersVisibility } = useContext(AppContext)
 
   const renderViewChangeButtons = () => {
     if (selectedDrone) {
@@ -29,15 +29,20 @@ const Sidebar: React.FC = () => {
       </div>
       <div className="scrollable">
         <div className="container">
-          <h3>DronHub</h3>
+          <h3>Menu</h3>
+          <MenuDropdown
+            label={"Filtry"}
+            opened={openedMenu === 1}
+            setOpened={toggleFiltersVisibility}
+          />
           <MenuDropdown
             label={"Moje Drony"}
-            opened={openedMenu === 1}
+            opened={openedMenu === 2}
             setOpened={(opened) => {
-              opened ? setOpenedMenu(1) : setOpenedMenu(null)
+              opened ? setOpenedMenu(2) : setOpenedMenu(null)
             }}
           />
-          {openedMenu === 1 && <div className="droneEntries">
+          {openedMenu === 2 && <div className="droneEntries">
             {drones?.map((drone: Drone, index) => (
               <div key={index} className="droneEntry" onClick={() => {
                 setSelectedDroneRegistration(drone.registrationNumber)
@@ -51,14 +56,14 @@ const Sidebar: React.FC = () => {
         </div>
         <div className="container">
           {selectedDrone && <div>
-            <h3>{selectedDrone.registrationNumber}</h3>
+            <div>Selected drone: {selectedDrone.registrationNumber}</div>
             <div>Latitude: <b>{selectedDrone.currentPosition.latitude.toFixed(4)}</b></div>
             <div>Longtitude: <b>{selectedDrone.currentPosition.longitude.toFixed(4)}</b></div>
             <div>Direction: <b>{selectedDrone.heading}</b></div>
             <div>Altitude: <b>{selectedDrone.currentPosition.altitude}</b></div>
             {renderViewChangeButtons()}
           </div>}
-        </div>
+        </div>  
       </div>
       <div className="container">
         DronHub.pl &copy; 2024
