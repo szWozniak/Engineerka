@@ -1,4 +1,4 @@
-package com.example.backend.domain.drone.requests.currentlyFlyingDrones.mappers;
+package com.example.backend.domain.drone.requests.mappers;
 
 import com.example.backend.domain.drone.filtering.filters.ComparisonType;
 import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
