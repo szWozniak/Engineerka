@@ -4,6 +4,8 @@ import { getCurrentDrones, getDroneByRegistration } from '../drones/api/api';
 import { Drone } from '../drones/types';
 import { Filter } from '../filters/types';
 import useFilters from '../filters/useFilters';
+import { INITIAL_VIEW_STATE } from '../mapConfig/initialView';
+import { MapViewState } from 'deck.gl';
 
 type AppContextType = {
   drones: Drone[] | undefined;
@@ -11,7 +13,9 @@ type AppContextType = {
   areFiltersOpened: boolean;
   setSelectedDroneRegistration: Dispatch<SetStateAction<string | null>>;
   applyFilters: (filters: Filter[]) => void;
-  toggleFiltersVisibility: () => void
+  toggleFiltersVisibility: () => void;
+  mapViewState: MapViewState;
+  setMapViewState: any;
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -20,7 +24,9 @@ export const AppContext = createContext<AppContextType>({
   areFiltersOpened: false,
   setSelectedDroneRegistration: () => { },
   applyFilters: (f) => {},
-  toggleFiltersVisibility: () => {}
+  toggleFiltersVisibility: () => {},
+  mapViewState: INITIAL_VIEW_STATE,
+  setMapViewState: () => { }
 })
 
 const AppContextProvider = ({ children }: {
@@ -28,10 +34,8 @@ const AppContextProvider = ({ children }: {
 }) => {
   const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
   const [filtersVisibility, setFiltersVisibility] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log("Regi ", selectedDroneRegistration)
-  }, [selectedDroneRegistration])
+  const [mapViewState, setMapViewState] = useState<MapViewState>(INITIAL_VIEW_STATE)
+  const [isMapUpdated, setIsMapUpdated] = useState<boolean>(false)
 
   const {filters, applyFilters} = useFilters();
 
@@ -55,6 +59,21 @@ const AppContextProvider = ({ children }: {
     enabled: true,
   })
 
+  useEffect(() => {
+    setIsMapUpdated(false)
+  }, [selectedDroneRegistration])
+
+  useEffect(() => {
+    if(!isMapUpdated) {
+      setMapViewState(prev => ({
+        ...prev,
+        ...selectedDrone?.currentPosition,
+        zoom: 15
+      }))
+      setIsMapUpdated(true)
+    }
+  }, [selectedDrone])
+
   return (
     <AppContext.Provider value={{ 
         drones,
@@ -62,7 +81,9 @@ const AppContextProvider = ({ children }: {
         setSelectedDroneRegistration, 
         applyFilters,
         areFiltersOpened: filtersVisibility,
-        toggleFiltersVisibility }}>
+        toggleFiltersVisibility,
+        mapViewState,
+        setMapViewState }}>
       {children}
     </AppContext.Provider>
   )
