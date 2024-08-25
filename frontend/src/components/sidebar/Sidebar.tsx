@@ -48,15 +48,6 @@ const Sidebar: React.FC = () => {
               </div>
             ))}
           </div>}
-          <button onClick={() => {
-            setMapViewState({
-              latitude: 50.0619,
-              longitude: 19.9369,
-              zoom: 13,
-              transitionInterpolator: new FlyToInterpolator({speed: 2}),
-              transitionDuration: 'auto'
-            })
-          }}>Test!</button>
         </div>
         <div className="container">
           {selectedDrone && <div>
