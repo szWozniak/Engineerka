@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 //DeckGL
 import DeckGL from '@deck.gl/react';
 //Map
@@ -10,14 +10,11 @@ import { registerLoaders } from '@loaders.gl/core';
 import Sidebar from './components/sidebar/Sidebar';
 import useLayerManager from './components/layers/useLayerManager';
 import { lightingEffect } from './mapConfig/effects';
-import { INITIAL_VIEW_STATE } from './mapConfig/initialView';
 import BottomMenu from './components/bottomMenu/BottomMenu';
-
-
+import { AppContext } from './context/AppContext';
+import { INITIAL_VIEW_STATE } from './mapConfig/initialView';
 
 registerLoaders([OBJLoader]);
-
-
 
 function getTooltip({ object }: any) {
   return (
@@ -31,6 +28,11 @@ function getTooltip({ object }: any) {
 }
 
 const App = () => {
+  const mapRef: any = useRef();
+  const { layers } = useLayerManager()
+
+  const { mapViewState, setMapViewState } = useContext(AppContext)
+
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {
       e.preventDefault();
@@ -40,10 +42,6 @@ const App = () => {
 
     return () => document.removeEventListener("contextmenu", disableDefaultRightClick)
   }, [])
-
-  const { layers } = useLayerManager()
-
-  const mapRef: any = useRef();
 
   return (
     <div>
@@ -58,10 +56,10 @@ const App = () => {
         pickingRadius={5}
         effects={[lightingEffect]}
         getTooltip={getTooltip}
-      // onViewStateChange={(view) => ({
-      //   ...view.viewState,
-      //   pitch: 0
-      // })}
+        viewState={mapViewState}
+        onViewStateChange={(newMapViewState) => {
+          setMapViewState(newMapViewState.viewState)
+        }}
       >
         <Map
           reuseMaps={true}
@@ -81,4 +79,3 @@ const App = () => {
 }
 
 export default App;
-
