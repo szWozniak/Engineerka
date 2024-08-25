@@ -7,11 +7,11 @@ spring:
     password: zaq12wsx
     driver-class-name: org.postgresql.Driver
   jpa:
-   hibernate:
+    hibernate:
       ddl-auto: update
-   properties:
+    properties:
       hibernate:
-      dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
   h2:
     console:
       enabled: true
