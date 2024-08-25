@@ -6,13 +6,13 @@ import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.domain.flight.FlightRepository;
-import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixture;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -39,12 +39,13 @@ public class DroneServiceTests {
     @Test
     public void ShouldReturnAllCurrentlyFlyingDrones_WithOnlyThreeLastPositions(){
         //prepare
-        Mockito.when(droneRepository.getDroneEntitiesByIsAirborneIsTrue()).thenReturn(
+        Mockito.when(droneRepository.findAll(Mockito.<Specification<DroneEntity>>any()))
+                .thenReturn(
                 List.of(getDroneEntityWithMultipleFlightRecords())
         );
 
         //act
-        var result = sut.getAllCurrentlyFlyingDrones();
+        var result = sut.getCurrentlyFlyingDrones(new ArrayList<>());
 
         //assert
 
@@ -63,14 +64,14 @@ public class DroneServiceTests {
         //prepare
 
         var droneWithRecords = getDroneEntityWithMultipleFlightRecords();
-        var droneWithoutRecords = DroneEntityFixture.getFlyingDrone(new ArrayList<>());
+        var droneWithoutRecords = DroneEntityFixture.getFlyingDrone(new ArrayList<>(), "megaDroniarz");
 
-        Mockito.when(droneRepository.getDroneEntitiesByIsAirborneIsTrue()).thenReturn(
+        Mockito.when(droneRepository.findAll(Mockito.<Specification<DroneEntity>>any())).thenReturn(
                 List.of(droneWithRecords, droneWithoutRecords)
         );
 
         //act
-        var result = sut.getAllCurrentlyFlyingDrones();
+        var result = sut.getCurrentlyFlyingDrones(new ArrayList<>());
 
         //assert
         Assertions.assertEquals(result.size(), 1);
@@ -82,11 +83,11 @@ public class DroneServiceTests {
 
     @Test
     public void ShouldReturnEmptyList_IfNoRegisteredDrones(){
-        Mockito.when(droneRepository.getDroneEntitiesByIsAirborneIsTrue()).thenReturn(
+        Mockito.when(droneRepository.findAll(Mockito.<Specification<DroneEntity>>any())).thenReturn(
                 new ArrayList<>()
         );
 
-        var result = sut.getAllCurrentlyFlyingDrones();
+        var result = sut.getCurrentlyFlyingDrones(new ArrayList<>());
 
         Assertions.assertEquals(result.size(), 0);
     }
@@ -119,7 +120,7 @@ public class DroneServiceTests {
 
         ));
 
-        var drone = DroneEntityFixture.getFlyingDrone(List.of(flightRecord));
+        var drone = DroneEntityFixture.getFlyingDrone(List.of(flightRecord), "megaDroniarz");
         Mockito.when(droneRepository.findByRegistrationNumber(Mockito.any()))
                 .thenReturn(Optional.of(drone));
 

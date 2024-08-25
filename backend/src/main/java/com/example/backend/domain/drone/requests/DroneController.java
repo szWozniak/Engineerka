@@ -1,8 +1,15 @@
-package com.example.backend.domain.drone;
+package com.example.backend.domain.drone.requests;
 
+import com.example.backend.domain.drone.DroneEntity;
+import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.drone.dto.DroneDto;
 import com.example.backend.domain.drone.dto.FlightSummaryDto;
 import com.example.backend.domain.flight.FlightEntity;
+import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
+import com.example.backend.domain.drone.requests.currentlyFlyingDrones.GetCurrentlyFlyingDronesRequest;
+import com.example.backend.domain.drone.requests.currentlyFlyingDrones.mappers.DroneFiltersMapper;
+import jakarta.validation.Valid;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +27,16 @@ public class DroneController {
     }
 
 
-    @GetMapping("")
-    public ResponseEntity<List<DroneDto>> get(){
-        var flyingDrones = droneService.getAllCurrentlyFlyingDrones();
+    @PostMapping("")
+    public ResponseEntity<List<DroneDto>> getCurrentlyFlyingDrones(@Valid @RequestBody GetCurrentlyFlyingDronesRequest request) throws BadRequestException{
+        List<IDroneFilter> mappedFilters;
+        try{
+            mappedFilters = DroneFiltersMapper.map(request.textFilters(), request.numberFilters());
+        }catch(IllegalArgumentException ex){
+            throw new BadRequestException(ex.getMessage());
+        }
+
+        var flyingDrones = droneService.getCurrentlyFlyingDrones(mappedFilters);
 
         var dtos = flyingDrones.stream().map(DroneDto::fromDroneEntity).toList();
 

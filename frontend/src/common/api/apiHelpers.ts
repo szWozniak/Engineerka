@@ -1,1 +1,1 @@
-export const defaultURL = "http://localhost:8080/"
+export const defaultURL = "http://localhost:8080"
