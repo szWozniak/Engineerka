@@ -28,15 +28,15 @@ public class DroneDto {
         this.sign = sign;
         this.type = type;
         this.heading = heading;
-        this.speed =  speed;
-        this.fuel =  fuel;
+        this.speed = speed;
+        this.fuel = fuel;
     }
 
     public static DroneDto fromDroneEntity(DroneEntity entity){
         var positions = entity.getFlightRecords();
         var currentPosition = positions.get(0);
 
-        return entity.getType().equals("Airborne")? new DroneDto(
+        return entity.isAirborne() ? new DroneDto(
             entity.getRegistrationNumber(),
             entity.getCountry(),
             entity.getOperator(),
