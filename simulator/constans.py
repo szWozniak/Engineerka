@@ -1,3 +1,4 @@
+TEST_SENSORS = [{'label': "Kraków", 'latitude': 50.0619, 'longitude': 19.9359}]
 ALL_SENSORS = [{'label': "Kraków", 'latitude': 50.0619, 'longitude': 19.9359},
            {'label': "Warszawa", 'latitude': 52.2319, 'longitude': 21.0067},
            {'label': "Katowice", 'latitude': 50.2598, 'longitude': 19.0215},
@@ -28,7 +29,7 @@ OPERATORS = ["PL", "DE", "FR", "ES", "IT", "UK", "NL", "BE", "AT", "SE", "NO", "
 IDENTIFICATION_LABELS = ["Dark Red", "Red", "Gold", "Yellow", "Dark Green", "Green", "Aqua", "Dark Aqua", "Dark Blue", "Blue", "Light Purple", "Dark Purple", "White", "Gray", "Dark Gray", "Black"]
 MODELS = ["DJI Mini 4 Pro", "DJI Mini 3", "DJI Air 3", "DJI Mavic 3 Pro", "DJI Air 2S rival", "DJI Mavic 3 Classic", "DJI Phantom 4 Pro V2.0", "DJI Mavic Air 2", "DJI FPV Combo", "DJI Inspire 2", "DJI Matrice 300 RTK", "DJI Mini 2", "DJI Mavic 2 Pro", "DJI Spark", "DJI Mavic Air", "DJI Phantom 4", "DJI Matrice 200", "DJI Mavic 2 Zoom", "DJI Phantom 3 Professional", "DJI Phantom 3 Standard", "DJI Matrice 600 Pro"]
 CONFIG_CONSTRAINTS = {'NUMBER_OF_DRONES': {'min_value': 10, 'max_value': 100},
-                      'NUMBER_OF_SENSORS': {'min_value': 1, 'max_value': 5},
+                      'NUMBER_OF_SENSORS': {'min_value': 1, 'max_value': 1},
                       'MINIMUM_FLIGHT_LENGTH': {'min_value': 10, 'max_value': 100},
                       'MAXIMUM_FLIGHT_LENGTH': {'min_value': 10, 'max_value': 100},
                       'MINIMUM_FLIGHT_STOP_LENGTH': {'min_value': 1, 'max_value': 20},

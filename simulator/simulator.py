@@ -238,7 +238,7 @@ if __name__ == "__main__":
     drones = generate_drones()
     drones_stop_ticks = [0 for _ in range(CONFIG['NUMBER_OF_DRONES'])]
     drones_tick_indexes = [0 for _ in range(CONFIG['NUMBER_OF_DRONES'])]
-    SENSORS = random.choices(const.ALL_SENSORS, k=CONFIG['NUMBER_OF_SENSORS'])
+    SENSORS = random.choices(const.TEST_SENSORS, k=CONFIG['NUMBER_OF_SENSORS'])
 
     while True:
         file_name = "File"+str(uuid.uuid4())
