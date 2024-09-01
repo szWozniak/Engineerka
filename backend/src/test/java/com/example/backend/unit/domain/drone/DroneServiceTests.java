@@ -41,7 +41,7 @@ public class DroneServiceTests {
         //prepare
         Mockito.when(droneRepository.findAll(Mockito.<Specification<DroneEntity>>any()))
                 .thenReturn(
-                List.of(getDroneEntityWithMultipleFlightRecords())
+                List.of(getCurrentlyFlyingDroneEntityWithMultipleFlightRecords())
         );
 
         //act
@@ -63,7 +63,7 @@ public class DroneServiceTests {
     public void ShouldReturnAllCurrentlyFlyingDrones_ThatHaveAtLeastOneRegisteredPosition(){
         //prepare
 
-        var droneWithRecords = getDroneEntityWithMultipleFlightRecords();
+        var droneWithRecords = getCurrentlyFlyingDroneEntityWithMultipleFlightRecords();
         var droneWithoutRecords = DroneEntityFixture.getFlyingDrone(new ArrayList<>(), "megaDroniarz");
 
         Mockito.when(droneRepository.findAll(Mockito.<Specification<DroneEntity>>any())).thenReturn(
@@ -95,7 +95,7 @@ public class DroneServiceTests {
     @Test
     public void ShouldReturnDrone_WithAllFlightsRecordFromCurrentFlight(){
         //prepare
-        var drone = getDroneEntityWithMultipleFlightRecords();
+        var drone = getCurrentlyFlyingDroneEntityWithMultipleFlightRecords();
         Mockito.when(droneRepository.findByRegistrationNumber(Mockito.any()))
                 .thenReturn(Optional.of(drone));
 
@@ -144,7 +144,64 @@ public class DroneServiceTests {
         Assertions.assertTrue(result.isEmpty());
     }
 
+    @Test
+    public void shouldReturnAllDrones_WithAllPositions(){
+        Mockito.when(droneRepository.findAll(Mockito.<Specification<DroneEntity>>any()))
+                .thenReturn(
+                        List.of(getCurrentlyFlyingDroneEntityWithMultipleFlightRecords(), getDroneEntityWithMultipleFlightRecords())
+                );
+
+        var result = sut.getDrones(new ArrayList<>());
+
+        Assertions.assertEquals(result.size(), 2);
+
+        var flights1 = result.get(0).getFlightRecords();
+        var flights2 = result.get(1).getFlightRecords();
+
+        Assertions.assertEquals(flights1.size(), 5);
+        Assertions.assertEquals(flights2.size(),5);
+    }
+
     private DroneEntity getDroneEntityWithMultipleFlightRecords(){
+        var flightRecords = List.of(
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("2",
+                        LocalDate.of(2012, 3, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("2",
+                        LocalDate.of(2012, 2, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("2",
+                        LocalDate.of(2012, 7, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("2",
+                        LocalDate.of(2012, 1, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("2",
+                        LocalDate.of(2012, 5, 3),
+                        LocalTime.of(3, 3, 3, 3))
+        );
+
+        var droneEntity = new DroneEntity(
+                "gigaDron",
+                false,
+                "Belarus",
+                "PL",
+                4,
+                "yellow",
+                "najlepszy",
+                "yes",
+                "Grounded"
+        );
+        droneEntity.setFlightRecords(flightRecords);
+
+        return droneEntity;
+    }
+
+    private DroneEntity getCurrentlyFlyingDroneEntityWithMultipleFlightRecords(){
         var flightRecords = List.of(
                 FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
                         LocalDate.of(2012, 3, 3),
@@ -176,7 +233,7 @@ public class DroneServiceTests {
                 "pink",
                 "szybcior",
                 "znak",
-                "fasd"
+                "Airborne"
         );
         droneEntity.setFlightRecords(flightRecords);
 
