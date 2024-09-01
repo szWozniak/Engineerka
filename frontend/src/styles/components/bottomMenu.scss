@@ -94,6 +94,24 @@
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 
+    & button {
+      font-size: 15px;
+      margin: 3px;
+      width: 45px;
+    }
+
+    & .operator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      height: 100%;
+
+      & img {
+        height: 30px;
+      }
+    }
+
     & th {
       letter-spacing: 2px;
       font-weight: 600;
