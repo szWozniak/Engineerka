@@ -1,7 +1,7 @@
 import React, { ReactNode, Dispatch, SetStateAction, createContext, useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { getCurrentDrones, getDroneByRegistration } from '../drones/api/api';
-import { Drone } from '../drones/types';
+import { getAllDrones, getCurrentDrones, getDroneByRegistration } from '../drones/api/api';
+import { Drone, DroneBase } from '../drones/types';
 import { Filter } from '../filters/types';
 import useFilters from '../filters/useFilters';
 import { INITIAL_VIEW_STATE } from '../mapConfig/initialView';
@@ -9,6 +9,7 @@ import { MapViewState } from 'deck.gl';
 
 type AppContextType = {
   drones: Drone[] | undefined;
+  allDrones: DroneBase[] | undefined;
   selectedDrone: Drone | null;
   areFiltersOpened: boolean;
   setSelectedDroneRegistration: Dispatch<SetStateAction<string | null>>;
@@ -20,6 +21,7 @@ type AppContextType = {
 
 export const AppContext = createContext<AppContextType>({
   drones: [],
+  allDrones: [],
   selectedDrone: null,
   areFiltersOpened: false,
   setSelectedDroneRegistration: () => { },
@@ -41,14 +43,23 @@ const AppContextProvider = ({ children }: {
 
   const toggleFiltersVisibility = () => setFiltersVisibility(prev => !prev);
 
+
   const { data: drones } = useQuery({
-    queryKey: ["current-drones", filters],
+    queryKey: ["current-drones", JSON.stringify(filters)],
     queryFn: () => getCurrentDrones(filters),
     keepPreviousData: true,
     refetchInterval: 1000,
     enabled: true
   })
 
+  const { data: allDrones } = useQuery({
+    queryKey: ["all-drones", JSON.stringify(filters)],
+    queryFn: () => getAllDrones(filters),
+    keepPreviousData: true,
+    refetchInterval: 1000,
+    enabled: true
+  })
+  
   const { data: selectedDrone } = useQuery({
     queryKey: ['drone', selectedDroneRegistration],
     queryFn:  () => {
@@ -62,6 +73,12 @@ const AppContextProvider = ({ children }: {
   useEffect(() => {
     setIsMapUpdated(false)
   }, [selectedDroneRegistration])
+
+  useEffect(() => {
+    if(!drones?.find(drone => drone.registrationNumber === selectedDroneRegistration)) {
+      setSelectedDroneRegistration(null)
+    }
+  }, [drones])
 
   useEffect(() => {
     if(!isMapUpdated) {
@@ -78,6 +95,7 @@ const AppContextProvider = ({ children }: {
   return (
     <AppContext.Provider value={{ 
         drones,
+        allDrones,
         selectedDrone: selectedDrone || null,
         setSelectedDroneRegistration, 
         applyFilters,
