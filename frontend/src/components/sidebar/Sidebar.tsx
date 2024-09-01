@@ -46,7 +46,6 @@ const Sidebar: React.FC = () => {
               <div key={index} className="droneEntry" onClick={() => {
                 setSelectedDroneRegistration(drone.registrationNumber)
               }}>
-                <span>{drone.identification}. </span>
                 <span>{drone.registrationNumber} </span>
                 <span className="extraLabel">{drone.type}</span>
               </div>
