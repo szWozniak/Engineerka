@@ -68,6 +68,7 @@ const AppContextProvider = ({ children }: {
       setMapViewState(prev => ({
         ...prev,
         ...selectedDrone?.currentPosition,
+        altitude: Math.max(selectedDrone?.currentPosition?.altitude || 1, 1),
         zoom: 15
       }))
       setIsMapUpdated(true)
