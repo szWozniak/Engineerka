@@ -3,7 +3,6 @@ import { Drone } from '../../drones/types'
 import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
 import { AppContext } from '../../context/AppContext';
-import { FlyToInterpolator, MapViewState } from 'deck.gl';
 
 const Sidebar: React.FC = () => {
 
