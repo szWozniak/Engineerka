@@ -88,7 +88,7 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
     speeds = np.random.uniform(25, 35, number_of_points)
     lat_before = starting_latitude
     lon_before = starting_longitude
-    alt_before = 0
+    alt_before = 1
 
     for i in range(number_of_points):
         step_length = np.random.pareto(alpha)
