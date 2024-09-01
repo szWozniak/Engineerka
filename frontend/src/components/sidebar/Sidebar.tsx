@@ -35,7 +35,7 @@ const Sidebar: React.FC = () => {
             setOpened={toggleFiltersVisibility}
           />
           <MenuDropdown
-            label={"Moje Drony"}
+            label={"Latające Drony"}
             opened={openedMenu === 2}
             setOpened={(opened) => {
               opened ? setOpenedMenu(2) : setOpenedMenu(null)

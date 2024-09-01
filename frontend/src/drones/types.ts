@@ -8,7 +8,7 @@ const dronePositionSchema = z.object({
 
 export type dronePosition = z.infer<typeof dronePositionSchema>;
 
-export const DroneSchema = z.object({
+export const DroneBaseSchema = z.object({
   registrationNumber: z.string(),
   country: z.string(),
   operator: z.string(),
@@ -16,13 +16,19 @@ export const DroneSchema = z.object({
   model: z.string(),
   sign: z.string(),
   type: z.string(),
-  heading: z.number(),
-  speed: z.number(),
-  fuel: z.number(),
-  currentPosition: dronePositionSchema,
-  trace: dronePositionSchema.array()
 })
 
+export const DroneSchema = DroneBaseSchema.merge(
+  z.object({
+    heading: z.number(),
+    speed: z.number(),
+    fuel: z.number(),
+    currentPosition: dronePositionSchema,
+    trace: dronePositionSchema.array()
+  })
+)
+
+export type DroneBase = z.infer<typeof DroneBaseSchema>
 export type Drone = z.infer<typeof DroneSchema>;
 
 export interface MapDrone extends Drone {

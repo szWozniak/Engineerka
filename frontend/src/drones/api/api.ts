@@ -1,6 +1,6 @@
 import { defaultURL } from "../../common/api/apiHelpers";
 import { Filter } from "../../filters/types";
-import { Drone, DroneSchema } from "../types";
+import { Drone, DroneBase, DroneBaseSchema, DroneSchema } from "../types";
 import mapFilters from "./mappers";
 
 const checkForErrors = (res: Response) => {
@@ -9,6 +9,19 @@ const checkForErrors = (res: Response) => {
     }
 
     return res;
+}
+
+export const getAllDrones = (filters: Filter[]): Promise<DroneBase[]> => {
+    return fetch(`${defaultURL}/drones/`, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json" 
+        },
+        body: JSON.stringify(mapFilters(filters))
+    })
+        .then(checkForErrors)
+        .then(r => r.json())
+        .then(DroneBaseSchema.array().parse) 
 }
 
 export const getCurrentDrones = (filters: Filter[]): Promise<Drone[]> => {

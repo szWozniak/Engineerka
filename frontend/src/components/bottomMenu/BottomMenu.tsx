@@ -7,7 +7,7 @@ import FilterSection from './filters/FilterSection';
 
 const BottomMenu = () => {
   const [isOpened, setIsOpened] = useState(false)
-  const { drones, areFiltersOpened } = useContext(AppContext)
+  const { allDrones, areFiltersOpened } = useContext(AppContext)
 
   return (
     <div className={`bottomMenu ${isOpened && 'opened'}`}>
@@ -15,7 +15,7 @@ const BottomMenu = () => {
         {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>
       {areFiltersOpened && <FilterSection isOpen={areFiltersOpened}/>}
-      <BigTable drones={drones}/>
+      <BigTable drones={allDrones}/>
       
     </div>
   );
