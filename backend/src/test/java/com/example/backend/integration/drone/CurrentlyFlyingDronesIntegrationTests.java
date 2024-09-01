@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @DataJpaTest
-public class currentlyFlyingDronesIntegrationTests {
+public class CurrentlyFlyingDronesIntegrationTests {
     private DroneService droneService;
     private DroneToRegisterMapper droneToRegisterMapper;
 

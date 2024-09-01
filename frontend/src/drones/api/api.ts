@@ -12,7 +12,7 @@ const checkForErrors = (res: Response) => {
 }
 
 export const getCurrentDrones = (filters: Filter[]): Promise<Drone[]> => {
-    return fetch(`${defaultURL}/drones`, {
+    return fetch(`${defaultURL}/drones/currentlyFlying`, {
         method: "POST",
         headers: {
             "Content-type": "application/json" 
@@ -25,7 +25,7 @@ export const getCurrentDrones = (filters: Filter[]): Promise<Drone[]> => {
 }
 
 export const getDroneByRegistration = (registration: string): Promise<Drone> => {
-    return fetch(`${defaultURL}/drones/${registration}`, {
+    return fetch(`${defaultURL}/drones/currentlyFlying/${registration}`, {
         method: "GET",
     })
         .then(checkForErrors)

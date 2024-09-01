@@ -3,7 +3,7 @@ package com.example.backend.domain.drone.dto;
 import com.example.backend.domain.drone.DroneEntity;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Optional;
 
 @Data
 public class DroneDto {
@@ -14,15 +14,12 @@ public class DroneDto {
     private final String model;
     private final String sign;
     private final String type;
-    private final int heading;
-    private final int speed;
-    private final int fuel;
-    private final PositionDto currentPosition;
-    private final List<PositionDto> trace;
+    private final Optional<Integer> heading;
+    private final Optional<Integer> speed;
+    private final Optional<Integer> fuel;
 
-    private DroneDto (String registrationNumber, String country, String operator, int identification, String model,
-                    String sign, String type, int heading, int speed, int fuel,
-                    PositionDto currentPosition, List<PositionDto> trace) {
+    private DroneDto(String registrationNumber, String country, String operator, int identification, String model,
+                     String sign, String type, Optional<Integer> heading, Optional<Integer> speed, Optional<Integer> fuel){
         this.registrationNumber = registrationNumber;
         this.country = country;
         this.operator = operator;
@@ -33,34 +30,32 @@ public class DroneDto {
         this.heading = heading;
         this.speed = speed;
         this.fuel = fuel;
-        this.currentPosition = currentPosition;
-        this.trace = trace;
     }
 
     public static DroneDto fromDroneEntity(DroneEntity entity){
         var positions = entity.getFlightRecords();
         var currentPosition = positions.get(0);
-        var trace = positions
-                .subList(1 , positions.size())
-                .stream().map(position -> new PositionDto(position.getLatitude(),
-                        position.getLongitude(),
-                        position.getAltitude()))
-                .toList();
 
-         return new DroneDto(
-                 entity.getRegistrationNumber(),
-                 entity.getCountry(),
-                 entity.getOperator(),
-                 entity.getIdentification(),
-                 entity.getModel(),
-                 entity.getSign(),
-                 entity.getType(),
-                currentPosition.getHeading(),
-                currentPosition.getSpeed(),
-                currentPosition.getFuel(),
-                new PositionDto(currentPosition.getLatitude(), currentPosition.getLongitude(),
-                        currentPosition.getAltitude()),
-                trace
-        );
+        return entity.isAirborne() ? new DroneDto(
+            entity.getRegistrationNumber(),
+            entity.getCountry(),
+            entity.getOperator(),
+            entity.getIdentification(),
+            entity.getModel(),
+            entity.getSign(),
+            entity.getType(),
+            Optional.of(currentPosition.getHeading()),
+            Optional.of(currentPosition.getSpeed()),
+            Optional.of(currentPosition.getFuel())
+        ) : new DroneDto(entity.getRegistrationNumber(),
+                entity.getCountry(),
+                entity.getOperator(),
+                entity.getIdentification(),
+                entity.getModel(),
+                entity.getSign(),
+                entity.getType(),
+                null,
+                null,
+                null);
     }
 }

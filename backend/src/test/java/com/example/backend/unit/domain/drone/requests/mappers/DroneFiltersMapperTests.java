@@ -3,7 +3,7 @@ package com.example.backend.unit.domain.drone.requests.mappers;
 import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
 import com.example.backend.domain.drone.filtering.filters.NumberFilter;
 import com.example.backend.domain.drone.filtering.filters.TextFilter;
-import com.example.backend.domain.drone.requests.currentlyFlyingDrones.mappers.DroneFiltersMapper;
+import com.example.backend.domain.drone.requests.mappers.DroneFiltersMapper;
 import com.example.backend.domain.drone.requests.filters.NumberFilterEntry;
 import com.example.backend.domain.drone.requests.filters.TextFilterEntry;
 import org.junit.jupiter.api.Assertions;
