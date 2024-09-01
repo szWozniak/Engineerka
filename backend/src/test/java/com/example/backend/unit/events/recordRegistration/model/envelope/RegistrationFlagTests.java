@@ -13,13 +13,13 @@ public class RegistrationFlagTests {
     @ParameterizedTest
     @MethodSource("provideAirbourneEnums")
     public void mapToIsAirbourneShouldReturnTrue_WhenGivenOtherFlagThanDrop(RegistrationFlag flag){
-        boolean result = RegistrationFlag.MapToAirbourne(flag);
+        boolean result = RegistrationFlag.mapToAirborne(flag);
         Assertions.assertTrue(result);
     }
 
     @Test
     public void mapToIsAirbourneShouldReturnFalse_WhenGivenRegistrationFlagOfDrop(){
-        boolean result = RegistrationFlag.MapToAirbourne(RegistrationFlag.DROP);
+        boolean result = RegistrationFlag.mapToAirborne(RegistrationFlag.DROP);
         Assertions.assertFalse(result);
     }
 
