@@ -111,24 +111,6 @@
     margin-top: 8px;
   }
 
-  & .sidebarButton {
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: 1px solid rgb(154, 154, 154);
-    border-radius: 10px;
-    color: white;
-    background-color: transparent;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 22px;
-
-    &:hover {
-      cursor: pointer;
-      background-color: rgb(154, 154, 154, 0.3);
-    }
-  }
-
   ::-webkit-scrollbar {
     width: 10px;
   }
