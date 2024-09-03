@@ -20,4 +20,4 @@ jobs:
         uses: gradle/action/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
 
       - name: Run tests
-        run: ./gradlew test
+        run: ./backend/gradlew test
