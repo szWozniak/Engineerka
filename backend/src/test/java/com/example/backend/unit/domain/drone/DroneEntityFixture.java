@@ -7,9 +7,9 @@ import java.util.List;
 
 public class DroneEntityFixture {
 
-    private static DroneEntity getDefaultDrone(List<FlightRecordEntity> flights, boolean isAirbourne){
+    private static DroneEntity getDefaultDrone(List<FlightRecordEntity> flights, boolean isAirbourne, String registrationNumber){
         var drone = new DroneEntity(
-                "megaDroniarz",
+                registrationNumber,
                 isAirbourne,
                 "Hawana",
                 "Michael Jackson",
@@ -25,11 +25,11 @@ public class DroneEntityFixture {
         return drone;
     }
 
-    public static DroneEntity getFlyingDrone(List<FlightRecordEntity> flights){
-        return getDefaultDrone(flights, true);
+    public static DroneEntity getFlyingDrone(List<FlightRecordEntity> flights, String registrationNumber){
+        return getDefaultDrone(flights, true, registrationNumber);
     }
 
-    public static DroneEntity getNotFlyingDrone(List<FlightRecordEntity> flights){
-        return getDefaultDrone(flights, false);
+    public static DroneEntity getNotFlyingDrone(List<FlightRecordEntity> flights, String registrationNumber){
+        return getDefaultDrone(flights, false, registrationNumber);
     }
 }

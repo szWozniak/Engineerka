@@ -11,6 +11,10 @@
   overflow: hidden;
   pointer-events: all;
 
+  .scrollable {
+    overflow: auto;
+  }
+
 
   & .header {
     width: calc(100% - 40px);
@@ -123,5 +127,28 @@
       cursor: pointer;
       background-color: rgb(154, 154, 154, 0.3);
     }
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #2c2c2c;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #717171;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+  }
+  
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #717171 #2c2c2c;
   }
 }
