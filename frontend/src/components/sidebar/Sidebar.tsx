@@ -3,7 +3,6 @@ import { Drone } from '../../drones/types'
 import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
 import { AppContext } from '../../context/AppContext';
-import { FlyToInterpolator, MapViewState } from 'deck.gl';
 
 const Sidebar: React.FC = () => {
 
@@ -36,7 +35,7 @@ const Sidebar: React.FC = () => {
             setOpened={toggleFiltersVisibility}
           />
           <MenuDropdown
-            label={"Moje Drony"}
+            label={"Latające Drony"}
             opened={openedMenu === 2}
             setOpened={(opened) => {
               opened ? setOpenedMenu(2) : setOpenedMenu(null)
@@ -47,7 +46,6 @@ const Sidebar: React.FC = () => {
               <div key={index} className="droneEntry" onClick={() => {
                 setSelectedDroneRegistration(drone.registrationNumber)
               }}>
-                <span>{drone.identification}. </span>
                 <span>{drone.registrationNumber} </span>
                 <span className="extraLabel">{drone.type}</span>
               </div>

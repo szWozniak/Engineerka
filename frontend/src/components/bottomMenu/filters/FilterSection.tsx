@@ -52,9 +52,10 @@ const FilterSection: React.FC<props> = ({ isOpen }) => {
             Filtry
             <div className="filters">
                 <TextFilterField label="Registration Number"
-                parameter="registrationNumber"
-                onChange={onTextFilterChange}
-                value={getTextFilter("registrationNumber").value}/>
+                    parameter="registrationNumber"
+                    onChange={onTextFilterChange}
+                    value={getTextFilter("registrationNumber").value}
+                />
             </div>
             <button className="apply" onClick={() => applyFilters(filtersState)}>Zastosuj</button>
         </div>

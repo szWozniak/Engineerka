@@ -6,10 +6,17 @@ public enum RegistrationFlag {
     DROP,
     EXT;
 
-    public static boolean MapToAirbourne(RegistrationFlag flag){
+    public static boolean mapToAirborne(RegistrationFlag flag){
         return switch (flag){
             case BEG, UPD, EXT -> true;
             case DROP  -> false;
+        };
+    }
+
+    public static String mapToType(RegistrationFlag flag){
+        return switch (flag){
+            case BEG, UPD, EXT -> "Airborne";
+            case DROP  -> "Grounded";
         };
     }
 }

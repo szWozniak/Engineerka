@@ -69,13 +69,13 @@ public class DroneEntity {
 
     public static DroneEntity fromDroneToRegister(DroneRecordToRegister drone){
         return new DroneEntity(drone.getRegistrationNumber(),
-                RegistrationFlag.MapToAirbourne(drone.getFlightRecord().getFlag()),
+                RegistrationFlag.mapToAirborne(drone.getFlightRecord().getFlag()),
                 drone.getCountry(),
                 drone.getOperator(),
                 drone.getIdentification().getValue(),
                 drone.getIdentificationLabel(),
                 drone.getModel(),
                 drone.getSign(),
-                drone.getType());
+                RegistrationFlag.mapToType(drone.getFlightRecord().getFlag()));
     }
 }

@@ -34,7 +34,8 @@ public class DroneToRegisterMapper {
         var flightRecordEntity = FlightRecordEntity.fromFlightRecordToRegister(drone.getFlightRecord());
 
         droneEntity.getFlightRecords().add(flightRecordEntity);
-        droneEntity.setAirborne(RegistrationFlag.MapToAirbourne(drone.getFlightRecord().getFlag()));
+        droneEntity.setAirborne(RegistrationFlag.mapToAirborne(drone.getFlightRecord().getFlag()));
+        droneEntity.setType(RegistrationFlag.mapToType(drone.getFlightRecord().getFlag()));
 
         return new DroneEntityWithFlightRecordEntity(droneEntity, flightRecordEntity);
     }
