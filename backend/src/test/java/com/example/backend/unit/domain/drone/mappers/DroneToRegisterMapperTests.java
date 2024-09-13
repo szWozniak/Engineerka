@@ -45,7 +45,7 @@ public class DroneToRegisterMapperTests {
                         "Belmondo",
                         "6969669",
                         "sign",
-                        "type",
+                        "Airborne",
                         69,
                         "signal",
                         "frequency",
@@ -135,7 +135,7 @@ public class DroneToRegisterMapperTests {
                 "czarny",
                 "fajny",
                 "znak",
-                "spokokolo");
+                "Airborne");
 
         List<DroneEntityWithFlightRecordEntity> result = sut.mapToEntities(List.of(droneToRegister),
                 List.of(existingDrone));
