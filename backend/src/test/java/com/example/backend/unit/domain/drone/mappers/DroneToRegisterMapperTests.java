@@ -70,7 +70,7 @@ public class DroneToRegisterMapperTests {
         Assertions.assertEquals(droneEntity.getIdentificationLabel(), "Magenta");
         Assertions.assertEquals(droneEntity.getModel(), "Belmondo");
         Assertions.assertEquals(droneEntity.getSign(), "sign");
-        Assertions.assertEquals(droneEntity.getType(), "type");
+        Assertions.assertEquals(droneEntity.getType(), "Airborne");
 
         var flightRecordEntity = result.get(0).flightRecord();
 
@@ -152,7 +152,7 @@ public class DroneToRegisterMapperTests {
         Assertions.assertEquals(droneEntity.getIdentificationLabel(), "czarny");
         Assertions.assertEquals(droneEntity.getModel(), "fajny");
         Assertions.assertEquals(droneEntity.getSign(), "znak");
-        Assertions.assertEquals(droneEntity.getType(), "spokokolo");
+        Assertions.assertEquals(droneEntity.getType(), "Airborne");
 
         var flightRecordEntity = result.get(0).flightRecord();
 
