@@ -154,3 +154,12 @@ thead {
     background-color: #557c25 !important;
   }
 }
+
+.tableContainer {
+  padding: 10px;
+
+  & .time {
+    color: rgb(154, 154, 154);
+    font-size: 14px;
+  }
+}

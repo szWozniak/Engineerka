@@ -3,7 +3,7 @@ import { DroneBase } from "../../../drones/types";
 import { AppContext } from "../../../context/AppContext";
 
 const BigTable = () => {  
-  const { drones, allDrones, setSelectedDroneRegistration } = useContext(AppContext)
+  const { drones, allDrones, setSelectedDroneRegistration, setTableSelectedDroneRegistration } = useContext(AppContext)
   
   return (
     <table className="droneTable">
@@ -54,7 +54,12 @@ const BigTable = () => {
                 }}
                 title="Wybierz drona"
               >📌</button>}
-              <button title="Pokaż loty">📋</button>
+              <button 
+                onClick={() => {
+                  setTableSelectedDroneRegistration(drone.registrationNumber)
+                }}
+                title="Pokaż loty"
+              >📋</button>
             </td>
           </tr>
           )

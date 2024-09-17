@@ -3,11 +3,14 @@ import { ArrowUpIcon } from '../icons/ArrowUpIcon';
 import { ArrowDownIcon } from '../icons/ArrowDownIcon';
 import { AppContext } from '../../context/AppContext';
 import BigTable from './bigTable/BigTable';
+import FlightsTable from './flightsTable/FlightsTable';
 import FilterSection from './filters/FilterSection';
+import { useQuery } from 'react-query';
+import { getDroneFlightsByRegistration } from '../../drones/api/api';
 
 const BottomMenu = () => {
   const [isOpened, setIsOpened] = useState(false)
-  const { areFiltersOpened } = useContext(AppContext)
+  const { areFiltersOpened, setTableSelectedDroneRegistration, tableSelectedDroneRegistration } = useContext(AppContext)
 
   const [startY, setStartY] = useState(0)
   const [startHeight, setStartHeight] = useState(0)
@@ -45,6 +48,22 @@ const BottomMenu = () => {
     };
   }, [])
 
+  const { data: droneFlights } = useQuery({
+    queryKey: ["drone-flights", tableSelectedDroneRegistration],
+    queryFn: () => {
+      if(tableSelectedDroneRegistration) {
+        return getDroneFlightsByRegistration(tableSelectedDroneRegistration)
+      }
+    },
+    keepPreviousData: true,
+    refetchInterval: 1000,
+    enabled: true
+  })
+
+  useEffect(() => {
+    console.log("XD", droneFlights)
+  }, [droneFlights])
+
   return (
     <div 
       className={`bottomMenu ${isOpened && 'opened'}`}
@@ -60,8 +79,16 @@ const BottomMenu = () => {
       {areFiltersOpened && <FilterSection isOpen={areFiltersOpened}/>}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
-        <span>Lista Dronów</span>
-        <BigTable />
+        {tableSelectedDroneRegistration 
+          ? <span>Historia lotów dla drona {tableSelectedDroneRegistration}</span> 
+          : <span>Lista Dronów</span>}
+        {tableSelectedDroneRegistration ? <div className="tableContainer">
+          <button
+            onClick={() => {
+              setTableSelectedDroneRegistration(null)
+            }}
+          >Powrót do listy dronów</button><br /><FlightsTable droneFlights={droneFlights || []} />
+        </div> : <BigTable />}
       </div>
     </div>
   );

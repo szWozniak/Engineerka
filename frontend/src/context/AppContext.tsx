@@ -17,6 +17,8 @@ type AppContextType = {
   toggleFiltersVisibility: () => void;
   mapViewState: MapViewState;
   setMapViewState: any;
+  tableSelectedDroneRegistration: string | null;
+  setTableSelectedDroneRegistration: Dispatch<SetStateAction<string | null>>;
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -28,13 +30,16 @@ export const AppContext = createContext<AppContextType>({
   applyFilters: (f) => {},
   toggleFiltersVisibility: () => {},
   mapViewState: INITIAL_VIEW_STATE,
-  setMapViewState: () => { }
+  setMapViewState: () => { },
+  tableSelectedDroneRegistration: null,
+  setTableSelectedDroneRegistration : () => { }
 })
 
 const AppContextProvider = ({ children }: {
   children: ReactNode
 }) => {
   const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
+  const [tableSelectedDroneRegistration, setTableSelectedDroneRegistration] = useState<string | null>(null)
   const [filtersVisibility, setFiltersVisibility] = useState<boolean>(false);
   const [mapViewState, setMapViewState] = useState<MapViewState>(INITIAL_VIEW_STATE)
   const [isMapUpdated, setIsMapUpdated] = useState<boolean>(false)
@@ -102,7 +107,9 @@ const AppContextProvider = ({ children }: {
         areFiltersOpened: filtersVisibility,
         toggleFiltersVisibility,
         mapViewState,
-        setMapViewState }}>
+        setMapViewState,
+        tableSelectedDroneRegistration,
+        setTableSelectedDroneRegistration }}>
       {children}
     </AppContext.Provider>
   )

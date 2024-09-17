@@ -31,6 +31,31 @@ export const DroneSchema = DroneBaseSchema.merge(
 export type DroneBase = z.infer<typeof DroneBaseSchema>
 export type Drone = z.infer<typeof DroneSchema>;
 
+export const FlightRecordPositionSchema = z.object({
+  latitude: z.number(),
+  longitude: z.number(),
+  altitude: z.number(),
+  date: z.string(),
+  time: z.string(),
+  heading: z.number(),
+  speed: z.number(),
+  fuel: z.number()
+})
+
+export type flightRecordPosition = z.infer<typeof FlightRecordPositionSchema>;
+
+export const DroneFlightSchema = z.object({
+  id: z.number(),
+  startDate: z.string(),
+  startTime: z.string(),
+  endDate: z.string(),
+  endTime: z.string(),
+  duration: z.string(),
+  flightRecords: FlightRecordPositionSchema.array()
+})
+
+export type DroneFlight = z.infer<typeof DroneFlightSchema>;
+
 export interface MapDrone extends Drone {
   color: Color
 }
