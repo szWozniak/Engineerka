@@ -16,15 +16,21 @@ public class FlightSummaryDto {
     private LocalDate endDate;
     private LocalTime endTime;
     private LocalTime duration;
+    private double averageSpeed;
+    private int elevationGain;
+    private double distance;
     private List<FlightRecordSummaryDto> flightRecords;
 
-    private FlightSummaryDto(Long id, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, LocalTime duration, List<FlightRecordSummaryDto> flightRecords) {
+    private FlightSummaryDto(Long id, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, LocalTime duration, double averageSpeed, int elevationGain, double distance, List<FlightRecordSummaryDto> flightRecords) {
         this.id = id;
         this.startDate = startDate;
         this.startTime = startTime;
         this.endDate = endDate;
         this.endTime = endTime;
         this.duration = duration;
+        this.averageSpeed = averageSpeed;
+        this.elevationGain = elevationGain;
+        this.distance = distance;
         this.flightRecords = flightRecords;
     }
 
@@ -36,6 +42,9 @@ public class FlightSummaryDto {
                 flightEntity.getEndDate(),
                 flightEntity.getEndTime(),
                 flightEntity.getDuration(),
+                flightEntity.getAverageSpeed(),
+                flightEntity.getElevationGain(),
+                flightEntity.getDistance(),
                 flightEntity.getFlightRecords().stream().map(FlightRecordSummaryDto::fromFlightRecordEntity).toList());
     }
 }
