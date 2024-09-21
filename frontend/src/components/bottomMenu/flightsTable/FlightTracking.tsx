@@ -51,7 +51,6 @@ const FlightTracking = () => {
 };
 
 const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameType>)  => {
-  console.log(payload)
   if (active && payload && payload.length) {
     return (
       <div className="tooltip">

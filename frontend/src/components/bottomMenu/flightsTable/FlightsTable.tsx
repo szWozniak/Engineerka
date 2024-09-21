@@ -4,7 +4,7 @@ import { AppContext } from "../../../context/AppContext";
 
 
 const FlightsTable = () => {  
-  const { tableSelectedDroneFlights, setTableSelectedDroneRegistration, setTrackedFlight } = useContext(AppContext)
+  const { tableSelectedDroneFlights, setTableSelectedDroneRegistration, setTrackedFlight, setHighlightedFlightId } = useContext(AppContext)
   
   return (
     <div className="tableContainer">
@@ -55,6 +55,12 @@ const FlightsTable = () => {
                 <button 
                   onClick={() => {
                     setTrackedFlight(flight)
+                  }}
+                  onMouseEnter={() => {
+                    setHighlightedFlightId(flight?.id)
+                  }}
+                  onMouseLeave={() => {
+                    setHighlightedFlightId(null)
                   }}
                   title="Podgląd lotu"
                 >🔍</button>
