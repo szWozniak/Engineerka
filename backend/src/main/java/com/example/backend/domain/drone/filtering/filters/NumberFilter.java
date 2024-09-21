@@ -5,6 +5,7 @@ import com.example.backend.domain.drone.filtering.validators.ComparisonTypeForFi
 import com.example.backend.domain.drone.filtering.infrastructure.PredicateCreator;
 import com.example.backend.domain.drone.filtering.infrastructure.PredicateCreatorFactory;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
+import jakarta.persistence.Tuple;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Join;
@@ -13,6 +14,7 @@ import jakarta.persistence.criteria.Subquery;
 import org.springframework.data.jpa.domain.Specification;
 import jakarta.persistence.criteria.Root;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class NumberFilter implements IDroneFilter {
@@ -34,7 +36,7 @@ public class NumberFilter implements IDroneFilter {
 
             Join<DroneEntity, FlightRecordEntity> droneWithFlightRecords = root.join("flightRecords");
 
-            //now for time only, then update to date and time
+
             Subquery<LocalTime> subQuery = createQueryToGetMostFreshFlightRecord(root, query, builder);
 
             PredicateCreator<Integer> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
@@ -47,16 +49,31 @@ public class NumberFilter implements IDroneFilter {
     }
 
     private Subquery<LocalTime> createQueryToGetMostFreshFlightRecord(Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder){
-        Subquery<LocalTime> freshestFlightRecordSubQuery = query.subquery(LocalTime.class);
-        Root<DroneEntity> subQueryRoot = freshestFlightRecordSubQuery.from(DroneEntity.class);
-        Join<DroneEntity, FlightRecordEntity>  droneWithFlightRecordsForSubquery = subQueryRoot.join("flightRecords");
+        Subquery<LocalDate> freshestDateSubquery = query.subquery(LocalDate.class);
+        Root<DroneEntity> subRoot = freshestDateSubquery.from(DroneEntity.class);
+        Join<DroneEntity, FlightRecordEntity> droneWithFlightRecordsForDate = subRoot.join("flightRecords");
 
-        Path<LocalTime> flightRecordTimeField = droneWithFlightRecordsForSubquery.get("time");
-        freshestFlightRecordSubQuery.select(
-                builder.greatest(flightRecordTimeField)
-        ).where(builder.equal(subQueryRoot, root));
+        Path<LocalDate> flightRecordDateField = droneWithFlightRecordsForDate.get("date");
 
-        return freshestFlightRecordSubQuery;
+        // Find the maximum date for the current DroneEntity
+        freshestDateSubquery.select(builder.greatest(flightRecordDateField))
+                .where(builder.equal(subRoot, root));
+
+        Subquery<LocalTime> freshestRecordSubQuery = query.subquery(LocalTime.class);
+        Root<DroneEntity> timeSubRoot = freshestRecordSubQuery.from(DroneEntity.class);
+        Join<DroneEntity, FlightRecordEntity> droneWithFlightRecordsForTime = timeSubRoot.join("flightRecords");
+
+        Path<LocalTime> flightRecordTimeField = droneWithFlightRecordsForTime.get("time");
+
+        freshestRecordSubQuery.select(builder.greatest(flightRecordTimeField))
+                .where(
+                        builder.and(
+                                builder.equal(timeSubRoot, root),
+                                builder.equal(droneWithFlightRecordsForTime.get("date"), freshestDateSubquery)
+                        )
+                );
+
+        return freshestRecordSubQuery;
     }
 
     private void validateComparisionType(ComparisonType comparisonType) throws IllegalArgumentException{

@@ -3,6 +3,8 @@ import { AppContext } from "../../../context/AppContext"
 import { Filter, FilterType, NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from "../../../filters/types";
 import RegistrationNumberFilter from "./concreteFilters/RegistrationNumberFilter";
 import AltitudeFilter from "./concreteFilters/AltitudeFilter";
+import FuelFilter from "./concreteFilters/FuelFilter";
+import ModelFilter from "./concreteFilters/ModelFilter";
 
 const DefaultFiltersState: Filter[] = [
   {
@@ -25,6 +27,27 @@ const DefaultFiltersState: Filter[] = [
     key: "maxAltitude",
     value: undefined,
     comparisonType: "LesserThan"
+  },
+  {
+    type: FilterType.Number,
+    parameter: "fuel",
+    key: "minFuel",
+    value: undefined,
+    comparisonType: "GreaterThan"
+  },
+  {
+    type: FilterType.Number,
+    parameter: "fuel",
+    key: "maxFuel",
+    value: undefined,
+    comparisonType: "LesserThan"
+  },
+  {
+    type: FilterType.Text,
+    parameter: "model",
+    key: "model",
+    value: "",
+    comparisonType: "Equals"
   }
 ]
 
@@ -86,6 +109,16 @@ const FilterSection: React.FC<props> = ({ isOpen }) => {
             maxValue={getNumberFilter("maxAltitude").value}
             onMinValueChange={(value) => onNumberFilterChange("minAltitude", value)}
             onMaxValueChange={(value) => onNumberFilterChange("maxAltitude", value)}
+          />
+          <FuelFilter
+            minValue={getNumberFilter("minFuel").value}
+            maxValue={getNumberFilter("maxFuel").value}
+            onMinValueChange={(value) => onNumberFilterChange("minFuel", value)}
+            onMaxValueChange={(value) => onNumberFilterChange("maxFuel", value)}
+          />
+          <ModelFilter
+            value={getTextFilter("model").value}
+            onChange={(value) => onTextFilterChange("model", value)}
           />
         </div>
         <button className="apply" onClick={() => applyFilters(filtersState)}>Zastosuj</button>
