@@ -1,7 +1,17 @@
-import React, { ReactNode, Dispatch, SetStateAction, createContext, useState, useEffect } from 'react';
+import React, { 
+  ReactNode, 
+  Dispatch, 
+  SetStateAction, 
+  createContext, 
+  useState, 
+  useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { getAllDrones, getCurrentDrones, getDroneByRegistration } from '../drones/api/api';
-import { Drone, DroneBase } from '../drones/types';
+import { 
+  getAllDrones, 
+  getCurrentDrones, 
+  getDroneByRegistration, 
+  getDroneFlightsByRegistration } from '../drones/api/api';
+import { Drone, DroneBase, DroneFlight } from '../drones/types';
 import { Filter } from '../filters/types';
 import useFilters from '../filters/useFilters';
 import { INITIAL_VIEW_STATE } from '../mapConfig/initialView';
@@ -19,6 +29,7 @@ type AppContextType = {
   setMapViewState: any;
   tableSelectedDroneRegistration: string | null;
   setTableSelectedDroneRegistration: Dispatch<SetStateAction<string | null>>;
+  tableSelectedDroneFlights: DroneFlight[];
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -32,7 +43,8 @@ export const AppContext = createContext<AppContextType>({
   mapViewState: INITIAL_VIEW_STATE,
   setMapViewState: () => { },
   tableSelectedDroneRegistration: null,
-  setTableSelectedDroneRegistration : () => { }
+  setTableSelectedDroneRegistration : () => { },
+  tableSelectedDroneFlights: []
 })
 
 const AppContextProvider = ({ children }: {
@@ -60,6 +72,18 @@ const AppContextProvider = ({ children }: {
   const { data: allDrones } = useQuery({
     queryKey: ["all-drones", JSON.stringify(filters)],
     queryFn: () => getAllDrones(filters),
+    keepPreviousData: true,
+    refetchInterval: 1000,
+    enabled: true
+  })
+
+  const { data: tableSelectedDroneFlights } = useQuery({
+    queryKey: ["drone-flights", tableSelectedDroneRegistration],
+    queryFn: () => {
+      if(tableSelectedDroneRegistration) {
+        return getDroneFlightsByRegistration(tableSelectedDroneRegistration)
+      }
+    },
     keepPreviousData: true,
     refetchInterval: 1000,
     enabled: true
@@ -109,7 +133,8 @@ const AppContextProvider = ({ children }: {
         mapViewState,
         setMapViewState,
         tableSelectedDroneRegistration,
-        setTableSelectedDroneRegistration }}>
+        setTableSelectedDroneRegistration,
+        tableSelectedDroneFlights: tableSelectedDroneFlights || [] }}>
       {children}
     </AppContext.Provider>
   )

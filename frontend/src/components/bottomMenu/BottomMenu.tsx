@@ -5,8 +5,6 @@ import { AppContext } from '../../context/AppContext';
 import BigTable from './bigTable/BigTable';
 import FlightsTable from './flightsTable/FlightsTable';
 import FilterSection from './filters/FilterSection';
-import { useQuery } from 'react-query';
-import { getDroneFlightsByRegistration } from '../../drones/api/api';
 
 const BottomMenu = () => {
   const [isOpened, setIsOpened] = useState(false)
@@ -48,18 +46,6 @@ const BottomMenu = () => {
     };
   }, [])
 
-  const { data: droneFlights } = useQuery({
-    queryKey: ["drone-flights", tableSelectedDroneRegistration],
-    queryFn: () => {
-      if(tableSelectedDroneRegistration) {
-        return getDroneFlightsByRegistration(tableSelectedDroneRegistration)
-      }
-    },
-    keepPreviousData: true,
-    refetchInterval: 1000,
-    enabled: true
-  })
-  
   return (
     <div 
       className={`bottomMenu ${isOpened && 'opened'}`}
@@ -83,7 +69,7 @@ const BottomMenu = () => {
             onClick={() => {
               setTableSelectedDroneRegistration(null)
             }}
-          >Powrót do listy dronów</button><br /><FlightsTable droneFlights={droneFlights || []} />
+          >Powrót do listy dronów</button><br /><FlightsTable />
         </div> : <BigTable />}
       </div>
     </div>
