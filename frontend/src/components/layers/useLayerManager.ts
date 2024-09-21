@@ -3,17 +3,19 @@ import useDronesLayer from './default/useDronesLayer';
 import useTracesLayer from './default/useTracesLayer';
 import { AppContext } from '../../context/AppContext';
 import useFlightsTracesLayer from './flights/useFlightsTracesLayer';
+import useTrackedDroneLayer from './flights/useTrackedDroneLayer';
 
 const useLayerManager = () => {
-    const { tableSelectedDroneRegistration } = useContext(AppContext)
+    const { tableSelectedDroneRegistration, trackedFlight } = useContext(AppContext)
     
     const dronesLayer = useDronesLayer();
     const tracesLayer = useTracesLayer();
     
     const flightsTracesLayer = useFlightsTracesLayer();
+    const trackedDroneLayer = useTrackedDroneLayer();
 
     const layers = tableSelectedDroneRegistration 
-        ? [ flightsTracesLayer ] 
+        ? (trackedFlight ? [ flightsTracesLayer, trackedDroneLayer] : [ flightsTracesLayer ])
         : [ dronesLayer, tracesLayer ]
 
     return { layers }

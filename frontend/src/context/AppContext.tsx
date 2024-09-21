@@ -32,6 +32,8 @@ type AppContextType = {
   tableSelectedDroneFlights: DroneFlight[];
   setTrackedFlight: Dispatch<SetStateAction<DroneFlight | null>>;
   trackedFlight: DroneFlight | null;
+  setTrackedPoint: Dispatch<SetStateAction<number>>;
+  trackedPoint: number;
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -48,7 +50,9 @@ export const AppContext = createContext<AppContextType>({
   setTableSelectedDroneRegistration : () => { },
   tableSelectedDroneFlights: [],
   setTrackedFlight: () => {},
-  trackedFlight: null
+  trackedFlight: null,
+  setTrackedPoint: () => {},
+  trackedPoint: 0
 })
 
 const AppContextProvider = ({ children }: {
@@ -60,11 +64,11 @@ const AppContextProvider = ({ children }: {
   const [mapViewState, setMapViewState] = useState<MapViewState>(INITIAL_VIEW_STATE)
   const [isMapUpdated, setIsMapUpdated] = useState<boolean>(false)
   const [trackedFlight, setTrackedFlight] = useState<DroneFlight | null>(null)
+  const [trackedPoint, setTrackedPoint] = useState<number>(0)
 
   const {filters, applyFilters} = useFilters();
 
   const toggleFiltersVisibility = () => setFiltersVisibility(prev => !prev);
-
 
   const { data: drones } = useQuery({
     queryKey: ["current-drones", JSON.stringify(filters)],
@@ -125,6 +129,10 @@ const AppContextProvider = ({ children }: {
       setIsMapUpdated(true)
     }
   }, [selectedDrone])
+  
+  useEffect(() => {
+    setTrackedPoint((trackedFlight?.flightRecords?.length || 1) - 1)
+  }, [trackedFlight])
 
   return (
     <AppContext.Provider value={{ 
@@ -141,7 +149,9 @@ const AppContextProvider = ({ children }: {
       setTableSelectedDroneRegistration,
       tableSelectedDroneFlights: tableSelectedDroneFlights || [],
       trackedFlight,
-      setTrackedFlight
+      setTrackedFlight,
+      trackedPoint,
+      setTrackedPoint
     }}>
       {children}
     </AppContext.Provider>
