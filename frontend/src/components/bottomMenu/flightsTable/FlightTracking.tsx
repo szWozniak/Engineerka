@@ -28,7 +28,8 @@ const FlightTracking = () => {
         <ResponsiveContainer height={200} width='100%'>
           <LineChart data={trackedFlight?.flightRecords?.map((record, index) => ({
             time: index,
-            uv: record?.altitude
+            alt: record?.altitude,
+            fuel: record?.fuel
           }))}>
             <Tooltip content={<CustomTooltip />} />
             <CartesianGrid stroke="#555555" strokeDasharray="3 3" opacity={0.8}  />
@@ -37,7 +38,8 @@ const FlightTracking = () => {
               hide={true}
               interval={"equidistantPreserveStart"}
             />
-            <Line type="monotone" dataKey="uv" stroke="rgb(134, 194, 50)" strokeWidth={2} dot={{ r: 2 }}/>
+            <Line type="monotone" dataKey="alt" stroke="rgb(184, 124, 50)" strokeWidth={3} dot={{ r: 4 }}/>
+            <Line type="monotone" dataKey="fuel" stroke="rgb(90, 130, 20)" strokeWidth={3} dot={{ r: 4 }}/>
           </LineChart>
         </ResponsiveContainer>
         <input type="range" min={0} max={trackedFlight?.flightRecords?.length} step={1} value={trackedPoint} onChange={(e) => {
@@ -49,10 +51,12 @@ const FlightTracking = () => {
 };
 
 const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameType>)  => {
+  console.log(payload)
   if (active && payload && payload.length) {
     return (
       <div className="tooltip">
-        Wysokość: <b>{payload[0].value}</b>
+        📈 Wysokość: <b>{payload[0]?.value}</b><br />
+        ⛽ Stan Paliwa: <b>{payload[1]?.value}</b>
       </div>
     );
   }

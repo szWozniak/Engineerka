@@ -51,6 +51,9 @@ export const DroneFlightSchema = z.object({
   endDate: z.string(),
   endTime: z.string(),
   duration: z.string(),
+  averageSpeed: z.number(),
+  elevationGain: z.number(),
+  distance: z.number(),
   flightRecords: FlightRecordPositionSchema.array()
 })
 

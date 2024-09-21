@@ -21,6 +21,9 @@ const FlightsTable = () => {
             <th>Data Startu</th>
             <th>Data Lądowania</th>
             <th>Czas lotu</th>
+            <th>Śr. Prędkość</th>
+            <th>Przewyższenie</th>
+            <th>Dystans</th>
             <th>Akcje</th>
           </tr>
         </thead>
@@ -38,6 +41,15 @@ const FlightsTable = () => {
                 </td>
                 <td>
                   {flight?.duration}
+                </td>
+                <td>
+                  {flight?.averageSpeed?.toFixed(2) + " km/s"}
+                </td>
+                <td>
+                  {flight?.elevationGain + "m"}
+                </td>
+                <td>
+                  {flight?.distance?.toFixed(4) + "km"}
                 </td>
                 <td>
                 <button 

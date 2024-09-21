@@ -11,7 +11,7 @@ const useFlightsTracesLayer = () => {
 
     const flights = trackedFlight ? [{
       ...trackedFlight,
-      flightRecords: trackedFlight.flightRecords.slice(0, trackedPoint)
+      flightRecords: trackedFlight.flightRecords.slice(0, trackedPoint+1)
     }] : tableSelectedDroneFlights
     const traces: droneTrace[] = [];
 
