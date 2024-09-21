@@ -1,7 +1,7 @@
-package com.example.backend.domain.drone.dto;
+package com.example.backend.domain.flight.dto;
 
 import com.example.backend.domain.flight.FlightEntity;
-import com.example.backend.domain.flightRecord.FlightRecordSummaryDto;
+import com.example.backend.domain.flightRecord.dto.FlightRecordSummaryDto;
 import lombok.Data;
 
 import java.time.LocalDate;
