@@ -59,11 +59,7 @@ const BottomMenu = () => {
     refetchInterval: 1000,
     enabled: true
   })
-
-  useEffect(() => {
-    console.log("XD", droneFlights)
-  }, [droneFlights])
-
+  
   return (
     <div 
       className={`bottomMenu ${isOpened && 'opened'}`}
