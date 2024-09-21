@@ -3,9 +3,12 @@ package com.example.backend.domain.drone;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import com.example.backend.events.recordRegistration.model.envelope.RegistrationFlag;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(indexes = {
+        @Index(name = "model_idx", columnList = "model")
+})
 public class DroneEntity {
     @Id
     @Getter
@@ -43,7 +49,7 @@ public class DroneEntity {
     @Setter
     private String type;
 
-    @OneToMany
+    @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true)
     @Getter
     @Setter
     private List<FlightRecordEntity> flightRecords;

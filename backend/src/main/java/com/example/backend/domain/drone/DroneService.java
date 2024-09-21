@@ -106,6 +106,7 @@ public class DroneService {
     }
 
     private List<DroneEntity> dronesWithLastThreeRecordsFromCurrentFlightIncluded(List<DroneEntity> drones){
+        var result = new ArrayList<DroneEntity>();
         for (var drone : drones){
             var sortedAndFilteredRecords = drone.getFlightRecords().stream()
                     .filter(fr -> fr.getFlight() == null)
@@ -114,13 +115,11 @@ public class DroneService {
             if (sortedAndFilteredRecords.size() != 0){
                 var lastIndex = Math.min(3, sortedAndFilteredRecords.size());
                 drone.setFlightRecords(sortedAndFilteredRecords.subList(0, lastIndex));
-            }
-            else{
-                drone.setFlightRecords(new ArrayList<>());
+                result.add(drone);
             }
         }
 
-        return drones;
+        return result;
     }
 
     public List<FlightEntity> getDroneFinishedFlights(String id){

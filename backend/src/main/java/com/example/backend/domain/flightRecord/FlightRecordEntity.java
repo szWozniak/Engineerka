@@ -5,7 +5,10 @@ import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.events.recordRegistration.model.FlightRecordToRegister;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +16,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
+@Table(indexes = {
+        @Index(name = "date_index", columnList = "date"),
+        @Index(name = "time_index", columnList = "time"),
+        @Index(name = "drone_idx", columnList = "drone_registrationNumber")
+})
 public class FlightRecordEntity {
     @Id
     @Getter
