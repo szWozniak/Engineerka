@@ -35,22 +35,28 @@ public class NumberFilter implements IDroneFilter {
             Join<DroneEntity, FlightRecordEntity> droneWithFlightRecords = root.join("flightRecords");
 
             //now for time only, then update to date and time
-            Subquery<LocalTime> freshestFlightRecordSubquery = query.subquery(LocalTime.class);
-            Root<DroneEntity> subRoot = freshestFlightRecordSubquery.from(DroneEntity.class);
-            Join<DroneEntity, FlightRecordEntity>  droneWithFlightRecordsForSubquery = subRoot.join("flightRecords");
-
-            Path<LocalTime> flightRecordTimeField = droneWithFlightRecordsForSubquery.get("time");
-            freshestFlightRecordSubquery.select(
-                    builder.greatest(flightRecordTimeField)
-                    ).where(builder.equal(subRoot, root));
+            Subquery<LocalTime> subQuery = createQueryToGetMostFreshFlightRecord(root, query, builder);
 
             PredicateCreator<Integer> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
 
             return builder.and(
-                    builder.equal(droneWithFlightRecords.get("time"), freshestFlightRecordSubquery),
+                    builder.equal(droneWithFlightRecords.get("time"), subQuery),
                     predicateCreator.apply(droneWithFlightRecords.get(attributeName), value)
             );
         };
+    }
+
+    private Subquery<LocalTime> createQueryToGetMostFreshFlightRecord(Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder){
+        Subquery<LocalTime> freshestFlightRecordSubQuery = query.subquery(LocalTime.class);
+        Root<DroneEntity> subQueryRoot = freshestFlightRecordSubQuery.from(DroneEntity.class);
+        Join<DroneEntity, FlightRecordEntity>  droneWithFlightRecordsForSubquery = subQueryRoot.join("flightRecords");
+
+        Path<LocalTime> flightRecordTimeField = droneWithFlightRecordsForSubquery.get("time");
+        freshestFlightRecordSubQuery.select(
+                builder.greatest(flightRecordTimeField)
+        ).where(builder.equal(subQueryRoot, root));
+
+        return freshestFlightRecordSubQuery;
     }
 
     private void validateComparisionType(ComparisonType comparisonType) throws IllegalArgumentException{
