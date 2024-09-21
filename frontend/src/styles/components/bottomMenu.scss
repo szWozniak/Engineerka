@@ -162,4 +162,21 @@ thead {
     color: rgb(154, 154, 154);
     font-size: 14px;
   }
+
+  & .droneTable {
+    padding: 0px;
+    box-shadow: none;
+  }
+
+  & .controls {
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgb(82, 82, 82);
+    border-top: 1px solid rgb(82, 82, 82);
+    display: flex;
+    gap: 10px;
+
+    & button {
+      font-size: 18px;
+    }
+  }
 }

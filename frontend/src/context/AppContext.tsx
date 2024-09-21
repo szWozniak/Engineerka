@@ -30,6 +30,8 @@ type AppContextType = {
   tableSelectedDroneRegistration: string | null;
   setTableSelectedDroneRegistration: Dispatch<SetStateAction<string | null>>;
   tableSelectedDroneFlights: DroneFlight[];
+  setTrackedFlight: Dispatch<SetStateAction<DroneFlight | null>>;
+  trackedFlight: DroneFlight | null;
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -44,7 +46,9 @@ export const AppContext = createContext<AppContextType>({
   setMapViewState: () => { },
   tableSelectedDroneRegistration: null,
   setTableSelectedDroneRegistration : () => { },
-  tableSelectedDroneFlights: []
+  tableSelectedDroneFlights: [],
+  setTrackedFlight: () => {},
+  trackedFlight: null
 })
 
 const AppContextProvider = ({ children }: {
@@ -55,6 +59,7 @@ const AppContextProvider = ({ children }: {
   const [filtersVisibility, setFiltersVisibility] = useState<boolean>(false);
   const [mapViewState, setMapViewState] = useState<MapViewState>(INITIAL_VIEW_STATE)
   const [isMapUpdated, setIsMapUpdated] = useState<boolean>(false)
+  const [trackedFlight, setTrackedFlight] = useState<DroneFlight | null>(null)
 
   const {filters, applyFilters} = useFilters();
 
@@ -123,18 +128,21 @@ const AppContextProvider = ({ children }: {
 
   return (
     <AppContext.Provider value={{ 
-        drones,
-        allDrones,
-        selectedDrone: selectedDrone || null,
-        setSelectedDroneRegistration, 
-        applyFilters,
-        areFiltersOpened: filtersVisibility,
-        toggleFiltersVisibility,
-        mapViewState,
-        setMapViewState,
-        tableSelectedDroneRegistration,
-        setTableSelectedDroneRegistration,
-        tableSelectedDroneFlights: tableSelectedDroneFlights || [] }}>
+      drones,
+      allDrones,
+      selectedDrone: selectedDrone || null,
+      setSelectedDroneRegistration, 
+      applyFilters,
+      areFiltersOpened: filtersVisibility,
+      toggleFiltersVisibility,
+      mapViewState,
+      setMapViewState,
+      tableSelectedDroneRegistration,
+      setTableSelectedDroneRegistration,
+      tableSelectedDroneFlights: tableSelectedDroneFlights || [],
+      trackedFlight,
+      setTrackedFlight
+    }}>
       {children}
     </AppContext.Provider>
   )

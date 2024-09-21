@@ -5,10 +5,11 @@ import { AppContext } from '../../context/AppContext';
 import BigTable from './bigTable/BigTable';
 import FlightsTable from './flightsTable/FlightsTable';
 import FilterSection from './filters/FilterSection';
+import FlightTracking from './flightsTable/FlightTracking';
 
 const BottomMenu = () => {
   const [isOpened, setIsOpened] = useState(false)
-  const { areFiltersOpened, setTableSelectedDroneRegistration, tableSelectedDroneRegistration } = useContext(AppContext)
+  const { areFiltersOpened, tableSelectedDroneRegistration, trackedFlight } = useContext(AppContext)
 
   const [startY, setStartY] = useState(0)
   const [startHeight, setStartHeight] = useState(0)
@@ -61,16 +62,11 @@ const BottomMenu = () => {
       {areFiltersOpened && <FilterSection isOpen={areFiltersOpened}/>}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
-        {tableSelectedDroneRegistration 
-          ? <span>Historia lotów dla drona {tableSelectedDroneRegistration}</span> 
-          : <span>Lista Dronów</span>}
-        {tableSelectedDroneRegistration ? <div className="tableContainer">
-          <button
-            onClick={() => {
-              setTableSelectedDroneRegistration(null)
-            }}
-          >Powrót do listy dronów</button><br /><FlightsTable />
-        </div> : <BigTable />}
+        {trackedFlight ? <span>Śledzenie lotu drona {tableSelectedDroneRegistration}</span> : 
+          (tableSelectedDroneRegistration 
+            ? <span>Historia lotów dla drona {tableSelectedDroneRegistration}</span> 
+            : <span>Lista Dronów</span>)}
+        {trackedFlight ? <FlightTracking /> : tableSelectedDroneRegistration ? <FlightsTable /> : <BigTable />}
       </div>
     </div>
   );

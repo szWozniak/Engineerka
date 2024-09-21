@@ -1,38 +1,58 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { DroneFlight } from "../../../drones/types";
 import { AppContext } from "../../../context/AppContext";
 
 
 const FlightsTable = () => {  
-  const { tableSelectedDroneFlights } = useContext(AppContext)
+  const { tableSelectedDroneFlights, setTableSelectedDroneRegistration, setTrackedFlight } = useContext(AppContext)
   
   return (
-    <table className="droneTable">
-      <thead>
-        <tr>
-          <th>Data Startu</th>
-          <th>Data Lądowania</th>
-          <th>Czas lotu</th>
-        </tr>
-      </thead>
-      {tableSelectedDroneFlights?.map((flight: DroneFlight, index) => {
-        return (
-          <tr key={index}>
-            <td>
-              {flight?.startDate}<br />
-              <span className="time">{flight?.startTime}</span>
-            </td>
-            <td>
-              {flight?.endDate}<br />
-              <span className="time">{flight?.endTime}</span>
-            </td>
-            <td>
-              {flight?.duration}
-            </td>
+    <div className="tableContainer">
+      <div className="controls">
+        <button
+          onClick={() => {
+            setTableSelectedDroneRegistration(null)
+          }}
+        >✈️ Powrót do listy dronów</button>
+      </div>
+      <table className="droneTable">
+        <thead>
+          <tr>
+            <th>Data Startu</th>
+            <th>Data Lądowania</th>
+            <th>Czas lotu</th>
+            <th>Akcje</th>
           </tr>
-        )
-      })}
-    </table>
+        </thead>
+        <tbody>
+          {tableSelectedDroneFlights?.map((flight: DroneFlight, index) => {
+            return (
+              <tr key={index}>
+                <td>
+                  {flight?.startDate}<br />
+                  <span className="time">{flight?.startTime}</span>
+                </td>
+                <td>
+                  {flight?.endDate}<br />
+                  <span className="time">{flight?.endTime}</span>
+                </td>
+                <td>
+                  {flight?.duration}
+                </td>
+                <td>
+                <button 
+                  onClick={() => {
+                    setTrackedFlight(flight)
+                  }}
+                  title="Podgląd lotu"
+                >🔍</button>
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </div>
   )
 }
 
