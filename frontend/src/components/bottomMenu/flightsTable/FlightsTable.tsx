@@ -4,7 +4,7 @@ import { AppContext } from "../../../context/AppContext";
 
 
 const FlightsTable = () => {  
-  const { tableSelectedDroneFlights, setTableSelectedDroneRegistration, setTrackedFlight } = useContext(AppContext)
+  const { tableSelectedDroneFlights, setTableSelectedDroneRegistration, setTrackedFlight, setHighlightedFlightId } = useContext(AppContext)
   
   return (
     <div className="tableContainer">
@@ -12,6 +12,7 @@ const FlightsTable = () => {
         <button
           onClick={() => {
             setTableSelectedDroneRegistration(null)
+            setHighlightedFlightId(null)
           }}
         >✈️ Powrót do listy dronów</button>
       </div>
@@ -21,6 +22,9 @@ const FlightsTable = () => {
             <th>Data Startu</th>
             <th>Data Lądowania</th>
             <th>Czas lotu</th>
+            <th>Śr. Prędkość</th>
+            <th>Przewyższenie</th>
+            <th>Dystans</th>
             <th>Akcje</th>
           </tr>
         </thead>
@@ -40,9 +44,24 @@ const FlightsTable = () => {
                   {flight?.duration}
                 </td>
                 <td>
+                  {flight?.averageSpeed?.toFixed(2) + " km/s"}
+                </td>
+                <td>
+                  {flight?.elevationGain + "m"}
+                </td>
+                <td>
+                  {flight?.distance?.toFixed(4) + "km"}
+                </td>
+                <td>
                 <button 
                   onClick={() => {
                     setTrackedFlight(flight)
+                  }}
+                  onMouseEnter={() => {
+                    setHighlightedFlightId(flight?.id)
+                  }}
+                  onMouseLeave={() => {
+                    setHighlightedFlightId(null)
                   }}
                   title="Podgląd lotu"
                 >🔍</button>

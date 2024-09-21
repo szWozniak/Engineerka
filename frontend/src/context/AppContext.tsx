@@ -34,6 +34,8 @@ type AppContextType = {
   trackedFlight: DroneFlight | null;
   setTrackedPoint: Dispatch<SetStateAction<number>>;
   trackedPoint: number;
+  setHighlightedFlightId: Dispatch<SetStateAction<number | null>>;
+  highlightedFlightId: number | null;
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -52,7 +54,9 @@ export const AppContext = createContext<AppContextType>({
   setTrackedFlight: () => {},
   trackedFlight: null,
   setTrackedPoint: () => {},
-  trackedPoint: 0
+  trackedPoint: 0,
+  setHighlightedFlightId: () => {},
+  highlightedFlightId: null
 })
 
 const AppContextProvider = ({ children }: {
@@ -65,6 +69,7 @@ const AppContextProvider = ({ children }: {
   const [isMapUpdated, setIsMapUpdated] = useState<boolean>(false)
   const [trackedFlight, setTrackedFlight] = useState<DroneFlight | null>(null)
   const [trackedPoint, setTrackedPoint] = useState<number>(0)
+  const [highlightedFlightId, setHighlightedFlightId] = useState<number | null>(null);
 
   const {filters, applyFilters} = useFilters();
 
@@ -151,7 +156,9 @@ const AppContextProvider = ({ children }: {
       trackedFlight,
       setTrackedFlight,
       trackedPoint,
-      setTrackedPoint
+      setTrackedPoint,
+      highlightedFlightId,
+      setHighlightedFlightId
     }}>
       {children}
     </AppContext.Provider>

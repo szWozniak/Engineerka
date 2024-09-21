@@ -4,14 +4,14 @@ import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 
 const useFlightsTracesLayer = () => {
-  const { trackedFlight, tableSelectedDroneFlights, trackedPoint } = useContext(AppContext)
+  const { trackedFlight, tableSelectedDroneFlights, trackedPoint, highlightedFlightId } = useContext(AppContext)
 
   const mapPositionsToTraces = (): droneTrace[] => {
     if (tableSelectedDroneFlights === undefined) return [];
 
     const flights = trackedFlight ? [{
       ...trackedFlight,
-      flightRecords: trackedFlight.flightRecords.slice(0, trackedPoint)
+      flightRecords: trackedFlight.flightRecords.slice(0, trackedPoint+1)
     }] : tableSelectedDroneFlights
     const traces: droneTrace[] = [];
 
@@ -22,7 +22,7 @@ const useFlightsTracesLayer = () => {
 
       for (let i = 0; i < trace.length - 1; i++) {
         traces.push({
-          id: index,
+          id: droneFlight?.id,
           start: [trace[i].longitude, trace[i].latitude, trace[i].altitude],
           end: [trace[i + 1].longitude, trace[i + 1].latitude, trace[i + 1].altitude]
         })
@@ -38,7 +38,7 @@ const useFlightsTracesLayer = () => {
     opacity: 0.8,
     getSourcePosition: d => d.start,
     getTargetPosition: d => d.end,
-    getColor: _d => [0, 200, 200, 125],
+    getColor: d => d.id === highlightedFlightId ? [200, 255, 255, 200] : [0, 200, 200, 125],
     getWidth: _d => 5,
     pickable: false,
     visible: true,

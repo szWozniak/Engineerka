@@ -13,7 +13,7 @@ const useTrackedDroneLayer = () => {
     data: [trackedFlight?.flightRecords?.[trackedPoint]],
     mesh: MESH_URL,
     getPosition: d => [d.longitude, d.latitude, d.altitude],
-    getColor: d => [150, 255, 255],
+    getColor: d => [255, 50, 50],
     getOrientation: d => [0, d.heading, 90],
     material: theme.material,
     sizeScale: 2,
