@@ -6,6 +6,7 @@ public record NumberFilterEntry(
         @NotNull(message = "filter parameter cannot be null")
         String parameter,
 
+        String key,
         @NotNull(message = "filter value cannot be null")
         int value,
 

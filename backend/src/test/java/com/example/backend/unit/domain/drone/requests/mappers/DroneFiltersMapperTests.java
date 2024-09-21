@@ -19,7 +19,7 @@ public class DroneFiltersMapperTests {
     @ParameterizedTest
     @ValueSource(strings = {"Equals"})
     public void ShouldProperlyMap_TextFilter(){
-        var textFilterEntry = new TextFilterEntry("registrationNumber", "Johnny", "Equals");
+        var textFilterEntry = new TextFilterEntry("registrationNumber", "whatever", "Johnny", "Equals");
 
         List<IDroneFilter> result = DroneFiltersMapper.map(List.of(textFilterEntry), new ArrayList<>());
 
@@ -31,7 +31,7 @@ public class DroneFiltersMapperTests {
     @ParameterizedTest
     @ValueSource(strings = {"GreaterThan", "LesserThan", "ZlyEnum"})
     public void ShouldThrowException_WhenInvalidTextFilter(String comparisonType){
-        var textFilterEntry = new TextFilterEntry("registrationNumber", "Johnny", comparisonType);
+        var textFilterEntry = new TextFilterEntry("registrationNumber", "whatever", "Johnny", comparisonType);
 
         Executable action = () -> DroneFiltersMapper.map(List.of(textFilterEntry), new ArrayList<>());
 
@@ -41,7 +41,7 @@ public class DroneFiltersMapperTests {
     @ParameterizedTest
     @ValueSource(strings = {"Equals", "GreaterThan", "LesserThan"})
     public void ShouldProperlyMap_NumberFilter(String comparisonType){
-        var numberFilterEntry = new NumberFilterEntry("registrationNumber", 69, comparisonType);
+        var numberFilterEntry = new NumberFilterEntry("registrationNumber", "whatever", 69, comparisonType);
 
         var result = DroneFiltersMapper.map(new ArrayList<>(), List.of(numberFilterEntry));
 
@@ -55,7 +55,7 @@ public class DroneFiltersMapperTests {
     @ParameterizedTest
     @ValueSource(strings = {"ZlyEnum"})
     public void ShouldThrowException_WhenInvalidNumberFilter(String comparisonType){
-        var numberFilterEntry = new NumberFilterEntry("registrationNumber", 69, comparisonType);
+        var numberFilterEntry = new NumberFilterEntry("registrationNumber", "whatever", 69, comparisonType);
 
         Executable action = () -> DroneFiltersMapper.map(new ArrayList<>(), List.of(numberFilterEntry));
 
