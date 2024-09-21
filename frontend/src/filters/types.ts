@@ -17,7 +17,7 @@ type DefaultFilter = {
 
 export type TextFilterKey = "registrationNumber" | "model"
 
-export type NumberFilterKey = "minAltitude" | "maxAltitude" | "minFuel" | "maxFuel"
+export type NumberFilterKey = "minAltitude" | "maxAltitude" | "minFuel" | "maxFuel" | "maxLongitude" | "minLongitude" | "maxLatitude" | "minLatitude"
 
 export type TextFilter = DefaultFilter & {type: FilterType.Text, value: string, key: TextFilterKey}
 

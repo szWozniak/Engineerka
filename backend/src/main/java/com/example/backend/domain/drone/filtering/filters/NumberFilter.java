@@ -29,6 +29,9 @@ public class NumberFilter implements IDroneFilter {
         this.comparisonType = comparisonType;
     }
 
+    //WARNING
+    //There is silent agreement that number fields are applied ONLY to flightRecords
+    //If it for any reason is applied for DroneEntity, then this class nededs to be changed
     @Override
     public Specification<DroneEntity> toSpecification() {
         return (Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {

@@ -47,7 +47,6 @@ public class DroneController {
 
     @PostMapping("/currentlyFlying")
     public ResponseEntity<List<FlyingDroneDto>> getCurrentlyFlyingDrones(@Valid @RequestBody GetCurrentlyFlyingDronesRequest request) throws BadRequestException{
-        System.out.println("dupa");
         List<IDroneFilter> mappedFilters;
         try{
             mappedFilters = DroneFiltersMapper.map(request.textFilters(), request.numberFilters());

@@ -5,6 +5,8 @@ import RegistrationNumberFilter from "./concreteFilters/RegistrationNumberFilter
 import AltitudeFilter from "./concreteFilters/AltitudeFilter";
 import FuelFilter from "./concreteFilters/FuelFilter";
 import ModelFilter from "./concreteFilters/ModelFilter";
+import LatitudeFilter from "./concreteFilters/LatitudeFilter";
+import LongitudeFilter from "./concreteFilters/LongitudeFilter";
 
 const DefaultFiltersState: Filter[] = [
   {
@@ -25,6 +27,34 @@ const DefaultFiltersState: Filter[] = [
     type: FilterType.Number,
     parameter: "altitude",
     key: "maxAltitude",
+    value: undefined,
+    comparisonType: "LesserThan"
+  },
+  {
+    type: FilterType.Number,
+    parameter: "longitude",
+    key: "minLongitude",
+    value: undefined,
+    comparisonType: "GreaterThan"
+  },
+  {
+    type: FilterType.Number,
+    parameter: "altitude",
+    key: "maxLongitude",
+    value: undefined,
+    comparisonType: "LesserThan"
+  },
+  {
+    type: FilterType.Number,
+    parameter: "altitude",
+    key: "minLatitude",
+    value: undefined,
+    comparisonType: "GreaterThan"
+  },
+  {
+    type: FilterType.Number,
+    parameter: "altitude",
+    key: "maxLatitude",
     value: undefined,
     comparisonType: "LesserThan"
   },
@@ -109,6 +139,18 @@ const FilterSection: React.FC<props> = ({ isOpen }) => {
             maxValue={getNumberFilter("maxAltitude").value}
             onMinValueChange={(value) => onNumberFilterChange("minAltitude", value)}
             onMaxValueChange={(value) => onNumberFilterChange("maxAltitude", value)}
+          />
+          <LatitudeFilter
+            minValue={getNumberFilter("minLatitude").value}
+            maxValue={getNumberFilter("maxLatitude").value}
+            onMinValueChange={(value) => onNumberFilterChange("minLatitude", value)}
+            onMaxValueChange={(value) => onNumberFilterChange("maxLatitude", value)}
+          />
+          <LongitudeFilter
+            minValue={getNumberFilter("minLongitude").value}
+            maxValue={getNumberFilter("maxLongitude").value}
+            onMinValueChange={(value) => onNumberFilterChange("minLongitude", value)}
+            onMaxValueChange={(value) => onNumberFilterChange("maxLongitude", value)}
           />
           <FuelFilter
             minValue={getNumberFilter("minFuel").value}
