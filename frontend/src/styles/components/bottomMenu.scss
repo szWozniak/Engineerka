@@ -35,8 +35,17 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    column-gap: 20px;
     flex-wrap: wrap;
     padding-top: 15px;
+
+    & .multipleFiltersContainer{
+      display: flex;
+      flex-direction: column;
+      row-gap: 15px;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
 
     & .filterContent{
       display: flex;
@@ -44,7 +53,7 @@
       row-gap: 4px;
       font-size: 16px;
 
-      & .textFilter{
+      & .concreteFilter{
         background-color: $lighter-grey;
         border-radius: 5px; 
         height: 30px;
