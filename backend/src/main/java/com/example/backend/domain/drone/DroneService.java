@@ -11,6 +11,7 @@ import com.example.backend.events.recordRegistration.model.DroneRecordToRegister
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -110,8 +111,13 @@ public class DroneService {
                     .filter(fr -> fr.getFlight() == null)
                     .sorted(new RecordTimestampsComparator()).toList();
 
-            var lastIndex = Math.min(3, sortedAndFilteredRecords.size());
-            drone.setFlightRecords(sortedAndFilteredRecords.subList(0, lastIndex));
+            if (sortedAndFilteredRecords.size() != 0){
+                var lastIndex = Math.min(3, sortedAndFilteredRecords.size());
+                drone.setFlightRecords(sortedAndFilteredRecords.subList(0, lastIndex));
+            }
+            else{
+                drone.setFlightRecords(new ArrayList<>());
+            }
         }
 
         return drones;

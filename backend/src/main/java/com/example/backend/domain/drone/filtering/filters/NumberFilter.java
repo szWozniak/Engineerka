@@ -5,7 +5,6 @@ import com.example.backend.domain.drone.filtering.validators.ComparisonTypeForFi
 import com.example.backend.domain.drone.filtering.infrastructure.PredicateCreator;
 import com.example.backend.domain.drone.filtering.infrastructure.PredicateCreatorFactory;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
-import jakarta.persistence.Tuple;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Join;
