@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { LineChart, Line, XAxis, CartesianGrid, Tooltip, ResponsiveContainer, YAxis } from 'recharts';
-import { TooltipProps } from 'recharts';
+import { LineChart, Line, XAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { TooltipProps, LegendProps } from 'recharts';
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import { AppContext } from '../../../context/AppContext';
 
 const FlightTracking = () => {
   const { trackedFlight, setTableSelectedDroneRegistration, 
-    setTrackedFlight, setTrackedPoint, trackedPoint } = useContext(AppContext)
+    setTrackedFlight, setTrackedPoint, trackedPoint, setHighlightedFlightId } = useContext(AppContext)
   
   return (
     <div className="tableContainer">
@@ -15,12 +15,14 @@ const FlightTracking = () => {
           onClick={() => {
             setTableSelectedDroneRegistration(null)
             setTrackedFlight(null)
+            setHighlightedFlightId(null)
           }}
         >✈️ Powrót do listy dronów</button>
         
         <button
           onClick={() => {
             setTrackedFlight(null)
+            setHighlightedFlightId(null)
           }}
         >📋 Powrót do listy lotów</button>
       </div>
@@ -38,6 +40,7 @@ const FlightTracking = () => {
               hide={true}
               interval={"equidistantPreserveStart"}
             />
+            <Legend content={<CustomLegend />}/>
             <Line type="monotone" dataKey="alt" stroke="rgb(184, 124, 50)" strokeWidth={3} dot={{ r: 4 }}/>
             <Line type="monotone" dataKey="fuel" stroke="rgb(90, 130, 20)" strokeWidth={3} dot={{ r: 4 }}/>
           </LineChart>
@@ -62,5 +65,18 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameT
 
   return null;
 };
+
+const CustomLegend = ({payload}: LegendProps) => {
+  if (payload){
+    return (
+      <div className="legend">
+        <h5 style={{color: payload[0]?.color}}>📈 Wysokość</h5>
+        <h5 style={{color: payload[1]?.color}}>⛽ Stan Paliwa</h5>
+      </div>
+    )
+  }
+
+  return null;
+}
 
 export default FlightTracking;

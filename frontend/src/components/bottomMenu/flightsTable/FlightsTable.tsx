@@ -12,6 +12,7 @@ const FlightsTable = () => {
         <button
           onClick={() => {
             setTableSelectedDroneRegistration(null)
+            setHighlightedFlightId(null)
           }}
         >✈️ Powrót do listy dronów</button>
       </div>

@@ -220,3 +220,9 @@ input[type="range"] {
     box-shadow: -150rem 0 0 150rem rgba(#fff, 0.2);
   }
 }
+
+.legend {
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+}
