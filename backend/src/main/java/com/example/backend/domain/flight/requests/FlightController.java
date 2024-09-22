@@ -1,5 +1,7 @@
-package com.example.backend.domain.flight;
+package com.example.backend.domain.flight.requests;
 
+import com.example.backend.domain.flight.FlightEntity;
+import com.example.backend.domain.flight.FlightService;
 import com.example.backend.domain.flight.dto.FlightDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,6 @@ public class FlightController {
 
         FlightDto dto = FlightDto.fromFlightEntity(flight.get());
 
-        System.out.println("DANE LOTU: "+id);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.backend.domain.flight.dto;
 
+import com.example.backend.domain.drone.dto.PositionDto;
 import com.example.backend.domain.flight.FlightEntity;
-import com.example.backend.domain.flightRecord.dto.FlightRecordSummaryDto;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -19,9 +19,9 @@ public class FlightSummaryDto {
     private double averageSpeed;
     private int elevationGain;
     private double distance;
-    private List<FlightRecordSummaryDto> flightRecords;
+    private List<PositionDto> flightRecords;
 
-    private FlightSummaryDto(Long id, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, LocalTime duration, double averageSpeed, int elevationGain, double distance, List<FlightRecordSummaryDto> flightRecords) {
+    private FlightSummaryDto(Long id, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, LocalTime duration, double averageSpeed, int elevationGain, double distance, List<PositionDto> flightRecords) {
         this.id = id;
         this.startDate = startDate;
         this.startTime = startTime;
@@ -45,6 +45,6 @@ public class FlightSummaryDto {
                 flightEntity.getAverageSpeed(),
                 flightEntity.getElevationGain(),
                 flightEntity.getDistance(),
-                flightEntity.getFlightRecords().stream().map(FlightRecordSummaryDto::fromFlightRecordEntity).toList());
+                flightEntity.getFlightRecords().stream().map(record -> new PositionDto(record.getLatitude(), record.getLongitude(), record.getAltitude())).toList());
     }
 }
