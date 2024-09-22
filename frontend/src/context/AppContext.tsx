@@ -115,7 +115,6 @@ const AppContextProvider = ({ children }: {
       return flightTrackingSelectedFlightId ? getDroneFlightByFlightId(flightTrackingSelectedFlightId) : null
     },
     keepPreviousData: true,
-    refetchInterval: 1000,
     enabled: true
   })
   
