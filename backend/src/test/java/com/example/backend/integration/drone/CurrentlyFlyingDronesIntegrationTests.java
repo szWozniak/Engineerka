@@ -9,7 +9,7 @@ import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.unit.domain.drone.DroneEntityFixture;
-import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixture;
+import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixtureBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +53,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
     }
 
     @Test
-    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheFilter(){
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheRegistrationNumberFilter(){
         var filter = new TextFilter("registrationNumber", "flyingDroneWithRecords1", ComparisonType.Equals);
         List<IDroneFilter> filters = new ArrayList<>();
         filters.add(filter);
@@ -61,6 +61,50 @@ public class CurrentlyFlyingDronesIntegrationTests {
 
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals("flyingDroneWithRecords1", result.get(0).getRegistrationNumber());
+    }
+
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheAltitudeMinFilter(){
+
+    }
+
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheAltitudeMaxFilter(){
+
+    }
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheLatitudeMinFilter(){
+
+    }
+
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheLatitudeMaxFilter(){
+
+    }
+
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheLongitudeMinFilter(){
+
+    }
+
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheLongitudeMaxFilter(){
+
+    }
+
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheFuelMinFilter(){
+
+    }
+
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheFuelMaxFilter(){
+
+    }
+
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheModelFilter(){
+
     }
 
 
@@ -73,7 +117,10 @@ public class CurrentlyFlyingDronesIntegrationTests {
     }
 
     private void persistDroneWithFlightRecord(String flightRecordId, String droneRegNumber, boolean isFlying){
-        var flightRecord = FlightRecordEntityFixture.getFlightRecordEntityFrom(flightRecordId, LocalDate.now(), LocalTime.now());
+        var flightRecord = new FlightRecordEntityFixtureBuilder()
+                .withId(flightRecordId)
+                .withDateAndTime(LocalDate.now(), LocalTime.now())
+                .build();
         fakeDb.persistAndFlush(flightRecord);
 
         var drone = isFlying ?
@@ -84,6 +131,4 @@ public class CurrentlyFlyingDronesIntegrationTests {
         flightRecord.setDrone(drone);
         fakeDb.persistAndFlush(flightRecord);
     }
-
-
 }
