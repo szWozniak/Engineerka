@@ -3,7 +3,6 @@ package com.example.backend.domain.drone;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import com.example.backend.events.recordRegistration.model.envelope.RegistrationFlag;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
@@ -49,7 +48,7 @@ public class DroneEntity {
     @Setter
     private String type;
 
-    @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     @Getter
     @Setter
     private List<FlightRecordEntity> flightRecords;
