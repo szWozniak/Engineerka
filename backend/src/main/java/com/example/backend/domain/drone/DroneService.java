@@ -11,6 +11,7 @@ import com.example.backend.events.recordRegistration.model.DroneRecordToRegister
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -105,19 +106,23 @@ public class DroneService {
     }
 
     private List<DroneEntity> dronesWithLastThreeRecordsFromCurrentFlightIncluded(List<DroneEntity> drones){
+        var result = new ArrayList<DroneEntity>();
         for (var drone : drones){
             var sortedAndFilteredRecords = drone.getFlightRecords().stream()
                     .filter(fr -> fr.getFlight() == null)
                     .sorted(new RecordTimestampsComparator()).toList();
 
-            var lastIndex = Math.min(3, sortedAndFilteredRecords.size());
-            drone.setFlightRecords(sortedAndFilteredRecords.subList(0, lastIndex));
+            if (sortedAndFilteredRecords.size() != 0){
+                var lastIndex = Math.min(3, sortedAndFilteredRecords.size());
+                drone.setFlightRecords(sortedAndFilteredRecords.subList(0, lastIndex));
+                result.add(drone);
+            }
         }
 
-        return drones;
+        return result;
     }
 
-    public List<FlightEntity> getDroneFinishedFlights(String id){
-        return flightRepository.findDistinctByFlightRecords_Drone_RegistrationNumberAndFlightRecords_FlightIsNotNull(id);
+    public List<FlightEntity> getDroneFinishedFlights(String registrationNumber){
+        return flightRepository.findDistinctByFlightRecords_Drone_RegistrationNumberAndFlightRecords_FlightIsNotNull(registrationNumber);
     }
 }

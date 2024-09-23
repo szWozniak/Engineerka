@@ -1,9 +1,9 @@
 import { PickingInfo, SimpleMeshLayer } from 'deck.gl';
 import React, { useContext } from 'react';
-import { Drone, MapDrone } from '../../drones/types';
-import MESH_URL, { DEFAULT_COLOR, SELECTED_COLOR } from '../../mapConfig/model';
-import { theme } from '../../mapConfig/theme';
-import { AppContext } from '../../context/AppContext';
+import { Drone, MapDrone } from '../../../drones/types';
+import MESH_URL, { DEFAULT_COLOR, SELECTED_COLOR } from '../../../mapConfig/model';
+import { theme } from '../../../mapConfig/theme';
+import { AppContext } from '../../../context/AppContext';
 
 const useDronesLayer = () => {
   const { drones, selectedDrone, setSelectedDroneRegistration } = useContext(AppContext)

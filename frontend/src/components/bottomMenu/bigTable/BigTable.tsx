@@ -3,28 +3,27 @@ import { DroneBase } from "../../../drones/types";
 import { AppContext } from "../../../context/AppContext";
 
 const BigTable = () => {  
-  const { drones, allDrones, setSelectedDroneRegistration } = useContext(AppContext)
+  const { drones, allDrones, setSelectedDroneRegistration, setTableSelectedDroneRegistration } = useContext(AppContext)
   
   return (
-    <div className="content" style={{"height": "230px"}}>
-      Lista Dronów
-      <table className="droneTable">
-        <thead>
-          <tr>
-            <th rowSpan={2}>Nr. rejestracyjny</th>
-            <th colSpan={3}>Dane geograficzne</th>
-            <th rowSpan={2}>Operator</th>
-            <th rowSpan={2}>Paliwo</th>
-            <th rowSpan={2}>Model</th>
-            <th rowSpan={2}>Typ drona</th>
-            <th rowSpan={2}>Akcje</th>
-          </tr>
-          <tr>
-            <th>Szerokość</th>
-            <th>Długość</th>
-            <th>Wysokość</th>
-          </tr>
-        </thead>
+    <table className="droneTable">
+      <thead>
+        <tr>
+          <th rowSpan={2}>Nr. rejestracyjny</th>
+          <th colSpan={3}>Dane geograficzne</th>
+          <th rowSpan={2}>Operator</th>
+          <th rowSpan={2}>Paliwo</th>
+          <th rowSpan={2}>Model</th>
+          <th rowSpan={2}>Typ drona</th>
+          <th rowSpan={2}>Akcje</th>
+        </tr>
+        <tr>
+          <th>Szerokość</th>
+          <th>Długość</th>
+          <th>Wysokość</th>
+        </tr>
+      </thead>
+      <tbody>
         {allDrones?.map((drone: DroneBase, index) => {
           const flyingDrone = drones?.find(d => d.registrationNumber === drone.registrationNumber)
 
@@ -56,13 +55,18 @@ const BigTable = () => {
                   }}
                   title="Wybierz drona"
                 >📌</button>}
-                <button title="Pokaż loty">📋</button>
+                <button 
+                  onClick={() => {
+                    setTableSelectedDroneRegistration(drone.registrationNumber)
+                  }}
+                  title="Pokaż loty"
+                >📋</button>
               </td>
             </tr>
             )
         })}
-      </table>
-    </div>
+      </tbody>
+    </table>
   )
 }
 

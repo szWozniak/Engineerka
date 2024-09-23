@@ -5,7 +5,9 @@ import com.example.backend.events.recordRegistration.model.envelope.Registration
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(indexes = {
+        @Index(name = "model_idx", columnList = "model")
+})
 public class DroneEntity {
     @Id
     @Getter

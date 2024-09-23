@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FlightService {
@@ -49,5 +50,9 @@ public class FlightService {
                 .findAllByDrone_RegistrationNumberAndFlight_IdIsNull(registrationNumber);
 
         return recordsFromCurrentFlight;
+    }
+
+    public Optional<FlightEntity> getFlight(Long id){
+        return flightRepository.findById(id);
     }
 }

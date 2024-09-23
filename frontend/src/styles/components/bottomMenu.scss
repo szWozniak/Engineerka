@@ -6,18 +6,24 @@
   justify-content: flex-end;
   align-items: center;
   flex-direction: column;
-
-  transform: translateY(250px);
-
   transition: all 0.5s ease-in-out;
 
   &.opened {
     transform: translateY(0);
   }
 
+  & .resizer {
+    width: 100%;
+    height: 10px;
+    user-select: none;
+
+    &:hover {
+      cursor: ns-resize;
+    }
+  }
+
   & .shadowArea {
     box-shadow: rgba(0, 0, 0, 0.9) 0px -40px 36px -28px inset;
-    height: 250px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -29,8 +35,17 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    column-gap: 20px;
     flex-wrap: wrap;
     padding-top: 15px;
+
+    & .multipleFiltersContainer{
+      display: flex;
+      flex-direction: column;
+      row-gap: 15px;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
 
     & .filterContent{
       display: flex;
@@ -38,7 +53,7 @@
       row-gap: 4px;
       font-size: 16px;
 
-      & .textFilter{
+      & .concreteFilter{
         background-color: $lighter-grey;
         border-radius: 5px; 
         height: 30px;
@@ -63,20 +78,23 @@
 
   & .content {
     background-color: $dark-grey;
-    width: calc(100% - 21px);
+    width: calc(100% - 1px);
     border-left: 1px solid $grey;
     font-size: 20px;
     font-family: Righteous;
     color: $secondary;
-    padding: 10px;
     pointer-events: all;
     overflow-y: auto;
+
+    & span {
+      padding: 10px;
+    }
   }
 
   svg {
     fill: currentColor;
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     scale: 1.5;
     color: #ccc;
     pointer-events: all;
@@ -92,6 +110,7 @@
     font-size: 18px;
     color: $light-grey;
     width: 100%;
+    padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 
     & button {
@@ -143,4 +162,76 @@ thead {
   & tr:nth-child(even) {
     background-color: #557c25 !important;
   }
+}
+
+.tableContainer {
+  padding: 10px;
+
+  & .time {
+    color: rgb(154, 154, 154);
+    font-size: 14px;
+  }
+
+  & .droneTable {
+    padding: 0px;
+    box-shadow: none;
+  }
+
+  & .controls {
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgb(82, 82, 82);
+    border-top: 1px solid rgb(82, 82, 82);
+    display: flex;
+    gap: 10px;
+
+    & button {
+      font-size: 18px;
+    }
+  }
+}
+
+.chartContainer {
+  & .recharts-surface {
+    scale: 1;
+  }
+}
+
+.tooltip {
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid black;
+  color: white;
+  font-weight: 300;
+  font-size: 16px;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  background-color: rgba(#fff, .2);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 1rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: ew-resize;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 0;
+    box-shadow: -150rem 0 0 150rem rgba(#fff, 0.6);
+  }
+
+  &::-moz-range-thumb {
+    border: none;
+    width: 0;
+    box-shadow: -150rem 0 0 150rem rgba(#fff, 0.2);
+  }
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
 }
