@@ -3,13 +3,9 @@ package com.example.backend.domain.flightRecord;
 import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.events.recordRegistration.model.FlightRecordToRegister;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,12 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(indexes = {
-        @Index(name = "date_time_index", columnList = "DATE, TIME"),
-        @Index(name = "date_index", columnList = "DATE"),
-        @Index(name = "time_index", columnList = "TIME"),
-        @Index(name = "drone_idx", columnList = "DRONE_REGISTRATION_NUMBER")
-})
 public class FlightRecordEntity {
     @Id
     @Getter
@@ -36,11 +26,9 @@ public class FlightRecordEntity {
     private String server;
     @Getter
     @Setter
-    @Column(name = "DATE")
     private LocalDate date;
     @Getter
     @Setter
-    @Column(name = "TIME")
     private LocalTime time;
     @Getter
     @Setter

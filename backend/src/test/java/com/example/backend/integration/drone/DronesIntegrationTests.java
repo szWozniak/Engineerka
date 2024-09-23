@@ -9,7 +9,7 @@ import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.unit.domain.drone.DroneEntityFixture;
-import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixtureBuilder;
+import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixture;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,10 +70,7 @@ public class DronesIntegrationTests {
     }
 
     private void persistDroneWithFlightRecord(String flightRecordId, String droneRegNumber, boolean isFlying){
-        var flightRecord = new FlightRecordEntityFixtureBuilder()
-                .withId(flightRecordId)
-                .withDateAndTime(LocalDate.now(), LocalTime.now())
-                .build();
+        var flightRecord = FlightRecordEntityFixture.getFlightRecordEntityFrom(flightRecordId, LocalDate.now(), LocalTime.now());
         fakeDb.persistAndFlush(flightRecord);
 
         var drone = isFlying ?

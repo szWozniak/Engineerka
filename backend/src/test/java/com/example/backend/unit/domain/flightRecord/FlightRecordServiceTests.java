@@ -27,10 +27,13 @@ public class FlightRecordServiceTests {
 
     @Test
     public void ShouldReturnTrue_IfRecordAlreadyRegistered(){
-        var flightRecord = new FlightRecordEntityFixtureBuilder()
-                .withId("krokodyl")
-                .withFilename("yo")
-                .build();
+        var flightRecord = FlightRecordEntityFixture.getFlightRecordEntityFrom(
+                "krokodyl",
+                LocalDate.now(),
+                LocalTime.now()
+        );
+
+        flightRecord.setFilename("yo");
 
         fakeDb.persistAndFlush(flightRecord);
 
@@ -41,10 +44,13 @@ public class FlightRecordServiceTests {
 
     @Test
     public void ShouldReturnFalse_IfRecordNotRegister(){
-        var flightRecord = new FlightRecordEntityFixtureBuilder()
-                .withId("krokodyl")
-                .withFilename("yo")
-                .build();
+        var flightRecord = FlightRecordEntityFixture.getFlightRecordEntityFrom(
+                "krokodyl",
+                LocalDate.now(),
+                LocalTime.now()
+        );
+
+        flightRecord.setFilename("yo");
 
         fakeDb.persistAndFlush(flightRecord);
 

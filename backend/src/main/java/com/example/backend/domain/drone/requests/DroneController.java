@@ -4,7 +4,7 @@ import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.drone.dto.DroneDto;
 import com.example.backend.domain.drone.dto.FlyingDroneDto;
-import com.example.backend.domain.flight.dto.FlightSummaryDto;
+import com.example.backend.domain.drone.dto.FlightSummaryDto;
 import com.example.backend.domain.drone.requests.Drones.GetDronesRequest;
 import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
@@ -74,9 +74,9 @@ public class DroneController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @GetMapping("/{registrationNumber}/flights")
-    public ResponseEntity<List<FlightSummaryDto>> getFlights(@PathVariable String registrationNumber) {
-        List<FlightEntity> flights = droneService.getDroneFinishedFlights(registrationNumber);
+    @GetMapping("/{id}/flights")
+    public ResponseEntity<List<FlightSummaryDto>> getFlights(@PathVariable String id) {
+        List<FlightEntity> flights = droneService.getDroneFinishedFlights(id);
 
         List<FlightSummaryDto> flightSummaryDtos = flights.stream().map(FlightSummaryDto::fromFlightEntity).toList();
 

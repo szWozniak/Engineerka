@@ -6,7 +6,7 @@ import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.domain.flight.FlightRepository;
-import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixtureBuilder;
+import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixture;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -113,10 +113,12 @@ public class DroneServiceTests {
     @Test
     public void ShouldNotReturnFlightRecords_FromPreviousFlights(){
         //prepare
-        var flightRecord = new FlightRecordEntityFixtureBuilder()
-                .withId("10")
-                .withFlight(new FlightEntity())
-                .build();
+        var flightRecord = FlightRecordEntityFixture.getFlightRecordEntityFrom("10",
+                LocalDate.now(),
+                LocalTime.now());
+        flightRecord.setFlight(new FlightEntity(
+
+        ));
 
         var drone = DroneEntityFixture.getFlyingDrone(List.of(flightRecord), "megaDroniarz");
         Mockito.when(droneRepository.findByRegistrationNumber(Mockito.any()))
@@ -162,26 +164,25 @@ public class DroneServiceTests {
 
     private DroneEntity getDroneEntityWithMultipleFlightRecords(){
         var flightRecords = List.of(
-                new FlightRecordEntityFixtureBuilder()
-                        .withId("1")
-                        .withDateAndTime(LocalDate.of(2012, 3, 3), LocalTime.of(3, 3, 3, 3))
-                        .build(),
-                new FlightRecordEntityFixtureBuilder()
-                        .withId("2")
-                        .withDateAndTime(LocalDate.of(2012, 2, 3),LocalTime.of(3, 3, 3, 3))
-                        .build(),
-                new FlightRecordEntityFixtureBuilder()
-                        .withId("3")
-                        .withDateAndTime(LocalDate.of(2012, 7, 3), LocalTime.of(3, 3, 3, 3))
-                        .build(),
-                new FlightRecordEntityFixtureBuilder()
-                        .withId("4")
-                        .withDateAndTime(LocalDate.of(2012, 1, 3), LocalTime.of(3, 3, 3, 3))
-                        .build(),
-                new FlightRecordEntityFixtureBuilder()
-                        .withId("5")
-                        .withDateAndTime(LocalDate.of(2012, 5, 3), LocalTime.of(3, 3, 3, 3))
-                        .build()
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("2",
+                        LocalDate.of(2012, 3, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("2",
+                        LocalDate.of(2012, 2, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("2",
+                        LocalDate.of(2012, 7, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("2",
+                        LocalDate.of(2012, 1, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("2",
+                        LocalDate.of(2012, 5, 3),
+                        LocalTime.of(3, 3, 3, 3))
         );
 
         var droneEntity = new DroneEntity(
@@ -202,26 +203,25 @@ public class DroneServiceTests {
 
     private DroneEntity getCurrentlyFlyingDroneEntityWithMultipleFlightRecords(){
         var flightRecords = List.of(
-                new FlightRecordEntityFixtureBuilder()
-                        .withId("1")
-                        .withDateAndTime(LocalDate.of(2012, 3, 3), LocalTime.of(3, 3, 3, 3))
-                        .build(),
-                new FlightRecordEntityFixtureBuilder()
-                        .withId("2")
-                        .withDateAndTime(LocalDate.of(2012, 2, 3),LocalTime.of(3, 3, 3, 3))
-                        .build(),
-                new FlightRecordEntityFixtureBuilder()
-                        .withId("3")
-                        .withDateAndTime(LocalDate.of(2012, 7, 3), LocalTime.of(3, 3, 3, 3))
-                        .build(),
-                new FlightRecordEntityFixtureBuilder()
-                        .withId("4")
-                        .withDateAndTime(LocalDate.of(2012, 1, 3), LocalTime.of(3, 3, 3, 3))
-                        .build(),
-                new FlightRecordEntityFixtureBuilder()
-                        .withId("5")
-                        .withDateAndTime(LocalDate.of(2012, 5, 3), LocalTime.of(3, 3, 3, 3))
-                        .build()
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
+                        LocalDate.of(2012, 3, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
+                        LocalDate.of(2012, 2, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
+                        LocalDate.of(2012, 7, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
+                        LocalDate.of(2012, 1, 3),
+                        LocalTime.of(3, 3, 3, 3)),
+
+                FlightRecordEntityFixture.getFlightRecordEntityFrom("1",
+                        LocalDate.of(2012, 5, 3),
+                        LocalTime.of(3, 3, 3, 3))
         );
 
         var droneEntity = new DroneEntity(
