@@ -59,8 +59,8 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameT
   if (active && payload && payload.length) {
     return (
       <div className="tooltip">
-        📈 Wysokość: <b>{payload[0]?.value}</b><br />
-        ⛽ Stan Paliwa: <b>{payload[1]?.value}</b>
+        📈 Wysokość: <b>{payload[0]?.value}m</b><br />
+        ⛽ Stan Paliwa: <b>{payload[1]?.value}%</b>
       </div>
     );
   }
