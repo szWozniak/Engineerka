@@ -6,7 +6,7 @@ import { AppContext } from '../../../context/AppContext';
 
 const FlightTracking = () => {
   const { trackedFlight, setTableSelectedDroneRegistration, 
-    setTrackedFlight, setTrackedPoint, trackedPoint, setHighlightedFlightId } = useContext(AppContext)
+    setTrackedFlight, setFlightsTableSelectedFlightId, setTrackedPoint, trackedPoint, setHighlightedFlightId } = useContext(AppContext)
   
   return (
     <div className="tableContainer">
@@ -16,6 +16,7 @@ const FlightTracking = () => {
             setTableSelectedDroneRegistration(null)
             setTrackedFlight(null)
             setHighlightedFlightId(null)
+            setFlightsTableSelectedFlightId(null)
           }}
         >✈️ Powrót do listy dronów</button>
         
@@ -23,6 +24,7 @@ const FlightTracking = () => {
           onClick={() => {
             setTrackedFlight(null)
             setHighlightedFlightId(null)
+            setFlightsTableSelectedFlightId(null)
           }}
         >📋 Powrót do listy lotów</button>
       </div>

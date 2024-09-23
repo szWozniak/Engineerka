@@ -122,7 +122,7 @@ public class DroneService {
         return result;
     }
 
-    public List<FlightEntity> getDroneFinishedFlights(String id){
-        return flightRepository.findDistinctByFlightRecords_Drone_RegistrationNumberAndFlightRecords_FlightIsNotNull(id);
+    public List<FlightEntity> getDroneFinishedFlights(String registrationNumber){
+        return flightRepository.findDistinctByFlightRecords_Drone_RegistrationNumberAndFlightRecords_FlightIsNotNull(registrationNumber);
     }
 }
