@@ -107,7 +107,7 @@ const AppContextProvider = ({ children }: {
     enabled: true
   })
 
-  const { data: flightTrackingSelectedDroneFlight } = useQuery({
+  const { data: FlightStatusPanelSelectedDroneFlight } = useQuery({
     queryKey: ["flight", flightsTableSelectedFlightId],
     queryFn: () => {
       return flightsTableSelectedFlightId ? getFlightById(flightsTableSelectedFlightId) : null
@@ -165,7 +165,7 @@ const AppContextProvider = ({ children }: {
       tableSelectedDroneRegistration,
       setTableSelectedDroneRegistration,
       tableSelectedDroneFlights: tableSelectedDroneFlights || [],
-      trackedFlight: flightTrackingSelectedDroneFlight,
+      trackedFlight: FlightStatusPanelSelectedDroneFlight,
       setTrackedFlight,
       setFlightsTableSelectedFlightId,
       flightsTableSelectedFlightId,

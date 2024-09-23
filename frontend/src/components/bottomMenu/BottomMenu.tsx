@@ -5,7 +5,7 @@ import { AppContext } from '../../context/AppContext';
 import BigTable from './bigTable/BigTable';
 import FlightsTable from './flightsTable/FlightsTable';
 import FilterSection from './filters/FilterSection';
-import FlightTracking from './flightsTable/FlightTracking';
+import FlightStatusPanel from './flightsTable/FlightStatusPanel';
 
 const BottomMenu = () => {
   const [isOpened, setIsOpened] = useState(false)
@@ -66,7 +66,7 @@ const BottomMenu = () => {
           (tableSelectedDroneRegistration 
             ? <span>Historia lotów dla drona {tableSelectedDroneRegistration}</span> 
             : <span>Lista Dronów</span>)}
-        {trackedFlight ? <FlightTracking /> : tableSelectedDroneRegistration ? <FlightsTable /> : <BigTable />}
+        {trackedFlight ? <FlightStatusPanel /> : tableSelectedDroneRegistration ? <FlightsTable /> : <BigTable />}
       </div>
     </div>
   );

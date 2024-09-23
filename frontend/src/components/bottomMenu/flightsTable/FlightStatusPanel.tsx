@@ -4,7 +4,7 @@ import { TooltipProps, LegendProps } from 'recharts';
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import { AppContext } from '../../../context/AppContext';
 
-const FlightTracking = () => {
+const FlightStatusPanel = () => {
   const { trackedFlight, setTableSelectedDroneRegistration, 
     setTrackedFlight, setFlightsTableSelectedFlightId, setTrackedPoint, trackedPoint, setHighlightedFlightId } = useContext(AppContext)
   
@@ -81,4 +81,4 @@ const CustomLegend = ({payload}: LegendProps) => {
   return null;
 }
 
-export default FlightTracking;
+export default FlightStatusPanel;
