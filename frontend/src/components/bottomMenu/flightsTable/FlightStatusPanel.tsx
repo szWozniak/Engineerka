@@ -5,8 +5,8 @@ import { NameType, ValueType } from "recharts/types/component/DefaultTooltipCont
 import { AppContext } from '../../../context/AppContext';
 
 const FlightStatusPanel = () => {
-  const { trackedFlight, setTableSelectedDroneRegistration, 
-    setTrackedFlight, setFlightsTableSelectedFlightId, setTrackedPoint, trackedPoint, setHighlightedFlightId } = useContext(AppContext)
+  const { trackedFlight, setTrackedFlight, trackedPoint, setTrackedPoint,
+    setTableSelectedDroneRegistration, setFlightsTableSelectedFlightId, setHighlightedFlightId } = useContext(AppContext)
   
   return (
     <div className="tableContainer">
