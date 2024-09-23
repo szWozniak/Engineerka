@@ -11,7 +11,7 @@ import {
   getCurrentDrones, 
   getDroneByRegistration, 
   getDroneFlightSummariesByRegistration,
-  getDroneFlightByFlightId } from '../drones/api/api';
+  getFlightById } from '../drones/api/api';
 import { Drone, DroneBase, DroneFlight, DroneFlightSummary } from '../drones/types';
 import { Filter } from '../filters/types';
 import useFilters from '../filters/useFilters';
@@ -33,8 +33,8 @@ type AppContextType = {
   tableSelectedDroneFlights: DroneFlightSummary[];
   setTrackedFlight: Dispatch<SetStateAction<DroneFlight | null>>;
   trackedFlight: DroneFlight | null | undefined;
-  setFlightTrackingSelectedFlightId: Dispatch<SetStateAction<number | null >>;
-  flightTrackingSelectedFlightId: number | null;
+  setFlightsTableSelectedFlightId: Dispatch<SetStateAction<number | null >>;
+  flightsTableSelectedFlightId: number | null;
   setTrackedPoint: Dispatch<SetStateAction<number>>;
   trackedPoint: number;
   setHighlightedFlightId: Dispatch<SetStateAction<number | null>>;
@@ -56,8 +56,8 @@ export const AppContext = createContext<AppContextType>({
   tableSelectedDroneFlights: [],
   setTrackedFlight: () => {},
   trackedFlight: null,
-  setFlightTrackingSelectedFlightId: () => {},
-  flightTrackingSelectedFlightId: null,
+  setFlightsTableSelectedFlightId: () => {},
+  flightsTableSelectedFlightId: null,
   setTrackedPoint: () => {},
   trackedPoint: 0,
   setHighlightedFlightId: () => {},
@@ -69,7 +69,7 @@ const AppContextProvider = ({ children }: {
 }) => {
   const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
   const [tableSelectedDroneRegistration, setTableSelectedDroneRegistration] = useState<string | null>(null)
-  const [flightTrackingSelectedFlightId, setFlightTrackingSelectedFlightId] = useState<number | null>(null)
+  const [flightsTableSelectedFlightId, setFlightsTableSelectedFlightId] = useState<number | null>(null)
   const [filtersVisibility, setFiltersVisibility] = useState<boolean>(false);
   const [mapViewState, setMapViewState] = useState<MapViewState>(INITIAL_VIEW_STATE)
   const [isMapUpdated, setIsMapUpdated] = useState<boolean>(false)
@@ -85,7 +85,7 @@ const AppContextProvider = ({ children }: {
     queryKey: ["current-drones", JSON.stringify(filters)],
     queryFn: () => getCurrentDrones(filters),
     keepPreviousData: true,
-    refetchInterval: 1000,
+    refetchInterval: 2000,
     enabled: true
   })
 
@@ -93,7 +93,7 @@ const AppContextProvider = ({ children }: {
     queryKey: ["all-drones", JSON.stringify(filters)],
     queryFn: () => getAllDrones(filters),
     keepPreviousData: true,
-    refetchInterval: 1000,
+    refetchInterval: 2000,
     enabled: true
   })
 
@@ -104,17 +104,14 @@ const AppContextProvider = ({ children }: {
         return getDroneFlightSummariesByRegistration(tableSelectedDroneRegistration)
       }
     },
-    keepPreviousData: true,
-    refetchInterval: 1000,
     enabled: true
   })
 
   const { data: flightTrackingSelectedDroneFlight } = useQuery({
-    queryKey: ["flight", flightTrackingSelectedFlightId],
+    queryKey: ["flight", flightsTableSelectedFlightId],
     queryFn: () => {
-      return flightTrackingSelectedFlightId ? getDroneFlightByFlightId(flightTrackingSelectedFlightId) : null
+      return flightsTableSelectedFlightId ? getFlightById(flightsTableSelectedFlightId) : null
     },
-    keepPreviousData: true,
     enabled: true
   })
   
@@ -124,7 +121,7 @@ const AppContextProvider = ({ children }: {
       return selectedDroneRegistration ? getDroneByRegistration(selectedDroneRegistration) : null
     },
     keepPreviousData: true,
-    refetchInterval: 1000,
+    refetchInterval: 2000,
     enabled: true,
   })
 
@@ -153,9 +150,6 @@ const AppContextProvider = ({ children }: {
   useEffect(() => {
     setTrackedPoint((trackedFlight?.flightRecords?.length || 1) - 1)
   }, [trackedFlight])
-
-
-  console.log(flightTrackingSelectedDroneFlight)
   
   return (
     <AppContext.Provider value={{ 
@@ -173,8 +167,8 @@ const AppContextProvider = ({ children }: {
       tableSelectedDroneFlights: tableSelectedDroneFlights || [],
       trackedFlight: flightTrackingSelectedDroneFlight,
       setTrackedFlight,
-      setFlightTrackingSelectedFlightId,
-      flightTrackingSelectedFlightId,
+      setFlightsTableSelectedFlightId,
+      flightsTableSelectedFlightId,
       trackedPoint,
       setTrackedPoint,
       highlightedFlightId,

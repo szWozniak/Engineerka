@@ -55,7 +55,7 @@ export const getDroneFlightSummariesByRegistration = (registration: string): Pro
     .then(DroneFlightSummarySchema.array().parse)
 }
 
-export const getDroneFlightByFlightId = (flightId: number): Promise<DroneFlight> => {
+export const getFlightById = (flightId: number): Promise<DroneFlight> => {
   return fetch(`${defaultURL}/flights/${flightId}`, {
     method: "GET",
   })

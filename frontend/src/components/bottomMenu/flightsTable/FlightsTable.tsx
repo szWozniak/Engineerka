@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
-import { DroneFlight, DroneFlightSummary } from "../../../drones/types";
+import { useContext } from "react";
+import { DroneFlightSummary } from "../../../drones/types";
 import { AppContext } from "../../../context/AppContext";
 
 
 const FlightsTable = () => {  
-  const { tableSelectedDroneFlights, setTableSelectedDroneRegistration, setFlightTrackingSelectedFlightId, setHighlightedFlightId } = useContext(AppContext)
+  const { tableSelectedDroneFlights, setTableSelectedDroneRegistration, setFlightsTableSelectedFlightId, setHighlightedFlightId } = useContext(AppContext)
   
   return (
     <div className="tableContainer">
@@ -13,7 +13,7 @@ const FlightsTable = () => {
           onClick={() => {
             setTableSelectedDroneRegistration(null)
             setHighlightedFlightId(null)
-            setFlightTrackingSelectedFlightId(null)
+            setFlightsTableSelectedFlightId(null)
           }}
         >✈️ Powrót do listy dronów</button>
       </div>
@@ -30,7 +30,7 @@ const FlightsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {tableSelectedDroneFlights?.map((flight: DroneFlightSummary, index) => {
+          {tableSelectedDroneFlights?.map((flight, index) => {
             return (
               <tr key={index}>
                 <td>
@@ -45,7 +45,7 @@ const FlightsTable = () => {
                   {flight?.duration}
                 </td>
                 <td>
-                  {flight?.averageSpeed?.toFixed(2) + " km/s"}
+                  {flight?.averageSpeed?.toFixed(2) + " km/h"}
                 </td>
                 <td>
                   {flight?.elevationGain + "m"}
@@ -56,7 +56,7 @@ const FlightsTable = () => {
                 <td>
                 <button 
                   onClick={() => {
-                    setFlightTrackingSelectedFlightId(flight?.id)
+                    setFlightsTableSelectedFlightId(flight?.id)
                   }}
                   onMouseEnter={() => {
                     setHighlightedFlightId(flight?.id)
