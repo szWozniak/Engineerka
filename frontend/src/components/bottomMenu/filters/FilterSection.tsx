@@ -92,6 +92,7 @@ const FilterSection: React.FC<props> = ({ isOpen }) => {
 
   const getTextFilter = (key: TextFilterKey): TextFilter => {
     const searchedFilter = filtersState.find(f => f.key === key);
+
     if (searchedFilter?.type !== FilterType.Text){
       throw new Error("Invalid key")
     }
@@ -101,6 +102,7 @@ const FilterSection: React.FC<props> = ({ isOpen }) => {
 
   const getNumberFilter = (key: NumberFilterKey): NumberFilter => {
     const searchedFilter = filtersState.find(f => f.key === key);
+    
     if (searchedFilter?.type !== FilterType.Number){
       throw new Error("Invalid key")
     }
