@@ -14,11 +14,15 @@ const useLayerManager = () => {
     const flightsTracesLayer = useFlightsTracesLayer();
     const trackedDroneLayer = useTrackedDroneLayer();
 
-    const layers = tableSelectedDroneRegistration 
-        ? (trackedFlight ? [ flightsTracesLayer, trackedDroneLayer] : [ flightsTracesLayer ])
-        : [ dronesLayer, tracesLayer ]
+    if(tableSelectedDroneRegistration) {
+        if(trackedFlight) {
+            return { layers: [ flightsTracesLayer, trackedDroneLayer] }
+        }
+        
+        return { layers: [ flightsTracesLayer ] }
+    }
 
-    return { layers }
+    return { layers: [ dronesLayer, tracesLayer ] }
 };
 
 export default useLayerManager;
