@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import useDronesLayer from './default/useDronesLayer';
-import useTracesLayer from './default/useTracesLayer';
+import useDronesTracesLayer from './default/useDronesTracesLayer';
 import { AppContext } from '../../context/AppContext';
 import useFlightsTracesLayer from './flights/useFlightsTracesLayer';
 import useTrackedDroneLayer from './flights/useTrackedDroneLayer';
@@ -9,7 +9,7 @@ const useLayerManager = () => {
     const { tableSelectedDroneRegistration, trackedFlight } = useContext(AppContext)
     
     const dronesLayer = useDronesLayer();
-    const tracesLayer = useTracesLayer();
+    const tracesLayer = useDronesTracesLayer();
     
     const flightsTracesLayer = useFlightsTracesLayer();
     const trackedDroneLayer = useTrackedDroneLayer();
