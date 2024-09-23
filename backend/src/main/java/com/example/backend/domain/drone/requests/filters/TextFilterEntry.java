@@ -7,7 +7,6 @@ public record TextFilterEntry(
         String parameter,
 
         String key,
-
         @NotNull(message = "filter value cannot be null")
         String value,
 

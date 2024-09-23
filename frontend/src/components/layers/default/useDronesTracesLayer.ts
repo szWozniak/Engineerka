@@ -3,7 +3,7 @@ import { droneTrace } from "../types/lines"
 import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 
-const useTracesLayer = () => {
+const useDronesTracesLayer = () => {
   const { drones, selectedDrone } = useContext(AppContext)
 
   const mapPositionsToTraces = (): droneTrace[] => {
@@ -47,4 +47,4 @@ const useTracesLayer = () => {
   })
 }
 
-export default useTracesLayer
+export default useDronesTracesLayer

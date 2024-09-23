@@ -4,9 +4,9 @@ import { TooltipProps, LegendProps } from 'recharts';
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import { AppContext } from '../../../context/AppContext';
 
-const FlightTracking = () => {
-  const { trackedFlight, setTableSelectedDroneRegistration, 
-    setTrackedFlight, setFlightsTableSelectedFlightId, setTrackedPoint, trackedPoint, setHighlightedFlightId } = useContext(AppContext)
+const FlightStatusPanel = () => {
+  const { trackedFlight, setTrackedFlight, trackedPoint, setTrackedPoint,
+    setTableSelectedDroneRegistration, setFlightsTableSelectedFlightId, setHighlightedFlightId } = useContext(AppContext)
   
   return (
     <div className="tableContainer">
@@ -59,8 +59,8 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameT
   if (active && payload && payload.length) {
     return (
       <div className="tooltip">
-        📈 Wysokość: <b>{payload[0]?.value}</b><br />
-        ⛽ Stan Paliwa: <b>{payload[1]?.value}</b>
+        📈 Wysokość: <b>{payload[0]?.value}m</b><br />
+        ⛽ Stan Paliwa: <b>{payload[1]?.value}%</b>
       </div>
     );
   }
@@ -81,4 +81,4 @@ const CustomLegend = ({payload}: LegendProps) => {
   return null;
 }
 
-export default FlightTracking;
+export default FlightStatusPanel;

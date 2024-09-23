@@ -35,12 +35,8 @@ public class NumberFilter implements IDroneFilter {
     @Override
     public Specification<DroneEntity> toSpecification() {
         return (Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
-
             Join<DroneEntity, FlightRecordEntity> droneWithFlightRecords = root.join("flightRecords");
-
-
             Subquery<LocalTime> subQuery = createQueryToGetMostFreshFlightRecord(root, query, builder);
-
             PredicateCreator<Integer> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
 
             return builder.and(
