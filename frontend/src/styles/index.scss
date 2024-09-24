@@ -1,8 +1,9 @@
 $primary: #61892F;
-$secondary: #86C232;
+$secondary: rgb(134, 194, 50);
 $dark-grey: #222629;
 $grey: #474B4F;
 $light-grey: #D7D7D7;
+$lighter-grey: #383a3c;
 
 @import './components/main.scss';
 @import './components/sidebar.scss';
