@@ -91,23 +91,42 @@ def convert_to_dms(lat, lon):
 
     return lat_str, lon_str
 
+def haversine_distance(lat1, lon1, lat2, lon2):
+    R = 6371.0
+
+    dlat = np.radians(lat2 - lat1)
+    dlon = np.radians(lon2 - lon1)
+
+    a = np.sin(dlat / 2)**2 + np.cos(np.radians(lat1)) * np.cos(np.radians(lat2)) * np.sin(dlon / 2)**2
+    c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
+
+    distance_2d = R * c
+
+    return distance_2d
+
 def generate_flight_ticks(starting_latitude, starting_longitude):
     number_of_points = random.randint(CONFIG['MINIMUM_FLIGHT_LENGTH'], CONFIG['MAXIMUM_FLIGHT_LENGTH'])
     latitudes = [0 for _ in range(number_of_points)]
     longitudes = [0 for _ in range(number_of_points)]
     headings = np.zeros(number_of_points)
     altitudes = np.zeros(number_of_points)
+    speeds = np.zeros(number_of_points)
 
     scale_factor_geo = 0.0005  
     alpha = 2.5
     time = np.linspace(0, np.pi, number_of_points)
     shaping_factor = np.sin(time)
+    initial_fuel = random.uniform(80, 100)
+    final_fuel = random.uniform(5, 30)
 
-    fuel = np.linspace(100, 50, number_of_points)
-    speeds = np.random.uniform(25, 35, number_of_points)
+    fuel = np.linspace(initial_fuel, final_fuel, number_of_points)
+    fuel = np.clip(fuel ** np.random.uniform(0.9, 1.1), final_fuel, initial_fuel)
     lat_before = starting_latitude
     lon_before = starting_longitude
     alt_before = 1
+    midpoint = number_of_points // 2 
+    alt_up_scale = 90 / (number_of_points ** 0.5)
+    alt_down_scale = 55 / (number_of_points ** 0.5)
 
     for i in range(number_of_points):
         step_length = np.random.pareto(alpha)
@@ -115,14 +134,25 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
         
         latitudes[i] = lat_before + step_length * np.cos(theta) * scale_factor_geo
         longitudes[i] = lon_before + step_length * np.sin(theta) * scale_factor_geo
-        altitudes[i] = min(alt_before + np.abs(step_length * shaping_factor[i]), const.MAX_FLIGHT_ALT)
-        headings[i-1] = calculate_heading(lat_before, lon_before, latitudes[i], longitudes[i]) 
+        headings[i] = calculate_heading(lat_before, lon_before, latitudes[i], longitudes[i])
+
+        if i < midpoint:
+            altitudes[i] = min(const.MAX_FLIGHT_ALT, alt_before + np.abs(step_length * shaping_factor[i]) * alt_up_scale)
+        else:
+            altitudes[i] = max(1, alt_before - np.abs(step_length * shaping_factor[i]) * alt_down_scale)
+
+        distance_2d = haversine_distance(lat_before, lon_before, latitudes[i], longitudes[i])
+        distance_3d = np.sqrt(distance_2d**2 + ((altitudes[i] - alt_before)/1000)**2)
+        
+        speeds[i] = distance_3d * 1800
 
         lat_before = latitudes[i]
         lon_before = longitudes[i]
         alt_before = altitudes[i]
 
         latitudes[i], longitudes[i] = convert_to_dms(latitudes[i], longitudes[i])
+    
+    altitudes[number_of_points-1] = 1
 
     return number_of_points, latitudes, longitudes, headings, altitudes, fuel, speeds
 
