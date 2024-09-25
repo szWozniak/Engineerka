@@ -39,21 +39,21 @@ const DefaultFiltersState: Filter[] = [
   },
   {
     type: FilterType.Number,
-    parameter: "altitude",
+    parameter: "longitude",
     key: "maxLongitude",
     value: undefined,
     comparisonType: "LesserThan"
   },
   {
     type: FilterType.Number,
-    parameter: "altitude",
+    parameter: "latitude",
     key: "minLatitude",
     value: undefined,
     comparisonType: "GreaterThan"
   },
   {
     type: FilterType.Number,
-    parameter: "altitude",
+    parameter: "latitude",
     key: "maxLatitude",
     value: undefined,
     comparisonType: "LesserThan"

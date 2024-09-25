@@ -19,8 +19,10 @@ import java.time.LocalTime;
 @Entity
 @Table(indexes = {
         @Index(name = "date_time_index", columnList = "DATE, TIME"),
-        @Index(name = "date_index", columnList = "DATE"),
-        @Index(name = "time_index", columnList = "TIME"),
+        @Index(name = "altitude_index", columnList = "ALTITUDE"),
+        @Index(name = "longitude_index", columnList = "LONGITUDE"),
+        @Index(name = "latitude_index", columnList = "LATITUDE"),
+        @Index(name = "fuel_index", columnList = "FUEL"),
         @Index(name = "drone_index", columnList = "DRONE_REGISTRATION_NUMBER")
 })
 public class FlightRecordEntity {
