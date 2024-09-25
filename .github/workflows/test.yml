@@ -37,8 +37,11 @@ jobs:
       with:
         node-version: v22.2.0
     - name: Run npm install
+      working-directory: ./frontend
       run: npm install
     - name: Build frontend
+      working-directory: ./frontend
       run: npm run build
     - name: Run tests
+      working-directory: ./frontend
       run: npm test
