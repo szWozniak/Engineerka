@@ -16,7 +16,7 @@ import { Drone, DroneBase, DroneFlight, DroneFlightSummary } from '../drones/typ
 import { Filter } from '../filters/types';
 import { INITIAL_VIEW_STATE } from '../mapConfig/initialView';
 import { MapViewState } from 'deck.gl';
-import useApplyFilters from '../filters/useApplyFilters';
+import useApplyFilters from '../filters/useCases/useApplyFilters';
 
 type AppContextType = {
   drones: Drone[] | undefined;

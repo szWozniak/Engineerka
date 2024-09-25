@@ -6,7 +6,7 @@ import FuelFilter from "./concreteFilters/FuelFilter";
 import ModelFilter from "./concreteFilters/ModelFilter";
 import LatitudeFilter from "./concreteFilters/LatitudeFilter";
 import LongitudeFilter from "./concreteFilters/LongitudeFilter";
-import useFilters from "./useCases/useFilters";
+import useFilters from "../../../filters/useCases/useFilters";
 
 interface props{
   isOpen: boolean

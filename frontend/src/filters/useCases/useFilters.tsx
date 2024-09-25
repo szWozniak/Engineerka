@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Filter, FilterType, NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from "../../../../filters/types"
+import { Filter, FilterType, NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from "../types"
 
 const DefaultFiltersState: Filter[] = [
     {
