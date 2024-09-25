@@ -10,13 +10,15 @@ import {
   getAllDrones, 
   getCurrentDrones, 
   getDroneByRegistration, 
-  getDroneFlightSummariesByRegistration,
-  getFlightById } from '../drones/api/api';
-import { Drone, DroneBase, DroneFlight, DroneFlightSummary } from '../drones/types';
+  getDroneFlightSummariesByRegistration } from '../drones/api/api';
+
 import { Filter } from '../filters/types';
 import { INITIAL_VIEW_STATE } from '../mapConfig/initialView';
 import { MapViewState } from 'deck.gl';
 import useApplyFilters from '../filters/useCases/useApplyFilters';
+import { Drone, DroneBase, DroneFlightSummary } from '../drones/types';
+import { DroneFlight } from '../flights/api/types';
+import { getFlightById } from '../flights/api/api';
 
 type AppContextType = {
   drones: Drone[] | undefined;
