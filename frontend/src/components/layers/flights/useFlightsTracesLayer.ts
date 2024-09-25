@@ -4,18 +4,18 @@ import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 
 const useFlightsTracesLayer = () => {
-  const { trackedFlight, tableSelectedDroneFlights, trackedPoint, highlightedFlightId } = useContext(AppContext)
+  const { flights, table } = useContext(AppContext) //this table thing is strange
 
   const mapPositionsToTraces = (): droneTrace[] => {
-    if (tableSelectedDroneFlights === undefined) return [];
+    if (table.selectedDroneFlights === undefined) return [];
 
-    const flights = trackedFlight ? [{
-      ...trackedFlight,
-      flightRecords: trackedFlight.flightRecords.slice(0, trackedPoint+1)
-    }] : tableSelectedDroneFlights
+    const flightsToDisplay = flights.trackedFlight ? [{
+      ...flights.trackedFlight,
+      flightRecords: flights.trackedFlight.flightRecords.slice(0, flights.trackedPoint+1)
+    }] : table.selectedDroneFlights
     const traces: droneTrace[] = [];
 
-    flights.forEach((droneFlight, index) => {
+    flightsToDisplay.forEach((droneFlight, index) => {
       const trace = droneFlight?.flightRecords || []
 
       if (trace.length < 2) { return []}
@@ -38,7 +38,7 @@ const useFlightsTracesLayer = () => {
     opacity: 0.8,
     getSourcePosition: d => d.start,
     getTargetPosition: d => d.end,
-    getColor: d => d.id === highlightedFlightId ? [200, 255, 255, 200] : [0, 200, 200, 125],
+    getColor: d => d.id === flights.highlitedFlightId ? [200, 255, 255, 200] : [0, 200, 200, 125],
     getWidth: _d => 5,
     pickable: false,
     visible: true,

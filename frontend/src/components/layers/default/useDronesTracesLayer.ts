@@ -4,15 +4,15 @@ import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 
 const useDronesTracesLayer = () => {
-  const { drones, selectedDrone } = useContext(AppContext)
+  const { drones } = useContext(AppContext)
 
   const mapPositionsToTraces = (): droneTrace[] => {
     if (drones === undefined) return [];
 
     const traces: droneTrace[] = [];
 
-    drones.forEach((drone, index) => {
-      const trace = (drone.registrationNumber === selectedDrone?.registrationNumber) ? selectedDrone.trace : drone.trace
+    drones.currentlyFlyng?.forEach((drone, index) => {
+      const trace = (drone.registrationNumber === drones.selected?.registrationNumber) ? drones.selected.trace : drone.trace
 
       if (trace.length === 0) { return []}
 

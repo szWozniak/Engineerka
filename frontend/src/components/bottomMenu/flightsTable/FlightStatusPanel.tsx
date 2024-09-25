@@ -1,36 +1,35 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { LineChart, Line, XAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { TooltipProps, LegendProps } from 'recharts';
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import { AppContext } from '../../../context/AppContext';
 
 const FlightStatusPanel = () => {
-  const { trackedFlight, setTrackedFlight, trackedPoint, setTrackedPoint,
-    setTableSelectedDroneRegistration, setFlightsTableSelectedFlightId, setHighlightedFlightId } = useContext(AppContext)
+  const { flights, table } = useContext(AppContext)
   
   return (
     <div className="tableContainer">
       <div className="controls">
         <button
           onClick={() => {
-            setTableSelectedDroneRegistration(null)
-            setTrackedFlight(null)
-            setHighlightedFlightId(null)
-            setFlightsTableSelectedFlightId(null)
+            table.setSelectedDroneRegistration(null)
+            flights.setTrackedFlight(null)
+            flights.setHighlightedFlightId(null)
+            flights.setTableSelectedFlightId(null)
           }}
         >✈️ Powrót do listy dronów</button>
         
         <button
           onClick={() => {
-            setTrackedFlight(null)
-            setHighlightedFlightId(null)
-            setFlightsTableSelectedFlightId(null)
+            flights.setTrackedFlight(null)
+            flights.setHighlightedFlightId(null)
+            flights.setTableSelectedFlightId(null)
           }}
         >📋 Powrót do listy lotów</button>
       </div>
       <div className="chartContainer">
         <ResponsiveContainer height={200} width='100%'>
-          <LineChart data={trackedFlight?.flightRecords?.map((record, index) => ({
+          <LineChart data={flights.trackedFlight?.flightRecords?.map((record, index) => ({
             time: index,
             alt: record?.altitude,
             fuel: record?.fuel
@@ -47,8 +46,12 @@ const FlightStatusPanel = () => {
             <Line type="monotone" dataKey="fuel" stroke="rgb(90, 130, 20)" strokeWidth={3} dot={{ r: 4 }}/>
           </LineChart>
         </ResponsiveContainer>
-        <input type="range" min={0} max={trackedFlight?.flightRecords?.length} step={1} value={trackedPoint} onChange={(e) => {
-          setTrackedPoint(parseInt(e?.target?.value))
+        <input type="range" min={0} 
+        max={flights.trackedFlight?.flightRecords?.length} 
+        step={1} 
+        value={flights.trackedPoint} 
+        onChange={(e) => {
+          flights.setTrackedPoint(parseInt(e?.target?.value))
         }}/>
       </div>
     </div>

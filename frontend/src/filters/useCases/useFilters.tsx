@@ -117,7 +117,7 @@ const useFilters = () => {
   }
 
   return {
-    filters: filtersState,
+    currentFilters: filtersState,
     textFilters: {
         get: getTextFilter,
         onChange: onTextFilterChange

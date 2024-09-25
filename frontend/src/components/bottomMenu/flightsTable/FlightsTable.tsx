@@ -1,19 +1,18 @@
 import { useContext } from "react";
-import { DroneFlightSummary } from "../../../drones/types";
 import { AppContext } from "../../../context/AppContext";
 
 
 const FlightsTable = () => {  
-  const { tableSelectedDroneFlights, setTableSelectedDroneRegistration, setFlightsTableSelectedFlightId, setHighlightedFlightId } = useContext(AppContext)
+  const { table, flights, drones } = useContext(AppContext)
   
   return (
     <div className="tableContainer">
       <div className="controls">
         <button
           onClick={() => {
-            setTableSelectedDroneRegistration(null)
-            setHighlightedFlightId(null)
-            setFlightsTableSelectedFlightId(null)
+            table.setSelectedDroneRegistration(null)
+            flights.setHighlightedFlightId(null)
+            flights.setTableSelectedFlightId(null)
           }}
         >✈️ Powrót do listy dronów</button>
       </div>
@@ -30,7 +29,7 @@ const FlightsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {tableSelectedDroneFlights?.map((flight, index) => {
+          {table.selectedDroneFlights?.map((flight, index) => {
             return (
               <tr key={index}>
                 <td>
@@ -56,13 +55,13 @@ const FlightsTable = () => {
                 <td>
                 <button 
                   onClick={() => {
-                    setFlightsTableSelectedFlightId(flight?.id)
+                    flights.setTableSelectedFlightId(flight?.id)
                   }}
                   onMouseEnter={() => {
-                    setHighlightedFlightId(flight?.id)
+                    flights.setHighlightedFlightId(flight?.id)
                   }}
                   onMouseLeave={() => {
-                    setHighlightedFlightId(null)
+                    flights.setHighlightedFlightId(null)
                   }}
                   title="Podgląd lotu"
                 >🔍</button>

@@ -8,11 +8,11 @@ const Sidebar: React.FC = () => {
 
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
-  const { drones, selectedDrone, setSelectedDroneRegistration, toggleFiltersVisibility } = useContext(AppContext)
+  const { drones, filters } = useContext(AppContext)
 
   const renderViewChangeButtons = () => {
-    if (selectedDrone) {
-      return (<button className="sidebarButton" onClick={() => setSelectedDroneRegistration(null)}>Reset selection</button>)
+    if (drones.selected) {
+      return (<button className="sidebarButton" onClick={() => drones.setSelected(null)}>Reset selection</button>)
     }
 
     return <></>
@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
           <MenuDropdown
             label={"Filtry"}
             opened={openedMenu === 1}
-            setOpened={toggleFiltersVisibility}
+            setOpened={filters.toggleVisibilty}
           />
           <MenuDropdown
             label={"Latające Drony"}
@@ -42,9 +42,9 @@ const Sidebar: React.FC = () => {
             }}
           />
           {openedMenu === 2 && <div className="droneEntries">
-            {drones?.map((drone: Drone, index) => (
+            {drones.currentlyFlyng?.map((drone: Drone, index) => (
               <div key={index} className="droneEntry" onClick={() => {
-                setSelectedDroneRegistration(drone.registrationNumber)
+                drones.setSelected(drone.registrationNumber)
               }}>
                 <span>{drone.registrationNumber} </span>
                 <span className="extraLabel">{drone.type}</span>
@@ -53,12 +53,12 @@ const Sidebar: React.FC = () => {
           </div>}
         </div>
         <div className="container">
-          {selectedDrone && <div>
-            <div>Selected drone: {selectedDrone.registrationNumber}</div>
-            <div>Latitude: <b>{selectedDrone.currentPosition.latitude.toFixed(4)}</b></div>
-            <div>Longtitude: <b>{selectedDrone.currentPosition.longitude.toFixed(4)}</b></div>
-            <div>Direction: <b>{selectedDrone.heading}</b></div>
-            <div>Altitude: <b>{selectedDrone.currentPosition.altitude}</b></div>
+          {drones.selected && <div>
+            <div>Selected drone: {drones.selected.registrationNumber}</div>
+            <div>Latitude: <b>{drones.selected.currentPosition.latitude.toFixed(4)}</b></div>
+            <div>Longtitude: <b>{drones.selected.currentPosition.longitude.toFixed(4)}</b></div>
+            <div>Direction: <b>{drones.selected.heading}</b></div>
+            <div>Altitude: <b>{drones.selected.currentPosition.altitude}</b></div>
             {renderViewChangeButtons()}
           </div>}
         </div>  

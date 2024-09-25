@@ -31,7 +31,7 @@ const App = () => {
   const mapRef: any = useRef();
   const { layers } = useLayerManager()
 
-  const { mapViewState, setMapViewState } = useContext(AppContext)
+  const { map } = useContext(AppContext)
 
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {
@@ -56,9 +56,9 @@ const App = () => {
         pickingRadius={5}
         effects={[lightingEffect]}
         getTooltip={getTooltip}
-        viewState={mapViewState}
+        viewState={map.viewState}
         onViewStateChange={(newMapViewState) => {
-          setMapViewState(newMapViewState.viewState)
+          map.setViewState(newMapViewState.viewState)
         }}
       >
         <Map

@@ -6,11 +6,11 @@ import { theme } from '../../../mapConfig/theme';
 import { AppContext } from '../../../context/AppContext';
 
 const useTrackedDroneLayer = () => {
-  const { trackedFlight, trackedPoint } = useContext(AppContext)
+  const { flights } = useContext(AppContext)
 
   return new SimpleMeshLayer({
     id: "tracked-drone",
-    data: [trackedFlight?.flightRecords?.[trackedPoint]],
+    data: [flights.trackedFlight?.flightRecords?.[flights.trackedPoint]],
     mesh: MESH_URL,
     getPosition: d => [d.longitude, d.latitude, d.altitude],
     getColor: d => [255, 50, 50],

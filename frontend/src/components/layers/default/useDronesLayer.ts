@@ -6,18 +6,18 @@ import { theme } from '../../../mapConfig/theme';
 import { AppContext } from '../../../context/AppContext';
 
 const useDronesLayer = () => {
-  const { drones, selectedDrone, setSelectedDroneRegistration } = useContext(AppContext)
+  const { drones } = useContext(AppContext)
 
   const handleMouseClick = (info: PickingInfo, _event: any) => {
     if (info && info.object) {
-      setSelectedDroneRegistration(info?.object?.registrationNumber)
+      drones.setSelected(info?.object?.registrationNumber)
     }
   }
 
   return new SimpleMeshLayer<MapDrone>({
     id: "default-drones",
-    data: drones?.map(
-      d => ({ ...d, color: d.registrationNumber === selectedDrone?.registrationNumber ? SELECTED_COLOR : DEFAULT_COLOR })
+    data: drones.currentlyFlyng?.map(
+      d => ({ ...d, color: d.registrationNumber === drones.selected?.registrationNumber ? SELECTED_COLOR : DEFAULT_COLOR })
     ),
     mesh: MESH_URL,
     getPosition: d => [d.currentPosition.longitude, d.currentPosition.latitude, d.currentPosition.altitude],

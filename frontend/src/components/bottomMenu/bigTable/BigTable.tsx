@@ -3,7 +3,7 @@ import { DroneBase } from "../../../drones/types";
 import { AppContext } from "../../../context/AppContext";
 
 const BigTable = () => {  
-  const { drones, allDrones, setSelectedDroneRegistration, setTableSelectedDroneRegistration } = useContext(AppContext)
+  const { drones } = useContext(AppContext)
   
   return (
     <table className="droneTable">
@@ -24,8 +24,8 @@ const BigTable = () => {
         </tr>
       </thead>
       <tbody>
-        {allDrones?.map((drone: DroneBase, index) => {
-          const flyingDrone = drones?.find(d => d.registrationNumber === drone.registrationNumber)
+        {drones.all?.map((drone: DroneBase, index) => {
+          const flyingDrone = drones.currentlyFlyng?.find(d => d.registrationNumber === drone.registrationNumber)
 
           return (
             <tr key={index} className="droneEntry" >
@@ -51,13 +51,13 @@ const BigTable = () => {
                 {flyingDrone && 
                 <button 
                   onClick={() => {
-                    setSelectedDroneRegistration(drone.registrationNumber)
+                    drones.setSelected(drone.registrationNumber)
                   }}
                   title="Wybierz drona"
                 >📌</button>}
                 <button 
                   onClick={() => {
-                    setTableSelectedDroneRegistration(drone.registrationNumber)
+                    drones.setSelected(drone.registrationNumber)
                   }}
                   title="Pokaż loty"
                 >📋</button>

@@ -13,9 +13,9 @@ interface props{
 }
 
 const FilterSection: React.FC<props> = ({ isOpen }) => {
-  const {applyFilters} = useContext(AppContext);
+  const {filters} = useContext(AppContext);
 
-  const {filters, numberFilters, textFilters} = useFilters();
+  const {currentFilters, numberFilters, textFilters} = useFilters();
 
   return(
     <div className={`content filterSection ${isOpen && 'opened'}`} style={{"height": "270px"}}>
@@ -55,7 +55,7 @@ const FilterSection: React.FC<props> = ({ isOpen }) => {
             onChange={(value) => textFilters.onChange("model", value)}
           />
         </div>
-        <button className="apply" onClick={() => applyFilters(filters)}>Zastosuj</button>
+        <button className="apply" onClick={() => filters.apply(currentFilters)}>Zastosuj</button>
       </div>
       
     </div>
