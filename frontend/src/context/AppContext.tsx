@@ -5,7 +5,6 @@ import React, {
   createContext, 
   useState, 
   useEffect } from 'react';
-import { useQuery } from 'react-query';
 import { 
   getAllDrones, 
   getCurrentDrones, 
@@ -19,6 +18,9 @@ import useApplyFilters from '../filters/useCases/useApplyFilters';
 import { Drone, DroneBase, DroneFlightSummary } from '../drones/types';
 import { DroneFlight } from '../flights/api/types';
 import { getFlightById } from '../flights/api/api';
+import { useQuery } from '@tanstack/react-query';
+import droneQueries from '../drones/repository/droneQuries';
+import flightQueries from '../flights/repository/flightQueries';
 
 type AppContextType = {
   drones: Drone[] | undefined;
@@ -70,8 +72,8 @@ const AppContextProvider = ({ children }: {
   children: ReactNode
 }) => {
   const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
-  const [tableSelectedDroneRegistration, setTableSelectedDroneRegistration] = useState<string | null>(null)
-  const [flightsTableSelectedFlightId, setFlightsTableSelectedFlightId] = useState<number | null>(null)
+  const [selectedDroneRegistrationFromTable, setSelectedDroneRegistrationFromTable] = useState<string | null>(null)
+  const [selectedFlightId, setSelectedFlightId] = useState<number | null>(null)
   const [filtersVisibility, setFiltersVisibility] = useState<boolean>(false);
   const [mapViewState, setMapViewState] = useState<MapViewState>(INITIAL_VIEW_STATE)
   const [isMapUpdated, setIsMapUpdated] = useState<boolean>(false)
@@ -83,49 +85,25 @@ const AppContextProvider = ({ children }: {
 
   const toggleFiltersVisibility = () => setFiltersVisibility(prev => !prev);
 
-  const { data: drones } = useQuery({
-    queryKey: ["current-drones", JSON.stringify(filters)],
-    queryFn: () => getCurrentDrones(filters),
-    keepPreviousData: true,
-    refetchInterval: 2000,
-    enabled: true
-  })
+  const { data: drones } = useQuery(
+    droneQueries.getCurrentDrones(filters)
+  )
 
-  const { data: allDrones } = useQuery({
-    queryKey: ["all-drones", JSON.stringify(filters)],
-    queryFn: () => getAllDrones(filters),
-    keepPreviousData: true,
-    refetchInterval: 2000,
-    enabled: true
-  })
+  const { data: allDrones } = useQuery(
+    droneQueries.getAllDrones(filters)
+  )
 
-  const { data: tableSelectedDroneFlights } = useQuery({
-    queryKey: ["drone-flights", tableSelectedDroneRegistration],
-    queryFn: () => {
-      if(tableSelectedDroneRegistration) {
-        return getDroneFlightSummariesByRegistration(tableSelectedDroneRegistration)
-      }
-    },
-    enabled: true
-  })
+  const { data: selectedDroneFlightsSummaries } = useQuery(
+    droneQueries.getSelectedDroneFlightsSummaries(selectedDroneRegistrationFromTable)
+  )
 
-  const { data: FlightStatusPanelSelectedDroneFlight } = useQuery({
-    queryKey: ["flight", flightsTableSelectedFlightId],
-    queryFn: () => {
-      return flightsTableSelectedFlightId ? getFlightById(flightsTableSelectedFlightId) : null
-    },
-    enabled: true
-  })
+  const { data: FlightStatusPanelSelectedDroneFlight } = useQuery(
+    flightQueries.getFlight(selectedFlightId)
+  )
   
-  const { data: selectedDrone } = useQuery({
-    queryKey: ['drone', selectedDroneRegistration],
-    queryFn:  () => {
-      return selectedDroneRegistration ? getDroneByRegistration(selectedDroneRegistration) : null
-    },
-    keepPreviousData: true,
-    refetchInterval: 2000,
-    enabled: true,
-  })
+  const { data: selectedDrone } = useQuery(
+    droneQueries.getSelectedDroneData(selectedDroneRegistration)
+  )
 
   useEffect(() => {
     setIsMapUpdated(false)
@@ -164,13 +142,13 @@ const AppContextProvider = ({ children }: {
       toggleFiltersVisibility,
       mapViewState,
       setMapViewState,
-      tableSelectedDroneRegistration,
-      setTableSelectedDroneRegistration,
-      tableSelectedDroneFlights: tableSelectedDroneFlights || [],
+      tableSelectedDroneRegistration: selectedDroneRegistrationFromTable,
+      setTableSelectedDroneRegistration: setSelectedDroneRegistrationFromTable,
+      tableSelectedDroneFlights: selectedDroneFlightsSummaries || [],
       trackedFlight: FlightStatusPanelSelectedDroneFlight,
       setTrackedFlight,
-      setFlightsTableSelectedFlightId,
-      flightsTableSelectedFlightId,
+      setFlightsTableSelectedFlightId: setSelectedFlightId,
+      flightsTableSelectedFlightId: selectedFlightId,
       trackedPoint,
       setTrackedPoint,
       highlightedFlightId,

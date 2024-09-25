@@ -17,3 +17,4 @@ flightRecords: FlightRecordSchema.array()
 })
   
 export type DroneFlight = z.infer<typeof DroneFlightSchema>;
+
