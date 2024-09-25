@@ -37,7 +37,7 @@ jobs:
       with:
         node-version: v22.2.0
     - name: Run npm install
-      run: npm ci
+      run: npm install
     - name: Build frontend
       run: npm run build
     - name: Run tests
