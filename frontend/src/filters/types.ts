@@ -1,5 +1,4 @@
-import { StringMappingType } from "typescript"
-import { Drone, flightRecordPosition as FlightRecordPosition } from "../drones/types"
+import { Drone, FlightRecord } from "../drones/types"
 
 type ComparisonType = "Equals" | "GreaterThan" | "LesserThan" 
 
@@ -8,7 +7,7 @@ export enum FilterType{
   Number
 }
 
-export type FilterParameter = keyof Drone | keyof FlightRecordPosition
+export type FilterParameter = keyof Drone | keyof FlightRecord
 
 type DefaultFilter = {
   parameter: FilterParameter,

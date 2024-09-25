@@ -36,42 +36,51 @@ public class NumberFilter implements IDroneFilter {
     public Specification<DroneEntity> toSpecification() {
         return (Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
             Join<DroneEntity, FlightRecordEntity> droneWithFlightRecords = root.join("flightRecords");
-            Subquery<LocalTime> subQuery = createQueryToGetMostFreshFlightRecord(root, query, builder);
+
+            Subquery<LocalDate> dateSubquery = createDateSubquery(root, query, builder);
+            Subquery<LocalTime> timeSubquery = createTimeSubquery(root, query, builder, dateSubquery);
+
             PredicateCreator<Integer> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
 
+            Path<LocalTime> timePath =  droneWithFlightRecords.get("time");
+            Path<LocalDate> datePath = droneWithFlightRecords.get("date");
+
             return builder.and(
-                    builder.equal(droneWithFlightRecords.get("time"), subQuery),
+                    builder.equal(datePath, dateSubquery),
+                    builder.equal(timePath, timeSubquery),
                     predicateCreator.apply(droneWithFlightRecords.get(attributeName), value)
             );
         };
     }
 
-    private Subquery<LocalTime> createQueryToGetMostFreshFlightRecord(Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder){
-        Subquery<LocalDate> freshestDateSubquery = query.subquery(LocalDate.class);
-        Root<DroneEntity> subRoot = freshestDateSubquery.from(DroneEntity.class);
-        Join<DroneEntity, FlightRecordEntity> droneWithFlightRecordsForDate = subRoot.join("flightRecords");
+    private Subquery<LocalDate> createDateSubquery(Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+        Subquery<LocalDate> dateSubquery = query.subquery(LocalDate.class);
+        Root<FlightRecordEntity> flightRecordRoot = dateSubquery.from(FlightRecordEntity.class);
 
-        Path<LocalDate> flightRecordDateField = droneWithFlightRecordsForDate.get("date");
+        Path<DroneEntity> dronePath = flightRecordRoot.get("drone");
+        Path<LocalDate> datePath = flightRecordRoot.get("date");
 
-        // Find the maximum date for the current DroneEntity
-        freshestDateSubquery.select(builder.greatest(flightRecordDateField))
-                .where(builder.equal(subRoot, root));
+        dateSubquery.select(builder.greatest(datePath))
+                .where(builder.equal(dronePath, root));
 
-        Subquery<LocalTime> freshestRecordSubQuery = query.subquery(LocalTime.class);
-        Root<DroneEntity> timeSubRoot = freshestRecordSubQuery.from(DroneEntity.class);
-        Join<DroneEntity, FlightRecordEntity> droneWithFlightRecordsForTime = timeSubRoot.join("flightRecords");
+        return dateSubquery;
+    }
 
-        Path<LocalTime> flightRecordTimeField = droneWithFlightRecordsForTime.get("time");
+    private Subquery<LocalTime> createTimeSubquery(Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder, Subquery<LocalDate> dateSubquery) {
+        Subquery<LocalTime> timeSubquery = query.subquery(LocalTime.class);
+        Root<FlightRecordEntity> flightRecordRoot = timeSubquery.from(FlightRecordEntity.class);
 
-        freshestRecordSubQuery.select(builder.greatest(flightRecordTimeField))
+        Path<LocalTime> timePath =  flightRecordRoot.get("time");
+        Path<DroneEntity> dronePath = flightRecordRoot.get("drone");
+        Path<LocalDate> datePath = flightRecordRoot.get("date");
+
+        timeSubquery.select(builder.greatest(timePath))
                 .where(
-                        builder.and(
-                                builder.equal(timeSubRoot, root),
-                                builder.equal(droneWithFlightRecordsForTime.get("date"), freshestDateSubquery)
-                        )
+                        builder.equal(dronePath, root),
+                        builder.equal(datePath, dateSubquery)
                 );
 
-        return freshestRecordSubQuery;
+        return timeSubquery;
     }
 
     private void validateComparisionType(ComparisonType comparisonType) throws IllegalArgumentException{
