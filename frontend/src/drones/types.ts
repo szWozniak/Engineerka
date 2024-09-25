@@ -41,6 +41,8 @@ export const FlightRecordSchema = z.object({
   fuel: z.number()
 })
 
+export type FlightRecord = z.infer<typeof FlightRecordSchema>;
+
 export const DroneFlightSchema = z.object({
   id: z.number(),
   flightRecords: FlightRecordSchema.array()

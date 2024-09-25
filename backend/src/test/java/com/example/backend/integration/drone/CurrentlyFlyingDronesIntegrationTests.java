@@ -125,13 +125,13 @@ public class CurrentlyFlyingDronesIntegrationTests {
         setupDatabase(
                 List.of(
                         new FlightRecordEntityFixtureBuilder().withId("1").withDateAndTime(
-                                        LocalDate.of(10, 10, 10),
+                                        LocalDate.of(2024, 10, 10),
                                         time
                                 )
                                 .withAltitude(30)
                                 .build(),
                         new FlightRecordEntityFixtureBuilder().withId("2").withDateAndTime(
-                                        LocalDate.of(5, 5, 5),
+                                        LocalDate.of(2023, 5, 5),
                                         time
                                 )
                                 .withAltitude(5)
@@ -139,13 +139,13 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 ),
                 List.of(
                         new FlightRecordEntityFixtureBuilder().withId("3").withDateAndTime(
-                                        LocalDate.of(10, 10, 10),
+                                        LocalDate.of(2024, 10, 10),
                                         time
                                 )
                                 .withAltitude(4)
                                 .build(),
                         new FlightRecordEntityFixtureBuilder().withId("4").withDateAndTime(
-                                        LocalDate.of(5, 5, 5),
+                                        LocalDate.of(2023, 5, 5),
                                         time
                                 )
                                 .withAltitude(30)
@@ -153,13 +153,13 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 ),
                 List.of(
                         new FlightRecordEntityFixtureBuilder().withId("5").withDateAndTime(
-                                        LocalDate.of(10, 10, 10),
+                                        LocalDate.of(2024, 10, 10),
                                         time
                                 )
                                 .withAltitude(30)
                                 .build(),
                         new FlightRecordEntityFixtureBuilder().withId("6").withDateAndTime(
-                                        LocalDate.of(5, 5, 5),
+                                        LocalDate.of(2023, 5, 5),
                                         time
                                 )
                                 .withAltitude(5)

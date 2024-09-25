@@ -4,6 +4,7 @@ import useDronesTracesLayer from './default/useDronesTracesLayer';
 import { AppContext } from '../../context/AppContext';
 import useFlightsTracesLayer from './flights/useFlightsTracesLayer';
 import useTrackedDroneLayer from './flights/useTrackedDroneLayer';
+import { Layer, LineLayer } from 'deck.gl';
 
 const useLayerManager = () => {
     const { tableSelectedDroneRegistration, trackedFlight } = useContext(AppContext)
@@ -14,15 +15,21 @@ const useLayerManager = () => {
     const flightsTracesLayer = useFlightsTracesLayer();
     const trackedDroneLayer = useTrackedDroneLayer();
 
-    if(tableSelectedDroneRegistration) {
-        if(trackedFlight) {
-            return { layers: [ flightsTracesLayer, trackedDroneLayer] }
+    const determineVisibleLayers = () => {
+        if (tableSelectedDroneRegistration === null){
+            return [ dronesLayer, tracesLayer ]
         }
-        
-        return { layers: [ flightsTracesLayer ] }
+
+        const result: Layer[] = [flightsTracesLayer]
+
+        if (trackedFlight !== null){
+            result.push(trackedDroneLayer)
+        }
+
+        return result;
     }
 
-    return { layers: [ dronesLayer, tracesLayer ] }
+    return { layers: determineVisibleLayers() }
 };
 
 export default useLayerManager;
