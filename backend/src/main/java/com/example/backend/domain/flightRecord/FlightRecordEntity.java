@@ -21,7 +21,7 @@ import java.time.LocalTime;
         @Index(name = "date_time_index", columnList = "DATE, TIME"),
         @Index(name = "date_index", columnList = "DATE"),
         @Index(name = "time_index", columnList = "TIME"),
-        @Index(name = "drone_idx", columnList = "DRONE_REGISTRATION_NUMBER")
+        @Index(name = "drone_index", columnList = "DRONE_REGISTRATION_NUMBER")
 })
 public class FlightRecordEntity {
     @Id
