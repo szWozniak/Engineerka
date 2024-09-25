@@ -14,9 +14,9 @@ import {
   getFlightById } from '../drones/api/api';
 import { Drone, DroneBase, DroneFlight, DroneFlightSummary } from '../drones/types';
 import { Filter } from '../filters/types';
-import useFilters from '../filters/useFilters';
 import { INITIAL_VIEW_STATE } from '../mapConfig/initialView';
 import { MapViewState } from 'deck.gl';
+import useApplyFilters from '../filters/useApplyFilters';
 
 type AppContextType = {
   drones: Drone[] | undefined;
@@ -77,7 +77,7 @@ const AppContextProvider = ({ children }: {
   const [trackedPoint, setTrackedPoint] = useState<number>(0)
   const [highlightedFlightId, setHighlightedFlightId] = useState<number | null>(null);
 
-  const {filters, applyFilters} = useFilters();
+  const {filters, applyFilters} = useApplyFilters();
 
   const toggleFiltersVisibility = () => setFiltersVisibility(prev => !prev);
 

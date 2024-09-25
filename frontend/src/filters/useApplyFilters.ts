@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Filter } from "./types"
 
-const useFilter = (): {
+const useApplyFilters = (): {
     filters: Filter[],
     applyFilters: (filters: Filter[]) => void
 } => {
@@ -18,4 +18,4 @@ const useFilter = (): {
     }
 }
 
-export default useFilter;
+export default useApplyFilters;
