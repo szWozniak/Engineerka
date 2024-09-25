@@ -5,11 +5,6 @@ import React, {
   createContext, 
   useState, 
   useEffect } from 'react';
-import { 
-  getAllDrones, 
-  getCurrentDrones, 
-  getDroneByRegistration, 
-  getDroneFlightSummariesByRegistration } from '../drones/api/api';
 
 import { Filter } from '../filters/types';
 import { INITIAL_VIEW_STATE } from '../mapConfig/initialView';
@@ -17,7 +12,6 @@ import { MapViewState } from 'deck.gl';
 import useApplyFilters from '../filters/useCases/useApplyFilters';
 import { Drone, DroneBase, DroneFlightSummary } from '../drones/types';
 import { DroneFlight } from '../flights/api/types';
-import { getFlightById } from '../flights/api/api';
 import { useQuery } from '@tanstack/react-query';
 import droneQueries from '../drones/repository/droneQuries';
 import flightQueries from '../flights/repository/flightQueries';
