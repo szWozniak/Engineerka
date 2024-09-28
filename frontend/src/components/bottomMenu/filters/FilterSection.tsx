@@ -7,15 +7,25 @@ import ModelFilter from "./concreteFilters/ModelFilter";
 import LatitudeFilter from "./concreteFilters/LatitudeFilter";
 import LongitudeFilter from "./concreteFilters/LongitudeFilter";
 import useFilters from "../../../filters/useCases/useFilters";
+import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from "../../../filters/types";
 
 interface props{
-  isOpen: boolean
+  isOpen: boolean,
+  getTextFilter: (filterKey: TextFilterKey) => TextFilter,
+  getNumberFilter: (filterKey: NumberFilterKey) => NumberFilter,
+  onNumberFilterChange: (filterKey: NumberFilterKey, value: number | undefined) => void,
+  onTextFilterChange: (filterKey: TextFilterKey, value: string) => void,
+  applyFilters: () => void
 }
 
-const FilterSection: React.FC<props> = ({ isOpen }) => {
-  const {filters} = useContext(AppContext);
-
-  const {currentFilters, numberFilters, textFilters} = useFilters();
+const FilterSection: React.FC<props> = ({ 
+  isOpen,
+  getNumberFilter,
+  getTextFilter,
+  onNumberFilterChange,
+  onTextFilterChange,
+  applyFilters
+ }) => {
 
   return(
     <div className={`content filterSection ${isOpen && 'opened'}`} style={{"height": "270px"}}>
@@ -23,39 +33,39 @@ const FilterSection: React.FC<props> = ({ isOpen }) => {
         Filtry
         <div className="filters">
           <RegistrationNumberFilter
-            value={textFilters.get("registrationNumber").value}
-            onChange={(value) => textFilters.onChange("registrationNumber", value)}
+            value={getTextFilter("registrationNumber").value}
+            onChange={(value) => onTextFilterChange("registrationNumber", value)}
           />
           <AltitudeFilter
-            minValue={numberFilters.get("minAltitude").value}
-            maxValue={numberFilters.get("maxAltitude").value}
-            onMinValueChange={(value) => numberFilters.onChange("minAltitude", value)}
-            onMaxValueChange={(value) => numberFilters.onChange("maxAltitude", value)}
+            minValue={getNumberFilter("minAltitude").value}
+            maxValue={getNumberFilter("maxAltitude").value}
+            onMinValueChange={(value) => onNumberFilterChange("minAltitude", value)}
+            onMaxValueChange={(value) => onNumberFilterChange("maxAltitude", value)}
           />
           <LatitudeFilter
-            minValue={numberFilters.get("minLatitude").value}
-            maxValue={numberFilters.get("maxLatitude").value}
-            onMinValueChange={(value) => numberFilters.onChange("minLatitude", value)}
-            onMaxValueChange={(value) => numberFilters.onChange("maxLatitude", value)}
+            minValue={getNumberFilter("minLatitude").value}
+            maxValue={getNumberFilter("maxLatitude").value}
+            onMinValueChange={(value) => onNumberFilterChange("minLatitude", value)}
+            onMaxValueChange={(value) => onNumberFilterChange("maxLatitude", value)}
           />
           <LongitudeFilter
-            minValue={numberFilters.get("minLongitude").value}
+            minValue={getNumberFilter("minLongitude").value}
             maxValue={numberFilters.get("maxLongitude").value}
-            onMinValueChange={(value) => numberFilters.onChange("minLongitude", value)}
-            onMaxValueChange={(value) => numberFilters.onChange("maxLongitude", value)}
+            onMinValueChange={(value) => onNumberFilterChange("minLongitude", value)}
+            onMaxValueChange={(value) => onNumberFilterChange("maxLongitude", value)}
           />
           <FuelFilter
-            minValue={numberFilters.get("minFuel").value}
-            maxValue={numberFilters.get("maxFuel").value}
-            onMinValueChange={(value) => numberFilters.onChange("minFuel", value)}
-            onMaxValueChange={(value) => numberFilters.onChange("maxFuel", value)}
+            minValue={getNumberFilter("minFuel").value}
+            maxValue={getNumberFilter("maxFuel").value}
+            onMinValueChange={(value) => onNumberFilterChange("minFuel", value)}
+            onMaxValueChange={(value) => onNumberFilterChange("maxFuel", value)}
           />
           <ModelFilter
-            value={textFilters.get("model").value}
-            onChange={(value) => textFilters.onChange("model", value)}
+            value={getTextFilter("model").value}
+            onChange={(value) => onTextFilterChange("model", value)}
           />
         </div>
-        <button className="apply" onClick={() => filters.apply(currentFilters)}>Zastosuj</button>
+        <button className="apply" onClick={() => applyFilters}>Zastosuj</button>
       </div>
       
     </div>

@@ -13,6 +13,7 @@ import { lightingEffect } from './mapConfig/effects';
 import BottomMenu from './components/bottomMenu/BottomMenu';
 import { AppContext } from './context/AppContext';
 import { INITIAL_VIEW_STATE } from './mapConfig/initialView';
+import useFilters from './filters/useCases/useFilters';
 
 registerLoaders([OBJLoader]);
 
@@ -43,11 +44,15 @@ const App = () => {
     return () => document.removeEventListener("contextmenu", disableDefaultRightClick)
   }, [])
 
+  const {applyFilters, filters, numberFilters, textFilters, visibility} = useFilters();
+
   return (
     <div>
       <div className="overlay">
         <Sidebar />
-        <BottomMenu />
+        <BottomMenu 
+          areFiltersOpen={visibility.areOpen}
+        />
       </div>
       <DeckGL
         layers={layers}

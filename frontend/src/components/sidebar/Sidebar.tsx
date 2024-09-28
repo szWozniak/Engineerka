@@ -1,14 +1,18 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Drone } from '../../drones/types'
 import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
 import { AppContext } from '../../context/AppContext';
 
-const Sidebar: React.FC = () => {
+interface Props{
+  toggleFiltersVisibility: () => void;
+}
+
+const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
 
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
-  const { drones, filters } = useContext(AppContext)
+  const { drones } = useContext(AppContext)
 
   const renderViewChangeButtons = () => {
     if (drones.selected) {
@@ -32,7 +36,7 @@ const Sidebar: React.FC = () => {
           <MenuDropdown
             label={"Filtry"}
             opened={openedMenu === 1}
-            setOpened={filters.toggleVisibilty}
+            setOpened={toggleFiltersVisibility}
           />
           <MenuDropdown
             label={"Latające Drony"}

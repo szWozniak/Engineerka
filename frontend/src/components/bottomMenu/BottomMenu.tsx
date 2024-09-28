@@ -6,10 +6,17 @@ import BigTable from './bigTable/BigTable';
 import FlightsTable from './flightsTable/FlightsTable';
 import FilterSection from './filters/FilterSection';
 import FlightStatusPanel from './flightsTable/FlightStatusPanel';
+import useFilters from '../../filters/useCases/useFilters';
 
-const BottomMenu = () => {
+interface Props{
+  areFiltersOpen: boolean
+}
+
+const BottomMenu: React.FC<Props> = ({
+  areFiltersOpen
+}) => {
   const [isOpened, setIsOpened] = useState(false)
-  const { filters, table, flights } = useContext(AppContext)
+  const { table, flights } = useContext(AppContext)
 
   const [startY, setStartY] = useState(0)
   const [startHeight, setStartHeight] = useState(0)
@@ -59,7 +66,7 @@ const BottomMenu = () => {
       >
         {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>
-      {filters.areOpened && <FilterSection isOpen={filters.areOpened}/>}
+      {areFiltersOpen && <FilterSection isOpen={areFiltersOpen}/>}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
         {flights.trackedFlight ? <span>Śledzenie lotu drona {table.selectedDroneRegistration}</span> : 
