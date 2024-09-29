@@ -1,18 +1,17 @@
 import { LineLayer } from "deck.gl"
 import { droneTrace } from "../types/lines"
-import { useContext } from "react";
-import { AppContext } from "../../../context/AppContext";
+import useDrones from "../../../drones/useCases/useDrones";
 
 const useDronesTracesLayer = () => {
-  const { drones } = useContext(AppContext)
+  const {flyingDrones, selectedDrone} = useDrones();
 
   const mapPositionsToTraces = (): droneTrace[] => {
-    if (drones === undefined) return [];
+    if (flyingDrones === undefined) return [];
 
     const traces: droneTrace[] = [];
 
-    drones.currentlyFlyng?.forEach((drone, index) => {
-      const trace = (drone.registrationNumber === drones.selected?.registrationNumber) ? drones.selected.trace : drone.trace
+    flyingDrones.forEach((drone, index) => {
+      const trace = (drone.registrationNumber === selectedDrone?.registrationNumber) ? selectedDrone.trace : drone.trace
 
       if (trace.length === 0) { return []}
 

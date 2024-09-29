@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Filter, FilterType, NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from "../types"
+import { AppContext } from "../../context/AppContext";
 
-const defaultFiltersState: Filter[] = [
+export const defaultFiltersState: Filter[] = [
     {
       type: FilterType.Text,
       parameter: "registrationNumber",
@@ -76,7 +77,9 @@ const defaultFiltersState: Filter[] = [
   
 const useFilters = () => {
     let currentFilters: Filter[] = structuredClone(defaultFiltersState);
-    const [filters, setFilters] = useState<Filter[]>(defaultFiltersState)
+
+    const {filtering} = useContext(AppContext);
+
     const [areFiltersOpen, setAreFiltersOpen] = useState<boolean>(false);
 
     const toggleFiltersVisibility = () => setAreFiltersOpen(prev => !prev);
@@ -118,13 +121,13 @@ const useFilters = () => {
         })
       }
 
-    const applyFilters = () => setFilters(currentFilters
+    const applyFilters = () => filtering.changeFilters(currentFilters
         .filter(f => f.value !== "")
         .map(f => structuredClone(f))
     )
 
     return {
-        filters,
+        filters: filtering.value,
         applyFilters,
         visibility: {
           areOpen: areFiltersOpen,

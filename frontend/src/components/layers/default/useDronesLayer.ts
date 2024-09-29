@@ -1,23 +1,22 @@
 import { PickingInfo, SimpleMeshLayer } from 'deck.gl';
-import React, { useContext } from 'react';
-import { Drone, MapDrone } from '../../../drones/types';
+import { MapDrone } from '../../../drones/types';
 import MESH_URL, { DEFAULT_COLOR, SELECTED_COLOR } from '../../../mapConfig/model';
 import { theme } from '../../../mapConfig/theme';
-import { AppContext } from '../../../context/AppContext';
+import useDrones from '../../../drones/useCases/useDrones';
 
 const useDronesLayer = () => {
-  const { drones } = useContext(AppContext)
+  const { flyingDrones, selectDrone, selectedDrone } = useDrones();
 
   const handleMouseClick = (info: PickingInfo, _event: any) => {
     if (info && info.object) {
-      drones.setSelected(info?.object?.registrationNumber)
+      selectDrone(info?.object?.registrationNumber)
     }
   }
 
   return new SimpleMeshLayer<MapDrone>({
     id: "default-drones",
-    data: drones.currentlyFlyng?.map(
-      d => ({ ...d, color: d.registrationNumber === drones.selected?.registrationNumber ? SELECTED_COLOR : DEFAULT_COLOR })
+    data: flyingDrones?.map(
+      d => ({ ...d, color: d.registrationNumber === selectedDrone?.registrationNumber ? SELECTED_COLOR : DEFAULT_COLOR })
     ),
     mesh: MESH_URL,
     getPosition: d => [d.currentPosition.longitude, d.currentPosition.latitude, d.currentPosition.altitude],

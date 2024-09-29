@@ -1,4 +1,4 @@
-import React, { 
+import { 
   ReactNode, 
   Dispatch, 
   SetStateAction, 
@@ -6,22 +6,20 @@ import React, {
   useState, 
   useEffect } from 'react';
 
-import { Filter } from '../filters/types';
 import { INITIAL_VIEW_STATE } from '../mapConfig/initialView';
 import { MapViewState } from 'deck.gl';
-import useFilters from '../filters/useCases/useFilters';
-import { Drone, DroneBase, DroneFlightSummary } from '../drones/types';
+import { DroneFlightSummary } from '../drones/types';
 import { DroneFlight } from '../flights/api/types';
 import { useQuery } from '@tanstack/react-query';
 import droneQueries from '../drones/repository/droneQuries';
 import flightQueries from '../flights/repository/flightQueries';
+import { Filter } from '../filters/types';
+import { defaultFiltersState } from '../filters/useCases/useFilters';
 
 type AppContextTypeTwo = {
-  drones: { //to mozna do hooka osobnego bo opiera sie na react query
-    currentlyFlyng: Drone[] | undefined,
-    all: DroneBase[] | undefined
-    selected: Drone | null
-    setSelected: Dispatch<SetStateAction<string | null>>
+  filtering: {
+    value: Filter[],
+    changeFilters: (filters: Filter[]) => void
   }
   map: {
     viewState: MapViewState,
@@ -45,11 +43,9 @@ type AppContextTypeTwo = {
 }
 
 export const AppContext = createContext<AppContextTypeTwo>({
-  drones: {
-    currentlyFlyng: [],
-    all: [],
-    selected: null,
-    setSelected: () => { }
+  filtering:{
+    value: defaultFiltersState,
+    changeFilters: (_f: Filter[]) => { } 
   },
   map: {
     viewState: INITIAL_VIEW_STATE,
@@ -75,59 +71,29 @@ export const AppContext = createContext<AppContextTypeTwo>({
 const AppContextProvider = ({ children }: {
   children: ReactNode
 }) => {
-  const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
-  const [selectedDroneRegistrationFromTable, setSelectedDroneRegistrationFromTable] = useState<string | null>(null)
+  const [filters, setFilters] = useState<Filter[]>(defaultFiltersState);
+
+
   const [selectedFlightId, setSelectedFlightId] = useState<number | null>(null)
-  
+  const [selectedDroneRegistrationFromTable, setSelectedDroneRegistrationFromTable] = useState<string | null>(null)
   const [mapViewState, setMapViewState] = useState<MapViewState>(INITIAL_VIEW_STATE)
   const [isMapUpdated, setIsMapUpdated] = useState<boolean>(false)
   const [trackedFlight, setTrackedFlight] = useState<DroneFlight | null>(null)
   const [trackedPoint, setTrackedPoint] = useState<number>(0)
   const [highlightedFlightId, setHighlightedFlightId] = useState<number | null>(null);
 
-  const {filters} = useFilters();
-
-  const { data: flyingDrones } = useQuery(
-    droneQueries.getCurrentDrones(filters)
-  )
-
-  const { data: allDrones } = useQuery(
-    droneQueries.getAllDrones(filters)
-  )
-
-  const { data: selectedDroneFlightsSummaries } = useQuery(
-    droneQueries.getSelectedDroneFlightsSummaries(selectedDroneRegistrationFromTable)
-  )
-
   const { data: FlightStatusPanelSelectedDroneFlight } = useQuery(
     flightQueries.getFlight(selectedFlightId)
   )
   
-  const { data: selectedDrone } = useQuery(
-    droneQueries.getSelectedDroneData(selectedDroneRegistration)
+  const { data: selectedDroneFlightsSummaries } = useQuery( //to move
+    droneQueries.getSelectedDroneFlightsSummaries(selectedDroneRegistrationFromTable)
   )
 
-  useEffect(() => {
-    setIsMapUpdated(false)
-  }, [selectedDroneRegistration])
+  // useEffect(() => {
+  //   setIsMapUpdated(false)
+  // }, [selectedDroneRegistration])
 
-  useEffect(() => {
-    if(!flyingDrones?.find(drone => drone.registrationNumber === selectedDroneRegistration)) {
-      setSelectedDroneRegistration(null)
-    }
-  }, [flyingDrones])
-
-  useEffect(() => {
-    if(!isMapUpdated) {
-      setMapViewState(prev => ({
-        ...prev,
-        ...selectedDrone?.currentPosition,
-        altitude: Math.max(selectedDrone?.currentPosition?.altitude || 1, 1),
-        zoom: 15
-      }))
-      setIsMapUpdated(true)
-    }
-  }, [selectedDrone])
   
   useEffect(() => {
     setTrackedPoint((trackedFlight?.flightRecords?.length || 1) - 1)
@@ -135,11 +101,9 @@ const AppContextProvider = ({ children }: {
   
   return (
     <AppContext.Provider value={{
-      drones: {
-        currentlyFlyng: flyingDrones,
-        all: allDrones,
-        selected: selectedDrone || null,
-        setSelected: setSelectedDroneRegistration
+      filtering:{
+        value: filters,
+        changeFilters: setFilters
       },
       map: {
         viewState: mapViewState,

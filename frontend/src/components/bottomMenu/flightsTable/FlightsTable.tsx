@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 
-
-const FlightsTable = () => {  
-  const { table, flights, drones } = useContext(AppContext)
+const FlightsTable = () => { 
+  const { table, flights } = useContext(AppContext)
   
   return (
     <div className="tableContainer">
