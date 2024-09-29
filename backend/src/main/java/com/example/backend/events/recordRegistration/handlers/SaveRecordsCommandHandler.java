@@ -3,16 +3,15 @@ package com.example.backend.events.recordRegistration.handlers;
 import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.flight.FlightService;
 import com.example.backend.events.recordRegistration.commands.SaveRecordsCommand;
+import com.example.backend.events.recordRegistration.mappers.DronesFromSimulatorMapper;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import com.example.backend.events.mediator.ICommandHandler;
 import com.example.backend.domain.flightRecord.FlightRecordService;
 import com.example.backend.events.recordRegistration.model.envelope.RegistrationFlag;
-import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -42,7 +41,7 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
             return;
         }
 
-        var validRecords = mapDronesFromSimulator(drones);
+        var validRecords = DronesFromSimulatorMapper.map(drones);
 
         this.droneService.upsertDronesRecords(validRecords);
 
@@ -55,21 +54,8 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
                 .filter(record -> record.getFlightRecord().getFlag().equals(RegistrationFlag.DROP))
                 .toList();
 
-        if (dronesThatFlightEnded.size() > 0){
-            flightService.createFlights(dronesThatFlightEnded);
+        if (!dronesThatFlightEnded.isEmpty()){
+            flightService.createFlights(dronesThatFlightEnded.stream().map(DroneRecordToRegister::getRegistrationNumber).toList());
         }
-    }
-
-    private List<DroneRecordToRegister> mapDronesFromSimulator(List<DroneFromSimulator> drones){
-        List<DroneRecordToRegister> validRecords = new ArrayList<>();
-
-        for(DroneFromSimulator drone : drones){
-            try{
-                validRecords.add(DroneRecordToRegister.fromDroneFromSimulator(drone));
-            }catch(IllegalArgumentException ex){
-                log.error("Could not register a record. Reason: " + ex);
-            }
-        }
-        return validRecords;
     }
 }

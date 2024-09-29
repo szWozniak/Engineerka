@@ -2,7 +2,6 @@ package com.example.backend.domain.flight;
 
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
-import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,13 +18,12 @@ public class FlightService {
         this.flightRecordRepository = flightRecordRepository;
     }
 
-    public void createFlights(List<DroneRecordToRegister> droneRecords){
+    public void createFlights(List<String> droneRegistrationNumbers){
         List<FlightEntity> flightsToSave = new ArrayList<>();
         List<FlightRecordEntity> flightRecordsToUpdate = new ArrayList<>();
 
-        for (var droneRecord : droneRecords){
+        for (var registrationNumber : droneRegistrationNumbers){
             var flight = new FlightEntity();
-            var registrationNumber = droneRecord.getRegistrationNumber();
             var flightRecordsForFlight = getAllDroneRecordsFromCurrentFlight(registrationNumber);
 
             flight.summarizeFlight(flightRecordsForFlight);

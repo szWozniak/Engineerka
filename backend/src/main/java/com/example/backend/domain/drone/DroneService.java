@@ -112,7 +112,7 @@ public class DroneService {
                     .filter(fr -> fr.getFlight() == null)
                     .sorted(new RecordTimestampsComparator()).toList();
 
-            if (sortedAndFilteredRecords.size() != 0){
+            if (!sortedAndFilteredRecords.isEmpty()){
                 var lastIndex = Math.min(3, sortedAndFilteredRecords.size());
                 drone.setFlightRecords(sortedAndFilteredRecords.subList(0, lastIndex));
                 result.add(drone);
@@ -124,5 +124,18 @@ public class DroneService {
 
     public List<FlightEntity> getDroneFinishedFlights(String registrationNumber){
         return flightRepository.findDistinctByFlightRecords_Drone_RegistrationNumberAndFlightRecords_FlightIsNotNull(registrationNumber);
+    }
+
+    public List<DroneEntity> getDronesThatShouldStopFlying(List<String> registrationNumbers){
+        return droneRepository.findByIsAirborneTrueAndRegistrationNumberNotIn(registrationNumbers);
+    }
+
+    public void stopDronesThatShouldStopFlying(List<DroneEntity> droneEntities){
+        droneEntities.forEach(droneEntity -> {
+            droneEntity.setAirborne(false);
+            droneEntity.setType("Grounded");
+        });
+
+        droneRepository.saveAll(droneEntities);
     }
 }

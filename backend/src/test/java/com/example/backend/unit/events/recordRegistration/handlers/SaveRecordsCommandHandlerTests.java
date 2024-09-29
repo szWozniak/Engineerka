@@ -48,7 +48,7 @@ public class SaveRecordsCommandHandlerTests {
         var expectedResultTwo = DroneRecordToRegister.fromDroneFromSimulator(droneTwo);
 
         Mockito.verify(droneService).upsertDronesRecords(List.of(expectedResultOne, expectedResultTwo));
-        Mockito.verify(flightService).createFlights(List.of(expectedResultOne));
+        Mockito.verify(flightService).createFlights(List.of(expectedResultOne.getRegistrationNumber()));
     }
 
     @Test
