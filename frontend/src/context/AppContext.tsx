@@ -6,7 +6,6 @@ import {
   useState, 
   useEffect } from 'react';
 
-import { INITIAL_VIEW_STATE } from '../mapConfig/initialView';
 import { MapViewState } from 'deck.gl';
 import { DroneFlightSummary } from '../drones/types';
 import { DroneFlight } from '../flights/api/types';
@@ -15,11 +14,16 @@ import droneQueries from '../drones/repository/droneQuries';
 import flightQueries from '../flights/repository/flightQueries';
 import { Filter } from '../filters/types';
 import { defaultFiltersState } from '../filters/useCases/useFilters';
+import { INITIAL_VIEW_STATE } from '../map/config/initialView';
 
 type AppContextTypeTwo = {
   filtering: {
     value: Filter[],
     changeFilters: (filters: Filter[]) => void
+  },
+  drones: {
+    selectedDroneRegistration: string | null,
+    selectDroneRegistration: (registrationNumber: string | null) => void 
   }
   map: {
     viewState: MapViewState,
@@ -47,6 +51,10 @@ export const AppContext = createContext<AppContextTypeTwo>({
     value: defaultFiltersState,
     changeFilters: (_f: Filter[]) => { } 
   },
+  drones: {
+    selectedDroneRegistration: null,
+    selectDroneRegistration: (_d: string | null) => {} 
+  },
   map: {
     viewState: INITIAL_VIEW_STATE,
     setViewState: () => { }
@@ -72,6 +80,7 @@ const AppContextProvider = ({ children }: {
   children: ReactNode
 }) => {
   const [filters, setFilters] = useState<Filter[]>(defaultFiltersState);
+  const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
 
 
   const [selectedFlightId, setSelectedFlightId] = useState<number | null>(null)
@@ -104,6 +113,10 @@ const AppContextProvider = ({ children }: {
       filtering:{
         value: filters,
         changeFilters: setFilters
+      },
+      drones: {
+        selectedDroneRegistration: selectedDroneRegistration,
+        selectDroneRegistration: setSelectedDroneRegistration
       },
       map: {
         viewState: mapViewState,

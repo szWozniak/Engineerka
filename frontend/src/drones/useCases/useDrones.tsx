@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import droneQueries from "../repository/droneQuries";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import useFilters from "../../filters/useCases/useFilters";
+import { AppContext } from "../../context/AppContext";
 
 const useDrones = () => {
-    const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
+    const {drones} = useContext(AppContext);
     const {filters} = useFilters()
     
   
@@ -17,14 +18,14 @@ const useDrones = () => {
     )
 
     const { data: selectedDrone } = useQuery(
-        droneQueries.getSelectedDroneData(selectedDroneRegistration)
+        droneQueries.getSelectedDroneData(drones.selectedDroneRegistration)
     )
 
     useEffect(() => {
-        if(!flyingDrones?.find(drone => drone.registrationNumber === selectedDroneRegistration)) {
-          setSelectedDroneRegistration(null)
+        if(!flyingDrones?.find(drone => drone.registrationNumber === drones.selectedDroneRegistration)) {
+          drones.selectDroneRegistration(null)
         }
-    }, [flyingDrones, selectedDroneRegistration])
+    }, [flyingDrones, drones])
 
     // useEffect(() => {
     //     if(!isMapUpdated) {
@@ -42,7 +43,7 @@ const useDrones = () => {
         flyingDrones: flyingDrones,
         allDrones: allDrones,
         selectedDrone: selectedDrone || null,
-        selectDrone: setSelectedDroneRegistration
+        selectDrone: drones.selectDroneRegistration
     }
 }
 
