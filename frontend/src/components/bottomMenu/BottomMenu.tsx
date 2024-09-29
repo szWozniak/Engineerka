@@ -6,14 +6,24 @@ import BigTable from './bigTable/BigTable';
 import FlightsTable from './flightsTable/FlightsTable';
 import FilterSection from './filters/FilterSection';
 import FlightStatusPanel from './flightsTable/FlightStatusPanel';
-import useFilters from '../../filters/useCases/useFilters';
+import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from '../../filters/types';
 
 interface Props{
   areFiltersOpen: boolean
+  getTextFilter: (filterKey: TextFilterKey) => TextFilter,
+  getNumberFilter: (filterKey: NumberFilterKey) => NumberFilter,
+  onNumberFilterChange: (filterKey: NumberFilterKey, value: number | undefined) => void,
+  onTextFilterChange: (filterKey: TextFilterKey, value: string) => void,
+  applyFilters: () => void
 }
 
 const BottomMenu: React.FC<Props> = ({
-  areFiltersOpen
+  areFiltersOpen,
+  applyFilters,
+  getNumberFilter,
+  getTextFilter,
+  onNumberFilterChange,
+  onTextFilterChange
 }) => {
   const [isOpened, setIsOpened] = useState(false)
   const { table, flights } = useContext(AppContext)
@@ -66,7 +76,14 @@ const BottomMenu: React.FC<Props> = ({
       >
         {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>
-      {areFiltersOpen && <FilterSection isOpen={areFiltersOpen}/>}
+      {areFiltersOpen && <FilterSection 
+        isOpen={areFiltersOpen}
+        applyFilters={applyFilters}
+        getNumberFilter={getNumberFilter}
+        getTextFilter={getTextFilter}
+        onNumberFilterChange={onNumberFilterChange}
+        onTextFilterChange={onTextFilterChange}
+      />}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
         {flights.trackedFlight ? <span>Śledzenie lotu drona {table.selectedDroneRegistration}</span> : 

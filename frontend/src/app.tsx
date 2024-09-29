@@ -49,9 +49,16 @@ const App = () => {
   return (
     <div>
       <div className="overlay">
-        <Sidebar />
+        <Sidebar 
+          toggleFiltersVisibility={visibility.toggleVisibility}
+        />
         <BottomMenu 
           areFiltersOpen={visibility.areOpen}
+          applyFilters={applyFilters}
+          getNumberFilter={numberFilters.get}
+          getTextFilter={textFilters.get}
+          onNumberFilterChange={numberFilters.onChange}
+          onTextFilterChange={textFilters.onChange}
         />
       </div>
       <DeckGL

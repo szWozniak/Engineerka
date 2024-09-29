@@ -50,7 +50,7 @@ const FilterSection: React.FC<props> = ({
           />
           <LongitudeFilter
             minValue={getNumberFilter("minLongitude").value}
-            maxValue={numberFilters.get("maxLongitude").value}
+            maxValue={getNumberFilter("maxLongitude").value}
             onMinValueChange={(value) => onNumberFilterChange("minLongitude", value)}
             onMaxValueChange={(value) => onNumberFilterChange("maxLongitude", value)}
           />

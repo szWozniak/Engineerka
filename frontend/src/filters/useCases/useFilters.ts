@@ -75,13 +75,14 @@ const defaultFiltersState: Filter[] = [
   ]
   
 const useFilters = () => {
+    let currentFilters: Filter[] = structuredClone(defaultFiltersState);
     const [filters, setFilters] = useState<Filter[]>(defaultFiltersState)
     const [areFiltersOpen, setAreFiltersOpen] = useState<boolean>(false);
 
     const toggleFiltersVisibility = () => setAreFiltersOpen(prev => !prev);
 
     const getTextFilter = (key: TextFilterKey): TextFilter => {
-        const searchedFilter = filters.find(f => f.key === key);
+        const searchedFilter = currentFilters.find(f => f.key === key);
     
         if (searchedFilter?.type !== FilterType.Text){
           throw new Error("Invalid key")
@@ -91,7 +92,7 @@ const useFilters = () => {
       }
     
       const getNumberFilter = (key: NumberFilterKey): NumberFilter => {
-        const searchedFilter = filters.find(f => f.key === key);
+        const searchedFilter = currentFilters.find(f => f.key === key);
     
         if (searchedFilter?.type !== FilterType.Number){
           throw new Error("Invalid key")
@@ -100,27 +101,24 @@ const useFilters = () => {
         return searchedFilter;
       }
       const onTextFilterChange = (key: TextFilterKey, value: string) => {
-        setFilters(prev => prev.map(f => {
+        currentFilters = currentFilters.map(f => {
           if (f.key === key && f.type === FilterType.Text){
             f.value = value
           }
-    
           return f;
-        }))
+        })
       }
     
       const onNumberFilterChange = (key: NumberFilterKey, value: number | undefined) => {
-        setFilters(prev => prev.map(f => {
+        currentFilters = currentFilters.map(f => {
           if (f.key === key && f.type === FilterType.Number){
             f.value = value
           }
-          
-          return f
-        }))
+          return f;
+        })
       }
 
-      //change it so it takes const and put it into state. Does not take a parameter
-    const applyFilters = (curFilters: Filter[]) => setFilters(curFilters
+    const applyFilters = () => setFilters(currentFilters
         .filter(f => f.value !== "")
         .map(f => structuredClone(f))
     )
