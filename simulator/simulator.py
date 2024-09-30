@@ -117,14 +117,16 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
     alpha = 2.5
     time = np.linspace(0, np.pi, number_of_points)
     shaping_factor = np.sin(time)
+    alt_up_scale = 90 / (number_of_points ** 0.5)
+    alt_down_scale = 55 / (number_of_points ** 0.5)
+    midpoint = number_of_points // 2 
 
     lat_before = starting_latitude
     lon_before = starting_longitude
     alt_before = 1
     fuel_before = random.uniform(80, 100)
-    midpoint = number_of_points // 2 
-    alt_up_scale = 90 / (number_of_points ** 0.5)
-    alt_down_scale = 55 / (number_of_points ** 0.5)
+    fuel_distance_multiplier = 35
+    fuel_elevation_gain_multiplier = 1.5
 
     for i in range(number_of_points):
         step_length = np.random.pareto(alpha)
@@ -145,9 +147,9 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
         speeds[i] = distance_3d * 1800
 
         if altitudes[i] > alt_before:
-            fuel[i] = fuel_before - distance_3d*35*1.5
+            fuel[i] = fuel_before - distance_3d*fuel_distance_multiplier*fuel_elevation_gain_multiplier
         else:
-            fuel[i] = fuel_before - distance_3d*35
+            fuel[i] = fuel_before - distance_3d*fuel_distance_multiplier
 
         lat_before = latitudes[i]
         lon_before = longitudes[i]
