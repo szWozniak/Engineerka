@@ -1,8 +1,8 @@
 import { PickingInfo, SimpleMeshLayer } from 'deck.gl';
 import { MapDrone } from '../../../drones/types';
-import MESH_URL, { DEFAULT_COLOR, SELECTED_COLOR } from '../../../mapConfig/model';
-import { theme } from '../../../mapConfig/theme';
 import useDrones from '../../../drones/useCases/useDrones';
+import MESH_URL, { DEFAULT_COLOR, SELECTED_COLOR } from '../../../map/config/model';
+import { theme } from '../../../map/config/theme';
 
 const useDronesLayer = () => {
   const { flyingDrones, selectDrone, selectedDrone } = useDrones();

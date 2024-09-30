@@ -27,17 +27,7 @@ const useDrones = () => {
         }
     }, [flyingDrones, drones])
 
-    // useEffect(() => {
-    //     if(!isMapUpdated) {
-    //       setMapViewState(prev => ({
-    //         ...prev,
-    //         ...selectedDrone?.currentPosition,
-    //         altitude: Math.max(selectedDrone?.currentPosition?.altitude || 1, 1),
-    //         zoom: 15
-    //       }))
-    //       setIsMapUpdated(true)
-    //     }
-    //   }, [selectedDrone])
+    
 
     return {
         flyingDrones: flyingDrones,

@@ -2,18 +2,19 @@ import { useContext, useEffect, useRef } from 'react';
 //DeckGL
 import DeckGL from '@deck.gl/react';
 //Map
-import Map from 'react-map-gl';
+import Map, { useMap } from 'react-map-gl';
 //Loaders
 import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
 
 import Sidebar from './components/sidebar/Sidebar';
 import useLayerManager from './components/layers/useLayerManager';
-import { lightingEffect } from './mapConfig/effects';
 import BottomMenu from './components/bottomMenu/BottomMenu';
 import { AppContext } from './context/AppContext';
-import { INITIAL_VIEW_STATE } from './mapConfig/initialView';
 import useFilters from './filters/useCases/useFilters';
+import { INITIAL_VIEW_STATE } from './map/config/initialView';
+import { lightingEffect } from './map/config/effects';
+import useMapState from './map/useCases/useMap';
 
 registerLoaders([OBJLoader]);
 
@@ -32,7 +33,7 @@ const App = () => {
   const mapRef: any = useRef();
   const { layers } = useLayerManager()
 
-  const { map } = useContext(AppContext)
+  const {mapViewState, setMapViewState} = useMapState();
 
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {
@@ -68,9 +69,9 @@ const App = () => {
         pickingRadius={5}
         effects={[lightingEffect]}
         getTooltip={getTooltip}
-        viewState={map.viewState}
+        viewState={mapViewState}
         onViewStateChange={(newMapViewState) => {
-          map.setViewState(newMapViewState.viewState)
+          setMapViewState(newMapViewState.viewState)
         }}
       >
         <Map

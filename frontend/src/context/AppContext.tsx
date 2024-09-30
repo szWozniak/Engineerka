@@ -25,10 +25,6 @@ type AppContextTypeTwo = {
     selectedDroneRegistration: string | null,
     selectDroneRegistration: (registrationNumber: string | null) => void 
   }
-  map: {
-    viewState: MapViewState,
-    setViewState: any
-  }
   table: {
     selectedDroneRegistration: string | null,
     selectedDroneFlights: DroneFlightSummary[],
@@ -55,10 +51,6 @@ export const AppContext = createContext<AppContextTypeTwo>({
     selectedDroneRegistration: null,
     selectDroneRegistration: (_d: string | null) => {} 
   },
-  map: {
-    viewState: INITIAL_VIEW_STATE,
-    setViewState: () => { }
-  },
   table: {
     selectedDroneRegistration: null,
     setSelectedDroneRegistration: () => { },
@@ -82,11 +74,9 @@ const AppContextProvider = ({ children }: {
   const [filters, setFilters] = useState<Filter[]>(defaultFiltersState);
   const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
 
-
   const [selectedFlightId, setSelectedFlightId] = useState<number | null>(null)
   const [selectedDroneRegistrationFromTable, setSelectedDroneRegistrationFromTable] = useState<string | null>(null)
-  const [mapViewState, setMapViewState] = useState<MapViewState>(INITIAL_VIEW_STATE)
-  const [isMapUpdated, setIsMapUpdated] = useState<boolean>(false)
+  
   const [trackedFlight, setTrackedFlight] = useState<DroneFlight | null>(null)
   const [trackedPoint, setTrackedPoint] = useState<number>(0)
   const [highlightedFlightId, setHighlightedFlightId] = useState<number | null>(null);
@@ -98,11 +88,6 @@ const AppContextProvider = ({ children }: {
   const { data: selectedDroneFlightsSummaries } = useQuery( //to move
     droneQueries.getSelectedDroneFlightsSummaries(selectedDroneRegistrationFromTable)
   )
-
-  // useEffect(() => {
-  //   setIsMapUpdated(false)
-  // }, [selectedDroneRegistration])
-
   
   useEffect(() => {
     setTrackedPoint((trackedFlight?.flightRecords?.length || 1) - 1)
@@ -117,10 +102,6 @@ const AppContextProvider = ({ children }: {
       drones: {
         selectedDroneRegistration: selectedDroneRegistration,
         selectDroneRegistration: setSelectedDroneRegistration
-      },
-      map: {
-        viewState: mapViewState,
-        setViewState: setMapViewState
       },
       table: {
         selectedDroneRegistration: selectedDroneRegistrationFromTable,
