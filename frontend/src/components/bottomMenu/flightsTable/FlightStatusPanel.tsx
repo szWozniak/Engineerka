@@ -60,7 +60,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameT
     return (
       <div className="tooltip">
         📈 Wysokość: <b>{payload[0]?.value}m</b><br />
-        ⛽ Stan Paliwa: <b>{payload[1]?.value}%</b>
+        🔋 Stan Baterii: <b>{payload[1]?.value}%</b>
       </div>
     );
   }
@@ -73,7 +73,7 @@ const CustomLegend = ({payload}: LegendProps) => {
     return (
       <div className="legend">
         <h5 style={{color: payload[0]?.color}}>📈 Wysokość</h5>
-        <h5 style={{color: payload[1]?.color}}>⛽ Stan Paliwa</h5>
+        <h5 style={{color: payload[1]?.color}}>🔋 Stan Baterii</h5>
       </div>
     )
   }

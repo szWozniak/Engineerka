@@ -12,7 +12,7 @@ const BigTable = () => {
           <th rowSpan={2}>Nr. rejestracyjny</th>
           <th colSpan={3}>Dane geograficzne</th>
           <th rowSpan={2}>Operator</th>
-          <th rowSpan={2}>Paliwo</th>
+          <th rowSpan={2}>Bateria</th>
           <th rowSpan={2}>Model</th>
           <th rowSpan={2}>Typ drona</th>
           <th rowSpan={2}>Akcje</th>
@@ -43,7 +43,7 @@ const BigTable = () => {
                 </div>
               </td>
               <td>{flyingDrone ? <div>
-                ⛽ {flyingDrone?.fuel}%
+                🔋 {flyingDrone?.fuel}%
               </div> : <>b/d</>}</td>
               <td>{drone.model} </td>
               <td className="extraLabel">{drone.type}</td>

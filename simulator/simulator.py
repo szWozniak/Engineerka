@@ -111,19 +111,17 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
     headings = np.zeros(number_of_points)
     altitudes = np.zeros(number_of_points)
     speeds = np.zeros(number_of_points)
+    fuel = np.zeros(number_of_points)
 
     scale_factor_geo = 0.0005  
     alpha = 2.5
     time = np.linspace(0, np.pi, number_of_points)
     shaping_factor = np.sin(time)
-    initial_fuel = random.uniform(80, 100)
-    final_fuel = random.uniform(5, 30)
 
-    fuel = np.linspace(initial_fuel, final_fuel, number_of_points)
-    fuel = np.clip(fuel ** np.random.uniform(0.9, 1.1), final_fuel, initial_fuel)
     lat_before = starting_latitude
     lon_before = starting_longitude
     alt_before = 1
+    fuel_before = random.uniform(80, 100)
     midpoint = number_of_points // 2 
     alt_up_scale = 90 / (number_of_points ** 0.5)
     alt_down_scale = 55 / (number_of_points ** 0.5)
@@ -146,13 +144,22 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
         
         speeds[i] = distance_3d * 1800
 
+        if altitudes[i] > alt_before:
+            fuel[i] = fuel_before - distance_3d*35*1.5
+        else:
+            fuel[i] = fuel_before - distance_3d*35
+
         lat_before = latitudes[i]
         lon_before = longitudes[i]
         alt_before = altitudes[i]
+        fuel_before = fuel[i]
 
         latitudes[i], longitudes[i] = convert_to_dms(latitudes[i], longitudes[i])
-    
-    altitudes[number_of_points-1] = 1
+
+        if fuel[i] <= 1:
+            altitudes[i] = 1
+            fuel[i] = 1
+            return i+1, latitudes[:i+1], longitudes[:i+1], headings[:i+1], altitudes[:i+1], fuel[:i+1], speeds[:i+1]
 
     return number_of_points, latitudes, longitudes, headings, altitudes, fuel, speeds
 
