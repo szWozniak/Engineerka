@@ -14,7 +14,7 @@ const BigTable = () => {
           <th rowSpan={2}>Operator</th>
           <th rowSpan={2}>Bateria</th>
           <th rowSpan={2}>Model</th>
-          <th rowSpan={2}>Typ drona</th>
+          <th rowSpan={2}>Stan drona</th>
           <th rowSpan={2}>Akcje</th>
         </tr>
         <tr>
