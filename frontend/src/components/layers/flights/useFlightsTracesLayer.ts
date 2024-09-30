@@ -1,18 +1,24 @@
 import { LineLayer } from "deck.gl"
 import { droneTrace } from "../types/lines"
-import { useContext } from "react";
-import { AppContext } from "../../../context/AppContext";
+import { DroneFlight } from "../../../flights/api/types";
+import { DroneFlightSummary } from "../../../drones/types";
 
-const useFlightsTracesLayer = () => {
-  const { flights, table } = useContext(AppContext) //this table thing is strange
+interface Props {
+  trackedFlight: DroneFlight | null | undefined,
+  trackedPoint: number,
+  flightsSummaries: DroneFlightSummary[] | undefined,
+  highlightedFlightId: number | null
+}
 
+const useFlightsTracesLayer = ({trackedFlight, trackedPoint, flightsSummaries, highlightedFlightId} : Props) => {
   const mapPositionsToTraces = (): droneTrace[] => {
-    if (table.selectedDroneFlights === undefined) return [];
+    if (flightsSummaries === undefined) return [];
 
-    const flightsToDisplay = flights.trackedFlight ? [{
-      ...flights.trackedFlight,
-      flightRecords: flights.trackedFlight.flightRecords.slice(0, flights.trackedPoint+1)
-    }] : table.selectedDroneFlights
+    const flightsToDisplay = trackedFlight ? [{
+      ...trackedFlight,
+      flightRecords: trackedFlight.flightRecords.slice(0, trackedPoint+1)
+    }] : flightsSummaries
+    
     const traces: droneTrace[] = [];
 
     flightsToDisplay.forEach((droneFlight, index) => {
@@ -38,7 +44,7 @@ const useFlightsTracesLayer = () => {
     opacity: 0.8,
     getSourcePosition: d => d.start,
     getTargetPosition: d => d.end,
-    getColor: d => d.id === flights.highlitedFlightId ? [200, 255, 255, 200] : [0, 200, 200, 125],
+    getColor: d => d.id === highlightedFlightId ? [200, 255, 255, 200] : [0, 200, 200, 125],
     getWidth: _d => 5,
     pickable: false,
     visible: true,

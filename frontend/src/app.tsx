@@ -1,8 +1,8 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 //DeckGL
 import DeckGL from '@deck.gl/react';
 //Map
-import Map, { useMap } from 'react-map-gl';
+import Map from 'react-map-gl';
 //Loaders
 import { OBJLoader } from '@loaders.gl/obj';
 import { registerLoaders } from '@loaders.gl/core';
@@ -10,7 +10,6 @@ import { registerLoaders } from '@loaders.gl/core';
 import Sidebar from './components/sidebar/Sidebar';
 import useLayerManager from './components/layers/useLayerManager';
 import BottomMenu from './components/bottomMenu/BottomMenu';
-import { AppContext } from './context/AppContext';
 import useFilters from './filters/useCases/useFilters';
 import { INITIAL_VIEW_STATE } from './map/config/initialView';
 import { lightingEffect } from './map/config/effects';

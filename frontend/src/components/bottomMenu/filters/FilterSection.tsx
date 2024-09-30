@@ -1,12 +1,9 @@
-import { useContext } from "react";
-import { AppContext } from "../../../context/AppContext"
 import RegistrationNumberFilter from "./concreteFilters/RegistrationNumberFilter";
 import AltitudeFilter from "./concreteFilters/AltitudeFilter";
 import FuelFilter from "./concreteFilters/FuelFilter";
 import ModelFilter from "./concreteFilters/ModelFilter";
 import LatitudeFilter from "./concreteFilters/LatitudeFilter";
 import LongitudeFilter from "./concreteFilters/LongitudeFilter";
-import useFilters from "../../../filters/useCases/useFilters";
 import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from "../../../filters/types";
 
 interface props{
