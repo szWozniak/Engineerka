@@ -7,6 +7,7 @@ import FlightsTable from './flightsTable/FlightsTable';
 import FilterSection from './filters/FilterSection';
 import FlightStatusPanel from './flightsTable/FlightStatusPanel';
 import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from '../../filters/types';
+import useFlights from '../../flights/useCases/useFlights';
 
 interface Props{
   areFiltersOpen: boolean
@@ -26,7 +27,7 @@ const BottomMenu: React.FC<Props> = ({
   onTextFilterChange
 }) => {
   const [isOpened, setIsOpened] = useState(false)
-  const { table, flights } = useContext(AppContext)
+  const {detailedFlight, flightsSummaries} = useFlights()
 
   const [startY, setStartY] = useState(0)
   const [startHeight, setStartHeight] = useState(0)
@@ -86,11 +87,26 @@ const BottomMenu: React.FC<Props> = ({
       />}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
-        {flights.trackedFlight ? <span>Śledzenie lotu drona {table.selectedDroneRegistration}</span> : 
-          (table.selectedDroneRegistration 
-            ? <span>Historia lotów dla drona {table.selectedDroneRegistration}</span> 
+        {detailedFlight.trackedFlight ? <span>Śledzenie lotu drona {flightsSummaries.droneRegistrationToShowFlightsFor}</span> : 
+          (flightsSummaries.droneRegistrationToShowFlightsFor 
+            ? <span>Historia lotów dla drona {flightsSummaries.droneRegistrationToShowFlightsFor}</span> 
             : <span>Lista Dronów</span>)}
-        {flights.trackedFlight ? <FlightStatusPanel /> : table.selectedDroneRegistration ? <FlightsTable /> : <BigTable />}
+        {detailedFlight.trackedFlight ? 
+        <FlightStatusPanel
+          selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
+          selectFlightId={detailedFlight.selectFlightId}
+          selectHighlightedFlightId={flightsSummaries.selectHighlightedFlightId}
+          selectTrackedPoint={detailedFlight.selectTrackedPoint}
+          trackedFlight={detailedFlight.trackedFlight}
+          trackedPoint={detailedFlight.trackedPoint}
+
+        /> : flightsSummaries.droneRegistrationToShowFlightsFor ?
+         <FlightsTable 
+            flightSummaries={flightsSummaries.flightsSummaries}
+            selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
+            selectFlightId={detailedFlight.selectFlightId}
+            selectHighlightedFlightId={flightsSummaries.selectHighlightedFlightId}
+         /> : <BigTable />}
       </div>
     </div>
   );

@@ -1,15 +1,18 @@
 import { SimpleMeshLayer } from 'deck.gl';
-import { useContext } from 'react';
-import { AppContext } from '../../../context/AppContext';
 import MESH_URL from '../../../map/config/model';
 import { theme } from '../../../map/config/theme';
+import { DroneFlight } from '../../../flights/api/types';
 
-const useTrackedDroneLayer = () => {
-  const { flights } = useContext(AppContext)
+interface Props {
+  trackedFlight: DroneFlight | null | undefined
+  trackedPoint: number
+}
+
+const useTrackedDroneLayer = ({trackedFlight, trackedPoint} : Props) => {
 
   return new SimpleMeshLayer({
     id: "tracked-drone",
-    data: [flights.trackedFlight?.flightRecords?.[flights.trackedPoint]],
+    data: [trackedFlight?.flightRecords?.[trackedPoint]],
     mesh: MESH_URL,
     getPosition: d => [d.longitude, d.latitude, d.altitude],
     getColor: d => [255, 50, 50],

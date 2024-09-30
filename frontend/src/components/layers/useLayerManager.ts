@@ -20,7 +20,12 @@ const useLayerManager = () => {
         }
     );
 
-    const trackedDroneLayer = useTrackedDroneLayer();
+    const trackedDroneLayer = useTrackedDroneLayer(
+        {
+            trackedFlight: detailedFlight.trackedFlight,
+            trackedPoint: detailedFlight.trackedPoint
+        }
+    );
 
     const determineVisibleLayers = () => {
         if (flightsSummaries.flightsSummaries === null){

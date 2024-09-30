@@ -1,17 +1,28 @@
-import { useContext } from "react";
-import { AppContext } from "../../../context/AppContext";
+import { Dispatch, SetStateAction } from "react";
+import { DroneFlightSummary } from "../../../drones/types";
 
-const FlightsTable = () => { 
-  const { table, flights } = useContext(AppContext)
+interface Props {
+  selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
+  selectDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>
+  selectFlightId: Dispatch<SetStateAction<number | null>>
+  flightSummaries: DroneFlightSummary[] | undefined
+}
+
+const FlightsTable: React.FC<Props> = ({
+    selectDroneRegistrationToShowFlightsFor,
+    selectFlightId,
+    selectHighlightedFlightId,
+    flightSummaries
+  }) => { 
   
   return (
     <div className="tableContainer">
       <div className="controls">
         <button
           onClick={() => {
-            table.setSelectedDroneRegistration(null)
-            flights.setHighlightedFlightId(null)
-            flights.setTableSelectedFlightId(null)
+            selectDroneRegistrationToShowFlightsFor(null)
+            selectHighlightedFlightId(null)
+            selectFlightId(null)
           }}
         >✈️ Powrót do listy dronów</button>
       </div>
@@ -28,7 +39,7 @@ const FlightsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {table.selectedDroneFlights?.map((flight, index) => {
+          {flightSummaries?.map((flight, index) => {
             return (
               <tr key={index}>
                 <td>
@@ -54,13 +65,13 @@ const FlightsTable = () => {
                 <td>
                 <button 
                   onClick={() => {
-                    flights.setTableSelectedFlightId(flight?.id)
+                    selectFlightId(flight?.id)
                   }}
                   onMouseEnter={() => {
-                    flights.setHighlightedFlightId(flight?.id)
+                    selectHighlightedFlightId(flight?.id)
                   }}
                   onMouseLeave={() => {
-                    flights.setHighlightedFlightId(null)
+                    selectHighlightedFlightId(null)
                   }}
                   title="Podgląd lotu"
                 >🔍</button>
