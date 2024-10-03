@@ -3,8 +3,10 @@ import { Drone } from '../../drones/types'
 import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
 import { AppContext } from '../../context/AppContext';
+import { useTranslation } from 'react-i18next';
 
 const Sidebar: React.FC = () => {
+  const { t } = useTranslation();
 
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
@@ -12,7 +14,7 @@ const Sidebar: React.FC = () => {
 
   const renderViewChangeButtons = () => {
     if (selectedDrone) {
-      return (<button className="sidebarButton" onClick={() => setSelectedDroneRegistration(null)}>Reset selection</button>)
+      return (<button className="sidebarButton" onClick={() => setSelectedDroneRegistration(null)}>{t("general.resetSelection")}</button>)
     }
 
     return <></>
@@ -28,14 +30,14 @@ const Sidebar: React.FC = () => {
       </div>
       <div className="scrollable">
         <div className="container">
-          <h3>Menu</h3>
+          <h3>{t("general.menu")}</h3>
           <MenuDropdown
-            label={"Filtry"}
+            label={t("general.filters")}
             opened={openedMenu === 1}
             setOpened={toggleFiltersVisibility}
           />
           <MenuDropdown
-            label={"Latające Drony"}
+            label={t("general.flyingDrones")}
             opened={openedMenu === 2}
             setOpened={(opened) => {
               opened ? setOpenedMenu(2) : setOpenedMenu(null)
@@ -50,21 +52,21 @@ const Sidebar: React.FC = () => {
                 <span className="extraLabel">{drone.type}</span>
               </div>
             ))}
-          </div>}
+          </div>} 
         </div>
         <div className="container">
           {selectedDrone && <div>
-            <div>Selected drone: {selectedDrone.registrationNumber}</div>
-            <div>Latitude: <b>{selectedDrone.currentPosition.latitude.toFixed(4)}</b></div>
-            <div>Longtitude: <b>{selectedDrone.currentPosition.longitude.toFixed(4)}</b></div>
-            <div>Direction: <b>{selectedDrone.heading}</b></div>
-            <div>Altitude: <b>{selectedDrone.currentPosition.altitude}</b></div>
+            <div>{t("general.selectedDrone")}: {selectedDrone.registrationNumber}</div>
+            <div>{t("geo.latitude")}: <b>{selectedDrone.currentPosition.latitude.toFixed(4)}</b></div>
+            <div>{t("geo.longitude")}: <b>{selectedDrone.currentPosition.longitude.toFixed(4)}</b></div>
+            <div>{t("geo.direction")}: <b>{selectedDrone.heading}</b></div>
+            <div>{t("geo.altitude")}: <b>{selectedDrone.currentPosition.altitude}</b></div>
             {renderViewChangeButtons()}
           </div>}
         </div>  
       </div>
       <div className="container">
-        DronHub.pl &copy; 2024
+        {t("general.domain")} &copy; 2024
       </div>
     </div>
   );

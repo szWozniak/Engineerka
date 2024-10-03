@@ -1,0 +1,53 @@
+{
+  "geo": {
+    "latitude": "Szerokość",
+    "longitude": "Długość",
+    "altitude": "Wysokość",
+    "direction": "Kierunek"
+  },
+  "general": {
+    "menu": "Menu",
+    "filters": "Filtry",
+    "flyingDrones": "Latające Drony",
+    "selectedDrone": "Wybrany Dron",
+    "resetSelection": "Usuń zaznaczenie",
+    "domain": "DronHub.pl",
+    "headers": {
+      "tracking": "Śledzenie lotu drona",
+      "history": "Historia lotów dla drona",
+      "list": "Lista Dronów"
+    }
+  },
+  "details": {
+    "drone": {
+      "registration": "Nr. rejestracyjny",
+      "geoData": "Dane geograficzne",
+      "operator": "Operator",
+      "battery": "Bateria",
+      "model": "Model",
+      "state": "Stan drona"
+    },
+    "flight": {
+      "takeoff": "Data startu",
+      "landing": "Data lądowania",
+      "time": "Czas lotu",
+      "speed": "Śr. prędkość",
+      "elevation": "Przewyższenie",
+      "distance": "Dystans"
+    },
+    "noData": "b/d"
+  },
+  "actions": {
+    "title": "Akcje",
+    "selectDrone": "Wybierz drona",
+    "showFlights": "Pokaż loty",
+    "previewFlight": "Podgląd lotu",
+    "backToDrones": "Powrót do listy dronów",
+    "backToFlights": "Powrót do listy lotów"
+  },
+  "filters": {
+    "min": "Min",
+    "max": "Max",
+    "apply": "Zastosuj"
+  }
+}

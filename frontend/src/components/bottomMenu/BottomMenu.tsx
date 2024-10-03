@@ -6,8 +6,11 @@ import BigTable from './bigTable/BigTable';
 import FlightsTable from './flightsTable/FlightsTable';
 import FilterSection from './filters/FilterSection';
 import FlightStatusPanel from './flightsTable/FlightStatusPanel';
+import { useTranslation } from 'react-i18next';
 
 const BottomMenu = () => {
+  const { t } = useTranslation();
+
   const [isOpened, setIsOpened] = useState(false)
   const { areFiltersOpened, tableSelectedDroneRegistration, trackedFlight } = useContext(AppContext)
 
@@ -62,10 +65,10 @@ const BottomMenu = () => {
       {areFiltersOpened && <FilterSection isOpen={areFiltersOpened}/>}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
-        {trackedFlight ? <span>Śledzenie lotu drona {tableSelectedDroneRegistration}</span> : 
+        {trackedFlight ? <span>{t("general.headers.tracking")} {tableSelectedDroneRegistration}</span> : 
           (tableSelectedDroneRegistration 
-            ? <span>Historia lotów dla drona {tableSelectedDroneRegistration}</span> 
-            : <span>Lista Dronów</span>)}
+            ? <span>{t("general.headers.history")} {tableSelectedDroneRegistration}</span> 
+            : <span>{t("general.headers.list")}</span>)}
         {trackedFlight ? <FlightStatusPanel /> : tableSelectedDroneRegistration ? <FlightsTable /> : <BigTable />}
       </div>
     </div>
