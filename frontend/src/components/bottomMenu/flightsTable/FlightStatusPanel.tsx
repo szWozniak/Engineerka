@@ -36,6 +36,7 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
           onClick={() => {
             selectHighlightedFlightId(null)
             selectFlightId(null)
+            selectTrackedPoint(0)
           }}
         >📋 Powrót do listy lotów</button>
       </div>

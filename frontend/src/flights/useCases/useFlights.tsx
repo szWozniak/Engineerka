@@ -5,16 +5,12 @@ import droneQueries from "../../drones/repository/droneQuries"
 import { AppContext } from "../../context/AppContext"
 
 const useFlights = () => {
-    const [selectedFlightId, setSelectedFlightId] = useState<number | null>(null)
-
     const { flights } = useContext(AppContext);
 
     const {droneRegistrationToShowFlightsFor, setDroneRegistrationToShowFlightsFor} = flights
 
-    const [trackedPoint, setTrackedPoint] = useState<number>(0)
-
     const { data: trackedFlight } = useQuery(
-        flightQueries.getFlight(selectedFlightId)
+        flightQueries.getFlight(flights.selectedFlightId)
     )
 
     const { data: flightsSummaries } = useQuery(
@@ -31,10 +27,9 @@ const useFlights = () => {
         },
         detailedFlight:{
             trackedFlight,
-            selectedFlightId,
-            selectFlightId: setSelectedFlightId,
-            trackedPoint,
-            selectTrackedPoint: setTrackedPoint,
+            selectFlightId: flights.setSelectedFlightId,
+            trackedPoint: flights.trackedPoint,
+            selectTrackedPoint: flights.setTrackedPoint,
         }
     }
 }

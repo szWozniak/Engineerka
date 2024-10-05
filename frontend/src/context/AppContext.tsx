@@ -8,7 +8,7 @@ import {
 
 import { Filter, FilterType } from '../filters/types';
 import { defaultFiltersState } from '../filters/useCases/useFilters';
-type AppContextTypeTwo = {
+type AppContextType = {
   filtering: {
     value: Filter[],
     changeFilters: (filters: Filter[]) => void
@@ -21,11 +21,15 @@ type AppContextTypeTwo = {
     droneRegistrationToShowFlightsFor: string | null,
     setDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>,
     highlightedFlightId: number | null,
-    setHighlightedFlightId: Dispatch<SetStateAction<number | null>>
+    setHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
+    selectedFlightId: number | null,
+    setSelectedFlightId: Dispatch<SetStateAction<number | null>>,
+    trackedPoint : number,
+    setTrackedPoint: Dispatch<SetStateAction<number>>
   }
 }
 
-export const AppContext = createContext<AppContextTypeTwo>({
+export const AppContext = createContext<AppContextType>({
   filtering:{
     value: [
       {
@@ -109,7 +113,11 @@ export const AppContext = createContext<AppContextTypeTwo>({
     droneRegistrationToShowFlightsFor: null,
     setDroneRegistrationToShowFlightsFor: () => {},
     highlightedFlightId: null,
-    setHighlightedFlightId: () => {}
+    setHighlightedFlightId: () => {},
+    selectedFlightId: null,
+    setSelectedFlightId: () => {},
+    trackedPoint: 0,
+    setTrackedPoint: () => {}
   }
 
 })
@@ -121,6 +129,8 @@ const AppContextProvider = ({ children }: {
   const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
   const [highlightedFlightId, setHighlightedFlightId] = useState<number | null>(null);
   const [droneRegistrationToShowFlightsFor, setDroneRegistrationToShowFlightsFor] = useState<string | null>(null)
+  const [selectedFlightId, setSelectedFlightId] = useState<number | null>(null)
+  const [trackedPoint, setTrackedPoint] = useState<number>(0)
   
   return (
     <AppContext.Provider value={{
@@ -136,8 +146,11 @@ const AppContextProvider = ({ children }: {
         droneRegistrationToShowFlightsFor,
         setDroneRegistrationToShowFlightsFor,
         highlightedFlightId,
-        setHighlightedFlightId
-
+        setHighlightedFlightId,
+        selectedFlightId,
+        setSelectedFlightId,
+        trackedPoint,
+        setTrackedPoint
       }
     }}>
       {children}
