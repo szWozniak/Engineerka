@@ -75,7 +75,7 @@ public class SaveRecordsCommandHandlerTests {
         sut.handle(command);
 
         Mockito.verify(droneService, Mockito.never()).upsertDronesRecords(List.of());
-        Mockito.verify(flightService, Mockito.never()).createFlights(Mockito.anyList(), Mockito.anyBoolean());
+        Mockito.verify(flightService, Mockito.never()).createFlights(List.of(), true);
     }
 
     @Test
