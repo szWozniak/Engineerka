@@ -12,6 +12,7 @@ import useLayerManager from './components/layers/useLayerManager';
 import BottomMenu from './components/bottomMenu/BottomMenu';
 import useFilters from './filters/useCases/useFilters';
 import { INITIAL_VIEW_STATE } from './map/config/initialView';
+import './i18n';
 import { lightingEffect } from './map/config/effects';
 import useMapState from './map/useCases/useMap';
 

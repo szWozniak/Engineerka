@@ -5,6 +5,7 @@ import BigTable from './bigTable/BigTable';
 import FlightsTable from './flightsTable/FlightsTable';
 import FilterSection from './filters/FilterSection';
 import FlightStatusPanel from './flightsTable/FlightStatusPanel';
+import { useTranslation } from 'react-i18next';
 import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from '../../filters/types';
 import useFlights from '../../flights/useCases/useFlights';
 
@@ -25,6 +26,8 @@ const BottomMenu: React.FC<Props> = ({
   onNumberFilterChange,
   onTextFilterChange
 }) => {
+  const { t } = useTranslation();
+
   const [isOpened, setIsOpened] = useState(false)
   const {detailedFlight, flightsSummaries} = useFlights()
 

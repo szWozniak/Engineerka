@@ -24,18 +24,18 @@ const FlightsTable: React.FC<Props> = ({
             selectHighlightedFlightId(null)
             selectFlightId(null)
           }}
-        >✈️ Powrót do listy dronów</button>
+        >✈️ {t("actions.backToDrones")}</button>
       </div>
       <table className="droneTable">
         <thead>
           <tr>
-            <th>Data Startu</th>
-            <th>Data Lądowania</th>
-            <th>Czas lotu</th>
-            <th>Śr. Prędkość</th>
-            <th>Przewyższenie</th>
-            <th>Dystans</th>
-            <th>Akcje</th>
+            <th>{t("details.flight.takeoff")}</th>
+            <th>{t("details.flight.landing")}</th>
+            <th>{t("details.flight.time")}</th>
+            <th>{t("details.flight.speed")}</th>
+            <th>{t("details.flight.elevation")}</th>
+            <th>{t("details.flight.distance")}</th>
+            <th>{t("actions.title")}</th>
           </tr>
         </thead>
         <tbody>

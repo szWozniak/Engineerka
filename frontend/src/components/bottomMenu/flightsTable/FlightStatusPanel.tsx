@@ -30,7 +30,7 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
             selectHighlightedFlightId(null)
             selectFlightId(null)
           }}
-        >✈️ Powrót do listy dronów</button>
+        >✈️ {t("actions.backToDrones")}</button>
         
         <button
           onClick={() => {
@@ -38,7 +38,7 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
             selectFlightId(null)
             selectTrackedPoint(0)
           }}
-        >📋 Powrót do listy lotów</button>
+        >📋 {t("actions.backToFlights")}</button>
       </div>
       <div className="chartContainer">
         <ResponsiveContainer height={200} width='100%'>
@@ -73,11 +73,13 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
 };
 
 const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameType>)  => {
+  const { t } = useTranslation();
+
   if (active && payload && payload.length) {
     return (
       <div className="tooltip">
-        📈 Wysokość: <b>{payload[0]?.value}m</b><br />
-        ⛽ Stan Paliwa: <b>{payload[1]?.value}%</b>
+        📈 {t("geo.altitude")}: <b>{payload[0]?.value}m</b><br />
+        🔋 {t("details.drone.battery")}: <b>{payload[1]?.value}%</b>
       </div>
     );
   }
@@ -86,11 +88,13 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameT
 };
 
 const CustomLegend = ({payload}: LegendProps) => {
+  const { t } = useTranslation();
+
   if (payload){
     return (
       <div className="legend">
-        <h5 style={{color: payload[0]?.color}}>📈 Wysokość</h5>
-        <h5 style={{color: payload[1]?.color}}>⛽ Stan Paliwa</h5>
+        <h5 style={{color: payload[0]?.color}}>📈 {t("geo.altitude")}</h5>
+        <h5 style={{color: payload[1]?.color}}>🔋 {t("details.drone.battery")}</h5>
       </div>
     )
   }

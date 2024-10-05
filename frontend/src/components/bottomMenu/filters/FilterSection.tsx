@@ -4,6 +4,7 @@ import FuelFilter from "./concreteFilters/FuelFilter";
 import ModelFilter from "./concreteFilters/ModelFilter";
 import LatitudeFilter from "./concreteFilters/LatitudeFilter";
 import LongitudeFilter from "./concreteFilters/LongitudeFilter";
+import { useTranslation } from 'react-i18next';
 import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from "../../../filters/types";
 
 interface props{
