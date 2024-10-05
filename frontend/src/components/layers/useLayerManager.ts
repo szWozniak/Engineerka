@@ -28,13 +28,13 @@ const useLayerManager = () => {
     );
 
     const determineVisibleLayers = () => {
-        if (flightsSummaries.flightsSummaries === null){
+        if (flightsSummaries.flightsSummaries === undefined){
             return [ dronesLayer, tracesLayer ]
         }
 
         const result: Layer[] = [flightsTracesLayer]
 
-        if (detailedFlight.trackedFlight !== null){
+        if (detailedFlight.trackedFlight !== undefined){
             result.push(trackedDroneLayer)
         }
 

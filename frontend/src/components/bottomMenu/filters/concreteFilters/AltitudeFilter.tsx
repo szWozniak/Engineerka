@@ -15,7 +15,6 @@ const AltitudeFilter: React.FC<Props> = ({minValue, maxValue, onMinValueChange, 
                 label='Altitude (min)'
                 value={minValue}
                 onChange={(value) => {
-                    console.log(value)
                     onMinValueChange(value)
                 }}
             />

@@ -76,7 +76,7 @@ export const defaultFiltersState: Filter[] = [
   ]
   
 const useFilters = () => {
-    let currentFilters: Filter[] = structuredClone(defaultFiltersState);
+    const [currentFilters, setCurrentFilters] = useState<Filter[]>(structuredClone(defaultFiltersState));
 
     const {filtering} = useContext(AppContext);
 
@@ -104,27 +104,33 @@ const useFilters = () => {
         return searchedFilter;
       }
       const onTextFilterChange = (key: TextFilterKey, value: string) => {
-        currentFilters = currentFilters.map(f => {
+        setCurrentFilters(prev => prev.map(f => {
           if (f.key === key && f.type === FilterType.Text){
             f.value = value
           }
           return f;
-        })
+        }))
+        console.log(currentFilters)
       }
     
       const onNumberFilterChange = (key: NumberFilterKey, value: number | undefined) => {
-        currentFilters = currentFilters.map(f => {
+        setCurrentFilters(prev => prev.map(f => {
           if (f.key === key && f.type === FilterType.Number){
             f.value = value
           }
           return f;
-        })
+        }))
+        console.log(currentFilters)
       }
 
-    const applyFilters = () => filtering.changeFilters(currentFilters
+    const applyFilters = () => {
+      filtering.changeFilters(currentFilters
         .filter(f => f.value !== "")
-        .map(f => structuredClone(f))
-    )
+        .map(f => structuredClone(f)))
+      
+      console.log(currentFilters)
+    }
+    
 
     return {
         filters: filtering.value,
