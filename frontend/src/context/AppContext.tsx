@@ -7,7 +7,7 @@ import {
 } from 'react'
 
 import { Filter, FilterType } from '../filters/types';
-import { defaultFiltersState } from '../filters/useCases/useFilters';
+import { defaultFiltersState } from '../filters/useCases/defaultState';
 type AppContextType = {
   filtering: {
     value: Filter[],
