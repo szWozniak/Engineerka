@@ -1,26 +1,8 @@
-import { Dispatch, SetStateAction, useContext } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { LineChart, Line, XAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { TooltipProps, LegendProps } from 'recharts';
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
-import { AppContext } from '../../../context/AppContext';
 import { DroneFlight } from '../../../flights/api/types';
-
-
-// table: {
-  //   selectedDroneRegistration: string | null,
-  //   selectedDroneFlights: DroneFlightSummary[],
-  //   setSelectedDroneRegistration: Dispatch<SetStateAction<string | null>>,
-  // }
-  // flights: {
-  //   trackedFlight: DroneFlight | null | undefined,
-  //   tableSelectedFlightId: number | null,
-  //   trackedPoint: number,
-  //   highlitedFlightId: number | null,
-  //   setTrackedFlight: Dispatch<SetStateAction<DroneFlight | null>>,
-  //   setTableSelectedFlightId: Dispatch<SetStateAction<number | null>>,
-  //   setTrackedPoint: Dispatch<SetStateAction<number>>
-  //   setHighlightedFlightId: Dispatch<SetStateAction<number | null>>
-  // }
 
 interface Props {
   selectDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>,
@@ -77,12 +59,13 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
           </LineChart>
         </ResponsiveContainer>
         <input type="range" min={0} 
-        max={trackedFlight?.flightRecords?.length} 
-        step={1} 
-        value={trackedPoint} 
-        onChange={(e) => {
-          selectTrackedPoint(parseInt(e?.target?.value))
-        }}/>
+          max={trackedFlight?.flightRecords?.length} 
+          step={1} 
+          value={trackedPoint} 
+          onChange={(e) => {
+            selectTrackedPoint(parseInt(e?.target?.value))
+          }}
+        />
       </div>
     </div>
   );

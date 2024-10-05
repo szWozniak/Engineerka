@@ -33,6 +33,7 @@ const App = () => {
   const { layers } = useLayerManager()
 
   const {mapViewState, setMapViewState} = useMapState();
+  const {applyFilters, numberFilters, textFilters, visibility} = useFilters();
 
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {
@@ -43,8 +44,6 @@ const App = () => {
 
     return () => document.removeEventListener("contextmenu", disableDefaultRightClick)
   }, [])
-
-  const {applyFilters, filters, numberFilters, textFilters, visibility} = useFilters();
 
   return (
     <div>

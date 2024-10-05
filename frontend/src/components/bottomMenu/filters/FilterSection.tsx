@@ -62,7 +62,7 @@ const FilterSection: React.FC<props> = ({
             onChange={(value) => onTextFilterChange("model", value)}
           />
         </div>
-        <button className="apply" onClick={() => applyFilters}>Zastosuj</button>
+        <button className="apply" onClick={applyFilters}>Zastosuj</button>
       </div>
       
     </div>

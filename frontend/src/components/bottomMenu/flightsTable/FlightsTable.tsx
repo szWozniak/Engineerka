@@ -64,15 +64,9 @@ const FlightsTable: React.FC<Props> = ({
                 </td>
                 <td>
                 <button 
-                  onClick={() => {
-                    selectFlightId(flight?.id)
-                  }}
-                  onMouseEnter={() => {
-                    selectHighlightedFlightId(flight?.id)
-                  }}
-                  onMouseLeave={() => {
-                    selectHighlightedFlightId(null)
-                  }}
+                  onClick={() => selectFlightId(flight?.id)}
+                  onMouseEnter={() => selectHighlightedFlightId(flight?.id)}
+                  onMouseLeave={() => selectHighlightedFlightId(null)}
                   title="Podgląd lotu"
                 >🔍</button>
                 </td>

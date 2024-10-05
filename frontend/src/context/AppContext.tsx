@@ -3,19 +3,11 @@ import {
   Dispatch, 
   SetStateAction, 
   createContext, 
-  useState, 
-  useEffect } from 'react';
+  useState,  
+} from 'react'
 
-import { MapViewState } from 'deck.gl';
-import { DroneFlightSummary } from '../drones/types';
-import { DroneFlight } from '../flights/api/types';
-import { useQuery } from '@tanstack/react-query';
-import droneQueries from '../drones/repository/droneQuries';
-import flightQueries from '../flights/repository/flightQueries';
-import { Filter } from '../filters/types';
+import { Filter, FilterType } from '../filters/types';
 import { defaultFiltersState } from '../filters/useCases/useFilters';
-import { INITIAL_VIEW_STATE } from '../map/config/initialView';
-
 type AppContextTypeTwo = {
   filtering: {
     value: Filter[],
@@ -29,26 +21,82 @@ type AppContextTypeTwo = {
     droneRegistrationToShowFlightsFor: string | null,
     setDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>
   }
-  // table: {
-  //   selectedDroneRegistration: string | null,
-  //   selectedDroneFlights: DroneFlightSummary[],
-  //   setSelectedDroneRegistration: Dispatch<SetStateAction<string | null>>,
-  // }
-  // flights: {
-  //   trackedFlight: DroneFlight | null | undefined,
-  //   tableSelectedFlightId: number | null,
-  //   trackedPoint: number,
-  //   highlitedFlightId: number | null,
-  //   setTrackedFlight: Dispatch<SetStateAction<DroneFlight | null>>,
-  //   setTableSelectedFlightId: Dispatch<SetStateAction<number | null>>,
-  //   setTrackedPoint: Dispatch<SetStateAction<number>>
-  //   setHighlightedFlightId: Dispatch<SetStateAction<number | null>>
-  // }
 }
 
 export const AppContext = createContext<AppContextTypeTwo>({
   filtering:{
-    value: defaultFiltersState,
+    value: [
+      {
+        type: FilterType.Text,
+        parameter: "registrationNumber",
+        key: "registrationNumber",
+        value: "",
+        comparisonType: "Equals"
+      },
+      {
+        type: FilterType.Number,
+        parameter: "altitude",
+        key: "minAltitude",
+        value: undefined,
+        comparisonType: "GreaterThan"
+      },
+      {
+        type: FilterType.Number,
+        parameter: "altitude",
+        key: "maxAltitude",
+        value: undefined,
+        comparisonType: "LesserThan"
+      },
+      {
+        type: FilterType.Number,
+        parameter: "longitude",
+        key: "minLongitude",
+        value: undefined,
+        comparisonType: "GreaterThan"
+      },
+      {
+        type: FilterType.Number,
+        parameter: "longitude",
+        key: "maxLongitude",
+        value: undefined,
+        comparisonType: "LesserThan"
+      },
+      {
+        type: FilterType.Number,
+        parameter: "latitude",
+        key: "minLatitude",
+        value: undefined,
+        comparisonType: "GreaterThan"
+      },
+      {
+        type: FilterType.Number,
+        parameter: "latitude",
+        key: "maxLatitude",
+        value: undefined,
+        comparisonType: "LesserThan"
+      },
+      {
+        type: FilterType.Number,
+        parameter: "fuel",
+        key: "minFuel",
+        value: undefined,
+        comparisonType: "GreaterThan"
+      },
+      {
+        type: FilterType.Number,
+        parameter: "fuel",
+        key: "maxFuel",
+        value: undefined,
+        comparisonType: "LesserThan"
+      },
+      {
+        type: FilterType.Text,
+        parameter: "model",
+        key: "model",
+        value: "",
+        comparisonType: "Equals"
+      }
+    ],
     changeFilters: (_f: Filter[]) => { } 
   },
   drones: {
