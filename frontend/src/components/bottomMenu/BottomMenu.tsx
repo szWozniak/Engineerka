@@ -64,6 +64,49 @@ const BottomMenu: React.FC<Props> = ({
     };
   }, [])
 
+  const rednerFlightTrackingView = () => (
+    <>
+      <span>Śledzenie lotu drona {flightsSummaries.droneRegistrationToShowFlightsFor}</span>
+      <FlightStatusPanel
+        selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
+        selectFlightId={detailedFlight.selectFlightId}
+        selectHighlightedFlightId={flightsSummaries.selectHighlightedFlightId}
+        selectTrackedPoint={detailedFlight.selectTrackedPoint}
+        trackedFlight={detailedFlight.trackedFlight}
+        trackedPoint={detailedFlight.trackedPoint}
+      />
+    </>
+  )
+
+  const renderDroneFlightsView = () => (
+    <>
+      <span>Historia lotów dla drona {flightsSummaries.droneRegistrationToShowFlightsFor}</span>
+      <FlightsTable 
+        flightSummaries={flightsSummaries.flightsSummaries}
+        selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
+        selectFlightId={detailedFlight.selectFlightId}
+        selectHighlightedFlightId={flightsSummaries.selectHighlightedFlightId}
+      />
+    </>
+  )
+
+  const renderContent = () => {
+    if (detailedFlight.trackedFlight !== undefined){
+      return rednerFlightTrackingView()
+    }
+
+    if (flightsSummaries.droneRegistrationToShowFlightsFor !== null){
+      return renderDroneFlightsView()
+    }
+
+    return (
+      <>
+        <span>Lista Dronów</span>
+        <BigTable />
+      </>
+    )
+  }
+
   return (
     <div 
       className={`bottomMenu ${isOpened && 'opened'}`}
@@ -86,26 +129,7 @@ const BottomMenu: React.FC<Props> = ({
       />}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
-        {detailedFlight.trackedFlight ? <span>Śledzenie lotu drona {flightsSummaries.droneRegistrationToShowFlightsFor}</span> : 
-          (flightsSummaries.droneRegistrationToShowFlightsFor 
-            ? <span>Historia lotów dla drona {flightsSummaries.droneRegistrationToShowFlightsFor}</span> 
-            : <span>Lista Dronów</span>)}
-        {detailedFlight.trackedFlight ? 
-        <FlightStatusPanel
-          selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
-          selectFlightId={detailedFlight.selectFlightId}
-          selectHighlightedFlightId={flightsSummaries.selectHighlightedFlightId}
-          selectTrackedPoint={detailedFlight.selectTrackedPoint}
-          trackedFlight={detailedFlight.trackedFlight}
-          trackedPoint={detailedFlight.trackedPoint}
-
-        /> : flightsSummaries.droneRegistrationToShowFlightsFor ?
-         <FlightsTable 
-            flightSummaries={flightsSummaries.flightsSummaries}
-            selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
-            selectFlightId={detailedFlight.selectFlightId}
-            selectHighlightedFlightId={flightsSummaries.selectHighlightedFlightId}
-         /> : <BigTable />}
+        {renderContent()}
       </div>
     </div>
   );
