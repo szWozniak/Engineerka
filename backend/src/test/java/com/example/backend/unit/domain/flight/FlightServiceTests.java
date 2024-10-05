@@ -115,7 +115,7 @@ public class FlightServiceTests {
         ));
 
         //act
-        sut.createFlights(List.of(droneToRegister));
+        sut.createFlights(List.of(droneToRegister.getRegistrationNumber()));
 
         //assert
         var flightRecordFromDb = flightRecordRepositoryForAssertions.findById("1");

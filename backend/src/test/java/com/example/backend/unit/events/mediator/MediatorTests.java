@@ -2,6 +2,8 @@ package com.example.backend.unit.events.mediator;
 
 import com.example.backend.events.mediator.ICommandHandler;
 import com.example.backend.events.mediator.Mediator;
+import com.example.backend.events.deadDronesStoppage.commands.StopDeadDronesCommand;
+import com.example.backend.events.deadDronesStoppage.handlers.StopDeadDronesCommandHandler;
 import com.example.backend.events.recordRegistration.handlers.SaveRecordsCommandHandler;
 import com.example.backend.unit.simulatorIntegration.model.DroneFromSimulatorFixtureBuilder;
 import com.example.backend.events.recordRegistration.commands.SaveRecordsCommand;
@@ -13,22 +15,27 @@ import java.util.List;
 
 public class MediatorTests {
     private Mediator sut;
-    private ICommandHandler<SaveRecordsCommand> handler;
+    private ICommandHandler<SaveRecordsCommand> saveHandler;
+    private ICommandHandler<StopDeadDronesCommand> checkHandler;
 
     @BeforeEach
     public void setUp(){
-        handler = Mockito.mock(SaveRecordsCommandHandler.class);
-        sut = new Mediator(handler);
+        saveHandler = Mockito.mock(SaveRecordsCommandHandler.class);
+        checkHandler = Mockito.mock(StopDeadDronesCommandHandler.class);
+        sut = new Mediator(saveHandler, checkHandler);
     }
 
     @Test
     public void ShouldCallSaveRecordsCommandHandler_WhenReceivesSaveRecordsCommand(){
         var drone = new DroneFromSimulatorFixtureBuilder().build();
         var dronesFromSimulator = List.of(drone);
-        SaveRecordsCommand command = new SaveRecordsCommand(dronesFromSimulator);
+        SaveRecordsCommand saveCommand = new SaveRecordsCommand(dronesFromSimulator);
+        StopDeadDronesCommand checkCommand = new StopDeadDronesCommand(dronesFromSimulator);
 
-        sut.send(command);
+        sut.send(saveCommand);
+        sut.send(checkCommand);
 
-        Mockito.verify(handler).handle(command);
+        Mockito.verify(saveHandler).handle(saveCommand);
+        Mockito.verify(checkHandler).handle(checkCommand);
     }
 }

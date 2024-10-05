@@ -37,8 +37,8 @@ public class SaveRecordsCommandHandlerTests {
     public void ShouldProcessAllValidRecordsRecords(){
         Mockito.when(flightRecordService.isRecordRegister(Mockito.any())).thenReturn(false);
 
-        var droneOne = new DroneFromSimulatorFixtureBuilder().WithFlag("DROP").build();
-        var droneTwo = new DroneFromSimulatorFixtureBuilder().WithFlag("UPD").build();
+        var droneOne = new DroneFromSimulatorFixtureBuilder().withFlag("DROP").build();
+        var droneTwo = new DroneFromSimulatorFixtureBuilder().withFlag("UPD").build();
 
         var command = new SaveRecordsCommand(List.of(droneOne, droneTwo));
 
@@ -48,7 +48,7 @@ public class SaveRecordsCommandHandlerTests {
         var expectedResultTwo = DroneRecordToRegister.fromDroneFromSimulator(droneTwo);
 
         Mockito.verify(droneService).upsertDronesRecords(List.of(expectedResultOne, expectedResultTwo));
-        Mockito.verify(flightService).createFlights(List.of(expectedResultOne));
+        Mockito.verify(flightService).createFlights(List.of(expectedResultOne.getRegistrationNumber()));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class SaveRecordsCommandHandlerTests {
     public void ShouldNotProcessInvalidRecords(){
         Mockito.when(flightRecordService.isRecordRegister(Mockito.any())).thenReturn(false);
 
-        var drone = new DroneFromSimulatorFixtureBuilder().WithLatitude("XDD").build();
+        var drone = new DroneFromSimulatorFixtureBuilder().withLatitude("XDD").build();
 
         var command = new SaveRecordsCommand(List.of(drone));
 
