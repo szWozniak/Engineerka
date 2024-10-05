@@ -3,7 +3,7 @@ package com.example.backend.events.recordRegistration.handlers;
 import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.flight.FlightService;
 import com.example.backend.events.recordRegistration.commands.SaveRecordsCommand;
-import com.example.backend.events.recordRegistration.mappers.DronesFromSimulatorMapper;
+import com.example.backend.events.mappers.DronesFromSimulatorMapper;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import com.example.backend.events.mediator.ICommandHandler;
 import com.example.backend.domain.flightRecord.FlightRecordService;

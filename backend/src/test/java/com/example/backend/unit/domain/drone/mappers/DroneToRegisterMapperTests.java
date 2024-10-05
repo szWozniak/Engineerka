@@ -6,7 +6,6 @@ import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -15,13 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DroneToRegisterMapperTests {
-    private DroneToRegisterMapper sut;
-
-    @BeforeEach
-    public void setUp() {
-        sut = new DroneToRegisterMapper();
-    }
-
     @Test
     public void ShouldCreateNewDroneEntity_DroneToRegisterIsNotPresentInCurrentDrones() {
         var droneToRegister = DroneRecordToRegister.fromDroneFromSimulator(
@@ -55,7 +47,7 @@ public class DroneToRegisterMapperTests {
                 )
         );
 
-        List<DroneEntityWithFlightRecordEntity> result = sut.mapToEntities(List.of(droneToRegister),
+        List<DroneEntityWithFlightRecordEntity> result = DroneToRegisterMapper.mapToEntities(List.of(droneToRegister),
                 new ArrayList<>());
 
         Assertions.assertEquals(result.size(), 1);
@@ -89,7 +81,7 @@ public class DroneToRegisterMapperTests {
 
     @Test
     public void ShouldReturnEmptyList_WhenNoDronesToRegisterGiven() {
-        var result = sut.mapToEntities(new ArrayList<>(), new ArrayList<>());
+        var result = DroneToRegisterMapper.mapToEntities(new ArrayList<>(), new ArrayList<>());
 
         Assertions.assertEquals(result.size(), 0);
     }
@@ -137,7 +129,7 @@ public class DroneToRegisterMapperTests {
                 "znak",
                 "Airborne");
 
-        List<DroneEntityWithFlightRecordEntity> result = sut.mapToEntities(List.of(droneToRegister),
+        List<DroneEntityWithFlightRecordEntity> result = DroneToRegisterMapper.mapToEntities(List.of(droneToRegister),
                 List.of(existingDrone));
 
         Assertions.assertEquals(result.size(), 1);

@@ -5,7 +5,6 @@ import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.drone.filtering.filters.ComparisonType;
 import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
 import com.example.backend.domain.drone.filtering.filters.TextFilter;
-import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.unit.domain.drone.DroneEntityFixture;
@@ -25,7 +24,6 @@ import java.util.List;
 @DataJpaTest
 public class DronesIntegrationTests {
     private DroneService droneService;
-    private DroneToRegisterMapper droneToRegisterMapper;
 
     @Autowired
     private TestEntityManager fakeDb;
@@ -38,8 +36,7 @@ public class DronesIntegrationTests {
 
     @BeforeEach
     public void setUp(){
-        droneToRegisterMapper = new DroneToRegisterMapper();
-        droneService = new DroneService(droneRepository, flightRecordRepository, droneToRegisterMapper, flightRepository);
+        droneService = new DroneService(droneRepository, flightRecordRepository, flightRepository);
         setupDatabase();
     }
 

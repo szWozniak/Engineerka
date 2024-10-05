@@ -1,4 +1,4 @@
-package com.example.backend.events.recordRegistration.mappers;
+package com.example.backend.events.mappers;
 
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;

@@ -1,6 +1,6 @@
 package com.example.backend.unit.events.recordRegistration.mappers;
 
-import com.example.backend.events.recordRegistration.mappers.DronesFromSimulatorMapper;
+import com.example.backend.events.mappers.DronesFromSimulatorMapper;
 import com.example.backend.events.recordRegistration.model.envelope.Heading;
 import com.example.backend.events.recordRegistration.model.envelope.Identification;
 import com.example.backend.events.recordRegistration.model.envelope.Latitude;

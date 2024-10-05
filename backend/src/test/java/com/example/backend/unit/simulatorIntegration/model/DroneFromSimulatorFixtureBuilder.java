@@ -39,33 +39,38 @@ public class DroneFromSimulatorFixtureBuilder {
         return drone;
     }
 
-    public DroneFromSimulatorFixtureBuilder WithLatitude(String lat){
+    public DroneFromSimulatorFixtureBuilder withLatitude(String lat){
         drone.setLatitude(lat);
         return this;
     }
 
-    public DroneFromSimulatorFixtureBuilder WithLongitude(String lon){
+    public DroneFromSimulatorFixtureBuilder withLongitude(String lon){
         drone.setLongitude(lon);
         return this;
     }
 
-    public DroneFromSimulatorFixtureBuilder WithHeading(int heading){
+    public DroneFromSimulatorFixtureBuilder withHeading(int heading){
         drone.setHeading(heading);
         return this;
     }
 
-    public DroneFromSimulatorFixtureBuilder WithIdentification(int identification){
+    public DroneFromSimulatorFixtureBuilder withIdentification(int identification){
         drone.setIdentification(identification);
         return this;
     }
 
-    public DroneFromSimulatorFixtureBuilder WithFlag(String flag){
+    public DroneFromSimulatorFixtureBuilder withFlag(String flag){
         drone.setFlag(flag);
         return this;
     }
 
-    public DroneFromSimulatorFixtureBuilder WithRegistrationNumber(String regNumber){
+    public DroneFromSimulatorFixtureBuilder withRegistrationNumber(String regNumber){
         drone.setRegistrationNumber(regNumber);
+        return this;
+    }
+
+    public DroneFromSimulatorFixtureBuilder withFilename(String filename){
+        drone.setFilename(filename);
         return this;
     }
 }

@@ -2,7 +2,6 @@ package com.example.backend.integration.drone;
 
 import com.example.backend.domain.drone.DroneRepository;
 import com.example.backend.domain.drone.DroneService;
-import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flight.FlightService;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
@@ -10,13 +9,14 @@ import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.domain.flightRecord.FlightRecordService;
 import com.example.backend.events.mediator.ICommandHandler;
 import com.example.backend.events.mediator.Mediator;
-import com.example.backend.events.recordRegistration.commands.CheckFlyingDronesCommand;
+import com.example.backend.events.deadDronesStoppage.commands.StopDeadDronesCommand;
 import com.example.backend.events.recordRegistration.commands.SaveRecordsCommand;
-import com.example.backend.events.recordRegistration.handlers.CheckFlyingDronesCommandHandler;
+import com.example.backend.events.deadDronesStoppage.handlers.StopDeadDronesCommandHandler;
 import com.example.backend.events.recordRegistration.handlers.SaveRecordsCommandHandler;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
 import com.example.backend.unit.domain.drone.DroneEntityFixture;
 import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixtureBuilder;
+import com.example.backend.unit.simulatorIntegration.model.DroneFromSimulatorFixtureBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,60 +39,27 @@ public class SimulatorIntegrationTests {
     private FlightRepository flightRepository;
     @Autowired
     private FlightRecordRepository flightRecordRepository;
-    private DroneToRegisterMapper droneToRegisterMapper;
     private DroneService droneService;
-    private FlightRecordService flightRecordService;
-    private FlightService flightService;
     private Mediator sut;
-    private ICommandHandler<SaveRecordsCommand> saveHandler;
-    private ICommandHandler<CheckFlyingDronesCommand> checkHandler;
+    private DroneFromSimulatorFixtureBuilder builder;
 
     @BeforeEach
     public void setUp(){
-        droneToRegisterMapper = new DroneToRegisterMapper();
-        droneService = new DroneService(droneRepository, flightRecordRepository, droneToRegisterMapper, flightRepository);
-        flightRecordService = new FlightRecordService(flightRecordRepository);
-        flightService = new FlightService(flightRepository, flightRecordRepository);
-        saveHandler = new SaveRecordsCommandHandler(flightRecordService, droneService, flightService);
-        checkHandler = new CheckFlyingDronesCommandHandler(droneService, flightService);
-        sut = new Mediator(saveHandler, checkHandler);
+        droneService = new DroneService(droneRepository, flightRecordRepository, flightRepository);
+        FlightRecordService flightRecordService = new FlightRecordService(flightRecordRepository);
+        FlightService flightService = new FlightService(flightRepository, flightRecordRepository);
+        ICommandHandler<SaveRecordsCommand> saveHandler = new SaveRecordsCommandHandler(flightRecordService, droneService, flightService);
+        ICommandHandler<StopDeadDronesCommand> stopHandler = new StopDeadDronesCommandHandler(droneService, flightService);
+        builder = new DroneFromSimulatorFixtureBuilder();
+        sut = new Mediator(saveHandler, stopHandler);
     }
 
     @Test
     public void ShouldCreateDrone() {
-        var drones = List.of(
-                new DroneFromSimulator(
-                        "filename",
-                        "server",
-                        LocalDate.now(),
-                        LocalTime.now(),
-                        "BEG",
-                        "id",
-                        "idExt",
-                        "500423N",
-                        "1195723E",
-                        90,
-                        100,
-                        50,
-                        "Nigeria",
-                        "operator",
-                        7,
-                        "Magenta",
-                        "Belmondo",
-                        "420-69-2137",
-                        "sign",
-                        "type",
-                        69,
-                        "signal",
-                        "frequency",
-                        "sensorLat",
-                        "sensorLon",
-                        "sensorLabel"
-                )
-        );
+        var drones = List.of(builder.withFlag("BEG").build());
 
         SaveRecordsCommand saveCommand = new SaveRecordsCommand(drones);
-        CheckFlyingDronesCommand checkCommand = new CheckFlyingDronesCommand(drones);
+        StopDeadDronesCommand checkCommand = new StopDeadDronesCommand(drones);
 
         sut.send(saveCommand);
         sut.send(checkCommand);
@@ -114,7 +81,7 @@ public class SimulatorIntegrationTests {
         var drones = new ArrayList<DroneFromSimulator>();
 
         SaveRecordsCommand saveCommand = new SaveRecordsCommand(drones);
-        CheckFlyingDronesCommand checkCommand = new CheckFlyingDronesCommand(drones);
+        StopDeadDronesCommand checkCommand = new StopDeadDronesCommand(drones);
 
         sut.send(saveCommand);
         sut.send(checkCommand);
@@ -133,39 +100,10 @@ public class SimulatorIntegrationTests {
     @Test
     public void ShouldStopDrone_AndFinishFlight_WhenSimulatorReturnedRecords() {
         setupDatabase();
-        var drones = List.of(
-                new DroneFromSimulator(
-                        "filename2",
-                        "server",
-                        LocalDate.now(),
-                        LocalTime.now(),
-                        "BEG",
-                        "id",
-                        "idExt",
-                        "500423N",
-                        "1195723E",
-                        90,
-                        100,
-                        50,
-                        "Nigeria",
-                        "operator",
-                        7,
-                        "Magenta",
-                        "Belmondo",
-                        "420-69-2137",
-                        "znak",
-                        "Airborne",
-                        69,
-                        "signal",
-                        "frequency",
-                        "sensorLat",
-                        "sensorLon",
-                        "sensorLabel"
-                )
-        );
+        var drones = List.of(builder.withFlag("BEG").withFilename("filname2").build());
 
         SaveRecordsCommand saveCommand = new SaveRecordsCommand(drones);
-        CheckFlyingDronesCommand checkCommand = new CheckFlyingDronesCommand(drones);
+        StopDeadDronesCommand checkCommand = new StopDeadDronesCommand(drones);
 
         sut.send(saveCommand);
         sut.send(checkCommand);
@@ -187,39 +125,10 @@ public class SimulatorIntegrationTests {
     @Test
     public void ShouldAddFlightRecord_WhenSimulatorReturnedRecords() {
         setupDatabase();
-        var drones = List.of(
-                new DroneFromSimulator(
-                        "filename2",
-                        "server",
-                        LocalDate.now(),
-                        LocalTime.now(),
-                        "BEG",
-                        "id",
-                        "idExt",
-                        "500423N",
-                        "1195723E",
-                        90,
-                        100,
-                        50,
-                        "Hawana",
-                        "Michael Jackson",
-                        3,
-                        "pink",
-                        "szybcior",
-                        "flyingDroneWithRecords",
-                        "znak",
-                        "Airborne",
-                        69,
-                        "signal",
-                        "frequency",
-                        "sensorLat",
-                        "sensorLon",
-                        "sensorLabel"
-                )
-        );
+        var drones = List.of(builder.withFlag("UPD").withFilename("filname2").withRegistrationNumber("flyingDroneWithRecords").build());
 
         SaveRecordsCommand saveCommand = new SaveRecordsCommand(drones);
-        CheckFlyingDronesCommand checkCommand = new CheckFlyingDronesCommand(drones);
+        StopDeadDronesCommand checkCommand = new StopDeadDronesCommand(drones);
 
         sut.send(saveCommand);
         sut.send(checkCommand);

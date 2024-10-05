@@ -1,7 +1,7 @@
 package com.example.backend.simulatorIntegration;
 
 import com.example.backend.events.mediator.IMediator;
-import com.example.backend.events.recordRegistration.commands.CheckFlyingDronesCommand;
+import com.example.backend.events.deadDronesStoppage.commands.StopDeadDronesCommand;
 import com.example.backend.events.recordRegistration.commands.SaveRecordsCommand;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class SimulatorIntegrationService {
         String path = filePathProvider.getFilePath(filename);
         List<DroneFromSimulator> parsedDrones = droneRecordsCsvReader.parseCsv(path);
         mediator.send(new SaveRecordsCommand(parsedDrones));
-        mediator.send(new CheckFlyingDronesCommand(parsedDrones));
+        mediator.send(new StopDeadDronesCommand(parsedDrones));
         removeFile(path);
     }
 

@@ -79,28 +79,28 @@ public class DroneRecordToRegisterTests {
 
     @Test
     public void ShouldThrowException_GivenBadLatitude(){
-        var drone = new DroneFromSimulatorFixtureBuilder().WithLatitude("XDDD").build();
+        var drone = new DroneFromSimulatorFixtureBuilder().withLatitude("XDDD").build();
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> DroneRecordToRegister.fromDroneFromSimulator(drone));
     }
 
     @Test
     public void ShouldThrowException_GivenBadLongitude(){
-        var drone = new DroneFromSimulatorFixtureBuilder().WithLongitude("XDDD").build();
+        var drone = new DroneFromSimulatorFixtureBuilder().withLongitude("XDDD").build();
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> DroneRecordToRegister.fromDroneFromSimulator(drone));
     }
 
     @Test
     public void ShouldThrowException_GivenBadHeading(){
-        var drone = new DroneFromSimulatorFixtureBuilder().WithHeading(2137).build();
+        var drone = new DroneFromSimulatorFixtureBuilder().withHeading(2137).build();
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> DroneRecordToRegister.fromDroneFromSimulator(drone));
     }
 
     @Test
     public void ShouldThrowException_GivenBadIdentification(){
-        var drone = new DroneFromSimulatorFixtureBuilder().WithIdentification(420).build();
+        var drone = new DroneFromSimulatorFixtureBuilder().withIdentification(420).build();
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> DroneRecordToRegister.fromDroneFromSimulator(drone));
     }

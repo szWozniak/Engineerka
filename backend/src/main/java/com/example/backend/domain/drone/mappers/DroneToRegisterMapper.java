@@ -12,7 +12,7 @@ import java.util.List;
 @Component
 public class DroneToRegisterMapper {
 
-    public List<DroneEntityWithFlightRecordEntity> mapToEntities(List<DroneRecordToRegister> dronesToRegister, List<DroneEntity> alreadyRegisteredDrones){
+    public static List<DroneEntityWithFlightRecordEntity> mapToEntities(List<DroneRecordToRegister> dronesToRegister, List<DroneEntity> alreadyRegisteredDrones){
 
         List<DroneEntityWithFlightRecordEntity> entites = new ArrayList<>();
 
@@ -23,7 +23,7 @@ public class DroneToRegisterMapper {
         return entites;
     }
 
-    private DroneEntityWithFlightRecordEntity createOrUpdateDrone(DroneRecordToRegister drone, List<DroneEntity> curDrones){
+    private static DroneEntityWithFlightRecordEntity createOrUpdateDrone(DroneRecordToRegister drone, List<DroneEntity> curDrones){
         var searchedDrone = curDrones
                 .stream()
                 .filter(entity -> entity.getRegistrationNumber().equals(drone.getRegistrationNumber()))

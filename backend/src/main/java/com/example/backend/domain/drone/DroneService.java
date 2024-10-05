@@ -20,13 +20,11 @@ import java.util.stream.Collectors;
 public class DroneService {
     private final DroneRepository droneRepository;
     private final FlightRecordRepository flightRecordRepository;
-    private final DroneToRegisterMapper droneToRegisterMapper;
     private final FlightRepository flightRepository;
 
-    public DroneService(DroneRepository droneRepository, FlightRecordRepository flightRecordRepository, DroneToRegisterMapper droneToRegisterMapper, FlightRepository flightRepository) {
+    public DroneService(DroneRepository droneRepository, FlightRecordRepository flightRecordRepository, FlightRepository flightRepository) {
         this.droneRepository = droneRepository;
         this.flightRecordRepository = flightRecordRepository;
-        this.droneToRegisterMapper = droneToRegisterMapper;
         this.flightRepository = flightRepository;
     }
 
@@ -71,7 +69,7 @@ public class DroneService {
         var dronesToRegisterRegistrationNumbers = drones.stream().map(DroneRecordToRegister::getRegistrationNumber).toList();
         var curDrones = getAllByIds(dronesToRegisterRegistrationNumbers);
 
-        var entitiesToSave = this.droneToRegisterMapper.mapToEntities(drones, curDrones);
+        var entitiesToSave = DroneToRegisterMapper.mapToEntities(drones, curDrones);
 
 
         var droneEntites = entitiesToSave
@@ -126,15 +124,22 @@ public class DroneService {
         return flightRepository.findDistinctByFlightRecords_Drone_RegistrationNumberAndFlightRecords_FlightIsNotNull(registrationNumber);
     }
 
-    public List<DroneEntity> getDronesThatShouldStopFlying(List<String> registrationNumbers){
+    public List<DroneEntity> findAndStopDronesThatShouldStopFlying(List<String> registrationNumbers){
+        List<DroneEntity> dronesThatShouldStopFlying;
+
         if(registrationNumbers.isEmpty()){
-            return droneRepository.findByIsAirborneTrue();
+            dronesThatShouldStopFlying = droneRepository.findByIsAirborneTrue();
+        }
+        else {
+            dronesThatShouldStopFlying = droneRepository.findByIsAirborneTrueAndRegistrationNumberNotIn(registrationNumbers); //this method doesn't work with empty list
         }
 
-        return droneRepository.findByIsAirborneTrueAndRegistrationNumberNotIn(registrationNumbers);
+        stopDronesThatShouldStopFlying(dronesThatShouldStopFlying);
+
+        return dronesThatShouldStopFlying;
     }
 
-    public void stopDronesThatShouldStopFlying(List<DroneEntity> droneEntities){
+    private void stopDronesThatShouldStopFlying(List<DroneEntity> droneEntities){
         droneEntities.forEach(droneEntity -> {
             droneEntity.setAirborne(false);
             droneEntity.setType("Grounded");
