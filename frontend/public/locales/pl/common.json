@@ -33,7 +33,8 @@
       "time": "Czas lotu",
       "speed": "Śr. prędkość",
       "elevation": "Przewyższenie",
-      "distance": "Dystans"
+      "distance": "Dystans",
+      "didLanded": "Czy wylądował?"
     },
     "noData": "b/d"
   },
