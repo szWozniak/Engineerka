@@ -8,19 +8,24 @@ interface Props{
 
 const NumberFilter: React.FC<Props> = ({label, value, onChange}) => {
     const changeValue = (value: string) => {
-        const numberValue = Number(value)
+        let numberValue: number | undefined = Number(value)
 
-        if (isNaN(numberValue) || numberValue < 0){
+        if (isNaN(numberValue)){
             return;
+        }
+
+        if (numberValue === 0) {
+            numberValue = undefined
         }
 
         onChange(numberValue)
     }
 
+
     return (
         <div className="filterContent">
             {label}
-            <input type="number" onChange={(e) => changeValue(e.target.value)} value={value === 0 ? undefined : value} className="concreteFilter"/> 
+            <input type="number" onChange={(e) => changeValue(e.target.value)} value={value} className="concreteFilter"/> 
         </div>
     );
 };

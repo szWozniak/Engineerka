@@ -18,14 +18,17 @@ const AltitudeFilter: React.FC<Props> = ({minValue, maxValue, onMinValueChange, 
                 label={`${t("geo.altitude")} (${t("filters.min")})`}
                 value={minValue}
                 onChange={(value) => {
-                    console.log(value)
+                    if (value !== undefined && value < 0) {return}
                     onMinValueChange(value)
                 }}
             />
             <NumberFilter
                 label={`${t("geo.altitude")} (${t("filters.max")})`}
                 value={maxValue}
-                onChange={onMaxValueChange}
+                onChange={(value) => {
+                    if (value !== undefined && value < 0) {return}
+                    onMaxValueChange(value)
+                }}
             />
         </div>
     );

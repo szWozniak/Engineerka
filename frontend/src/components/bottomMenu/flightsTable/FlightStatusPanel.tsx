@@ -1,33 +1,44 @@
-import React, { useContext, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { LineChart, Line, XAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { TooltipProps, LegendProps } from 'recharts';
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
-import { AppContext } from '../../../context/AppContext';
+import { DroneFlight } from '../../../flights/api/types';
 import { useTranslation } from 'react-i18next';
 
-const FlightStatusPanel = () => {
-  const { t } = useTranslation();
+interface Props {
+  selectDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>,
+  selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
+  selectFlightId: Dispatch<SetStateAction<number | null>>,
+  selectTrackedPoint: Dispatch<SetStateAction<number>>,
+  trackedFlight: DroneFlight | null | undefined,
+  trackedPoint: number,
+}
 
-  const { trackedFlight, setTrackedFlight, trackedPoint, setTrackedPoint,
-    setTableSelectedDroneRegistration, setFlightsTableSelectedFlightId, setHighlightedFlightId } = useContext(AppContext)
+const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlightsFor,
+  selectFlightId,
+  selectHighlightedFlightId,
+  selectTrackedPoint,
+  trackedFlight,
+  trackedPoint,
+}) => {
+  const {t} = useTranslation();
   
   return (
     <div className="tableContainer">
       <div className="controls">
         <button
           onClick={() => {
-            setTableSelectedDroneRegistration(null)
-            setTrackedFlight(null)
-            setHighlightedFlightId(null)
-            setFlightsTableSelectedFlightId(null)
+            selectDroneRegistrationToShowFlightsFor(null)
+            selectHighlightedFlightId(null)
+            selectFlightId(null)
           }}
         >✈️ {t("actions.backToDrones")}</button>
         
         <button
           onClick={() => {
-            setTrackedFlight(null)
-            setHighlightedFlightId(null)
-            setFlightsTableSelectedFlightId(null)
+            selectHighlightedFlightId(null)
+            selectFlightId(null)
+            selectTrackedPoint(0)
           }}
         >📋 {t("actions.backToFlights")}</button>
       </div>
@@ -50,9 +61,14 @@ const FlightStatusPanel = () => {
             <Line type="monotone" dataKey="fuel" stroke="rgb(90, 130, 20)" strokeWidth={3} dot={{ r: 4 }}/>
           </LineChart>
         </ResponsiveContainer>
-        <input type="range" min={0} max={trackedFlight?.flightRecords?.length} step={1} value={trackedPoint} onChange={(e) => {
-          setTrackedPoint(parseInt(e?.target?.value))
-        }}/>
+        <input type="range" min={0} 
+          max={trackedFlight?.flightRecords?.length} 
+          step={1} 
+          value={trackedPoint} 
+          onChange={(e) => {
+            selectTrackedPoint(parseInt(e?.target?.value))
+          }}
+        />
       </div>
     </div>
   );

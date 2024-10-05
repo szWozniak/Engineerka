@@ -1,20 +1,24 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Drone } from '../../drones/types'
 import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
-import { AppContext } from '../../context/AppContext';
+import useDrones from '../../drones/useCases/useDrones';
 import { useTranslation } from 'react-i18next';
 
-const Sidebar: React.FC = () => {
-  const { t } = useTranslation();
+interface Props{
+  toggleFiltersVisibility: () => void;
+}
+
+const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
+  const {t} = useTranslation();
 
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
-  const { drones, selectedDrone, setSelectedDroneRegistration, toggleFiltersVisibility } = useContext(AppContext)
+  const {flyingDrones, selectedDrone, selectDrone} = useDrones();
 
   const renderViewChangeButtons = () => {
     if (selectedDrone) {
-      return (<button className="sidebarButton" onClick={() => setSelectedDroneRegistration(null)}>{t("general.resetSelection")}</button>)
+      return (<button className="sidebarButton" onClick={() => selectDrone(null)}>Reset selection</button>)
     }
 
     return <></>
@@ -44,9 +48,9 @@ const Sidebar: React.FC = () => {
             }}
           />
           {openedMenu === 2 && <div className="droneEntries">
-            {drones?.map((drone: Drone, index) => (
+            {flyingDrones?.map((drone: Drone, index) => (
               <div key={index} className="droneEntry" onClick={() => {
-                setSelectedDroneRegistration(drone.registrationNumber)
+                selectDrone(drone.registrationNumber)
               }}>
                 <span>{drone.registrationNumber} </span>
                 <span className="extraLabel">{drone.type}</span>

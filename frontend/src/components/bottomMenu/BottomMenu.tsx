@@ -1,18 +1,35 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowUpIcon } from '../icons/ArrowUpIcon';
 import { ArrowDownIcon } from '../icons/ArrowDownIcon';
-import { AppContext } from '../../context/AppContext';
 import BigTable from './bigTable/BigTable';
 import FlightsTable from './flightsTable/FlightsTable';
 import FilterSection from './filters/FilterSection';
 import FlightStatusPanel from './flightsTable/FlightStatusPanel';
 import { useTranslation } from 'react-i18next';
+import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from '../../filters/types';
+import useFlights from '../../flights/useCases/useFlights';
 
-const BottomMenu = () => {
+interface Props{
+  areFiltersOpen: boolean
+  getTextFilter: (filterKey: TextFilterKey) => TextFilter,
+  getNumberFilter: (filterKey: NumberFilterKey) => NumberFilter,
+  onNumberFilterChange: (filterKey: NumberFilterKey, value: number | undefined) => void,
+  onTextFilterChange: (filterKey: TextFilterKey, value: string) => void,
+  applyFilters: () => void
+}
+
+const BottomMenu: React.FC<Props> = ({
+  areFiltersOpen,
+  applyFilters,
+  getNumberFilter,
+  getTextFilter,
+  onNumberFilterChange,
+  onTextFilterChange
+}) => {
   const { t } = useTranslation();
 
   const [isOpened, setIsOpened] = useState(false)
-  const { areFiltersOpened, tableSelectedDroneRegistration, trackedFlight } = useContext(AppContext)
+  const {detailedFlight, flightsSummaries} = useFlights()
 
   const [startY, setStartY] = useState(0)
   const [startHeight, setStartHeight] = useState(0)
@@ -50,6 +67,49 @@ const BottomMenu = () => {
     };
   }, [])
 
+  const rednerFlightTrackingView = () => (
+    <>
+      <span>{t("general.headers.tracking")}{flightsSummaries.droneRegistrationToShowFlightsFor}</span>
+      <FlightStatusPanel
+        selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
+        selectFlightId={detailedFlight.selectFlightId}
+        selectHighlightedFlightId={flightsSummaries.selectHighlightedFlightId}
+        selectTrackedPoint={detailedFlight.selectTrackedPoint}
+        trackedFlight={detailedFlight.trackedFlight}
+        trackedPoint={detailedFlight.trackedPoint}
+      />
+    </>
+  )
+
+  const renderDroneFlightsView = () => (
+    <>
+      <span>t("general.headers.history") {flightsSummaries.droneRegistrationToShowFlightsFor}</span>
+      <FlightsTable 
+        flightSummaries={flightsSummaries.flightsSummaries}
+        selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
+        selectFlightId={detailedFlight.selectFlightId}
+        selectHighlightedFlightId={flightsSummaries.selectHighlightedFlightId}
+      />
+    </>
+  )
+
+  const renderContent = () => {
+    if (detailedFlight.trackedFlight !== undefined){
+      return rednerFlightTrackingView()
+    }
+
+    if (flightsSummaries.droneRegistrationToShowFlightsFor !== null){
+      return renderDroneFlightsView()
+    }
+
+    return (
+      <>
+        <span>t("general.headers.list")</span>
+        <BigTable />
+      </>
+    )
+  }
+
   return (
     <div 
       className={`bottomMenu ${isOpened && 'opened'}`}
@@ -62,14 +122,17 @@ const BottomMenu = () => {
       >
         {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>
-      {areFiltersOpened && <FilterSection isOpen={areFiltersOpened}/>}
+      {areFiltersOpen && <FilterSection 
+        isOpen={areFiltersOpen}
+        applyFilters={applyFilters}
+        getNumberFilter={getNumberFilter}
+        getTextFilter={getTextFilter}
+        onNumberFilterChange={onNumberFilterChange}
+        onTextFilterChange={onTextFilterChange}
+      />}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
-        {trackedFlight ? <span>{t("general.headers.tracking")} {tableSelectedDroneRegistration}</span> : 
-          (tableSelectedDroneRegistration 
-            ? <span>{t("general.headers.history")} {tableSelectedDroneRegistration}</span> 
-            : <span>{t("general.headers.list")}</span>)}
-        {trackedFlight ? <FlightStatusPanel /> : tableSelectedDroneRegistration ? <FlightsTable /> : <BigTable />}
+        {renderContent()}
       </div>
     </div>
   );

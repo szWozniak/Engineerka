@@ -1,21 +1,30 @@
-import { useContext } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { DroneFlightSummary } from "../../../drones/types";
-import { AppContext } from "../../../context/AppContext";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-const FlightsTable = () => {  
-  const { t } = useTranslation();
+interface Props {
+  selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
+  selectDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>
+  selectFlightId: Dispatch<SetStateAction<number | null>>
+  flightSummaries: DroneFlightSummary[] | undefined
+}
 
-  const { tableSelectedDroneFlights, setTableSelectedDroneRegistration, setFlightsTableSelectedFlightId, setHighlightedFlightId } = useContext(AppContext)
+const FlightsTable: React.FC<Props> = ({
+    selectDroneRegistrationToShowFlightsFor,
+    selectFlightId,
+    selectHighlightedFlightId,
+    flightSummaries
+  }) => { 
+  const {t} = useTranslation();
   
   return (
     <div className="tableContainer">
       <div className="controls">
         <button
           onClick={() => {
-            setTableSelectedDroneRegistration(null)
-            setHighlightedFlightId(null)
-            setFlightsTableSelectedFlightId(null)
+            selectDroneRegistrationToShowFlightsFor(null)
+            selectHighlightedFlightId(null)
+            selectFlightId(null)
           }}
         >✈️ {t("actions.backToDrones")}</button>
       </div>
@@ -32,7 +41,7 @@ const FlightsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {tableSelectedDroneFlights?.map((flight, index) => {
+          {flightSummaries?.map((flight, index) => {
             return (
               <tr key={index}>
                 <td>
@@ -57,15 +66,9 @@ const FlightsTable = () => {
                 </td>
                 <td>
                 <button 
-                  onClick={() => {
-                    setFlightsTableSelectedFlightId(flight?.id)
-                  }}
-                  onMouseEnter={() => {
-                    setHighlightedFlightId(flight?.id)
-                  }}
-                  onMouseLeave={() => {
-                    setHighlightedFlightId(null)
-                  }}
+                  onClick={() => selectFlightId(flight?.id)}
+                  onMouseEnter={() => selectHighlightedFlightId(flight?.id)}
+                  onMouseLeave={() => selectHighlightedFlightId(null)}
                   title={t("actions.previewFlight")}
                 >🔍</button>
                 </td>

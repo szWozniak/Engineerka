@@ -1,28 +1,40 @@
-import { useContext } from 'react';
 import useDronesLayer from './default/useDronesLayer';
 import useDronesTracesLayer from './default/useDronesTracesLayer';
-import { AppContext } from '../../context/AppContext';
 import useFlightsTracesLayer from './flights/useFlightsTracesLayer';
 import useTrackedDroneLayer from './flights/useTrackedDroneLayer';
-import { Layer, LineLayer } from 'deck.gl';
+import { Layer } from 'deck.gl';
+import useFlights from '../../flights/useCases/useFlights';
 
 const useLayerManager = () => {
-    const { tableSelectedDroneRegistration, trackedFlight } = useContext(AppContext)
+    const { flightsSummaries, detailedFlight } = useFlights();
     
     const dronesLayer = useDronesLayer();
     const tracesLayer = useDronesTracesLayer();
     
-    const flightsTracesLayer = useFlightsTracesLayer();
-    const trackedDroneLayer = useTrackedDroneLayer();
+    const flightsTracesLayer = useFlightsTracesLayer(
+        {
+            flightsSummaries: flightsSummaries.flightsSummaries,
+            highlightedFlightId: flightsSummaries.highlightedFlightId,
+            trackedFlight: detailedFlight.trackedFlight,
+            trackedPoint: detailedFlight.trackedPoint
+        }
+    );
+
+    const trackedDroneLayer = useTrackedDroneLayer(
+        {
+            trackedFlight: detailedFlight.trackedFlight,
+            trackedPoint: detailedFlight.trackedPoint
+        }
+    );
 
     const determineVisibleLayers = () => {
-        if (tableSelectedDroneRegistration === null){
+        if (flightsSummaries.flightsSummaries === undefined){
             return [ dronesLayer, tracesLayer ]
         }
 
         const result: Layer[] = [flightsTracesLayer]
 
-        if (trackedFlight !== null){
+        if (detailedFlight.trackedFlight !== undefined){
             result.push(trackedDroneLayer)
         }
 

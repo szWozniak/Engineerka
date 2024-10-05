@@ -1,4 +1,5 @@
-import { Drone, FlightRecord } from "../drones/types"
+import { Drone } from "../drones/types"
+import { FlightRecord } from "../flights/api/types"
 
 type ComparisonType = "Equals" | "GreaterThan" | "LesserThan" 
 

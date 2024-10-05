@@ -1,11 +1,12 @@
-import { useContext } from "react";
 import { DroneBase } from "../../../drones/types";
-import { AppContext } from "../../../context/AppContext";
+import useDrones from "../../../drones/useCases/useDrones";
+import useFlights from "../../../flights/useCases/useFlights";
 import { useTranslation } from 'react-i18next';
 
 const BigTable = () => {  
   const { t } = useTranslation();
-  const { drones, allDrones, setSelectedDroneRegistration, setTableSelectedDroneRegistration } = useContext(AppContext)
+  const {flyingDrones, allDrones, selectDrone} = useDrones();
+  const {flightsSummaries} = useFlights()
   
   return (
     <table className="droneTable">
@@ -27,7 +28,7 @@ const BigTable = () => {
       </thead>
       <tbody>
         {allDrones?.map((drone: DroneBase, index) => {
-          const flyingDrone = drones?.find(d => d.registrationNumber === drone.registrationNumber)
+          const flyingDrone = flyingDrones?.find(d => d.registrationNumber === drone.registrationNumber)
 
           return (
             <tr key={index} className="droneEntry" >
@@ -53,13 +54,13 @@ const BigTable = () => {
                 {flyingDrone && 
                 <button 
                   onClick={() => {
-                    setSelectedDroneRegistration(drone.registrationNumber)
+                    selectDrone(drone.registrationNumber)
                   }}
                   title={t("actions.selectDrone")}
                 >📌</button>}
                 <button 
                   onClick={() => {
-                    setTableSelectedDroneRegistration(drone.registrationNumber)
+                    flightsSummaries.selectDroneRegistrationToShowFlightsFor(drone.registrationNumber)
                   }}
                   title={t("actions.showFlights")}
                 >📋</button>

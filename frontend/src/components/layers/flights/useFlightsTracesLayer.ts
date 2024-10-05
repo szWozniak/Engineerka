@@ -1,21 +1,27 @@
 import { LineLayer } from "deck.gl"
 import { droneTrace } from "../types/lines"
-import { useContext } from "react";
-import { AppContext } from "../../../context/AppContext";
+import { DroneFlight } from "../../../flights/api/types";
+import { DroneFlightSummary } from "../../../drones/types";
 
-const useFlightsTracesLayer = () => {
-  const { trackedFlight, tableSelectedDroneFlights, trackedPoint, highlightedFlightId } = useContext(AppContext)
+interface Props {
+  trackedFlight: DroneFlight | null | undefined,
+  trackedPoint: number,
+  flightsSummaries: DroneFlightSummary[] | undefined,
+  highlightedFlightId: number | null
+}
 
+const useFlightsTracesLayer = ({trackedFlight, trackedPoint, flightsSummaries, highlightedFlightId} : Props) => {
   const mapPositionsToTraces = (): droneTrace[] => {
-    if (tableSelectedDroneFlights === undefined) return [];
+    if (flightsSummaries === undefined) return [];
 
-    const flights = trackedFlight ? [{
+    const flightsToDisplay = trackedFlight ? [{
       ...trackedFlight,
       flightRecords: trackedFlight.flightRecords.slice(0, trackedPoint+1)
-    }] : tableSelectedDroneFlights
+    }] : flightsSummaries
+    
     const traces: droneTrace[] = [];
 
-    flights.forEach((droneFlight, index) => {
+    flightsToDisplay.forEach((droneFlight, index) => {
       const trace = droneFlight?.flightRecords || []
 
       if (trace.length < 2) { return []}

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 //DeckGL
 import DeckGL from '@deck.gl/react';
 //Map
@@ -9,11 +9,12 @@ import { registerLoaders } from '@loaders.gl/core';
 
 import Sidebar from './components/sidebar/Sidebar';
 import useLayerManager from './components/layers/useLayerManager';
-import { lightingEffect } from './mapConfig/effects';
 import BottomMenu from './components/bottomMenu/BottomMenu';
-import { AppContext } from './context/AppContext';
-import { INITIAL_VIEW_STATE } from './mapConfig/initialView';
+import useFilters from './filters/useCases/useFilters';
+import { INITIAL_VIEW_STATE } from './map/config/initialView';
 import './i18n';
+import { lightingEffect } from './map/config/effects';
+import useMapState from './map/useCases/useMap';
 
 registerLoaders([OBJLoader]);
 
@@ -32,7 +33,8 @@ const App = () => {
   const mapRef: any = useRef();
   const { layers } = useLayerManager()
 
-  const { mapViewState, setMapViewState } = useContext(AppContext)
+  const {mapViewState, setMapViewState} = useMapState();
+  const {applyFilters, numberFilters, textFilters, visibility} = useFilters();
 
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {
@@ -47,8 +49,17 @@ const App = () => {
   return (
     <div>
       <div className="overlay">
-        <Sidebar />
-        <BottomMenu />
+        <Sidebar 
+          toggleFiltersVisibility={visibility.toggleVisibility}
+        />
+        <BottomMenu 
+          areFiltersOpen={visibility.areOpen}
+          applyFilters={applyFilters}
+          getNumberFilter={numberFilters.get}
+          getTextFilter={textFilters.get}
+          onNumberFilterChange={numberFilters.onChange}
+          onTextFilterChange={textFilters.onChange}
+        />
       </div>
       <DeckGL
         layers={layers}
