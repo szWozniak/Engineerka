@@ -13,6 +13,7 @@ import { lightingEffect } from './mapConfig/effects';
 import BottomMenu from './components/bottomMenu/BottomMenu';
 import { AppContext } from './context/AppContext';
 import { INITIAL_VIEW_STATE } from './mapConfig/initialView';
+import './i18n';
 
 registerLoaders([OBJLoader]);
 

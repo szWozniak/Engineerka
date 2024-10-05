@@ -7,6 +7,7 @@ import FuelFilter from "./concreteFilters/FuelFilter";
 import ModelFilter from "./concreteFilters/ModelFilter";
 import LatitudeFilter from "./concreteFilters/LatitudeFilter";
 import LongitudeFilter from "./concreteFilters/LongitudeFilter";
+import { useTranslation } from 'react-i18next';
 
 const DefaultFiltersState: Filter[] = [
   {
@@ -86,6 +87,8 @@ interface props{
 }
 
 const FilterSection: React.FC<props> = ({ isOpen }) => {
+  const { t } = useTranslation();
+
   const {applyFilters} = useContext(AppContext);
   
   const [filtersState, SetFiltersState] = useState<Filter[]>(DefaultFiltersState);
@@ -167,7 +170,7 @@ const FilterSection: React.FC<props> = ({ isOpen }) => {
             onChange={(value) => onTextFilterChange("model", value)}
           />
         </div>
-        <button className="apply" onClick={() => applyFilters(filtersState)}>Zastosuj</button>
+        <button className="apply" onClick={() => applyFilters(filtersState)}>{t("filters.apply")}</button>
       </div>
       
     </div>

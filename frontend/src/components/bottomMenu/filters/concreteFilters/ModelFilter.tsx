@@ -1,5 +1,6 @@
 import React from 'react';
 import TextFilterField from '../TextFilter';
+import { useTranslation } from 'react-i18next';
 
 interface Props{
     value: string,
@@ -7,9 +8,11 @@ interface Props{
 }
 
 const ModelFilter: React.FC<Props> = ({value, onChange}) => {
+    const { t } = useTranslation();
+
     return (
         <TextFilterField 
-            label="Model"
+            label={t("details.model")}
             onChange={onChange}
             value={value}
         />

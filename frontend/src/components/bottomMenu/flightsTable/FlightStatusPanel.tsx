@@ -3,8 +3,11 @@ import { LineChart, Line, XAxis, CartesianGrid, Tooltip, ResponsiveContainer, Le
 import { TooltipProps, LegendProps } from 'recharts';
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import { AppContext } from '../../../context/AppContext';
+import { useTranslation } from 'react-i18next';
 
 const FlightStatusPanel = () => {
+  const { t } = useTranslation();
+
   const { trackedFlight, setTrackedFlight, trackedPoint, setTrackedPoint,
     setTableSelectedDroneRegistration, setFlightsTableSelectedFlightId, setHighlightedFlightId } = useContext(AppContext)
   
@@ -18,7 +21,7 @@ const FlightStatusPanel = () => {
             setHighlightedFlightId(null)
             setFlightsTableSelectedFlightId(null)
           }}
-        >✈️ Powrót do listy dronów</button>
+        >✈️ {t("actions.backToDrones")}</button>
         
         <button
           onClick={() => {
@@ -26,7 +29,7 @@ const FlightStatusPanel = () => {
             setHighlightedFlightId(null)
             setFlightsTableSelectedFlightId(null)
           }}
-        >📋 Powrót do listy lotów</button>
+        >📋 {t("actions.backToFlights")}</button>
       </div>
       <div className="chartContainer">
         <ResponsiveContainer height={200} width='100%'>
@@ -56,11 +59,13 @@ const FlightStatusPanel = () => {
 };
 
 const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameType>)  => {
+  const { t } = useTranslation();
+
   if (active && payload && payload.length) {
     return (
       <div className="tooltip">
-        📈 Wysokość: <b>{payload[0]?.value}m</b><br />
-        🔋 Stan Baterii: <b>{payload[1]?.value}%</b>
+        📈 {t("geo.altitude")}: <b>{payload[0]?.value}m</b><br />
+        🔋 {t("details.drone.battery")}: <b>{payload[1]?.value}%</b>
       </div>
     );
   }
@@ -69,11 +74,13 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameT
 };
 
 const CustomLegend = ({payload}: LegendProps) => {
+  const { t } = useTranslation();
+
   if (payload){
     return (
       <div className="legend">
-        <h5 style={{color: payload[0]?.color}}>📈 Wysokość</h5>
-        <h5 style={{color: payload[1]?.color}}>🔋 Stan Baterii</h5>
+        <h5 style={{color: payload[0]?.color}}>📈 {t("geo.altitude")}</h5>
+        <h5 style={{color: payload[1]?.color}}>🔋 {t("details.drone.battery")}</h5>
       </div>
     )
   }

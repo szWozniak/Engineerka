@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { DroneFlightSummary } from "../../../drones/types";
 import { AppContext } from "../../../context/AppContext";
-
+import { useTranslation } from 'react-i18next';
 
 const FlightsTable = () => {  
+  const { t } = useTranslation();
+
   const { tableSelectedDroneFlights, setTableSelectedDroneRegistration, setFlightsTableSelectedFlightId, setHighlightedFlightId } = useContext(AppContext)
   
   return (
@@ -15,18 +17,18 @@ const FlightsTable = () => {
             setHighlightedFlightId(null)
             setFlightsTableSelectedFlightId(null)
           }}
-        >✈️ Powrót do listy dronów</button>
+        >✈️ {t("actions.backToDrones")}</button>
       </div>
       <table className="droneTable">
         <thead>
           <tr>
-            <th>Data Startu</th>
-            <th>Data Lądowania</th>
-            <th>Czas lotu</th>
-            <th>Śr. Prędkość</th>
-            <th>Przewyższenie</th>
-            <th>Dystans</th>
-            <th>Akcje</th>
+            <th>{t("details.flight.takeoff")}</th>
+            <th>{t("details.flight.landing")}</th>
+            <th>{t("details.flight.time")}</th>
+            <th>{t("details.flight.speed")}</th>
+            <th>{t("details.flight.elevation")}</th>
+            <th>{t("details.flight.distance")}</th>
+            <th>{t("actions.title")}</th>
           </tr>
         </thead>
         <tbody>
@@ -64,7 +66,7 @@ const FlightsTable = () => {
                   onMouseLeave={() => {
                     setHighlightedFlightId(null)
                   }}
-                  title="Podgląd lotu"
+                  title={t("actions.previewFlight")}
                 >🔍</button>
                 </td>
               </tr>

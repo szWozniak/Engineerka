@@ -1,5 +1,6 @@
 import React from 'react';
 import NumberFilter from '../NumberFilter';
+import { useTranslation } from 'react-i18next';
 
 interface Props{
     minValue: number | undefined,
@@ -9,15 +10,17 @@ interface Props{
 }
 
 const FuelFilter: React.FC<Props> = ({minValue, maxValue, onMinValueChange, onMaxValueChange}) => {
+    const { t } = useTranslation();
+
     return (
         <div className='multipleFiltersContainer'>
             <NumberFilter
-                label='Battery (min)'
+                label={`${t("details.battery")} (${t("filters.min")})`}
                 value={minValue}
                 onChange={onMinValueChange}
             />
             <NumberFilter
-                label='Battery (max)'
+                label={`${t("details.battery")} (${t("filters.max")})`}
                 value={maxValue}
                 onChange={onMaxValueChange}
             />
