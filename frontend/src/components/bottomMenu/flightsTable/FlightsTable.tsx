@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { DroneFlightSummary } from "../../../drones/types";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
@@ -14,6 +15,7 @@ const FlightsTable: React.FC<Props> = ({
     selectHighlightedFlightId,
     flightSummaries
   }) => { 
+  const {t} = useTranslation();
   
   return (
     <div className="tableContainer">
@@ -67,7 +69,7 @@ const FlightsTable: React.FC<Props> = ({
                   onClick={() => selectFlightId(flight?.id)}
                   onMouseEnter={() => selectHighlightedFlightId(flight?.id)}
                   onMouseLeave={() => selectHighlightedFlightId(null)}
-                  title="Podgląd lotu"
+                  title={t("actions.previewFlight")}
                 >🔍</button>
                 </td>
               </tr>

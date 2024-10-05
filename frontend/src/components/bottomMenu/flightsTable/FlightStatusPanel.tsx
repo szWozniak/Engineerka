@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, CartesianGrid, Tooltip, ResponsiveContainer, Le
 import { TooltipProps, LegendProps } from 'recharts';
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import { DroneFlight } from '../../../flights/api/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   selectDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>,
@@ -20,6 +21,7 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
   trackedFlight,
   trackedPoint,
 }) => {
+  const {t} = useTranslation();
   
   return (
     <div className="tableContainer">

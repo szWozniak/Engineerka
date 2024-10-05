@@ -24,11 +24,12 @@ const FilterSection: React.FC<props> = ({
   onTextFilterChange,
   applyFilters
  }) => {
+  const {t} = useTranslation();
 
   return(
     <div className={`content filterSection ${isOpen && 'opened'}`} style={{"height": "270px"}}>
       <div style={{"paddingLeft": "20px", "paddingTop": "20px"}}>
-        Filtry
+        {t("general.filters")}
         <div className="filters">
           <RegistrationNumberFilter
             value={getTextFilter("registrationNumber").value}
@@ -63,7 +64,7 @@ const FilterSection: React.FC<props> = ({
             onChange={(value) => onTextFilterChange("model", value)}
           />
         </div>
-        <button className="apply" onClick={applyFilters}>Zastosuj</button>
+        <button className="apply" onClick={applyFilters}>{t("filters.apply")}</button>
       </div>
       
     </div>

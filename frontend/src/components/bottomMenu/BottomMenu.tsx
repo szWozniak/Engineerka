@@ -69,7 +69,7 @@ const BottomMenu: React.FC<Props> = ({
 
   const rednerFlightTrackingView = () => (
     <>
-      <span>Śledzenie lotu drona {flightsSummaries.droneRegistrationToShowFlightsFor}</span>
+      <span>{t("general.headers.tracking")}{flightsSummaries.droneRegistrationToShowFlightsFor}</span>
       <FlightStatusPanel
         selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
         selectFlightId={detailedFlight.selectFlightId}
@@ -83,7 +83,7 @@ const BottomMenu: React.FC<Props> = ({
 
   const renderDroneFlightsView = () => (
     <>
-      <span>Historia lotów dla drona {flightsSummaries.droneRegistrationToShowFlightsFor}</span>
+      <span>t("general.headers.history") {flightsSummaries.droneRegistrationToShowFlightsFor}</span>
       <FlightsTable 
         flightSummaries={flightsSummaries.flightsSummaries}
         selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
@@ -104,7 +104,7 @@ const BottomMenu: React.FC<Props> = ({
 
     return (
       <>
-        <span>Lista Dronów</span>
+        <span>t("general.headers.list")</span>
         <BigTable />
       </>
     )
