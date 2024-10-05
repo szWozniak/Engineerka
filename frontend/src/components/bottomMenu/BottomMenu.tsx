@@ -89,7 +89,7 @@ const BottomMenu: React.FC<Props> = ({
 
   const renderDroneFlightsView = () => (
     <>
-      <span>t("general.headers.history") {flightsSummaries.droneRegistrationToShowFlightsFor}</span>
+      <span>{t("general.headers.history")} {flightsSummaries.droneRegistrationToShowFlightsFor}</span>
       <FlightsTable 
         flightSummaries={flightsSummaries.flightsSummaries}
         selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
@@ -110,7 +110,7 @@ const BottomMenu: React.FC<Props> = ({
 
     return (
       <>
-        <span>t("general.headers.list")</span>
+        <span>{t("general.headers.list")}</span>
         <BigTable />
       </>
     )

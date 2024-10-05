@@ -13,7 +13,7 @@ const RegistrationNumberFilter: React.FC<Props> = ({value, onChange, onReset}) =
 
     return (
         <TextFilterField 
-            label={t("details.registration")}
+            label={t("details.drone.registration")}
             onChange={onChange}
             value={value}
             onReset={onReset}

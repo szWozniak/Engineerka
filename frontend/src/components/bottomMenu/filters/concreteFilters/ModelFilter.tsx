@@ -13,7 +13,7 @@ const ModelFilter: React.FC<Props> = ({value, onChange, onReset}) => {
 
     return (
         <TextFilterField 
-            label={t("details.model")}
+            label={t("details.drone.model")}
             onChange={onChange}
             value={value}
             onReset={onReset}

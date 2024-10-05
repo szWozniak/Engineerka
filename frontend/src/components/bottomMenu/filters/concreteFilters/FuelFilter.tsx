@@ -29,13 +29,13 @@ const FuelFilter: React.FC<Props> = ({minValue, maxValue, onMinValueChange, onMa
     return (
         <div className='multipleFiltersContainer' key={refreshKey}>
             <NumberFilter
-                label={`${t("details.battery")} (${t("filters.min")})`}
+                label={`${t("details.drone.battery")} (${t("filters.min")})`}
                 value={minValue}
                 onChange={onMinValueChange}
                 onReset={resetMinValue}
             />
             <NumberFilter
-                label={`${t("details.battery")} (${t("filters.max")})`}
+                label={`${t("details.drone.battery")} (${t("filters.max")})`}
                 value={maxValue}
                 onChange={onMaxValueChange}
                 onReset={resetMaxValue}
