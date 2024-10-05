@@ -1,6 +1,7 @@
 import React from 'react';
 import NumberFilter from '../NumberFilter';
 import { useTranslation } from 'react-i18next';
+import useRefreshKey from '../../../../common/useRefreshKey';
 
 interface Props{
     minValue: number | undefined,
@@ -14,19 +15,31 @@ interface Props{
 const LatitudeFilter: React.FC<Props> = ({minValue, maxValue, onMinValueChange, onMaxValueChange, onMaxValueReset, onMinValueReset}) => {
     const { t } = useTranslation();
 
+    const {refreshKey, refresh} = useRefreshKey();
+
+    const resetMinValue = () => {
+        onMinValueReset()
+        refresh()
+    }
+
+    const resetMaxValue = () => {
+        onMaxValueReset()
+        refresh()
+    }
+
     return (
-        <div className='multipleFiltersContainer'>
+        <div className='multipleFiltersContainer' key={refreshKey}>
             <NumberFilter
                 label={`${t("geo.latitude")} (${t("filters.min")})`}
                 value={minValue}
                 onChange={onMinValueChange}
-                onReset={onMinValueReset}
+                onReset={resetMinValue}
             />
             <NumberFilter
                 label={`${t("geo.latitude")} (${t("filters.max")})`}
                 value={maxValue}
                 onChange={onMaxValueChange}
-                onReset={onMaxValueReset}
+                onReset={resetMaxValue}
             />
         </div>
     );

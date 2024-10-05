@@ -14,17 +14,23 @@ interface Props{
   getTextFilter: (filterKey: TextFilterKey) => TextFilter,
   getNumberFilter: (filterKey: NumberFilterKey) => NumberFilter,
   onNumberFilterChange: (filterKey: NumberFilterKey, value: number | undefined) => void,
+  onNumberFilterReset: (filterKey: NumberFilterKey) => void
   onTextFilterChange: (filterKey: TextFilterKey, value: string) => void,
+  onTextFilterReset: (filterKey: TextFilterKey) => void
   applyFilters: () => void
+  resetFilters: () => void
 }
 
 const BottomMenu: React.FC<Props> = ({
   areFiltersOpen,
   applyFilters,
+  resetFilters,
   getNumberFilter,
   getTextFilter,
   onNumberFilterChange,
-  onTextFilterChange
+  onNumberFilterReset,
+  onTextFilterChange,
+  onTextFilterReset
 }) => {
   const { t } = useTranslation();
 
@@ -125,10 +131,13 @@ const BottomMenu: React.FC<Props> = ({
       {areFiltersOpen && <FilterSection 
         isOpen={areFiltersOpen}
         applyFilters={applyFilters}
+        resetFilters={resetFilters}
         getNumberFilter={getNumberFilter}
         getTextFilter={getTextFilter}
         onNumberFilterChange={onNumberFilterChange}
+        onNumberFilterReset={onNumberFilterReset}
         onTextFilterChange={onTextFilterChange}
+        onTextFilterReset={onTextFilterReset}
       />}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>

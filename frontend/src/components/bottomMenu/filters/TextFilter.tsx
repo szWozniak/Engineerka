@@ -9,8 +9,10 @@ const TextFilterField: React.FC<props> = ({label, value, onChange, onReset}) => 
     return(
         <div className="filterContent">
             {label}
-            <input type="text" onChange={(e) => onChange(e.target.value)} value={value} className="concreteFilter"/>
-            <span id="clearIcon" className="clear-icon" onClick={onReset}>&times;</span>
+            <div className="actionContainer">
+                <input type="text" onChange={(e) => onChange(e.target.value)} value={value} className="concreteFilter"/>
+                <span className="clear-icon" onClick={onReset}>x</span>
+            </div>
         </div>
     )
 }

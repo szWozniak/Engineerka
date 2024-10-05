@@ -14,10 +14,6 @@ const useFilters = () => {
 
     const toggleFiltersVisibility = () => setAreFiltersOpen(prev => !prev);
 
-    const resetFilters = () => {
-      filtering.changeFilters(structuredClone(defaultFiltersState))
-    }
-
     const getTextFilter = (key: TextFilterKey): TextFilter => {
         const searchedFilter = currentFilters.find(f => f.key === key);
     
@@ -37,6 +33,7 @@ const useFilters = () => {
     
         return searchedFilter;
       }
+
       const onTextFilterChange = (key: TextFilterKey, value: string) => {
         setCurrentFilters(prev => prev.map(f => {
           if (f.key === key && f.type === FilterType.Text){
@@ -45,6 +42,16 @@ const useFilters = () => {
           return f;
         }))
       }
+
+      const onTextFilterReset = (key: TextFilterKey) => {
+        setCurrentFilters(prev => prev.map(f => {
+          if (f.key === key && f.type === FilterType.Text){
+            f.value = ""
+          }
+          return f;
+        }))
+      }
+
     
       const onNumberFilterChange = (key: NumberFilterKey, value: number | undefined) => {
         setCurrentFilters(prev => prev.map(f => {
@@ -55,12 +62,25 @@ const useFilters = () => {
         }))
       }
 
+      const onNumberFilterReset = (key: NumberFilterKey) => {
+        setCurrentFilters(prev => prev.map(f => {
+          if (f.key === key && f.type === FilterType.Number){
+            f.value = undefined
+          }
+          return f;
+        }))
+      }
+
     const applyFilters = () => {
       filtering.changeFilters(currentFilters
         .filter(f => f.value !== "")
         .map(f => structuredClone(f)))
     }
-    
+
+    const resetFilters = () => {
+      filtering.changeFilters(structuredClone(defaultFiltersState))
+      setCurrentFilters(structuredClone(defaultFiltersState))
+    }
 
     return {
         filters: filtering.value,
@@ -72,11 +92,13 @@ const useFilters = () => {
         },
         textFilters: {
             get: getTextFilter,
-            onChange: onTextFilterChange
+            onChange: onTextFilterChange,
+            onReset: onTextFilterReset
         },
         numberFilters: {
             get: getNumberFilter,
-            onChange: onNumberFilterChange
+            onChange: onNumberFilterChange,
+            onReset: onNumberFilterReset
         }
     }
 }
