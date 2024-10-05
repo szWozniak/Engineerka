@@ -1,8 +1,10 @@
 import { DroneBase } from "../../../drones/types";
 import useDrones from "../../../drones/useCases/useDrones";
+import useFlights from "../../../flights/useCases/useFlights";
 
 const BigTable = () => {  
   const {flyingDrones, allDrones, selectDrone} = useDrones();
+  const {flightsSummaries} = useFlights()
   
   return (
     <table className="droneTable">
@@ -56,7 +58,7 @@ const BigTable = () => {
                 >📌</button>}
                 <button 
                   onClick={() => {
-                    selectDrone(drone.registrationNumber)
+                    flightsSummaries.selectDroneRegistrationToShowFlightsFor(drone.registrationNumber)
                   }}
                   title="Pokaż loty"
                 >📋</button>

@@ -12,7 +12,6 @@ const useFlights = () => {
     const {droneRegistrationToShowFlightsFor, setDroneRegistrationToShowFlightsFor} = flights
 
     const [trackedPoint, setTrackedPoint] = useState<number>(0)
-    const [highlightedFlightId, setHighlightedFlightId] = useState<number | null>(null);
 
     const { data: trackedFlight } = useQuery(
         flightQueries.getFlight(selectedFlightId)
@@ -27,8 +26,8 @@ const useFlights = () => {
             droneRegistrationToShowFlightsFor: droneRegistrationToShowFlightsFor,
             selectDroneRegistrationToShowFlightsFor: setDroneRegistrationToShowFlightsFor,
             flightsSummaries,
-            highlightedFlightId,
-            selectHighlightedFlightId: setHighlightedFlightId
+            highlightedFlightId: flights.highlightedFlightId,
+            selectHighlightedFlightId: flights.setHighlightedFlightId
         },
         detailedFlight:{
             trackedFlight,

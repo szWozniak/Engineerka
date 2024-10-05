@@ -19,7 +19,9 @@ type AppContextTypeTwo = {
   },
   flights: {
     droneRegistrationToShowFlightsFor: string | null,
-    setDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>
+    setDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>,
+    highlightedFlightId: number | null,
+    setHighlightedFlightId: Dispatch<SetStateAction<number | null>>
   }
 }
 
@@ -105,7 +107,9 @@ export const AppContext = createContext<AppContextTypeTwo>({
   },
   flights: {
     droneRegistrationToShowFlightsFor: null,
-    setDroneRegistrationToShowFlightsFor: () => {}
+    setDroneRegistrationToShowFlightsFor: () => {},
+    highlightedFlightId: null,
+    setHighlightedFlightId: () => {}
   }
 
 })
@@ -115,6 +119,7 @@ const AppContextProvider = ({ children }: {
 }) => {
   const [filters, setFilters] = useState<Filter[]>(defaultFiltersState);
   const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
+  const [highlightedFlightId, setHighlightedFlightId] = useState<number | null>(null);
   const [droneRegistrationToShowFlightsFor, setDroneRegistrationToShowFlightsFor] = useState<string | null>(null)
   
   return (
@@ -129,7 +134,10 @@ const AppContextProvider = ({ children }: {
       },
       flights: {
         droneRegistrationToShowFlightsFor,
-        setDroneRegistrationToShowFlightsFor
+        setDroneRegistrationToShowFlightsFor,
+        highlightedFlightId,
+        setHighlightedFlightId
+
       }
     }}>
       {children}
