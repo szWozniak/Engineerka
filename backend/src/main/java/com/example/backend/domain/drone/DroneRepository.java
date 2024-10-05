@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface DroneRepository extends JpaRepository<DroneEntity, String>, JpaSpecificationExecutor<DroneEntity> {
     Optional<DroneEntity> findByRegistrationNumber(String registrationNumber);
     List<DroneEntity> findByIsAirborneTrueAndRegistrationNumberNotIn(List<String> registrationNumbersList);
+    List<DroneEntity> findByIsAirborneTrue();
 }
 

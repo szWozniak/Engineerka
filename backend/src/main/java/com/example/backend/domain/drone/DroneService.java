@@ -127,6 +127,10 @@ public class DroneService {
     }
 
     public List<DroneEntity> getDronesThatShouldStopFlying(List<String> registrationNumbers){
+        if(registrationNumbers.isEmpty()){
+            return droneRepository.findByIsAirborneTrue();
+        }
+
         return droneRepository.findByIsAirborneTrueAndRegistrationNumberNotIn(registrationNumbers);
     }
 

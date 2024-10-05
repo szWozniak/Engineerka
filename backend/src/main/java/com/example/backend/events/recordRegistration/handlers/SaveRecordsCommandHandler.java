@@ -31,7 +31,7 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
     public void handle(SaveRecordsCommand command){
         var drones = command.drones();
 
-        if (drones.size() == 0){
+        if (drones.isEmpty()){
             log.info("File contained no records");
             return;
         }

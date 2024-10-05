@@ -7,6 +7,7 @@ import com.example.backend.events.mediator.ICommandHandler;
 import com.example.backend.events.recordRegistration.commands.CheckFlyingDronesCommand;
 import com.example.backend.events.recordRegistration.mappers.DronesFromSimulatorMapper;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,7 @@ public class CheckFlyingDronesCommandHandler implements ICommandHandler<CheckFly
         this.flightService = flightService;
     }
 
-    @Override
+    @Transactional
     public void handle(CheckFlyingDronesCommand command) {
         var drones = command.drones();
 
