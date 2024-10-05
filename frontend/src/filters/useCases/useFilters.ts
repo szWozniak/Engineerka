@@ -110,7 +110,6 @@ const useFilters = () => {
           }
           return f;
         }))
-        console.log(currentFilters)
       }
     
       const onNumberFilterChange = (key: NumberFilterKey, value: number | undefined) => {
@@ -120,7 +119,6 @@ const useFilters = () => {
           }
           return f;
         }))
-        console.log(currentFilters)
       }
 
     const applyFilters = () => {
