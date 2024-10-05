@@ -14,6 +14,10 @@ const useFilters = () => {
 
     const toggleFiltersVisibility = () => setAreFiltersOpen(prev => !prev);
 
+    const resetFilters = () => {
+      filtering.changeFilters(structuredClone(defaultFiltersState))
+    }
+
     const getTextFilter = (key: TextFilterKey): TextFilter => {
         const searchedFilter = currentFilters.find(f => f.key === key);
     
@@ -61,6 +65,7 @@ const useFilters = () => {
     return {
         filters: filtering.value,
         applyFilters,
+        resetFilters,
         visibility: {
           areOpen: areFiltersOpen,
           toggleVisibility: toggleFiltersVisibility

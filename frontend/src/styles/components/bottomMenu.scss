@@ -53,6 +53,17 @@
       row-gap: 4px;
       font-size: 16px;
 
+      & .clear-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 18px;
+        color: gray;
+      }
+      
+
       & .concreteFilter{
         background-color: $lighter-grey;
         border-radius: 5px; 
@@ -103,6 +114,12 @@
       color: white;
       cursor: pointer;
     }
+  }
+
+  .actionContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
   }
 
   & .droneTable {

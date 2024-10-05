@@ -7,9 +7,11 @@ interface Props{
     maxValue: number | undefined,
     onMinValueChange: (value: number | undefined) => void
     onMaxValueChange: (value: number | undefined) => void
+    onMinValueReset: () => void
+    onMaxValueReset: () => void
 }
 
-const FuelFilter: React.FC<Props> = ({minValue, maxValue, onMinValueChange, onMaxValueChange}) => {
+const FuelFilter: React.FC<Props> = ({minValue, maxValue, onMinValueChange, onMaxValueChange, onMaxValueReset, onMinValueReset}) => {
     const { t } = useTranslation();
 
     return (
@@ -18,11 +20,13 @@ const FuelFilter: React.FC<Props> = ({minValue, maxValue, onMinValueChange, onMa
                 label={`${t("details.battery")} (${t("filters.min")})`}
                 value={minValue}
                 onChange={onMinValueChange}
+                onReset={onMinValueReset}
             />
             <NumberFilter
                 label={`${t("details.battery")} (${t("filters.max")})`}
                 value={maxValue}
                 onChange={onMaxValueChange}
+                onReset={onMaxValueReset}
             />
         </div>
     );

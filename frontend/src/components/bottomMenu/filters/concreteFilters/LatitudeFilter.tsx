@@ -7,9 +7,11 @@ interface Props{
     maxValue: number | undefined,
     onMinValueChange: (value: number | undefined) => void
     onMaxValueChange: (value: number | undefined) => void
+    onMinValueReset: () => void
+    onMaxValueReset: () => void
 }
 
-const LatitudeFilter: React.FC<Props> = ({minValue, maxValue, onMinValueChange, onMaxValueChange}) => {
+const LatitudeFilter: React.FC<Props> = ({minValue, maxValue, onMinValueChange, onMaxValueChange, onMaxValueReset, onMinValueReset}) => {
     const { t } = useTranslation();
 
     return (
@@ -18,11 +20,13 @@ const LatitudeFilter: React.FC<Props> = ({minValue, maxValue, onMinValueChange, 
                 label={`${t("geo.latitude")} (${t("filters.min")})`}
                 value={minValue}
                 onChange={onMinValueChange}
+                onReset={onMinValueReset}
             />
             <NumberFilter
                 label={`${t("geo.latitude")} (${t("filters.max")})`}
                 value={maxValue}
                 onChange={onMaxValueChange}
+                onReset={onMaxValueReset}
             />
         </div>
     );
