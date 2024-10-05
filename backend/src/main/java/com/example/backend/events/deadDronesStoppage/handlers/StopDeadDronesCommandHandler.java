@@ -11,7 +11,9 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Slf4j
@@ -32,6 +34,6 @@ public class StopDeadDronesCommandHandler implements ICommandHandler<StopDeadDro
 
         List<DroneEntity> dronesThatShouldStopFlying = droneService.findAndStopDronesThatShouldStopFlying(flyingDronesRegistrationNumbers);
 
-        flightService.createFlights(dronesThatShouldStopFlying.stream().map(DroneEntity::getRegistrationNumber).toList());
+        flightService.createFlights(dronesThatShouldStopFlying.stream().map(DroneEntity::getRegistrationNumber).toList(), false);
     }
 }

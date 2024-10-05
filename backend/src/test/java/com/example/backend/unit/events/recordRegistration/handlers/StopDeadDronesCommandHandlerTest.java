@@ -12,7 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StopDeadDronesCommandHandlerTest {
     private StopDeadDronesCommandHandler sut;
@@ -37,6 +39,10 @@ public class StopDeadDronesCommandHandlerTest {
 
         sut.handle(command);
 
-        Mockito.verify(flightService).createFlights(drone.stream().map(DroneEntity::getRegistrationNumber).toList());
+        Map<String, Boolean> droneRegistrationNumbersAndFlightStatus = new HashMap<>();
+
+        drone.forEach(droneRecord -> droneRegistrationNumbersAndFlightStatus.put(droneRecord.getRegistrationNumber(), false));
+
+        Mockito.verify(flightService).createFlights(drone.stream().map(DroneEntity::getRegistrationNumber).toList(), false);
     }
 }

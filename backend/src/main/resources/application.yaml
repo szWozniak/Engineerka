@@ -5,9 +5,9 @@ spring:
   application:
     name: dronhub_backend
   datasource:
-    url: jdbc:mysql://localhost:3306/dronhub
-    username: dronhub
-    password: passwd
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
