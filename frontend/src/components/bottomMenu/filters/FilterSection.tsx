@@ -40,15 +40,23 @@ const FilterSection: React.FC<props> = ({
   }
 
   return(
-    <div className={`content filterSection ${isOpen && 'opened'}`} style={{"height": "310px"}}>
-      <div style={{"paddingLeft": "20px", "paddingTop": "20px"}}>
-        {t("general.filters")}
+    <div className={`content filterSection ${isOpen && 'opened'}`}>
+      <div className="filterContainer">
+        <b>{t("general.filters")}</b>
         <div className="filters" key={refreshKey}>
-          <RegistrationNumberFilter
-            value={getTextFilter("registrationNumber").value}
-            onChange={(value) => onTextFilterChange("registrationNumber", value)}
-            onReset={() => onTextFilterReset("registrationNumber")}
-          />
+          <div className='multipleFiltersContainer'>
+            <RegistrationNumberFilter
+              value={getTextFilter("registrationNumber").value}
+              onChange={(value) => onTextFilterChange("registrationNumber", value)}
+              onReset={() => onTextFilterReset("registrationNumber")}
+            />
+            <ModelFilter
+              value={getTextFilter("model").value}
+              onChange={(value) => onTextFilterChange("model", value)}
+              onReset={() => onTextFilterReset("model")}
+            />
+          </div>
+          
           <AltitudeFilter
             minValue={getNumberFilter("minAltitude").value}
             maxValue={getNumberFilter("maxAltitude").value}
@@ -82,11 +90,6 @@ const FilterSection: React.FC<props> = ({
             onMaxValueChange={(value) => onNumberFilterChange("maxFuel", value)}
             onMinValueReset={() => onNumberFilterReset("minFuel")}
             onMaxValueReset={() => onNumberFilterReset("maxFuel")}
-          />
-          <ModelFilter
-            value={getTextFilter("model").value}
-            onChange={(value) => onTextFilterChange("model", value)}
-            onReset={() => onTextFilterReset("model")}
           />
         </div>
         <div className="actionContainer">

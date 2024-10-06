@@ -1,5 +1,5 @@
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: Varela;
   font-size: 13px;
   -webkit-font-smoothing: antialiased;
   margin: 0;
@@ -7,16 +7,18 @@ body {
   overflow: hidden;
 }
 
-.closeButton {
-  padding: 0;
-  margin: 0;
-  line-height: 0;
-  background: none;
-  border: none;
-  color: $secondary;
+.menuDropdown {
+  color: $light-grey;
+  display: flex;
+  border-radius: 10px;
+  align-items: center;
+  user-select: none;
+  padding: 6px;
+  gap: 10px;
 
   &:hover {
-    color: $primary;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
     cursor: pointer;
   }
 
@@ -25,21 +27,13 @@ body {
   }
 }
 
-.menuDropdown {
-  color: $secondary;
-  display: flex;
-  align-items: center;
-  user-select: none;
-  padding-top: 8px;
-  padding-bottom: 8px;
+.menuActive {
+  color: rgb(147, 221, 43);
+  background-color: rgba(149, 255, 0, 0.15);
 
   &:hover {
-    color: $primary;
-    cursor: pointer;
-  }
-
-  svg {
-    fill: currentColor;
+    color: rgb(150, 245, 17);
+    background-color: rgba(149, 255, 0, 0.3);
   }
 }
 
@@ -56,20 +50,20 @@ body {
 }
 
 button {
-  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px; 
+  border: 1px solid #3c4044;
+  color: $light-grey;
+  font-size: 16px;
   padding-left: 10px;
   padding-right: 10px;
-  border: 1px solid rgb(154, 154, 154);
-  border-radius: 10px;
-  color: white;
-  background-color: transparent;
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 22px;
 
   &:hover {
     cursor: pointer;
-    background-color: rgb(154, 154, 154, 0.3);
+    background-color: #3c4044;
+    color: white;
   }
 }
 
@@ -94,4 +88,24 @@ button {
   
   scrollbar-width: thin;
   scrollbar-color: #717171 #2c2c2c;
+}
+
+.closeButton {
+  padding: 5px;
+  border-radius: 50%;
+  margin: 0;
+  line-height: 0;
+  background: none;
+  border: none;
+  color: white;
+
+  &:hover {
+    color: rgb(147, 221, 43);
+    background-color: rgba(149, 255, 0, 0.176);
+    cursor: pointer;
+  }
+
+  svg {
+    fill: currentColor;
+  }
 }

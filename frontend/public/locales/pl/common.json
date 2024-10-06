@@ -6,21 +6,27 @@
     "direction": "Kierunek"
   },
   "general": {
-    "menu": "Menu",
+    "menu": "Menu Główne",
     "filters": "Filtry",
     "flyingDrones": "Latające Drony",
     "selectedDrone": "Wybrany Dron",
     "resetSelection": "Usuń zaznaczenie",
     "domain": "DronHub.pl",
+    "language": {
+      "title": "Wybór języka",
+      "polish": "Polski",
+      "english": "Angielski"
+    },
     "headers": {
       "tracking": "Śledzenie lotu drona",
       "history": "Historia lotów dla drona",
-      "list": "Lista Dronów"
+      "list": "Lista Dronów",
+      "info": "Informacje o dronie"
     }
   },
   "details": {
     "drone": {
-      "registration": "Nr. rejestracyjny",
+      "registration": "Rejestracja",
       "geoData": "Dane geograficzne",
       "operator": "Operator",
       "battery": "Bateria",
