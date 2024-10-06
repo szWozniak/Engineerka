@@ -15,7 +15,6 @@ import { INITIAL_VIEW_STATE } from './map/config/initialView';
 import './i18n';
 import { lightingEffect } from './map/config/effects';
 import useMapState from './map/useCases/useMap';
-import { useTranslation } from "react-i18next";
 
 registerLoaders([OBJLoader]);
 
@@ -24,20 +23,8 @@ const App = () => {
   const mapRef: any = useRef();
   const { layers } = useLayerManager()
 
-  const {mapViewState, setMapViewState} = useMapState();
+  const {mapViewState, setMapViewState, getTooltip} = useMapState();
   const {applyFilters, numberFilters, textFilters, visibility} = useFilters();
-
-  const {t} = useTranslation();
-
-  function getTooltip({ object }: any) {
-    return (
-      object &&
-      `\
-    ${t("details.drone.registration")}: ${object?.registrationNumber}\n
-    ${t("details.drone.model")}: ${object?.model}
-    `
-    );
-  }
 
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {

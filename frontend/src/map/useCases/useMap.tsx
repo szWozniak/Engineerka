@@ -2,10 +2,12 @@ import { MapViewState } from "deck.gl"
 import { useEffect, useState } from "react"
 import { INITIAL_VIEW_STATE } from "../config/initialView"
 import useDrones from "../../drones/useCases/useDrones"
+import { useTranslation } from "react-i18next";
 
 interface ReturnType{
     mapViewState: MapViewState,
-    setMapViewState: any
+    setMapViewState: any,
+    getTooltip: any
 }
 
 const useMapState = (): ReturnType => {
@@ -13,6 +15,17 @@ const useMapState = (): ReturnType => {
     const [isMapUpdated, setIsMapUpdated] = useState<boolean>(false)
 
     const { selectedDrone } = useDrones();
+    const {t} = useTranslation();
+
+    function getTooltip({ object }: any) {
+      return (
+        object &&
+        `\
+      ${t("details.drone.registration")}: ${object?.registrationNumber}\n
+      ${t("details.drone.model")}: ${object?.model}
+      `
+      );
+    }
 
     useEffect(() => { //this might not work
         setIsMapUpdated(false)
@@ -32,7 +45,8 @@ const useMapState = (): ReturnType => {
 
     return {
       mapViewState,
-      setMapViewState
+      setMapViewState,
+      getTooltip
     }
 }
 
