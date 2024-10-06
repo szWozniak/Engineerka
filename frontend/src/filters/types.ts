@@ -15,7 +15,7 @@ type DefaultFilter = {
   comparisonType: ComparisonType
 }
 
-export type TextFilterKey = "registrationNumber" | "model"
+export type TextFilterKey = "registrationNumber" | "model" | "operator" | "type"
 
 export type NumberFilterKey = "minAltitude" | "maxAltitude" | "minFuel" | "maxFuel" | "maxLongitude" | "minLongitude" | "maxLatitude" | "minLatitude"
 
@@ -23,4 +23,4 @@ export type TextFilter = DefaultFilter & {type: FilterType.Text, value: string, 
 
 export type NumberFilter = DefaultFilter & {type: FilterType.Number, value: number | undefined, key: NumberFilterKey}
 
-export type Filter = TextFilter | NumberFilter; 
+export type Filter = TextFilter | NumberFilter;
