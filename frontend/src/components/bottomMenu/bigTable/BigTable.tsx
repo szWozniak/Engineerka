@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 const BigTable = () => {  
   const { t } = useTranslation();
-  const {flyingDrones, allDrones, selectDrone} = useDrones();
+  const {flyingDronesWithTimestamp, allDrones, selectDrone} = useDrones();
   const {flightsSummaries} = useFlights()
   
   return (
@@ -28,7 +28,7 @@ const BigTable = () => {
       </thead>
       <tbody>
         {allDrones?.map((drone: DroneBase, index) => {
-          const flyingDrone = flyingDrones?.find(d => d.registrationNumber === drone.registrationNumber)
+          const flyingDrone = flyingDronesWithTimestamp?.flyingDrones?.find(d => d.registrationNumber === drone.registrationNumber)
 
           return (
             <tr key={index} className="droneEntry" >

@@ -5,7 +5,7 @@ import MESH_URL, { DEFAULT_COLOR, SELECTED_COLOR } from '../../../map/config/mod
 import { theme } from '../../../map/config/theme';
 
 const useDronesLayer = () => {
-  const { flyingDrones, selectDrone, selectedDrone } = useDrones();
+  const { flyingDronesWithTimestamp, selectDrone, selectedDrone } = useDrones();
 
   const handleMouseClick = (info: PickingInfo, _event: any) => {
     if (info && info.object) {
@@ -15,7 +15,7 @@ const useDronesLayer = () => {
 
   return new SimpleMeshLayer<MapDrone>({
     id: "default-drones",
-    data: flyingDrones?.map(
+    data: flyingDronesWithTimestamp?.flyingDrones?.map(
       d => ({ ...d, color: d.registrationNumber === selectedDrone?.registrationNumber ? SELECTED_COLOR : DEFAULT_COLOR })
     ),
     mesh: MESH_URL,

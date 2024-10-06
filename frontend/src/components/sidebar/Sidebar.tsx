@@ -14,7 +14,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
 
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
-  const {flyingDrones, selectedDrone, selectDrone} = useDrones();
+  const {flyingDronesWithTimestamp, selectedDrone, selectDrone} = useDrones();
 
   const renderViewChangeButtons = () => {
     if (selectedDrone) {
@@ -48,7 +48,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
             }}
           />
           {openedMenu === 2 && <div className="droneEntries">
-            {flyingDrones?.map((drone: Drone, index) => (
+            {flyingDronesWithTimestamp?.flyingDrones?.map((drone: Drone, index) => (
               <div key={index} className="droneEntry" onClick={() => {
                 selectDrone(drone.registrationNumber)
               }}>
@@ -69,9 +69,10 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
           </div>}
         </div>  
       </div>
-      <div className="container">
-        {t("general.domain")} &copy; 2024
-      </div>
+      <footer className="container">
+        <span>{t("general.domain")} &copy; 2024</span>
+        <span className="recordUpdate">{t("general.recordUpdate")}: {flyingDronesWithTimestamp?.date} {flyingDronesWithTimestamp?.time}</span>
+      </footer>
     </div>
   );
 };
