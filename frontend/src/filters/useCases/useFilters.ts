@@ -84,8 +84,10 @@ const useFilters = () => {
 
     return {
         filters: filtering.value,
-        applyFilters,
-        resetFilters,
+        bulkFiltersActions: {
+          applyFilters,
+          resetFilters
+        },
         visibility: {
           areOpen: areFiltersOpen,
           toggleVisibility: toggleFiltersVisibility
