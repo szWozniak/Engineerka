@@ -4,6 +4,7 @@ import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.drone.dto.DroneDto;
 import com.example.backend.domain.drone.dto.FlyingDroneDto;
+import com.example.backend.domain.drone.dto.FlyingDronesWithTimestampDto;
 import com.example.backend.domain.flight.dto.FlightSummaryDto;
 import com.example.backend.domain.drone.requests.Drones.GetDronesRequest;
 import com.example.backend.domain.flight.FlightEntity;
@@ -16,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +49,7 @@ public class DroneController {
     }
 
     @PostMapping("/currentlyFlying")
-    public ResponseEntity<List<FlyingDroneDto>> getCurrentlyFlyingDrones(@Valid @RequestBody GetCurrentlyFlyingDronesRequest request) throws BadRequestException{
+    public ResponseEntity<FlyingDronesWithTimestampDto> getCurrentlyFlyingDrones(@Valid @RequestBody GetCurrentlyFlyingDronesRequest request) throws BadRequestException{
         List<IDroneFilter> mappedFilters;
         try{
             mappedFilters = DroneFiltersMapper.map(request.textFilters(), request.numberFilters());
@@ -56,9 +59,13 @@ public class DroneController {
 
         var flyingDrones = droneService.getCurrentlyFlyingDrones(mappedFilters);
 
-        var dtos = flyingDrones.stream().map(FlyingDroneDto::fromDroneEntity).toList();
+        var flyingDroneDtos = flyingDrones.stream().map(FlyingDroneDto::fromDroneEntity).toList();
+        var date = LocalDate.now();
+        var time = LocalTime.now().withNano(0);
 
-        return new ResponseEntity<>(dtos, HttpStatus.OK);
+        var dto = new FlyingDronesWithTimestampDto(flyingDroneDtos, date, time);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @GetMapping("/currentlyFlying/{registration}")

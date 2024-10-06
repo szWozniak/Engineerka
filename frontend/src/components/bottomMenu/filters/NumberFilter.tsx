@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 interface Props{
     label: string,
     value: number | undefined,
     onChange: (value: number | undefined) => void
+    onReset: () => void
 }
 
-const NumberFilter: React.FC<Props> = ({label, value, onChange}) => {
+const NumberFilter: React.FC<Props> = ({label, value, onChange, onReset}) => {
     const changeValue = (value: string) => {
         let numberValue: number | undefined = Number(value)
 
@@ -21,11 +22,17 @@ const NumberFilter: React.FC<Props> = ({label, value, onChange}) => {
         onChange(numberValue)
     }
 
+    console.log(value)
+
+    const displayValue = useMemo(() => value, [value])
 
     return (
         <div className="filterContent">
             {label}
-            <input type="number" onChange={(e) => changeValue(e.target.value)} value={value} className="concreteFilter"/> 
+            <div className="actionContainer">
+                <input type="number" onChange={(e) => changeValue(e.target.value)} value={displayValue} className="concreteFilter"/>
+                <span className="clear-icon" onClick={onReset}>x</span>
+            </div>
         </div>
     );
 };

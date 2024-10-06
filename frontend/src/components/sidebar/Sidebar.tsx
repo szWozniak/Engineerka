@@ -14,7 +14,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
 
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
-  const {flyingDrones, selectedDrone, selectDrone} = useDrones();
+  const {flyingDrones, timestamp, selectedDrone, selectDrone} = useDrones();
 
   const renderViewChangeButtons = () => {
     if (selectedDrone) {
@@ -69,9 +69,10 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
           </div>}
         </div>  
       </div>
-      <div className="container">
-        {t("general.domain")} &copy; 2024
-      </div>
+      <footer className="container">
+        <span>{t("general.domain")} &copy; 2024</span>
+        <span className="recordUpdate">{t("general.recordUpdate")}: {timestamp?.date} {timestamp?.time}</span>
+      </footer>
     </div>
   );
 };

@@ -24,7 +24,7 @@ const App = () => {
   const { layers } = useLayerManager()
 
   const {mapViewState, setMapViewState, getTooltip} = useMapState();
-  const {applyFilters, numberFilters, textFilters, visibility} = useFilters();
+  const {bulkFiltersActions, numberFilters, textFilters, visibility} = useFilters();
 
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {
@@ -44,11 +44,14 @@ const App = () => {
         />
         <BottomMenu 
           areFiltersOpen={visibility.areOpen}
-          applyFilters={applyFilters}
+          applyFilters={bulkFiltersActions.applyFilters}
+          resetFilters={bulkFiltersActions.resetFilters}
           getNumberFilter={numberFilters.get}
           getTextFilter={textFilters.get}
           onNumberFilterChange={numberFilters.onChange}
+          onNumberFilterReset={numberFilters.onReset}
           onTextFilterChange={textFilters.onChange}
+          onTextFilterReset={textFilters.onReset}
         />
       </div>
       <DeckGL
