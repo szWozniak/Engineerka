@@ -76,7 +76,7 @@ export const defaultFiltersState: Filter[] = [
       parameter: "model",
       key: "model",
       value: "",
-      comparisonType: "Equals"
+      comparisonType: "Contains"
     },
     {
       type: FilterType.Text,

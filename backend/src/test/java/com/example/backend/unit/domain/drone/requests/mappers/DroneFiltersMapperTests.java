@@ -53,7 +53,7 @@ public class DroneFiltersMapperTests {
 
 
     @ParameterizedTest
-    @ValueSource(strings = {"ZlyEnum"})
+    @ValueSource(strings = {"ZlyEnum", "Contains"})
     public void ShouldThrowException_WhenInvalidNumberFilter(String comparisonType){
         var numberFilterEntry = new NumberFilterEntry("registrationNumber", "whatever", 69, comparisonType);
 
