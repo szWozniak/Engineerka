@@ -37,9 +37,9 @@ services:
       - mysql
       - rabbitmq
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/dronhub
-      SPRING_DATASOURCE_USERNAME: dronhub
-      SPRING_DATASOURCE_PASSWORD: passwd
+      DATABASE_URL: jdbc:mysql://mysql:3306/dronhub
+      DATABASE_USERNAME: dronhub
+      DATABASE_PASSWORD: passwd
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_RABBITMQ_PORT: 5672
       SPRING_RABBITMQ_USERNAME: guest
