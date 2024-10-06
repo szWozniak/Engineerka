@@ -62,7 +62,10 @@ public class DroneServiceTests {
         //prepare
 
         var droneWithRecords = getCurrentlyFlyingDroneEntityWithMultipleFlightRecords();
-        var droneWithoutRecords = DroneEntityFixture.getFlyingDrone(new ArrayList<>(), "megaDroniarz");
+        var droneWithoutRecords = new DroneEntityFixtureBuilder()
+                .withRegistrationNumber("megaDroniarz")
+                .withIsAirbourne(true)
+                .build();
 
         Mockito.when(droneRepository.findAll(Mockito.<Specification<DroneEntity>>any())).thenReturn(
                 List.of(droneWithRecords, droneWithoutRecords)
@@ -116,7 +119,11 @@ public class DroneServiceTests {
                 .withFlight(new FlightEntity())
                 .build();
 
-        var drone = DroneEntityFixture.getFlyingDrone(List.of(flightRecord), "megaDroniarz");
+        var drone = new DroneEntityFixtureBuilder()
+                .withRegistrationNumber("megaDroniarz")
+                .withIsAirbourne(true)
+                .withFlyingRecords(List.of(flightRecord))
+                .build();
         Mockito.when(droneRepository.findByRegistrationNumber(Mockito.any()))
                 .thenReturn(Optional.of(drone));
 

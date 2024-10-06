@@ -6,7 +6,7 @@ export const defaultFiltersState: Filter[] = [
       parameter: "registrationNumber",
       key: "registrationNumber",
       value: "",
-      comparisonType: "Equals"
+      comparisonType: "Contains"
     },
     {
       type: FilterType.Number,
@@ -69,6 +69,6 @@ export const defaultFiltersState: Filter[] = [
       parameter: "model",
       key: "model",
       value: "",
-      comparisonType: "Equals"
+      comparisonType: "Contains"
     }
   ]

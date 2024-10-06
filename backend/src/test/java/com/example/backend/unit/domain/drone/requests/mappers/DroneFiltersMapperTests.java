@@ -17,7 +17,7 @@ import java.util.List;
 public class DroneFiltersMapperTests {
 
     @ParameterizedTest
-    @ValueSource(strings = {"Equals"})
+    @ValueSource(strings = {"Equals", "Contains"})
     public void ShouldProperlyMap_TextFilter(){
         var textFilterEntry = new TextFilterEntry("registrationNumber", "whatever", "Johnny", "Equals");
 
