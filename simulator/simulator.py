@@ -237,7 +237,7 @@ def init_connection():
     global channel
 
     credentials = pika.PlainCredentials('guest','guest')
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', credentials=credentials))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq', credentials=credentials))
     channel = connection.channel()
 
     channel.exchange_declare('fileExchange', durable=True, exchange_type='topic')
