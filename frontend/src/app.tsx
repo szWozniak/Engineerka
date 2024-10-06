@@ -18,22 +18,12 @@ import useMapState from './map/useCases/useMap';
 
 registerLoaders([OBJLoader]);
 
-function getTooltip({ object }: any) {
-  return (
-    object &&
-    `\
-  Drone Information\n
-  Drone ID: ${object?.id}\n
-  Position: ${object?.position}
-  `
-  );
-}
 
 const App = () => {
   const mapRef: any = useRef();
   const { layers } = useLayerManager()
 
-  const {mapViewState, setMapViewState} = useMapState();
+  const {mapViewState, setMapViewState, getTooltip} = useMapState();
   const {bulkFiltersActions, numberFilters, textFilters, visibility} = useFilters();
 
   useEffect(() => {
