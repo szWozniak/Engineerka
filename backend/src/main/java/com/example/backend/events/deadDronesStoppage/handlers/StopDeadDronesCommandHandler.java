@@ -32,6 +32,6 @@ public class StopDeadDronesCommandHandler implements ICommandHandler<StopDeadDro
 
         List<DroneEntity> dronesThatShouldStopFlying = droneService.findAndStopDronesThatShouldStopFlying(flyingDronesRegistrationNumbers);
 
-        flightService.createFlights(dronesThatShouldStopFlying.stream().map(DroneEntity::getRegistrationNumber).toList());
+        flightService.createFlights(dronesThatShouldStopFlying.stream().map(DroneEntity::getRegistrationNumber).toList(), false);
     }
 }

@@ -18,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 @DataJpaTest
 public class FlightServiceTests {
@@ -115,7 +116,7 @@ public class FlightServiceTests {
         ));
 
         //act
-        sut.createFlights(List.of(droneToRegister.getRegistrationNumber()));
+        sut.createFlights(List.of(droneToRegister.getRegistrationNumber()),true);
 
         //assert
         var flightRecordFromDb = flightRecordRepositoryForAssertions.findById("1");

@@ -18,7 +18,7 @@ public class FlightService {
         this.flightRecordRepository = flightRecordRepository;
     }
 
-    public void createFlights(List<String> droneRegistrationNumbers){
+    public void createFlights(List<String> droneRegistrationNumbers, Boolean didLanded){
         List<FlightEntity> flightsToSave = new ArrayList<>();
         List<FlightRecordEntity> flightRecordsToUpdate = new ArrayList<>();
 
@@ -26,7 +26,7 @@ public class FlightService {
             var flight = new FlightEntity();
             var flightRecordsForFlight = getAllDroneRecordsFromCurrentFlight(registrationNumber);
 
-            flight.summarizeFlight(flightRecordsForFlight);
+            flight.summarizeFlight(flightRecordsForFlight, didLanded);
             flightRepository.save(flight);
 
             for (var flightRecordEntity : flightRecordsForFlight){

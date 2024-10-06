@@ -95,6 +95,7 @@ public class SimulatorIntegrationTests {
 
         var droneFlight = droneService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber());
         Assertions.assertEquals(1, droneFlight.size());
+        Assertions.assertFalse(droneFlight.get(0).isDidLanded());
     }
 
     @Test
@@ -120,6 +121,7 @@ public class SimulatorIntegrationTests {
 
         var droneFlight = droneService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber());
         Assertions.assertEquals(1, droneFlight.size());
+        Assertions.assertFalse(droneFlight.get(0).isDidLanded());
     }
 
     @Test
