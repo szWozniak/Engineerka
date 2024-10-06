@@ -56,6 +56,8 @@ services:
     build:
       context: simulator
       dockerfile: Dockerfile
+    environment:
+      RABBITMQ_HOST: "rabbitmq"
     networks:
       - app-network
     volumes:

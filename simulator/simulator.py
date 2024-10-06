@@ -7,6 +7,7 @@ import time
 import uuid
 import pika
 import constans as const
+from os import getenv
 
 def parse_config_file(file):
     config = const.DEFAULT_CONFIG.copy()
@@ -236,8 +237,9 @@ def prepare_single_flight_tick(index, drone_data, flight_data, file_name, day_da
 def init_connection():
     global channel
 
+    rabbit_host = getenv("RABBITMQ_HOST", "localhost")
     credentials = pika.PlainCredentials('guest','guest')
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq', credentials=credentials))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbit_host, credentials=credentials))
     channel = connection.channel()
 
     channel.exchange_declare('fileExchange', durable=True, exchange_type='topic')
