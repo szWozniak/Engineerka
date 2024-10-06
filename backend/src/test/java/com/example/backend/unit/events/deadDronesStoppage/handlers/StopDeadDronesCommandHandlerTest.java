@@ -1,4 +1,4 @@
-package com.example.backend.unit.events.recordRegistration.handlers;
+package com.example.backend.unit.events.deadDronesStoppage.handlers;
 
 import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.drone.DroneService;
@@ -38,10 +38,6 @@ public class StopDeadDronesCommandHandlerTest {
         Mockito.when(droneService.findAndStopDronesThatShouldStopFlying(Mockito.any())).thenReturn(drone);
 
         sut.handle(command);
-
-        Map<String, Boolean> droneRegistrationNumbersAndFlightStatus = new HashMap<>();
-
-        drone.forEach(droneRecord -> droneRegistrationNumbersAndFlightStatus.put(droneRecord.getRegistrationNumber(), false));
 
         Mockito.verify(flightService).createFlights(drone.stream().map(DroneEntity::getRegistrationNumber).toList(), false);
     }
