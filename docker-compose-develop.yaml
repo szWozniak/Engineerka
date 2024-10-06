@@ -28,7 +28,8 @@ services:
     networks:
       - app-network
 
-  app:
+  backend:
+    restart: on-failure
     build:
       context: backend
       dockerfile: Dockerfile
@@ -51,6 +52,7 @@ services:
       - shared_directory:/usr/shared_directory
 
   simulator:
+    restart: on-failure
     build:
       context: simulator
       dockerfile: Dockerfile
@@ -58,6 +60,15 @@ services:
       - app-network
     volumes:
       - shared_directory:/usr/shared_directory
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - app-network
 
 volumes:
   mysql_data:
