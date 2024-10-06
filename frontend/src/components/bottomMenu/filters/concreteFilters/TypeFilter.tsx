@@ -20,7 +20,7 @@ const TypeFilter: React.FC<Props> = ({value, onChange}) => {
         throw new Error("Not legal value for type parameter");
     }
 
-    const onToggle = (value: boolean) => onChange(value ? "Airbourne" : "")
+    const onToggle = (value: boolean) => onChange(value ? "Airborne" : "")
 
     return (
         <Toggle

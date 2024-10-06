@@ -43,7 +43,7 @@ const FilterSection: React.FC<props> = ({
   }
 
   return(
-    <div className={`content filterSection ${isOpen && 'opened'}`} style={{"height": "310px"}}>
+    <div className={`content filterSection ${isOpen && 'opened'}`} style={{"height": "380px"}}>
       <div style={{"paddingLeft": "20px", "paddingTop": "20px"}}>
         {t("general.filters")}
         <div className="filters" key={refreshKey}>
