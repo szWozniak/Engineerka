@@ -1,4 +1,4 @@
-package com.example.backend.unit.events.recordRegistration.handlers;
+package com.example.backend.unit.events.deadDronesStoppage.handlers;
 
 import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.drone.DroneService;
@@ -12,7 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StopDeadDronesCommandHandlerTest {
     private StopDeadDronesCommandHandler sut;
@@ -37,6 +39,6 @@ public class StopDeadDronesCommandHandlerTest {
 
         sut.handle(command);
 
-        Mockito.verify(flightService).createFlights(drone.stream().map(DroneEntity::getRegistrationNumber).toList());
+        Mockito.verify(flightService).createFlights(drone.stream().map(DroneEntity::getRegistrationNumber).toList(), false);
     }
 }
