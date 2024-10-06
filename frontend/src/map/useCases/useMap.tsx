@@ -1,4 +1,4 @@
-import { MapViewState } from "deck.gl"
+import { MapViewState, PickingInfo } from "deck.gl"
 import { useEffect, useState } from "react"
 import { INITIAL_VIEW_STATE } from "../config/initialView"
 import useDrones from "../../drones/useCases/useDrones"
@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 interface ReturnType{
     mapViewState: MapViewState,
     setMapViewState: any,
-    getTooltip: any
+    getTooltip: (info: PickingInfo) => any
 }
 
 const useMapState = (): ReturnType => {
