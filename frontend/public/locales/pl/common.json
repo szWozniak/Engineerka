@@ -25,6 +25,7 @@
       "operator": "Operator",
       "battery": "Bateria",
       "model": "Model",
+      "type": "Display only flying",
       "state": "Stan drona"
     },
     "flight": {

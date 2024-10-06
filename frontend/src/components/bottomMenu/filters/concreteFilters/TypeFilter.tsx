@@ -1,5 +1,6 @@
 import React from 'react';
 import Toggle from '../../../../common/components/Toggle';
+import { useTranslation } from 'react-i18next';
 
 interface Props{
     value: string,
@@ -7,6 +8,7 @@ interface Props{
 }
 
 const TypeFilter: React.FC<Props> = ({value, onChange}) => {
+    const {t} = useTranslation();
 
     const determineToggleValue= () => {
         if (value === ""){
@@ -24,7 +26,7 @@ const TypeFilter: React.FC<Props> = ({value, onChange}) => {
 
     return (
         <Toggle
-            label='Display only flying'
+            label={t("details.drone.type")}
             onChange={onToggle}
             value={determineToggleValue()}
         />

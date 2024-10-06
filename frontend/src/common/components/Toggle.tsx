@@ -4,7 +4,6 @@ interface Props {
   value: boolean,
   label: string,
   onChange: (value: boolean) => void,
-
 }
 
 const Toggle: React.FC<Props> = ({value, label, onChange}) => {
@@ -15,7 +14,6 @@ const Toggle: React.FC<Props> = ({value, label, onChange}) => {
           <input type="checkbox" checked={value} onChange={(e) => onChange(e.target.checked)}/>
           <span className="slider"></span>
         </label>
-        
       </div>
     );
 };

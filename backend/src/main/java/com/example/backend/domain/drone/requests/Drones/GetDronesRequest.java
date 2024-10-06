@@ -14,5 +14,4 @@ public record GetDronesRequest(
         @NotNull
         @Valid
         List<NumberFilterEntry> numberFilters
-)
-{}
+){}
