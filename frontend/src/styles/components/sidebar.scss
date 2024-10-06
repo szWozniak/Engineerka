@@ -145,11 +145,25 @@
         display: none;
       }
     }
+
+    & footer {
+      flex-direction: column;
+    }
   }
   
   & h3 {
     margin: 0;
     font-size: 16px;
     color: white;
+  }
+
+  & footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  & .recordUpdate {
+    font-size: 10px;
   }
 }

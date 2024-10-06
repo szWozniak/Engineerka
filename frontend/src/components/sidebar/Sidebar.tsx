@@ -21,7 +21,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
   const [opened, setOpened] = useState<boolean>(true);
   const [openedFlyingDrones, setOpenedFlyingDrones] = useState<boolean>(false);
   const [openedLanguageMenu, setOpenedLanguageMenu] = useState<boolean>(false);
-  const {flyingDrones, selectedDrone, selectDrone} = useDrones();
+  const {flyingDrones, timestamp, selectedDrone, selectDrone} = useDrones();
 
   return (
     <div className={`sidebar ${opened ? 'opened' : 'closed'}`}>
@@ -87,9 +87,10 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
           </div>
         </div>)}
       </div>
-      <div className="container">
-        {t("general.domain")} &copy; 2024
-      </div>
+      <footer className="container">
+        <span>{t("general.domain")} &copy; 2024</span>
+        <span className="recordUpdate">{t("general.recordUpdate")}: {timestamp?.date} {timestamp?.time}</span>
+      </footer>
     </div>
   );
 };

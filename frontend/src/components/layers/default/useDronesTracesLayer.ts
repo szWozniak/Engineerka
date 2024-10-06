@@ -10,7 +10,7 @@ const useDronesTracesLayer = () => {
 
     const traces: droneTrace[] = [];
 
-    flyingDrones.forEach((drone, index) => {
+    flyingDrones?.forEach((drone, index) => {
       const trace = (drone.registrationNumber === selectedDrone?.registrationNumber) ? selectedDrone.trace : drone.trace
 
       if (trace.length === 0) { return []}
