@@ -8,8 +8,7 @@ const useDrones = () => {
     const {drones} = useContext(AppContext);
     const {filters} = useFilters()
     
-  
-    const { data: flyingDrones } = useQuery(
+    const { data: flyingDronesWithTimestamp } = useQuery(
         droneQueries.getCurrentDrones(filters)
     )
     
@@ -22,15 +21,14 @@ const useDrones = () => {
     )
 
     useEffect(() => {
-        if(!flyingDrones?.find(drone => drone.registrationNumber === drones.selectedDroneRegistration)) {
+        if(!flyingDronesWithTimestamp?.flyingDrones?.find(drone => drone.registrationNumber === drones.selectedDroneRegistration)) {
           drones.selectDroneRegistration(null)
         }
-    }, [flyingDrones, drones])
-
-    
+    }, [flyingDronesWithTimestamp, drones])
 
     return {
-        flyingDrones: flyingDrones,
+        flyingDrones: flyingDronesWithTimestamp?.flyingDrones,
+        timestamp: {date: flyingDronesWithTimestamp?.date, time: flyingDronesWithTimestamp?.time},
         allDrones: allDrones,
         selectedDrone: selectedDrone || null,
         selectDrone: drones.selectDroneRegistration

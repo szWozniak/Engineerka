@@ -29,8 +29,15 @@ export const DroneSchema = DroneBaseSchema.merge(
   })
 )
 
+export const DronesWithTimestampSchema = z.object({
+  flyingDrones: DroneSchema.array(),
+  date: z.string(),
+  time: z.string()
+})
+
 export type DroneBase = z.infer<typeof DroneBaseSchema>
 export type Drone = z.infer<typeof DroneSchema>;
+export type DronesWithTimestamp = z.infer<typeof DronesWithTimestampSchema>;
 
 export const DroneFlightSummarySchema = z.object({
   id: z.number(),
@@ -42,6 +49,7 @@ export const DroneFlightSummarySchema = z.object({
   averageSpeed: z.number(),
   elevationGain: z.number(),
   distance: z.number(),
+  didLanded: z.boolean(),
   flightRecords: dronePositionSchema.array()
 })
 

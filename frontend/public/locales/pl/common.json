@@ -12,6 +12,7 @@
     "selectedDrone": "Wybrany Dron",
     "resetSelection": "Usuń zaznaczenie",
     "domain": "DronHub.pl",
+    "recordUpdate": "Odświeżono",
     "headers": {
       "tracking": "Śledzenie lotu drona",
       "history": "Historia lotów dla drona",
@@ -34,7 +35,8 @@
       "time": "Czas lotu",
       "speed": "Śr. prędkość",
       "elevation": "Przewyższenie",
-      "distance": "Dystans"
+      "distance": "Dystans",
+      "didLanded": "Czy wylądował?"
     },
     "noData": "b/d"
   },

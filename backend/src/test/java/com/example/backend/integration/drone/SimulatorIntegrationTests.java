@@ -14,7 +14,7 @@ import com.example.backend.events.recordRegistration.commands.SaveRecordsCommand
 import com.example.backend.events.deadDronesStoppage.handlers.StopDeadDronesCommandHandler;
 import com.example.backend.events.recordRegistration.handlers.SaveRecordsCommandHandler;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
-import com.example.backend.unit.domain.drone.DroneEntityFixture;
+import com.example.backend.unit.domain.drone.DroneEntityFixtureBuilder;
 import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixtureBuilder;
 import com.example.backend.unit.simulatorIntegration.model.DroneFromSimulatorFixtureBuilder;
 import org.junit.jupiter.api.Assertions;
@@ -95,6 +95,7 @@ public class SimulatorIntegrationTests {
 
         var droneFlight = droneService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber());
         Assertions.assertEquals(1, droneFlight.size());
+        Assertions.assertFalse(droneFlight.get(0).isDidLanded());
     }
 
     @Test
@@ -120,6 +121,7 @@ public class SimulatorIntegrationTests {
 
         var droneFlight = droneService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber());
         Assertions.assertEquals(1, droneFlight.size());
+        Assertions.assertFalse(droneFlight.get(0).isDidLanded());
     }
 
     @Test
@@ -159,9 +161,11 @@ public class SimulatorIntegrationTests {
         var flightRecords = new ArrayList<FlightRecordEntity>();
         flightRecords.add(flightRecord);
 
-        var drone = isFlying ?
-                DroneEntityFixture.getFlyingDrone(flightRecords, droneRegNumber) :
-                DroneEntityFixture.getNotFlyingDrone(flightRecords, droneRegNumber);
+        var drone = new DroneEntityFixtureBuilder()
+                .withRegistrationNumber(droneRegNumber)
+                .withFlyingRecords(flightRecords)
+                .withIsAirbourne(isFlying)
+                .build();
         fakeDb.persistAndFlush(drone);
 
         flightRecord.setDrone(drone);

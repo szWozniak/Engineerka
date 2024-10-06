@@ -12,7 +12,9 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Slf4j
@@ -55,7 +57,7 @@ public class SaveRecordsCommandHandler implements ICommandHandler<SaveRecordsCom
                 .toList();
 
         if (!dronesThatFlightEnded.isEmpty()){
-            flightService.createFlights(dronesThatFlightEnded.stream().map(DroneRecordToRegister::getRegistrationNumber).toList());
+            flightService.createFlights(dronesThatFlightEnded.stream().map(DroneRecordToRegister::getRegistrationNumber).toList(), true);
         }
     }
 }

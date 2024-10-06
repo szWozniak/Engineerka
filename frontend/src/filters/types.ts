@@ -1,7 +1,7 @@
 import { Drone } from "../drones/types"
 import { FlightRecord } from "../flights/api/types"
 
-type ComparisonType = "Equals" | "GreaterThan" | "LesserThan" 
+type ComparisonType = "Equals" | "GreaterThan" | "LesserThan" | "Contains"
 
 export enum FilterType{
   Text,

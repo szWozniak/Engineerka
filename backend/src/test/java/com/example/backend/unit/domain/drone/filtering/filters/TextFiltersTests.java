@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 public class TextFiltersTests {
 
     @ParameterizedTest
-    @ValueSource(strings = {"Equals"})
+    @ValueSource(strings = {"Equals", "Contains"})
     public void ShouldCreateTextFilter(String comparisonType){
         var result = new TextFilter("attribute", "johnny", Enum.valueOf(ComparisonType.class, comparisonType));
     }

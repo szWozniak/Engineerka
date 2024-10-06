@@ -5,7 +5,7 @@ import com.example.backend.domain.drone.DroneRepository;
 import com.example.backend.domain.drone.filtering.filters.ComparisonType;
 import com.example.backend.domain.drone.filtering.filters.TextFilter;
 import com.example.backend.domain.drone.requests.currentlyFlyingDrones.CurrentlyFlyingDronesQuery;
-import com.example.backend.unit.domain.drone.DroneEntityFixture;
+import com.example.backend.unit.domain.drone.DroneEntityFixtureBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,7 +42,7 @@ public class CurrentlyFlyingDronesQueryTests {
     @Test
     public void ShouldNotReturnNoFlyingDrones(){
         //prepare
-        var notFlyingDrone = DroneEntityFixture.getNotFlyingDrone(new ArrayList<>(), "dron3");
+        var notFlyingDrone = new DroneEntityFixtureBuilder().withRegistrationNumber("dron3").withIsAirbourne(false).build();
         fakeDb.persistAndFlush(notFlyingDrone);
 
         //act
@@ -70,8 +70,8 @@ public class CurrentlyFlyingDronesQueryTests {
     }
 
     private void SetupDatabase(){
-        var drone = DroneEntityFixture.getFlyingDrone(new ArrayList<>(), "dron1");
-        var drone2 = DroneEntityFixture.getFlyingDrone(new ArrayList<>(), "dron2");
+        var drone = new DroneEntityFixtureBuilder().withRegistrationNumber("dron1").withIsAirbourne(true).build();
+        var drone2 = new DroneEntityFixtureBuilder().withRegistrationNumber("dron2").withIsAirbourne(true).build();
 
         fakeDb.persistAndFlush(drone);
         fakeDb.persistAndFlush(drone2);
