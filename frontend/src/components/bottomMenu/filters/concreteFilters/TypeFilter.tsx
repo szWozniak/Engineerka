@@ -9,7 +9,7 @@ interface Props{
 const TypeFilter: React.FC<Props> = ({value, onChange}) => {
 
     const determineToggleValue= () => {
-        if (value === "Grounded"){
+        if (value === ""){
             return false
         }
 
@@ -20,7 +20,7 @@ const TypeFilter: React.FC<Props> = ({value, onChange}) => {
         throw new Error("Not legal value for type parameter");
     }
 
-    const onToggle = (value: boolean) => onChange(value ? "Airbourne" : "Grounded")
+    const onToggle = (value: boolean) => onChange(value ? "Airbourne" : "")
 
     return (
         <Toggle

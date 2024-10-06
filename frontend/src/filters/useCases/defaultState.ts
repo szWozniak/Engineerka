@@ -82,7 +82,7 @@ export const defaultFiltersState: Filter[] = [
       type: FilterType.Text,
       parameter: "type",
       key: "type",
-      value: "Airborne",
+      value: "",
       comparisonType: "Equals"
     }
   ]
