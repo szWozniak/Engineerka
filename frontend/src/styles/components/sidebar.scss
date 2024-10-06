@@ -100,6 +100,10 @@
     & .container {
       padding: 5px;
     }
+
+    & footer {
+      flex-direction: column;
+    }
   }
 
   & button {
@@ -109,5 +113,15 @@
   & h3 {
     margin-bottom: 8px;
     margin-top: 8px;
+  }
+
+  & footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  & .recordUpdate {
+    font-size: 10px;
   }
 }
