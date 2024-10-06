@@ -27,7 +27,8 @@ const useDrones = () => {
     }, [flyingDronesWithTimestamp, drones])
 
     return {
-        flyingDronesWithTimestamp: flyingDronesWithTimestamp,
+        flyingDrones: flyingDronesWithTimestamp?.flyingDrones,
+        timestamp: {date: flyingDronesWithTimestamp?.date, time: flyingDronesWithTimestamp?.time},
         allDrones: allDrones,
         selectedDrone: selectedDrone || null,
         selectDrone: drones.selectDroneRegistration

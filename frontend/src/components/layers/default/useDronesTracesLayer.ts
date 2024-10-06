@@ -3,14 +3,14 @@ import { droneTrace } from "../types/lines"
 import useDrones from "../../../drones/useCases/useDrones";
 
 const useDronesTracesLayer = () => {
-  const {flyingDronesWithTimestamp, selectedDrone} = useDrones();
+  const {flyingDrones, selectedDrone} = useDrones();
 
   const mapPositionsToTraces = (): droneTrace[] => {
-    if (flyingDronesWithTimestamp === undefined) return [];
+    if (flyingDrones === undefined) return [];
 
     const traces: droneTrace[] = [];
 
-    flyingDronesWithTimestamp?.flyingDrones?.forEach((drone, index) => {
+    flyingDrones?.forEach((drone, index) => {
       const trace = (drone.registrationNumber === selectedDrone?.registrationNumber) ? selectedDrone.trace : drone.trace
 
       if (trace.length === 0) { return []}
