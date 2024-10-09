@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: dronhub
+      MYSQL_USER: dronhub
+      MYSQL_PASSWORD: passwd
+      MYSQL_ROOT_PASSWORD: passwd
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app-network
+
+  backend:
+    restart: on-failure
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+      - rabbitmq
+    environment:
+      DATABASE_URL: jdbc:mysql://mysql:3306/dronhub
+      DATABASE_USERNAME: dronhub
+      DATABASE_PASSWORD: passwd
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    volumes:
+      - shared_directory:/usr/shared_directory
+
+  simulator:
+    restart: on-failure
+    build:
+      context: simulator
+      dockerfile: Dockerfile
+    environment:
+      RABBITMQ_HOST: "rabbitmq"
+    networks:
+      - app-network
+    volumes:
+      - shared_directory:/usr/shared_directory
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+  shared_directory:
+
+networks:
+  app-network:
+    driver: bridge
