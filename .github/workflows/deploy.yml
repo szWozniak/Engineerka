@@ -1,4 +1,4 @@
-name: Java Test
+name: Build Docker Images
 
 on:
   pull_request:
