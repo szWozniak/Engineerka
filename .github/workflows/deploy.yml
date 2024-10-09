@@ -58,6 +58,46 @@ jobs:
       - name: Build Docker image
         working-directory: ./backend
         run: |
+          docker build . --file Dockerfile-dev --tag pejdzor/dronhub_backend_develop
+
+      - name: Tag with commit
+        run: docker image tag pejdzor/dronhub_backend_develop pejdzor/dronhub_backend_develop:${{github.sha}}
+
+      - name: Tag with latest
+        run: docker image tag pejdzor/dronhub_backend_develop pejdzor/dronhub_backend_develop:latest
+
+      - name: Push docker image
+        run: docker push pejdzor/dronhub_backend_develop:${{github.sha}}
+
+  build-backend-production:
+    if: github.event.pull_request.merged == true
+    needs: test-backend
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
+
+      - name: Build backend
+        working-directory: ./backend
+        run: ./gradlew clean build
+
+      - name: Docker login
+        env:
+          DOCKER_USERNAME: ${{ secrets.dockerhub_username }}
+          DOCKER_PASSWORD: ${{ secrets.dockerhub_password }}
+        run: docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" docker.io
+
+      - name: Build Docker image
+        working-directory: ./backend
+        run: |
           docker build . --file Dockerfile-dev --tag pejdzor/dronhub_backend
 
       - name: Tag with commit
