@@ -26,6 +26,7 @@
       "operator": "Operator",
       "battery": "Bateria",
       "model": "Model",
+      "type": "Tylko latające",
       "state": "Stan drona"
     },
     "flight": {

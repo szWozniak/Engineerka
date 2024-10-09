@@ -51,6 +51,13 @@ export const defaultFiltersState: Filter[] = [
       comparisonType: "LesserThan"
     },
     {
+      type: FilterType.Text,
+      parameter: "operator",
+      key: "operator",
+      value: "",
+      comparisonType: "Equals"
+    },
+    {
       type: FilterType.Number,
       parameter: "fuel",
       key: "minFuel",
@@ -70,5 +77,12 @@ export const defaultFiltersState: Filter[] = [
       key: "model",
       value: "",
       comparisonType: "Contains"
+    },
+    {
+      type: FilterType.Text,
+      parameter: "type",
+      key: "type",
+      value: "",
+      comparisonType: "Equals"
     }
   ]

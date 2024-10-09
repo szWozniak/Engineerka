@@ -359,21 +359,67 @@ public class CurrentlyFlyingDronesIntegrationTests {
         Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
     }
 
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheOperatorFilter(){
+        //prepare database
+        setupDatabase(
+                List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("2").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
+        );
+
+        var filter = new TextFilter("operator", "operatorToBeFound", ComparisonType.Contains);
+
+        //act
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+
+        //assert
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
+    }
+
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheTypeFilter(){
+        //prepare database
+        setupDatabase(
+                List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("2").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
+        );
+
+        var filter = new TextFilter("type", "Airborne", ComparisonType.Contains);
+
+        //act
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+
+        //assert
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
+    }
+
 
     private void setupDatabase(List<FlightRecordEntity> flightRecordsToBeFound,
                                List<FlightRecordEntity> flightRecordsNotToBeFound,
                                List<FlightRecordEntity> flightRecordsForNotFlyingDrone
     ){
-        persistDroneWithFlightRecord(flightRecordsToBeFound, "flyingDroneToBeFound", true, "modelToBeFound");
-        persistDroneWithFlightRecord(flightRecordsNotToBeFound, "flyingDroneNotToBeFound", true, "modelNotToBeFound");
+        persistDroneWithFlightRecord(flightRecordsToBeFound, "flyingDroneToBeFound",
+                true, "modelToBeFound", "operatorToBeFound", "Airborne");
+        persistDroneWithFlightRecord(flightRecordsNotToBeFound, "flyingDroneNotToBeFound",
+                true, "modelNotToBeFound", "operatorNotToBeFound", "Grounded");
 
         var flyingDroneWithNoRecord = new DroneEntityFixtureBuilder().withRegistrationNumber("flyingDroneWithNoRecords").build();
         fakeDb.persistAndFlush(flyingDroneWithNoRecord);
 
-        persistDroneWithFlightRecord(flightRecordsForNotFlyingDrone, "notFlyingDroneWithRecords", false, "modelToBeFound");
+        persistDroneWithFlightRecord(flightRecordsForNotFlyingDrone, "notFlyingDroneWithRecords",
+                false, "modelToBeFound", "operatorToBeFound", "Grounded");
     }
 
-    private void persistDroneWithFlightRecord(List<FlightRecordEntity> flightRecords, String droneRegNumber, boolean isFlying, String model){
+    private void persistDroneWithFlightRecord(List<FlightRecordEntity> flightRecords,
+                                              String droneRegNumber,
+                                              boolean isFlying,
+                                              String model,
+                                              String operator,
+                                              String type){
         for (var flightRecord : flightRecords){
             fakeDb.persistAndFlush(flightRecord);
         }
@@ -383,6 +429,8 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 .withIsAirbourne(isFlying)
                 .withFlyingRecords(flightRecords)
                 .withModel(model)
+                .withOperator(operator)
+                .withType(type)
                 .build();
         fakeDb.persistAndFlush(drone);
 
