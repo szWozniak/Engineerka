@@ -15,9 +15,9 @@ const MenuDropdown = ({
   setOpened
 }: MenuDropdownProps) => {
   return (
-    <div className={`menuDropdown${disabled ? " disabled" : ""}`} onClick={() => {
-      setOpened(!opened)
-    }}>
+    <div className={`menuDropdown${disabled ? " disabled" : ""}`} onClick={!disabled ? () => {
+        setOpened(!opened)
+    } : undefined}>
       {opened ? <ArrowDownIcon /> : <ArrowRightIcon />}
       {label}
     </div>
