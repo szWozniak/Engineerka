@@ -57,10 +57,14 @@ jobs:
 
       - name: Build Docker image
         working-directory: ./backend
-        run: docker build . --file Dockerfile-dev --tag pejdzor/dronhub_backend
+        run: |
+          docker build . --file Dockerfile-dev --tag pejdzor/dronhub_backend
 
       - name: Tag with commit
         run: docker image tag pejdzor/dronhub_backend pejdzor/dronhub_backend:${{github.sha}}
+
+      - name: Tag with latest
+        run: docker image tag pejdzor/dronhub_backend pejdzor/dronhub_backend:latest
 
       - name: Push docker image
         run: docker push pejdzor/dronhub_backend:${{github.sha}}
