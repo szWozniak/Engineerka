@@ -128,7 +128,7 @@ const BottomMenu: React.FC<Props> = ({
       >
         {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>
-      {areFiltersOpen && <FilterSection 
+      {areFiltersOpen && detailedFlight.trackedFlight === undefined && <FilterSection 
         isOpen={areFiltersOpen}
         applyFilters={applyFilters}
         resetFilters={resetFilters}

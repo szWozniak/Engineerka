@@ -41,6 +41,11 @@ body {
   svg {
     fill: currentColor;
   }
+
+  &.disabled {
+    color: $lighter-grey;
+    cursor: not-allowed;
+  }
 }
 
 .overlay {

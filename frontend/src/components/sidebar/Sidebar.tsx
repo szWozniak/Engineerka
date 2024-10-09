@@ -4,6 +4,7 @@ import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
 import useDrones from '../../drones/useCases/useDrones';
 import { useTranslation } from 'react-i18next';
+import useFlights from '../../flights/useCases/useFlights';
 
 interface Props{
   toggleFiltersVisibility: () => void;
@@ -15,6 +16,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
   const [opened, setOpened] = useState<boolean>(true);
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
   const {flyingDrones, timestamp, selectedDrone, selectDrone} = useDrones();
+  const {detailedFlight} = useFlights()
 
   const renderViewChangeButtons = () => {
     if (selectedDrone) {
@@ -38,6 +40,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
           <MenuDropdown
             label={t("general.filters")}
             opened={openedMenu === 1}
+            disabled={detailedFlight.trackedFlight !== undefined}
             setOpened={toggleFiltersVisibility}
           />
           <MenuDropdown
