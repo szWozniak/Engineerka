@@ -4,7 +4,7 @@ on:
   - push
 
 jobs:
-  build-java:
+  test-java-branch:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -24,7 +24,7 @@ jobs:
         working-directory: ./backend
         run: ./gradlew test
 
-  test-frontend:
+  test-frontend-branch:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -42,12 +42,7 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
----
-name: Java Test
-on:
-  - pull_request
-jobs:
-  test-frontend:
+  test-frontend-pr:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -73,7 +68,7 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-  test-backend:
+  test-backend-pr:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
