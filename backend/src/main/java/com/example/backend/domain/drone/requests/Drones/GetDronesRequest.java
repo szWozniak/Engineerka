@@ -13,4 +13,5 @@ public record GetDronesRequest(
         List<TextFilterEntry> textFilters,
         @NotNull
         @Valid
-        List<NumberFilterEntry> numberFilters){}
+        List<NumberFilterEntry> numberFilters
+){}

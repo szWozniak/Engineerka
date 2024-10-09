@@ -7,7 +7,7 @@ import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
 import com.example.backend.domain.drone.filtering.filters.TextFilter;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
-import com.example.backend.unit.domain.drone.DroneEntityFixture;
+import com.example.backend.unit.domain.drone.DroneEntityFixtureBuilder;
 import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixtureBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -73,9 +73,10 @@ public class DronesIntegrationTests {
                 .build();
         fakeDb.persistAndFlush(flightRecord);
 
-        var drone = isFlying ?
-                DroneEntityFixture.getFlyingDrone(List.of(flightRecord), droneRegNumber) :
-                DroneEntityFixture.getNotFlyingDrone(List.of(flightRecord), droneRegNumber);
+        var drone = new DroneEntityFixtureBuilder()
+                .withRegistrationNumber(droneRegNumber)
+                .withFlyingRecords(List.of(flightRecord))
+                .withIsAirbourne(isFlying).build();
         fakeDb.persistAndFlush(drone);
 
         flightRecord.setDrone(drone);

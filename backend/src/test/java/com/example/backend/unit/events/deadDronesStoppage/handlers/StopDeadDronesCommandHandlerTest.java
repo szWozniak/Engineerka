@@ -6,7 +6,7 @@ import com.example.backend.domain.flight.FlightService;
 import com.example.backend.events.deadDronesStoppage.commands.StopDeadDronesCommand;
 import com.example.backend.events.deadDronesStoppage.handlers.StopDeadDronesCommandHandler;
 import com.example.backend.simulatorIntegration.model.DroneFromSimulator;
-import com.example.backend.unit.domain.drone.DroneEntityFixture;
+import com.example.backend.unit.domain.drone.DroneEntityFixtureBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -33,7 +33,7 @@ public class StopDeadDronesCommandHandlerTest {
     public void ShouldStopDrones_AndCreateFlights_ForNotReceivedDroneThatIsCurrentlyFlying(){
         var drones = new ArrayList<DroneFromSimulator>();
         var command = new StopDeadDronesCommand(drones);
-        var drone = List.of(DroneEntityFixture.getFlyingDrone(new ArrayList<>(),"AAS421"));
+        var drone = List.of(new DroneEntityFixtureBuilder().withRegistrationNumber("AAS421").withIsAirbourne(true).build());
 
         Mockito.when(droneService.findAndStopDronesThatShouldStopFlying(Mockito.any())).thenReturn(drone);
 

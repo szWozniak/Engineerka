@@ -8,14 +8,13 @@ __check_defined = \
     $(error Undefined $1$(if $2, ($2)) Please set environtment variable or run in development mode with 'make develop'))
 	
 
-all: check-variables clear-docker kill-tmux clean check-deps start-rabbitmq run-backend run-frontend run-simulator
+all: check-variables clear-docker clean check-deps start-rabbitmq run-backend run-frontend run-simulator
 	echo "Started application in production mode."
 
 check-variables:
 	$(call check_defined, DATABASE_URL)
 	$(call check_defined, DATABASE_USERNAME)
 	$(call check_defined, DATABASE_PASSWORD)
-
 
 check-deps:
 	@echo "Checking dependencies..."
@@ -24,7 +23,6 @@ check-deps:
 	@$(MAKE) check-gradle
 	@$(MAKE) check-python
 	@$(MAKE) check-pip
-	@$(MAKE) check-tmux
 	@echo "Dependencies satisfied. You are good to go <3"
 
 check-docker:
@@ -88,15 +86,6 @@ check-pip:
 		fi \
 	fi
 
-check-tmux:
-	@echo "Checking tmux"
-	@if command -v tmux > /dev/null; then \
-		echo "tmux found :)"; \
-	else \
-		echo "tmux not found"; \
-		echo "Please install tmux to run DronHub"; \
-	fi
-
 build-frontend:
 	@echo "Building frontend..."
 	cd frontend && npm install && npm run build
@@ -104,15 +93,19 @@ build-frontend:
 
 run-frontend: build-frontend
 	@echo "Starting frontend"
-	tmux new-session -s frontend -d 'cd frontend && npx serve -s build -l 80'
+	cd frontend && npx serve -s build -l 80
 
 run-backend-develop:
 	@echo "Starting backend in development mode. Have fun :D "
-	tmux new-session -s backend "cd backend && $(GRADLE) run --args='--spring.profiles.active=develop'"
+	cd backend && $(GRADLE) run --args='--spring.profiles.active=develop' &
 
 run-backend:
-	echo "Starting backend in production mode. Behold the power of DronHub <3"
-	tmux new-session -s backend  -d "cd backend && $(GRADLE) run --args='--spring.profiles.active=prod'"
+	@echo "Starting backend in production mode. Behold the power of DronHub <3"
+	cd backend && $(GRADLE) run --args='--spring.profiles.active=prod'
+
+build-backend:
+	@echo "Building Spring Boot Porject"
+	cd ./backend && $(GRADLE) build
 
 check-python-deps:
 	@echo "Cheking python dependencies"
@@ -123,9 +116,9 @@ check-python-deps:
 	fi
 	@echo "All dependencies satisfied :>"
 
-run-simulator: check-python-deps
+run-simulator: check-pip check-python check-python-deps
 	@echo "Starting simulator. Watch out, Pythons can bite."
-	tmux new-session -s simulator -d "cd simulator && python3 simulator.py"
+	cd simulator && python3 simulator.py &
 
 clear-docker:
 	@if docker container ls | grep 'dronhub_rabbitmq'; then \
@@ -144,30 +137,23 @@ clear-docker:
 			docker container rm dronhub_mysql; \
 		fi \
 	fi
-	
-start-rabbitmq: 
+	docker-compose -f docker-compose-develop.yaml down
+
+start-rabbitmq:
 	docker pull rabbitmq:3-management
 	docker run -d --name dronhub_rabbitmq -p 5672:5672 -p 5673:5673 -p 15672:15672 rabbitmq:3-management
 
 start-mysql:
 	docker pull mysql
-	docker run -d --name dronhub_mysql -e MYSQL_ROOT_PASSWORD=passwd -e MYSQL_USER=dronhub -e MYSQL_PASSWORD=passwd -e MYSQL_DATABASE=dronhub -p 3306:3306 mysql 
+	docker run -d --name dronhub_mysql -p 3306:3306 mysql
 
-develop: kill-tmux clear-docker start-rabbitmq start-mysql run-frontend run-simulator run-backend-develop
+develop: clear-docker start-rabbitmq start-mysql run-frontend run-simulator run-backend-develop
 	echo "Started application in development mode."
 
-clean:
+start-develop: clean build-frontend build-backend
+	docker-compose -f docker-compose-develop.yaml up -d
+
+clean: clear-docker
 	rm -rf backend/build/
 	rm -rf frontend/build/
 	rm -rf shared_folder/*
-
-kill-tmux:
-	@if tmux ls | grep frontend; then\
-		tmux kill-session -t frontend;\
-	fi
-	@if tmux ls | grep backend; then \
-		tmux kill-session -t backend; \
-	fi
-	@if tmux ls | grep simulator; then \
-		tmux kill-session -t simulator; \
-	fi		

@@ -9,7 +9,7 @@ import com.example.backend.domain.drone.filtering.filters.TextFilter;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
-import com.example.backend.unit.domain.drone.DroneEntityFixture;
+import com.example.backend.unit.domain.drone.DroneEntityFixtureBuilder;
 import com.example.backend.unit.domain.flightRecord.FlightRecordEntityFixtureBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -180,7 +180,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
         );
 
-        var filter = new TextFilter("registrationNumber", "flyingDroneToBeFound", ComparisonType.Equals);
+        var filter = new TextFilter("registrationNumber", "flyingDroneToBeFound", ComparisonType.Contains);
         List<IDroneFilter> filters = new ArrayList<>();
         filters.add(filter);
         var result = droneService.getCurrentlyFlyingDrones(filters);
@@ -340,45 +340,98 @@ public class CurrentlyFlyingDronesIntegrationTests {
         Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
     }
 
-//    @Test
-//    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheModelFilter(){
-//        //prepare database
-//        setupDatabase(
-//                List.of(new FlightRecordEntityFixtureBuilder().build()),
-//                List.of(new FlightRecordEntityFixtureBuilder().build()),
-//                List.of(new FlightRecordEntityFixtureBuilder().build())
-//        );
-//
-//        var filter = new TextFilter("model", "modelToFind", ComparisonType.GreaterThan);
-//
-//        //act
-//        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
-//
-//        //assert
-//        Assertions.assertEquals(1, result.size());
-//        Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
-//    }
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheModelFilter(){
+        //prepare database
+        setupDatabase(
+                List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("2").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
+        );
+
+        var filter = new TextFilter("model", "modelToBeFound", ComparisonType.Contains);
+
+        //act
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+
+        //assert
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
+    }
+
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheOperatorFilter(){
+        //prepare database
+        setupDatabase(
+                List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("2").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
+        );
+
+        var filter = new TextFilter("operator", "operatorToBeFound", ComparisonType.Contains);
+
+        //act
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+
+        //assert
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
+    }
+
+    @Test
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheTypeFilter(){
+        //prepare database
+        setupDatabase(
+                List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("2").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
+        );
+
+        var filter = new TextFilter("type", "Airborne", ComparisonType.Contains);
+
+        //act
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+
+        //assert
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
+    }
 
 
     private void setupDatabase(List<FlightRecordEntity> flightRecordsToBeFound,
                                List<FlightRecordEntity> flightRecordsNotToBeFound,
                                List<FlightRecordEntity> flightRecordsForNotFlyingDrone
     ){
-        persistDroneWithFlightRecord(flightRecordsToBeFound, "flyingDroneToBeFound", true);
-        persistDroneWithFlightRecord(flightRecordsNotToBeFound, "flyingDroneNotToBeFound", true);
-        var flyingDroneWithNoRecord = DroneEntityFixture.getFlyingDrone(new ArrayList<>(), "flyingDroneWithNoRecords");
+        persistDroneWithFlightRecord(flightRecordsToBeFound, "flyingDroneToBeFound",
+                true, "modelToBeFound", "operatorToBeFound", "Airborne");
+        persistDroneWithFlightRecord(flightRecordsNotToBeFound, "flyingDroneNotToBeFound",
+                true, "modelNotToBeFound", "operatorNotToBeFound", "Grounded");
+
+        var flyingDroneWithNoRecord = new DroneEntityFixtureBuilder().withRegistrationNumber("flyingDroneWithNoRecords").build();
         fakeDb.persistAndFlush(flyingDroneWithNoRecord);
-        persistDroneWithFlightRecord(flightRecordsForNotFlyingDrone, "notFlyingDroneWithRecords", false);
+
+        persistDroneWithFlightRecord(flightRecordsForNotFlyingDrone, "notFlyingDroneWithRecords",
+                false, "modelToBeFound", "operatorToBeFound", "Grounded");
     }
 
-    private void persistDroneWithFlightRecord(List<FlightRecordEntity> flightRecords, String droneRegNumber, boolean isFlying){
+    private void persistDroneWithFlightRecord(List<FlightRecordEntity> flightRecords,
+                                              String droneRegNumber,
+                                              boolean isFlying,
+                                              String model,
+                                              String operator,
+                                              String type){
         for (var flightRecord : flightRecords){
             fakeDb.persistAndFlush(flightRecord);
         }
 
-        var drone = isFlying ?
-                DroneEntityFixture.getFlyingDrone(flightRecords, droneRegNumber) :
-                DroneEntityFixture.getNotFlyingDrone(flightRecords, droneRegNumber);
+        var drone = new DroneEntityFixtureBuilder()
+                .withRegistrationNumber(droneRegNumber)
+                .withIsAirbourne(isFlying)
+                .withFlyingRecords(flightRecords)
+                .withModel(model)
+                .withOperator(operator)
+                .withType(type)
+                .build();
         fakeDb.persistAndFlush(drone);
 
         for (var flightRecord : flightRecords){

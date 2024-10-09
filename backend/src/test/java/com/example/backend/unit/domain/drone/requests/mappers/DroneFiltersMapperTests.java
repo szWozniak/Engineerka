@@ -17,7 +17,7 @@ import java.util.List;
 public class DroneFiltersMapperTests {
 
     @ParameterizedTest
-    @ValueSource(strings = {"Equals"})
+    @ValueSource(strings = {"Equals", "Contains"})
     public void ShouldProperlyMap_TextFilter(){
         var textFilterEntry = new TextFilterEntry("registrationNumber", "whatever", "Johnny", "Equals");
 
@@ -53,7 +53,7 @@ public class DroneFiltersMapperTests {
 
 
     @ParameterizedTest
-    @ValueSource(strings = {"ZlyEnum"})
+    @ValueSource(strings = {"ZlyEnum", "Contains"})
     public void ShouldThrowException_WhenInvalidNumberFilter(String comparisonType){
         var numberFilterEntry = new NumberFilterEntry("registrationNumber", "whatever", 69, comparisonType);
 

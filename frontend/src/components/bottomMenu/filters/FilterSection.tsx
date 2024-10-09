@@ -7,6 +7,9 @@ import LongitudeFilter from "./concreteFilters/LongitudeFilter";
 import { useTranslation } from 'react-i18next';
 import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from "../../../filters/types";
 import useRefreshKey from "../../../common/useRefreshKey";
+import OperatorFilter from "./concreteFilters/OperatorFilter";
+import Toggle from "../../../common/components/Toggle";
+import TypeFilter from "./concreteFilters/TypeFilter";
 
 interface props{
   isOpen: boolean,
@@ -44,28 +47,10 @@ const FilterSection: React.FC<props> = ({
       <div className="filterContainer">
         <b>{t("general.filters")}</b>
         <div className="filters" key={refreshKey}>
-          <div className='multipleFiltersContainer'>
-            <RegistrationNumberFilter
-              value={getTextFilter("registrationNumber").value}
-              onChange={(value) => onTextFilterChange("registrationNumber", value)}
-              onReset={() => onTextFilterReset("registrationNumber")}
-            />
-            <ModelFilter
-              value={getTextFilter("model").value}
-              onChange={(value) => onTextFilterChange("model", value)}
-              onReset={() => onTextFilterReset("model")}
-            />
-          </div>
-          
-          <AltitudeFilter
-            minValue={getNumberFilter("minAltitude").value}
-            maxValue={getNumberFilter("maxAltitude").value}
-            onMinValueChange={(value) => {
-              onNumberFilterChange("minAltitude", value)
-            }}
-            onMaxValueChange={(value) => onNumberFilterChange("maxAltitude", value)}
-            onMinValueReset={() => onNumberFilterReset("minAltitude")}
-            onMaxValueReset={() => onNumberFilterReset("maxAltitude")}
+          <RegistrationNumberFilter
+            value={getTextFilter("registrationNumber").value}
+            onChange={(value) => onTextFilterChange("registrationNumber", value)}
+            onReset={() => onTextFilterReset("registrationNumber")}
           />
           <LatitudeFilter
             minValue={getNumberFilter("minLatitude").value}
@@ -83,6 +68,21 @@ const FilterSection: React.FC<props> = ({
             onMinValueReset={() => onNumberFilterReset("minLongitude")}
             onMaxValueReset={() => onNumberFilterReset("maxLongitude")}
           />
+          <AltitudeFilter
+            minValue={getNumberFilter("minAltitude").value}
+            maxValue={getNumberFilter("maxAltitude").value}
+            onMinValueChange={(value) => {
+              onNumberFilterChange("minAltitude", value)
+            }}
+            onMaxValueChange={(value) => onNumberFilterChange("maxAltitude", value)}
+            onMinValueReset={() => onNumberFilterReset("minAltitude")}
+            onMaxValueReset={() => onNumberFilterReset("maxAltitude")}
+          />
+          <OperatorFilter
+            value={getTextFilter("operator").value}
+            onChange={(value) => onTextFilterChange("operator", value)}
+            onReset={() => onTextFilterReset("operator")}
+          />
           <FuelFilter
             minValue={getNumberFilter("minFuel").value}
             maxValue={getNumberFilter("maxFuel").value}
@@ -90,6 +90,15 @@ const FilterSection: React.FC<props> = ({
             onMaxValueChange={(value) => onNumberFilterChange("maxFuel", value)}
             onMinValueReset={() => onNumberFilterReset("minFuel")}
             onMaxValueReset={() => onNumberFilterReset("maxFuel")}
+          />
+          <ModelFilter
+            value={getTextFilter("model").value}
+            onChange={(value) => onTextFilterChange("model", value)}
+            onReset={() => onTextFilterReset("model")}
+          />
+          <TypeFilter
+            onChange={(value) => onTextFilterChange("type", value)}
+            value={getTextFilter("type").value}
           />
         </div>
         <div className="actionContainer">

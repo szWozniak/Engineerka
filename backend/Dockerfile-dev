@@ -1,0 +1,8 @@
+FROM openjdk:17
+
+COPY ./build/ /usr/dronhub
+
+WORKDIR /usr/dronhub
+
+CMD ["java", "-Dspring.profiles.active=develop" ,"-jar", "./libs/dronhub_backend-0.0.1-SNAPSHOT.jar"]
+EXPOSE 8080
