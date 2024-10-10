@@ -40,6 +40,7 @@ const App = () => {
     <div>
       <div className="overlay">
         <Sidebar 
+          areFiltersOpened={visibility.areOpen}
           toggleFiltersVisibility={visibility.toggleVisibility}
         />
         <BottomMenu 

@@ -3,21 +3,18 @@ import { useState } from 'react';
 type MenuDropdownProps = {
   label: string
   icon: JSX.Element
+  opened: boolean
   onClick: () => void
 }
 
 const MenuDropdown = ({
   label,
   icon,
+  opened,
   onClick
 }: MenuDropdownProps) => {
-  const [opened, setOpened] = useState<boolean>(false);
-
   return (
-    <div className={`menuDropdown${opened ? " menuActive" : ""}`} onClick={() => {
-      setOpened(prev => !prev);
-      onClick();
-    }}>
+    <div className={`menuDropdown${opened ? " menuActive" : ""}`} onClick={onClick}>
       {icon}
       <span className="label">{label}</span>
     </div>

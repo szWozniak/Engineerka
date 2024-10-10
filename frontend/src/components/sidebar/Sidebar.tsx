@@ -10,12 +10,12 @@ import { IoClose } from "react-icons/io5";
 import { FiCornerDownRight } from "react-icons/fi";
 import { MdLanguage } from "react-icons/md";
 
-
 interface Props{
+  areFiltersOpened: boolean
   toggleFiltersVisibility: () => void;
 }
 
-const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
+const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened }) => {
   const {t, i18n} = useTranslation();
 
   const [opened, setOpened] = useState<boolean>(true);
@@ -37,11 +37,13 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
           <MenuDropdown
             icon={<IoFilterSharp />}
             label={t("general.filters")}
+            opened={areFiltersOpened}
             onClick={toggleFiltersVisibility}
           />
           <MenuDropdown
             icon={<MdFlightTakeoff />}
             label={t("general.flyingDrones")}
+            opened={openedFlyingDrones}
             onClick={() => setOpenedFlyingDrones(prev => !prev)}
           />
           {openedFlyingDrones && <div className="menuEntries">
@@ -58,6 +60,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
           <MenuDropdown
             icon={<MdLanguage />}
             label={t("general.language.title")}
+            opened={openedLanguageMenu}
             onClick={() => setOpenedLanguageMenu(prev => !prev)}
           />
           {openedLanguageMenu && <div className="menuEntries">

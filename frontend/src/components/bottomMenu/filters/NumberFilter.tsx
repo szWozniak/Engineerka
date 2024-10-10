@@ -23,8 +23,6 @@ const NumberFilter: React.FC<Props> = ({label, value, onChange, onReset}) => {
     onChange(numberValue)
   }
 
-  console.log(value)
-
   const displayValue = useMemo(() => value, [value])
 
   return (
