@@ -154,6 +154,14 @@
     & button {
       height: 35px;
     }
+
+    .clear-icon {
+      height: auto;
+
+      svg {
+        padding-top: 1px;
+      }
+    }
   }
 
   & .tableBox {
@@ -311,7 +319,7 @@ input[type="range"] {
 }
 
 input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

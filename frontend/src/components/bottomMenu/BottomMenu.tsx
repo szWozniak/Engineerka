@@ -119,7 +119,7 @@ const BottomMenu: React.FC<Props> = ({
   return (
     <div 
       className={`bottomMenu ${isOpened && 'opened'}`}
-      style={{"transform": `translateY(${isOpened ? 0 : (size)}px)`}}
+      style={{"transform": `translateY(${isOpened ? 0 : size}px)`}}
     >
       <div 
         className="shadowArea" 
