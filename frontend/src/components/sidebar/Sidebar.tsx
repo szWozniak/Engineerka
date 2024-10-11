@@ -1,73 +1,94 @@
 import React, { useState } from 'react';
 import { Drone } from '../../drones/types'
-import { CloseIcon } from '../icons/CloseIcon';
 import MenuDropdown from './MenuDropdown';
 import useDrones from '../../drones/useCases/useDrones';
 import { useTranslation } from 'react-i18next';
+import { MdCloseFullscreen } from "react-icons/md";
+import { IoFilterSharp } from "react-icons/io5";
+import { MdFlightTakeoff } from "react-icons/md";
+import { IoClose } from "react-icons/io5";
+import { FiCornerDownRight } from "react-icons/fi";
+import { MdLanguage } from "react-icons/md";
 
 interface Props{
+  areFiltersOpened: boolean
   toggleFiltersVisibility: () => void;
 }
 
-const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility }) => {
-  const {t} = useTranslation();
+const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened }) => {
+  const {t, i18n} = useTranslation();
 
   const [opened, setOpened] = useState<boolean>(true);
-  const [openedMenu, setOpenedMenu] = useState<number | null>(null);
+  const [openedFlyingDrones, setOpenedFlyingDrones] = useState<boolean>(false);
+  const [openedLanguageMenu, setOpenedLanguageMenu] = useState<boolean>(false);
   const {flyingDrones, timestamp, selectedDrone, selectDrone} = useDrones();
-
-  const renderViewChangeButtons = () => {
-    if (selectedDrone) {
-      return (<button className="sidebarButton" onClick={() => selectDrone(null)}>Reset selection</button>)
-    }
-
-    return <></>
-  }
 
   return (
     <div className={`sidebar ${opened ? 'opened' : 'closed'}`}>
       <div className="header">
         <img className="logo" alt="logo" src={`assets/logo${!opened ? 'Small' : ''}.png`} onClick={() => !opened && setOpened(true)} />
         <button className="closeButton" onClick={() => setOpened(prev => !prev)}>
-          <CloseIcon />
+          <MdCloseFullscreen />
         </button>
       </div>
       <div className="scrollable">
         <div className="container">
           <h3>{t("general.menu")}</h3>
           <MenuDropdown
+            icon={<IoFilterSharp />}
             label={t("general.filters")}
-            opened={openedMenu === 1}
-            setOpened={toggleFiltersVisibility}
+            opened={areFiltersOpened}
+            onClick={toggleFiltersVisibility}
           />
           <MenuDropdown
+            icon={<MdFlightTakeoff />}
             label={t("general.flyingDrones")}
-            opened={openedMenu === 2}
-            setOpened={(opened) => {
-              opened ? setOpenedMenu(2) : setOpenedMenu(null)
-            }}
+            opened={openedFlyingDrones}
+            onClick={() => setOpenedFlyingDrones(prev => !prev)}
           />
-          {openedMenu === 2 && <div className="droneEntries">
+          {openedFlyingDrones && <div className="menuEntries">
             {flyingDrones?.map((drone: Drone, index) => (
-              <div key={index} className="droneEntry" onClick={() => {
+              <div key={index} className="menuEntry" onClick={() => {
                 selectDrone(drone.registrationNumber)
               }}>
+                <FiCornerDownRight />
                 <span>{drone.registrationNumber} </span>
                 <span className="extraLabel">{drone.type}</span>
               </div>
             ))}
-          </div>} 
+          </div>}
+          <MenuDropdown
+            icon={<MdLanguage />}
+            label={t("general.language.title")}
+            opened={openedLanguageMenu}
+            onClick={() => setOpenedLanguageMenu(prev => !prev)}
+          />
+          {openedLanguageMenu && <div className="menuEntries">
+            <div className="menuEntry languageEntry" onClick={() => {
+              i18n.changeLanguage("pl")
+            }}>
+              <FiCornerDownRight /> <img src={`https://flagsapi.com/PL/shiny/64.png`} /> <span>{t("general.language.polish")}</span>
+            </div>
+            <div className="menuEntry languageEntry" onClick={() => {
+              i18n.changeLanguage("en")
+            }}>
+              <FiCornerDownRight /> <img src={`https://flagsapi.com/GB/shiny/64.png`} /> <span>{t("general.language.english")}</span>
+            </div>
+          </div>}
         </div>
-        <div className="container">
-          {selectedDrone && <div>
-            <div>{t("general.selectedDrone")}: {selectedDrone.registrationNumber}</div>
+        {selectedDrone && (<div className="container selectedDrone">
+          <button className="closeButton" onClick={() => selectDrone(null)}>
+            <IoClose />
+          </button>
+          <h3>{t("general.headers.info")}</h3>
+          <div>
+            <div>{t("details.drone.registration")}: <b>{selectedDrone.registrationNumber}</b></div>
             <div>{t("geo.latitude")}: <b>{selectedDrone.currentPosition.latitude.toFixed(4)}</b></div>
             <div>{t("geo.longitude")}: <b>{selectedDrone.currentPosition.longitude.toFixed(4)}</b></div>
             <div>{t("geo.direction")}: <b>{selectedDrone.heading}</b></div>
             <div>{t("geo.altitude")}: <b>{selectedDrone.currentPosition.altitude}</b></div>
-            {renderViewChangeButtons()}
-          </div>}
-        </div>  
+          </div>
+        </div>)}
       </div>
       <footer className="container">
         <span>{t("general.domain")} &copy; 2024</span>

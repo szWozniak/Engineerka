@@ -29,13 +29,17 @@
     align-items: center;
     flex-direction: column;
     width: 100%;
+
+    & svg {
+      margin-bottom: 20px;
+    }
   }
 
   & .filters{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    column-gap: 20px;
+    gap: 20px;
     flex-wrap: wrap;
     padding-top: 15px;
 
@@ -55,37 +59,43 @@
       font-size: 16px;
 
       & .clear-icon {
-        font-variation-settings:
-          'FILL' 0,
-          'wght' 400,
-          'GRAD' 0,
-          'opsz' 24
-        ;
-        font-size: 25px;
-        color: gray;
-        transform: translate3D(-50px, -1px, 0px);
-        cursor: pointer;
-        height: fit-content;
-        width: fit-content;
+        position: absolute;
+        right: 3px;
+        padding: 2px;
+        border-radius: 50%;
+        margin: 0;
+        line-height: 0;
+        background: none;
+        border: none;
+
+        svg {
+          margin-bottom: 0;
+          scale: 1;
+          color: white;
+        }
       }
 
       & .clear-icon:hover {
-        color: rgb(152, 152, 152);
+        background-color: rgba(149, 255, 0, 0.176);
+        cursor: pointer;
+
+        svg {
+          color: rgb(147, 221, 43);
+        }
       }
 
       & .concreteFilter{
-        background-color: $lighter-grey;
-        border-radius: 5px; 
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 10px; 
         height: 30px;
         width: 18 0px;
-        border: 1px solid rgb(154, 154, 154);
-        
-        //rgb(221, 217, 217)
+        border: 1px solid #3c4044;
         color: white;
-        font-size: 15px;
+        font-size: 16px;
+        padding-left: 10px;
 
         &:focus{
-          border: 1px solid $secondary;
+          border: 1px solid #5d646a;
           outline: none;
         }
       }
@@ -94,7 +104,11 @@
 
   & .filterSection {
     border-bottom: 1px solid $grey;
-  
+    
+    & .filterContainer {
+      padding: 10px;
+      padding-bottom: 0;
+    }
   }
   
 
@@ -103,8 +117,7 @@
     width: calc(100% - 1px);
     border-left: 1px solid $grey;
     font-size: 20px;
-    font-family: Righteous;
-    color: $secondary;
+    color: white;
     pointer-events: all;
     overflow-y: auto;
 
@@ -113,13 +126,17 @@
     }
   }
 
+  button {
+    height: 30px;
+  }
+
   svg {
     fill: currentColor;
     color: white;
-    margin-bottom: 30px;
-    scale: 1.5;
+    scale: 1.2;
     color: #ccc;
     pointer-events: all;
+    padding-top: 3px;
 
     &:hover {
       color: white;
@@ -131,15 +148,35 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    column-gap: 20px;
+    column-gap: 10px;
+    position: relative;
+
+    & button {
+      height: 35px;
+    }
+
+    .clear-icon {
+      height: auto;
+
+      svg {
+        padding-top: 1px;
+      }
+    }
+  }
+
+  & .tableBox {
+    border-radius: 10px;
+    padding: 0;
+    margin: 10px;
+    overflow: hidden;
   }
 
   & .droneTable {
-    font-family: Arial, Helvetica, sans-serif;
+    border-spacing: 0;
+    border-radius: 10px;
     font-size: 18px;
     color: $light-grey;
     width: 100%;
-    padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 
     & button {
@@ -148,12 +185,15 @@
       width: 45px;
     }
 
-    & .operator {
+    & .withIcon {
       display: flex;
-      justify-content: center;
       align-items: center;
-      gap: 5px;
+      gap: 10px;
       height: 100%;
+
+      svg {
+        margin-bottom: 0;
+      }
 
       & img {
         height: 30px;
@@ -168,17 +208,17 @@
 
     & td, th {
       font-size: 15px;
-      text-align: center;
-      padding-top: 5px;
-      padding-bottom: 5px;
+      text-align: left;
+      padding: 5px;
+      padding-left: 10px;
     }
 
     & tr:nth-child(odd) {
-      background-color: rgba(255, 255, 255, 0.15);
+      background-color: rgba(255, 255, 255, 0.05);
     }
 
     & tr:nth-child(even) {
-      background-color: rgba(255, 255, 255, 0.075);
+      background-color: rgba(0, 0, 0, 0.1);
     }
   }
 }
@@ -208,13 +248,20 @@ thead {
 
   & .controls {
     margin-bottom: 10px;
-    border-bottom: 1px solid rgb(82, 82, 82);
-    border-top: 1px solid rgb(82, 82, 82);
     display: flex;
     gap: 10px;
 
     & button {
+      height: 35px;
       font-size: 18px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+
+      & svg {
+        padding-bottom: 5px;
+      }
     }
   }
 }
@@ -232,7 +279,6 @@ thead {
   font-weight: 300;
   font-size: 16px;
   padding: 10px;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 input[type="range"] {
@@ -263,10 +309,17 @@ input[type="range"] {
   display: flex;
   justify-content: center;
   column-gap: 10px;
+
+  & h5 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
 }
 
 input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

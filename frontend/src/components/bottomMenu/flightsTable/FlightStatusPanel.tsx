@@ -4,6 +4,10 @@ import { TooltipProps, LegendProps } from 'recharts';
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import { DroneFlight } from '../../../flights/api/types';
 import { useTranslation } from 'react-i18next';
+import { MdFlightTakeoff } from "react-icons/md";
+import { FaListUl } from "react-icons/fa6";
+import { MdBatteryCharging90 } from "react-icons/md";
+import { FaChartLine } from "react-icons/fa";
 
 interface Props {
   selectDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>,
@@ -32,7 +36,7 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
             selectHighlightedFlightId(null)
             selectFlightId(null)
           }}
-        >✈️ {t("actions.backToDrones")}</button>
+        ><MdFlightTakeoff /> {t("actions.backToDrones")}</button>
         
         <button
           onClick={() => {
@@ -40,7 +44,7 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
             selectFlightId(null)
             selectTrackedPoint(0)
           }}
-        >📋 {t("actions.backToFlights")}</button>
+        ><FaListUl /> {t("actions.backToFlights")}</button>
       </div>
       <div className="chartContainer">
         <ResponsiveContainer height={200} width='100%'>
@@ -80,8 +84,8 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameT
   if (active && payload && payload.length) {
     return (
       <div className="tooltip">
-        📈 {t("geo.altitude")}: <b>{payload[0]?.value}m</b><br />
-        🔋 {t("details.drone.battery")}: <b>{payload[1]?.value}%</b>
+        <FaChartLine /> {t("geo.altitude")}: <b>{payload[0]?.value}m</b><br />
+        <MdBatteryCharging90 /> {t("details.drone.battery")}: <b>{payload[1]?.value}%</b>
       </div>
     );
   }
@@ -95,8 +99,8 @@ const CustomLegend = ({payload}: LegendProps) => {
   if (payload){
     return (
       <div className="legend">
-        <h5 style={{color: payload[0]?.color}}>📈 {t("geo.altitude")}</h5>
-        <h5 style={{color: payload[1]?.color}}>🔋 {t("details.drone.battery")}</h5>
+        <h5 style={{color: payload[0]?.color}}><FaChartLine /> {t("geo.altitude")}</h5>
+        <h5 style={{color: payload[1]?.color}}><MdBatteryCharging90 /> {t("details.drone.battery")}</h5>
       </div>
     )
   }

@@ -75,7 +75,7 @@ const BottomMenu: React.FC<Props> = ({
 
   const rednerFlightTrackingView = () => (
     <>
-      <span>{t("general.headers.tracking")}{flightsSummaries.droneRegistrationToShowFlightsFor}</span>
+      <span><b>{t("general.headers.tracking")}</b> {flightsSummaries.droneRegistrationToShowFlightsFor}</span>
       <FlightStatusPanel
         selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
         selectFlightId={detailedFlight.selectFlightId}
@@ -89,7 +89,7 @@ const BottomMenu: React.FC<Props> = ({
 
   const renderDroneFlightsView = () => (
     <>
-      <span>{t("general.headers.history")} {flightsSummaries.droneRegistrationToShowFlightsFor}</span>
+      <span><b>{t("general.headers.history")}</b> {flightsSummaries.droneRegistrationToShowFlightsFor}</span>
       <FlightsTable 
         flightSummaries={flightsSummaries.flightsSummaries}
         selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
@@ -110,7 +110,7 @@ const BottomMenu: React.FC<Props> = ({
 
     return (
       <>
-        <span>{t("general.headers.list")}</span>
+        <span><b>{t("general.headers.list")}</b></span>
         <BigTable />
       </>
     )
@@ -119,7 +119,7 @@ const BottomMenu: React.FC<Props> = ({
   return (
     <div 
       className={`bottomMenu ${isOpened && 'opened'}`}
-      style={{"transform": `translateY(${isOpened ? 0 : (size + 20)}px)`}}
+      style={{"transform": `translateY(${isOpened ? 0 : size}px)`}}
     >
       <div 
         className="shadowArea" 

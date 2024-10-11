@@ -1,23 +1,22 @@
-import { ArrowDownIcon } from '../icons/ArrowDownIcon';
-import { ArrowRightIcon } from '../icons/ArrowRightIcon';
+import { useState } from 'react';
 
 type MenuDropdownProps = {
   label: string
+  icon: JSX.Element
   opened: boolean
-  setOpened: (opened: boolean) => void
+  onClick: () => void
 }
 
 const MenuDropdown = ({
   label,
+  icon,
   opened,
-  setOpened
+  onClick
 }: MenuDropdownProps) => {
   return (
-    <div className="menuDropdown" onClick={() => {
-      setOpened(!opened)
-    }}>
-      {opened ? <ArrowDownIcon /> : <ArrowRightIcon />}
-      {label}
+    <div className={`menuDropdown${opened ? " menuActive" : ""}`} onClick={onClick}>
+      {icon}
+      <span className="label">{label}</span>
     </div>
   );
 };

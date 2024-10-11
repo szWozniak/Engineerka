@@ -1,0 +1,61 @@
+{
+  "geo": {
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "altitude": "Altitude",
+    "direction": "Direction"
+  },
+  "general": {
+    "menu": "Main Menu",
+    "filters": "Filters",
+    "flyingDrones": "Flying Drones",
+    "selectedDrone": "Selected Drone",
+    "resetSelection": "Clear Selection",
+    "domain": "DronHub.pl",
+    "recordUpdate": "Refreshed",
+    "language": {
+      "title": "Language Selection",
+      "polish": "Polish",
+      "english": "English"
+    },
+    "headers": {
+      "tracking": "Drone Flight Tracking",
+      "history": "Flight History for Drone",
+      "list": "Drone List",
+      "info": "Drone Information"
+    }
+  },
+  "details": {
+    "drone": {
+      "registration": "Registration",
+      "geoData": "Geographic Data",
+      "operator": "Operator",
+      "battery": "Battery",
+      "model": "Model",
+      "state": "Drone Status"
+    },
+    "flight": {
+      "takeoff": "Takeoff Date",
+      "landing": "Landing Date",
+      "time": "Flight Time",
+      "speed": "Avg. Speed",
+      "elevation": "Elevation",
+      "distance": "Distance"
+    },
+    "noData": "n/a"
+  },
+  "actions": {
+    "title": "Actions",
+    "selectDrone": "Select Drone",
+    "showFlights": "Show Flights",
+    "previewFlight": "Flight Preview",
+    "backToDrones": "Back to Drone List",
+    "backToFlights": "Back to Flight List"
+  },
+  "filters": {
+    "min": "Min",
+    "max": "Max",
+    "apply": "Apply",
+    "reset": "Clear"
+  }
+}
