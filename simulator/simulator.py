@@ -126,7 +126,7 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
     lon_before = starting_longitude
     alt_before = 1
     fuel_before = random.uniform(80, 100)
-    fuel_distance_multiplier = 35
+    fuel_distance_multiplier = 38
     fuel_elevation_gain_multiplier = 1.5
 
     for i in range(number_of_points):
@@ -141,6 +141,9 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
             altitudes[i] = min(const.MAX_FLIGHT_ALT, alt_before + np.abs(step_length * shaping_factor[i]) * alt_up_scale)
         else:
             altitudes[i] = max(1, alt_before - np.abs(step_length * shaping_factor[i]) * alt_down_scale)
+
+        if i == number_of_points-1:
+            altitudes[i] = 1
 
         distance_2d = haversine_distance(lat_before, lon_before, latitudes[i], longitudes[i])
         distance_3d = np.sqrt(distance_2d**2 + ((altitudes[i] - alt_before)/1000)**2)
