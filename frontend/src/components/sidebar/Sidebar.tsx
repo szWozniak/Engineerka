@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Drone } from '../../drones/types'
 import MenuDropdown from './MenuDropdown';
 import useDrones from '../../drones/useCases/useDrones';
@@ -9,6 +9,7 @@ import { MdFlightTakeoff } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 import { FiCornerDownRight } from "react-icons/fi";
 import { MdLanguage } from "react-icons/md";
+import { AppContext } from "../../context/AppContext";
 
 interface Props{
   areFiltersOpened: boolean
@@ -22,6 +23,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened })
   const [openedFlyingDrones, setOpenedFlyingDrones] = useState<boolean>(false);
   const [openedLanguageMenu, setOpenedLanguageMenu] = useState<boolean>(false);
   const {flyingDrones, timestamp, selectedDrone, selectDrone} = useDrones();
+  const {flights} = useContext(AppContext);
 
   return (
     <div className={`sidebar ${opened ? 'opened' : 'closed'}`}>
@@ -38,6 +40,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened })
             icon={<IoFilterSharp />}
             label={t("general.filters")}
             opened={areFiltersOpened}
+            disabled={flights.selectedFlightId !== null}
             onClick={toggleFiltersVisibility}
           />
           <MenuDropdown

@@ -3,16 +3,19 @@ import { Filter, FilterType, NumberFilter, NumberFilterKey, TextFilter, TextFilt
 import { AppContext } from "../../context/AppContext";
 import { defaultFiltersState } from "./defaultState";
 
-
-  
 const useFilters = () => {
     const [currentFilters, setCurrentFilters] = useState<Filter[]>(structuredClone(defaultFiltersState));
 
-    const {filtering} = useContext(AppContext);
+    const {filtering, flights} = useContext(AppContext);
 
     const [areFiltersOpen, setAreFiltersOpen] = useState<boolean>(false);
 
-    const toggleFiltersVisibility = () => setAreFiltersOpen(prev => !prev);
+    const toggleFiltersVisibility = () => setAreFiltersOpen(prev => {
+      if(flights.selectedFlightId)
+        return false;
+
+      return !prev;
+    });
 
     const getTextFilter = (key: TextFilterKey): TextFilter => {
         const searchedFilter = currentFilters.find(f => f.key === key);
