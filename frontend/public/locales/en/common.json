@@ -40,7 +40,8 @@
       "time": "Flight Time",
       "speed": "Avg. Speed",
       "elevation": "Elevation",
-      "distance": "Distance"
+      "distance": "Distance",
+      "didLanded": "Did landed?"
     },
     "noData": "n/a"
   },
