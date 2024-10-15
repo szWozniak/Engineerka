@@ -77,7 +77,7 @@ const FlightsTable: React.FC<Props> = ({
                   <button 
                     onClick={() => {
                       selectFlightId(flight?.id)
-                      visibility.toggleVisibility();
+                      visibility.closeFilters();
                       bulkFiltersActions.resetFilters();
                     }}
                     onMouseEnter={() => selectHighlightedFlightId(flight?.id)}

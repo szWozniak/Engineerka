@@ -10,12 +10,9 @@ const useFilters = () => {
 
     const [areFiltersOpen, setAreFiltersOpen] = useState<boolean>(false);
 
-    const toggleFiltersVisibility = () => setAreFiltersOpen(prev => {
-      if(flights.selectedFlightId)
-        return false;
-
-      return !prev;
-    });
+    const toggleFiltersVisibility = () => setAreFiltersOpen(prev => !prev);
+    
+    const closeFilters = () => setAreFiltersOpen(false);
 
     const getTextFilter = (key: TextFilterKey): TextFilter => {
         const searchedFilter = currentFilters.find(f => f.key === key);
@@ -93,7 +90,8 @@ const useFilters = () => {
         },
         visibility: {
           areOpen: areFiltersOpen,
-          toggleVisibility: toggleFiltersVisibility
+          toggleVisibility: toggleFiltersVisibility,
+          closeFilters: closeFilters
         },
         textFilters: {
             get: getTextFilter,
