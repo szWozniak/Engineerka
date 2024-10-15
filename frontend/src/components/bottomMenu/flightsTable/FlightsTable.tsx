@@ -3,6 +3,7 @@ import { DroneFlightSummary } from "../../../drones/types";
 import { useTranslation } from "react-i18next";
 import { MdFlightTakeoff } from "react-icons/md";
 import { MdSearch } from "react-icons/md";
+import useFilters from "../../../filters/useCases/useFilters";
 
 interface Props {
   selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
@@ -18,6 +19,7 @@ const FlightsTable: React.FC<Props> = ({
     flightSummaries
   }) => { 
   const {t} = useTranslation();
+  const {visibility, bulkFiltersActions} = useFilters();
   
   return (
     <div className="tableContainer">
@@ -73,7 +75,11 @@ const FlightsTable: React.FC<Props> = ({
                   </td>
                   <td>
                   <button 
-                    onClick={() => selectFlightId(flight?.id)}
+                    onClick={() => {
+                      selectFlightId(flight?.id)
+                      visibility.closeFilters();
+                      bulkFiltersActions.resetFilters();
+                    }}
                     onMouseEnter={() => selectHighlightedFlightId(flight?.id)}
                     onMouseLeave={() => selectHighlightedFlightId(null)}
                     title={t("actions.previewFlight")}
