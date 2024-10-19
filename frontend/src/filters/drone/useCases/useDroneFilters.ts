@@ -74,7 +74,7 @@ const useDroneFilters = () => {
 
     const applyFilters = () => {
       filtering.drone.changeFilters(currentFilters
-        .filter(f => f.value !== "")
+        .filter(f => f.value !== "" && f.value !== undefined)
         .map(f => structuredClone(f)))
     }
 

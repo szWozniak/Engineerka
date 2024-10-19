@@ -11,6 +11,18 @@ const useFlightFilters = () => {
 
     const [areFiltersOpen, setAreFiltersOpen] = useState<boolean>(false)
 
+    const applyFilters = () => {
+        filtering.flight.changeFilters(currentFilters
+            .filter(f => f.value !== "" && f.value !== undefined)
+            .map(f => structuredClone(f))
+        )
+    }
+
+    const resetFilters = () => {
+        filtering.flight.changeFilters(structuredClone(defaultFlightsFiltersState))
+        setCurrentFilters(structuredClone(defaultFlightsFiltersState))
+    }
+
     const toggleFiltersVisibility = () => setAreFiltersOpen(prev => !prev);
     
     const closeFilters = () => setAreFiltersOpen(false);
@@ -72,10 +84,60 @@ const useFlightFilters = () => {
     }
 
     const getBooleanFilter = (key: FlightBooleanFilterKey) => {
-        
+        const searchedFilter = currentFilters.find(f => f.key === key);
+    
+        if (searchedFilter?.type !== FilterType.Boolean){
+          throw new Error("Invalid key")
+        }
+    
+        return searchedFilter;
     }
 
-    
+    const onBooleanFilterChange = (key: FlightBooleanFilterKey, value: boolean | undefined) => {
+        setCurrentFilters(prev => prev.map(f => {
+            if (f.key === key && f.type === FilterType.Boolean){
+              f.value = value
+            }
+            return f;
+          }))
+    }
+
+    const onBooleanFilterReset = (key: FlightBooleanFilterKey) => {
+        setCurrentFilters(prev => prev.map(f => {
+            if (f.key === key && f.type === FilterType.Boolean){
+              f.value = undefined
+            }
+            return f;
+          }))
+    }
+
+    return {
+        filters: filtering.drone.value,
+        bulkFiltersActions: {
+          applyFilters,
+          resetFilters
+        },
+        visibility: {
+          areOpen: areFiltersOpen,
+          toggleVisibility: toggleFiltersVisibility,
+          closeFilters: closeFilters
+        },
+        textFilters: {
+            get: getTextFilter,
+            onChange: onTextFilterChange,
+            onReset: onTextFilterReset
+        },
+        numberFilters: {
+            get: getNumberFilter,
+            onChange: onNumberFilterChange,
+            onReset: onNumberFilterReset
+        },
+        booleanFilters: {
+            get: getBooleanFilter,
+            onChange: onBooleanFilterChange,
+            onReset: onBooleanFilterReset
+        }
+    }
 }
 
 export default useFlightFilters;
