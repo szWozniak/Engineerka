@@ -42,7 +42,14 @@
       "speed": "Śr. prędkość",
       "elevation": "Przewyższenie",
       "distance": "Dystans",
-      "didLanded": "Czy wylądował?"
+      "didLanded": "Czy wylądował?",
+      "startDate": "Data startu",
+      "endDate": "Data końca",
+      "startTime": "Czas startu",
+      "endTime": "Czas końca",
+      "duration": "Czas lotu",
+      "averageSpeed": "Średnia prędkość",
+      "elevationGain": "Nabyta wysokość"
     },
     "noData": "b/d"
   },

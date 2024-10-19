@@ -54,21 +54,42 @@ export const defaultFlightsFiltersState: FlightFilter[] = [
     {
         type: FilterType.Number,
         parameter: "averageSpeed",
-        key: "averageSpeed",
+        key: "minAverageSpeed",
+        value: undefined,
+        comparisonType: "Equals"
+    },
+    {
+        type: FilterType.Number,
+        parameter: "averageSpeed",
+        key: "maxAverageSpeed",
         value: undefined,
         comparisonType: "Equals"
     },
     {
         type: FilterType.Number,
         parameter: "elevationGain",
-        key: "elevationGain",
+        key: "minElevationGain",
+        value: undefined,
+        comparisonType: "Equals"
+    },
+    {
+        type: FilterType.Number,
+        parameter: "elevationGain",
+        key: "maxElevationGain",
         value: undefined,
         comparisonType: "Equals"
     },
     {
         type: FilterType.Number,
         parameter: "distance",
-        key: "distance",
+        key: "minDistance",
+        value: undefined,
+        comparisonType: "Equals"
+    },
+    {
+        type: FilterType.Number,
+        parameter: "distance",
+        key: "maxDistance",
         value: undefined,
         comparisonType: "Equals"
     },
