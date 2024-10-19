@@ -18,12 +18,12 @@ public class CurrentlyFlyingDronesQuery {
     }
 
     public List<DroneEntity> execute(List<Specification<DroneEntity>> specifications){
-        specifications.add(createConstraints());
+        specifications.add(createDefaultConstraints());
         Specification<DroneEntity> combinedSpecifications = SpecificationHelper.combine(specifications);
         return repository.findAll(combinedSpecifications);
     }
 
-    private Specification<DroneEntity> createConstraints(){
+    private Specification<DroneEntity> createDefaultConstraints(){
         return (Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> builder.isTrue(root.get("isAirborne"));
     }
 }

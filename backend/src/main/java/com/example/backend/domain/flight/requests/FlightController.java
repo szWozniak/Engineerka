@@ -1,11 +1,16 @@
 package com.example.backend.domain.flight.requests;
 
+import com.example.backend.domain.drone.filtering.IDroneFilter;
+import com.example.backend.domain.drone.requests.mappers.DroneFiltersMapper;
 import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.domain.flight.FlightService;
 import com.example.backend.domain.flight.dto.FlightDto;
 import com.example.backend.domain.flight.dto.FlightSummaryDto;
+import com.example.backend.domain.flight.filtering.IFlightFilter;
 import com.example.backend.domain.flight.requests.flightSummaries.GetFlightsRequest;
+import com.example.backend.domain.flight.requests.mappers.FlightFiltersMapper;
 import jakarta.validation.Valid;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,8 +47,16 @@ public class FlightController {
 
     @PostMapping("/{droneRegistrationNumber}")
     public ResponseEntity<List<FlightSummaryDto>> getFlights(@PathVariable String droneRegistrationNumber,
-                                                             @Valid @RequestBody GetFlightsRequest request) {
-        List<FlightEntity> flights = flightService.getDroneFinishedFlights(droneRegistrationNumber);
+                                                             @Valid @RequestBody GetFlightsRequest request) throws BadRequestException {
+        List<IFlightFilter> mappedFilters;
+
+        try {
+            mappedFilters = FlightFiltersMapper.map(request.textFilters(), request.numberFilters());
+        } catch(IllegalArgumentException ex){
+            throw new BadRequestException(ex.getMessage());
+        }
+
+        List<FlightEntity> flights = flightService.getDroneFinishedFlights(droneRegistrationNumber, mappedFilters);
 
         List<FlightSummaryDto> flightSummaryDtos = flights.stream().map(FlightSummaryDto::fromFlightEntity).toList();
 
