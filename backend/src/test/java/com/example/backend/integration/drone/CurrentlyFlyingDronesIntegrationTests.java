@@ -2,10 +2,10 @@ package com.example.backend.integration.drone;
 
 import com.example.backend.domain.drone.DroneRepository;
 import com.example.backend.domain.drone.DroneService;
-import com.example.backend.domain.drone.filtering.filters.ComparisonType;
-import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
-import com.example.backend.domain.drone.filtering.filters.NumberFilter;
-import com.example.backend.domain.drone.filtering.filters.TextFilter;
+import com.example.backend.domain.drone.filtering.ComparisonType;
+import com.example.backend.domain.drone.filtering.IDroneFilter;
+import com.example.backend.domain.drone.filtering.NumberFilter;
+import com.example.backend.domain.drone.filtering.TextFilter;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;

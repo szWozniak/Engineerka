@@ -1,9 +1,9 @@
 package com.example.backend.domain.drone.requests.mappers;
 
-import com.example.backend.domain.drone.filtering.filters.ComparisonType;
-import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
-import com.example.backend.domain.drone.filtering.filters.NumberFilter;
-import com.example.backend.domain.drone.filtering.filters.TextFilter;
+import com.example.backend.domain.drone.filtering.ComparisonType;
+import com.example.backend.domain.drone.filtering.IDroneFilter;
+import com.example.backend.domain.drone.filtering.NumberFilter;
+import com.example.backend.domain.drone.filtering.TextFilter;
 import com.example.backend.domain.drone.requests.filters.NumberFilterEntry;
 import com.example.backend.domain.drone.requests.filters.TextFilterEntry;
 

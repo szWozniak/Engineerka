@@ -1,8 +1,8 @@
 package com.example.backend.unit.domain.drone.filtering.validators;
 
-import com.example.backend.domain.drone.filtering.filters.ComparisonType;
-import com.example.backend.domain.drone.filtering.filters.FilterType;
-import com.example.backend.domain.drone.filtering.validators.ComparisonTypeForFilterValidator;
+import com.example.backend.domain.drone.filtering.ComparisonType;
+import com.example.backend.domain.drone.filtering.FilterType;
+import com.example.backend.common.filtering.ComparisonTypeForFilterValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;

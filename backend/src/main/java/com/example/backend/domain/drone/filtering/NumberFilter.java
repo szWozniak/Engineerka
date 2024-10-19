@@ -1,9 +1,9 @@
-package com.example.backend.domain.drone.filtering.filters;
+package com.example.backend.domain.drone.filtering;
 
 import com.example.backend.domain.drone.DroneEntity;
-import com.example.backend.domain.drone.filtering.validators.ComparisonTypeForFilterValidator;
-import com.example.backend.domain.drone.filtering.infrastructure.PredicateCreator;
-import com.example.backend.domain.drone.filtering.infrastructure.PredicateCreatorFactory;
+import com.example.backend.common.filtering.ComparisonTypeForFilterValidator;
+import com.example.backend.common.filtering.infrastructure.PredicateCreator;
+import com.example.backend.common.filtering.infrastructure.PredicateCreatorFactory;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

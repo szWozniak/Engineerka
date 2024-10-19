@@ -1,7 +1,7 @@
 package com.example.backend.unit.domain.drone.filtering.filters;
 
-import com.example.backend.domain.drone.filtering.filters.ComparisonType;
-import com.example.backend.domain.drone.filtering.filters.TextFilter;
+import com.example.backend.domain.drone.filtering.ComparisonType;
+import com.example.backend.domain.drone.filtering.TextFilter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;

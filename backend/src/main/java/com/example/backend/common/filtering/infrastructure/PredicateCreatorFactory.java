@@ -1,6 +1,6 @@
-package com.example.backend.domain.drone.filtering.infrastructure;
+package com.example.backend.common.filtering.infrastructure;
 
-import com.example.backend.domain.drone.filtering.filters.ComparisonType;
+import com.example.backend.domain.drone.filtering.ComparisonType;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Path;
 

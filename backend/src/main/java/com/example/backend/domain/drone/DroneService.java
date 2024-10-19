@@ -1,5 +1,5 @@
 package com.example.backend.domain.drone;
-import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
+import com.example.backend.domain.drone.filtering.IDroneFilter;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.drone.mappers.DroneEntityWithFlightRecordEntity;
 import com.example.backend.domain.drone.requests.Drones.DronesQuery;

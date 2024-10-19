@@ -1,4 +1,4 @@
-package com.example.backend.domain.drone.filtering.filters;
+package com.example.backend.domain.drone.filtering;
 
 import com.example.backend.domain.drone.DroneEntity;
 import org.springframework.data.jpa.domain.Specification;

@@ -2,7 +2,7 @@ package com.example.backend.domain.drone.requests.Drones;
 
 import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.drone.DroneRepository;
-import com.example.backend.domain.drone.filtering.infrastructure.SpecificationHelper;
+import com.example.backend.common.filtering.infrastructure.SpecificationHelper;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;

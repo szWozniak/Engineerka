@@ -2,7 +2,7 @@ package com.example.backend.domain.drone.requests.currentlyFlyingDrones;
 
 import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.drone.DroneRepository;
-import com.example.backend.domain.drone.filtering.infrastructure.SpecificationHelper;
+import com.example.backend.common.filtering.infrastructure.SpecificationHelper;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.springframework.data.jpa.domain.Specification;

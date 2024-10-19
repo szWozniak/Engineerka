@@ -1,7 +1,7 @@
-package com.example.backend.domain.drone.filtering.validators;
+package com.example.backend.common.filtering;
 
-import com.example.backend.domain.drone.filtering.filters.ComparisonType;
-import com.example.backend.domain.drone.filtering.filters.FilterType;
+import com.example.backend.domain.drone.filtering.ComparisonType;
+import com.example.backend.domain.drone.filtering.FilterType;
 
 import java.util.List;
 

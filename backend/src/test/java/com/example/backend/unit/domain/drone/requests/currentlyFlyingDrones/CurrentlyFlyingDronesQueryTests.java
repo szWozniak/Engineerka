@@ -2,8 +2,8 @@ package com.example.backend.unit.domain.drone.requests.currentlyFlyingDrones;
 
 import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.drone.DroneRepository;
-import com.example.backend.domain.drone.filtering.filters.ComparisonType;
-import com.example.backend.domain.drone.filtering.filters.TextFilter;
+import com.example.backend.domain.drone.filtering.ComparisonType;
+import com.example.backend.domain.drone.filtering.TextFilter;
 import com.example.backend.domain.drone.requests.currentlyFlyingDrones.CurrentlyFlyingDronesQuery;
 import com.example.backend.unit.domain.drone.DroneEntityFixtureBuilder;
 import org.junit.jupiter.api.Assertions;
