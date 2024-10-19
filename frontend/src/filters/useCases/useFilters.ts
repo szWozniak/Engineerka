@@ -6,7 +6,7 @@ import { defaultFiltersState } from "./defaultState";
 const useFilters = () => {
     const [currentFilters, setCurrentFilters] = useState<Filter[]>(structuredClone(defaultFiltersState));
 
-    const {filtering, flights} = useContext(AppContext);
+    const {filtering} = useContext(AppContext);
 
     const [areFiltersOpen, setAreFiltersOpen] = useState<boolean>(false);
 

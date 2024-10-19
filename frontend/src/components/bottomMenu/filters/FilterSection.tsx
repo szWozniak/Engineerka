@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from "../../../filters/types";
 import useRefreshKey from "../../../common/useRefreshKey";
 import OperatorFilter from "./concreteFilters/OperatorFilter";
-import Toggle from "../../../common/components/Toggle";
 import TypeFilter from "./concreteFilters/TypeFilter";
 
 interface props{

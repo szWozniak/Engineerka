@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @DataJpaTest
-public class CurrentlyFlyingDronesQueryTests {
+public class CurrentlyFlyingDronesQueryTests { //TODO: fix this test
     private CurrentlyFlyingDronesQuery sut;
     @Autowired
     private TestEntityManager fakeDb;

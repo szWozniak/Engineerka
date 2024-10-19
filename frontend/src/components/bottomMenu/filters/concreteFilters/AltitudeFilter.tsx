@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import NumberFilter from '../NumberFilter';
 import { useTranslation } from 'react-i18next';
-import { on } from 'events';
 import useRefreshKey from '../../../../common/useRefreshKey';
 
 interface Props{
