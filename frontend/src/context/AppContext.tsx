@@ -6,12 +6,12 @@ import {
   useState,  
 } from 'react'
 
-import { Filter, FilterType } from '../filters/types';
-import { defaultFiltersState } from '../filters/useCases/defaultState';
+import { DroneFilter, FilterType } from '../filters/drone/types';
+import { defaultFiltersState } from '../filters/drone/useCases/defaultState';
 type AppContextType = {
   filtering: {
-    value: Filter[],
-    changeFilters: (filters: Filter[]) => void
+    value: DroneFilter[],
+    changeFilters: (filters: DroneFilter[]) => void
   },
   drones: {
     selectedDroneRegistration: string | null,
@@ -103,7 +103,7 @@ export const AppContext = createContext<AppContextType>({
         comparisonType: "Equals"
       }
     ],
-    changeFilters: (_f: Filter[]) => { } 
+    changeFilters: (_f: DroneFilter[]) => { } 
   },
   drones: {
     selectedDroneRegistration: null,
@@ -125,7 +125,7 @@ export const AppContext = createContext<AppContextType>({
 const AppContextProvider = ({ children }: {
   children: ReactNode
 }) => {
-  const [filters, setFilters] = useState<Filter[]>(defaultFiltersState);
+  const [filters, setFilters] = useState<DroneFilter[]>(defaultFiltersState);
   const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
   const [highlightedFlightId, setHighlightedFlightId] = useState<number | null>(null);
   const [droneRegistrationToShowFlightsFor, setDroneRegistrationToShowFlightsFor] = useState<string | null>(null)

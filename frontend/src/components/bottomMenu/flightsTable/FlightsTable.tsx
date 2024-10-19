@@ -2,8 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
 import { MdFlightTakeoff } from "react-icons/md";
 import { MdSearch } from "react-icons/md";
-import useFilters from "../../../filters/useCases/useFilters";
-import { DroneFlightSummary } from "../../../flights/api/types";
+import useDroneFilters from "../../../filters/drone/useCases/useDroneFilters";
 
 interface Props {
   selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
@@ -19,7 +18,7 @@ const FlightsTable: React.FC<Props> = ({
     flightSummaries
   }) => { 
   const {t} = useTranslation();
-  const {visibility, bulkFiltersActions} = useFilters();
+  const {visibility, bulkFiltersActions} = useDroneFilters();
   
   return (
     <div className="tableContainer">

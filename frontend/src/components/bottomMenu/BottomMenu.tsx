@@ -6,17 +6,17 @@ import FlightsTable from './flightsTable/FlightsTable';
 import FilterSection from './filters/FilterSection';
 import FlightStatusPanel from './flightsTable/FlightStatusPanel';
 import { useTranslation } from 'react-i18next';
-import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from '../../filters/types';
+import { DroneNumberFilter, DroneNumberFilterKey, DroneTextFilter, DroneTextFilterKey } from '../../filters/drone/types';
 import useFlights from '../../flights/useCases/useFlights';
 
 interface Props{
   areFiltersOpen: boolean
-  getTextFilter: (filterKey: TextFilterKey) => TextFilter,
-  getNumberFilter: (filterKey: NumberFilterKey) => NumberFilter,
-  onNumberFilterChange: (filterKey: NumberFilterKey, value: number | undefined) => void,
-  onNumberFilterReset: (filterKey: NumberFilterKey) => void
-  onTextFilterChange: (filterKey: TextFilterKey, value: string) => void,
-  onTextFilterReset: (filterKey: TextFilterKey) => void
+  getTextFilter: (filterKey: DroneTextFilterKey) => DroneTextFilter,
+  getNumberFilter: (filterKey: DroneNumberFilterKey) => DroneNumberFilter,
+  onNumberFilterChange: (filterKey: DroneNumberFilterKey, value: number | undefined) => void,
+  onNumberFilterReset: (filterKey: DroneNumberFilterKey) => void
+  onTextFilterChange: (filterKey: DroneTextFilterKey, value: string) => void,
+  onTextFilterReset: (filterKey: DroneTextFilterKey) => void
   applyFilters: () => void
   resetFilters: () => void
 }

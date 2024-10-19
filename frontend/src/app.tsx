@@ -10,11 +10,11 @@ import { registerLoaders } from '@loaders.gl/core';
 import Sidebar from './components/sidebar/Sidebar';
 import useLayerManager from './components/layers/useLayerManager';
 import BottomMenu from './components/bottomMenu/BottomMenu';
-import useFilters from './filters/useCases/useFilters';
 import { INITIAL_VIEW_STATE } from './map/config/initialView';
 import './i18n';
 import { lightingEffect } from './map/config/effects';
 import useMapState from './map/useCases/useMap';
+import useDroneFilters from './filters/drone/useCases/useDroneFilters';
 
 registerLoaders([OBJLoader]);
 
@@ -24,7 +24,7 @@ const App = () => {
   const { layers } = useLayerManager()
 
   const {mapViewState, setMapViewState, getTooltip} = useMapState();
-  const {bulkFiltersActions, numberFilters, textFilters, visibility} = useFilters();
+  const {bulkFiltersActions, numberFilters, textFilters, visibility} = useDroneFilters();
 
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {

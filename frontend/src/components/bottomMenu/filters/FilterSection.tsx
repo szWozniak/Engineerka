@@ -5,19 +5,19 @@ import ModelFilter from "./concreteFilters/ModelFilter";
 import LatitudeFilter from "./concreteFilters/LatitudeFilter";
 import LongitudeFilter from "./concreteFilters/LongitudeFilter";
 import { useTranslation } from 'react-i18next';
-import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from "../../../filters/types";
+import { DroneNumberFilter, DroneNumberFilterKey, DroneTextFilter, DroneTextFilterKey } from "../../../filters/drone/types";
 import useRefreshKey from "../../../common/useRefreshKey";
 import OperatorFilter from "./concreteFilters/OperatorFilter";
 import TypeFilter from "./concreteFilters/TypeFilter";
 
 interface props{
   isOpen: boolean,
-  getTextFilter: (filterKey: TextFilterKey) => TextFilter,
-  getNumberFilter: (filterKey: NumberFilterKey) => NumberFilter,
-  onNumberFilterChange: (filterKey: NumberFilterKey, value: number | undefined) => void,
-  onNumberFilterReset: (filterKey: NumberFilterKey) => void,
-  onTextFilterChange: (filterKey: TextFilterKey, value: string) => void,
-  onTextFilterReset: (filterKey: TextFilterKey) => void,
+  getTextFilter: (filterKey: DroneTextFilterKey) => DroneTextFilter,
+  getNumberFilter: (filterKey: DroneNumberFilterKey) => DroneNumberFilter,
+  onNumberFilterChange: (filterKey: DroneNumberFilterKey, value: number | undefined) => void,
+  onNumberFilterReset: (filterKey: DroneNumberFilterKey) => void,
+  onTextFilterChange: (filterKey: DroneTextFilterKey, value: string) => void,
+  onTextFilterReset: (filterKey: DroneTextFilterKey) => void,
   applyFilters: () => void
   resetFilters: () => void
 }

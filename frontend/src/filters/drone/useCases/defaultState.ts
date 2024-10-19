@@ -1,6 +1,7 @@
-import { Filter, FilterType } from "../types";
+import { DroneFilter, FilterType } from "../types";
 
-export const defaultFiltersState: Filter[] = [
+
+export const defaultFiltersState: DroneFilter[] = [
     {
       type: FilterType.Text,
       parameter: "registrationNumber",

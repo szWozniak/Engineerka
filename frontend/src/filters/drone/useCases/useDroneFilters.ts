@@ -1,10 +1,10 @@
 import { useContext, useState } from "react"
-import { Filter, FilterType, NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from "../types"
-import { AppContext } from "../../context/AppContext";
 import { defaultFiltersState } from "./defaultState";
+import { DroneFilter, FilterType, DroneNumberFilter, DroneNumberFilterKey, DroneTextFilter, DroneTextFilterKey } from "../types";
+import { AppContext } from "../../../context/AppContext";
 
-const useFilters = () => {
-    const [currentFilters, setCurrentFilters] = useState<Filter[]>(structuredClone(defaultFiltersState));
+const useDroneFilters = () => {
+    const [currentFilters, setCurrentFilters] = useState<DroneFilter[]>(structuredClone(defaultFiltersState));
 
     const {filtering} = useContext(AppContext);
 
@@ -14,7 +14,7 @@ const useFilters = () => {
     
     const closeFilters = () => setAreFiltersOpen(false);
 
-    const getTextFilter = (key: TextFilterKey): TextFilter => {
+    const getTextFilter = (key: DroneTextFilterKey): DroneTextFilter => {
         const searchedFilter = currentFilters.find(f => f.key === key);
     
         if (searchedFilter?.type !== FilterType.Text){
@@ -24,7 +24,7 @@ const useFilters = () => {
         return searchedFilter;
       }
     
-      const getNumberFilter = (key: NumberFilterKey): NumberFilter => {
+      const getNumberFilter = (key: DroneNumberFilterKey): DroneNumberFilter => {
         const searchedFilter = currentFilters.find(f => f.key === key);
     
         if (searchedFilter?.type !== FilterType.Number){
@@ -34,7 +34,7 @@ const useFilters = () => {
         return searchedFilter;
       }
 
-      const onTextFilterChange = (key: TextFilterKey, value: string) => {
+      const onTextFilterChange = (key: DroneTextFilterKey, value: string) => {
         setCurrentFilters(prev => prev.map(f => {
           if (f.key === key && f.type === FilterType.Text){
             f.value = value
@@ -43,7 +43,7 @@ const useFilters = () => {
         }))
       }
 
-      const onTextFilterReset = (key: TextFilterKey) => {
+      const onTextFilterReset = (key: DroneTextFilterKey) => {
         setCurrentFilters(prev => prev.map(f => {
           if (f.key === key && f.type === FilterType.Text){
             f.value = ""
@@ -53,7 +53,7 @@ const useFilters = () => {
       }
 
     
-      const onNumberFilterChange = (key: NumberFilterKey, value: number | undefined) => {
+      const onNumberFilterChange = (key: DroneNumberFilterKey, value: number | undefined) => {
         setCurrentFilters(prev => prev.map(f => {
           if (f.key === key && f.type === FilterType.Number){
             f.value = value
@@ -62,7 +62,7 @@ const useFilters = () => {
         }))
       }
 
-      const onNumberFilterReset = (key: NumberFilterKey) => {
+      const onNumberFilterReset = (key: DroneNumberFilterKey) => {
         setCurrentFilters(prev => prev.map(f => {
           if (f.key === key && f.type === FilterType.Number){
             f.value = undefined
@@ -106,4 +106,4 @@ const useFilters = () => {
     }
 }
 
-export default useFilters;
+export default useDroneFilters;
