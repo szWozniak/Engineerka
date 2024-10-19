@@ -7,28 +7,28 @@ export const defaultFlightsFiltersState: FlightFilter[] = [
         parameter: "startDate",
         key: "startDate",
         value: "",
-        comparisonType: "Contains"
+        comparisonType: "GreaterThan"
     },
     {
         type: FilterType.Text,
         parameter: "startTime",
         key: "startTime",
         value: "",
-        comparisonType: "Contains"
+        comparisonType: "GreaterThan"
     },
     {
         type: FilterType.Text,
         parameter: "endDate",
         key: "endDate",
         value: "",
-        comparisonType: "Contains"
+        comparisonType: "LesserThan"
     },
     {
         type: FilterType.Text,
         parameter: "endTime",
         key: "endTime",
         value: "",
-        comparisonType: "Contains"
+        comparisonType: "LesserThan"
     },
     {
         type: FilterType.Text,
@@ -45,53 +45,46 @@ export const defaultFlightsFiltersState: FlightFilter[] = [
         comparisonType: "LesserThan"
     },
     {
-        type: FilterType.Text,
-        parameter: "endTime",
-        key: "endTime",
-        value: "",
-        comparisonType: "Contains"
-    },
-    {
         type: FilterType.Number,
         parameter: "averageSpeed",
         key: "minAverageSpeed",
         value: undefined,
-        comparisonType: "Equals"
+        comparisonType: "GreaterThan"
     },
     {
         type: FilterType.Number,
         parameter: "averageSpeed",
         key: "maxAverageSpeed",
         value: undefined,
-        comparisonType: "Equals"
+        comparisonType: "LesserThan"
     },
     {
         type: FilterType.Number,
         parameter: "elevationGain",
         key: "minElevationGain",
         value: undefined,
-        comparisonType: "Equals"
+        comparisonType: "GreaterThan"
     },
     {
         type: FilterType.Number,
         parameter: "elevationGain",
         key: "maxElevationGain",
         value: undefined,
-        comparisonType: "Equals"
+        comparisonType: "LesserThan"
     },
     {
         type: FilterType.Number,
         parameter: "distance",
         key: "minDistance",
         value: undefined,
-        comparisonType: "Equals"
+        comparisonType: "GreaterThan"
     },
     {
         type: FilterType.Number,
         parameter: "distance",
         key: "maxDistance",
         value: undefined,
-        comparisonType: "Equals"
+        comparisonType: "LesserThan"
     },
     {
         type: FilterType.Boolean,

@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const DidLanded = () => {
+const DidLandedFilter = () => {
     return (
         <div>
             
@@ -9,4 +9,4 @@ const DidLanded = () => {
     );
 };
 
-export default DidLanded;
+export default DidLandedFilter;

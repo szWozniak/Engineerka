@@ -12,7 +12,7 @@ interface Props{
     onMaxValueReset: () => void
 }
 
-const Distance: React.FC<Props> = (
+const ElevationGainFilter: React.FC<Props> = (
     {minValue,
         maxValue,
         onMinValueChange,
@@ -33,10 +33,11 @@ const Distance: React.FC<Props> = (
         onMaxValueReset()
         refresh()
     }
+    
     return (
         <div className='multipleFiltersContainer' key={refreshKey}>
             <NumberFilter
-                label={`${t("details.flight.distance")} (${t("filters.min")})`}
+                label={`${t("details.flight.elevationGain")} (${t("filters.min")})`}
                 value={minValue}
                 onChange={(value) => {
                     if (value !== undefined && value < 0) {return}
@@ -45,7 +46,7 @@ const Distance: React.FC<Props> = (
                 onReset={resetMinValue}
             />
             <NumberFilter
-                label={`${t("details.flight.distance")} (${t("filters.max")})`}
+                label={`${t("details.flight.elevationGain")} (${t("filters.max")})`}
                 value={maxValue}
                 onChange={(value) => {
                     if (value !== undefined && value < 0) {return}
@@ -57,4 +58,4 @@ const Distance: React.FC<Props> = (
     );
 };
 
-export default Distance;
+export default ElevationGainFilter;
