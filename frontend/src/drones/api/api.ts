@@ -1,6 +1,6 @@
 import { checkForErrors, defaultURL } from "../../common/api/apiHelpers";
 import { DroneFilter } from "../../filters/drone/types";
-import { Drone, DroneBase, DroneBaseSchema, DroneFlightSummary, DroneFlightSummarySchema, DroneSchema, DronesWithTimestamp, DronesWithTimestampSchema } from "../types";
+import { Drone, DroneBase, DroneBaseSchema, DroneSchema, DronesWithTimestamp, DronesWithTimestampSchema } from "../types";
 import mapFilters from "./mappers";
 
 export const getAllDrones = (filters: DroneFilter[]): Promise<DroneBase[]> => {

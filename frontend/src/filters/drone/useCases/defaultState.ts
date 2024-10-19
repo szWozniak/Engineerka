@@ -1,4 +1,5 @@
-import { DroneFilter, FilterType } from "../types";
+import { FilterType } from "../../commonTypes";
+import { DroneFilter } from "../types";
 
 
 export const defaultFiltersState: DroneFilter[] = [

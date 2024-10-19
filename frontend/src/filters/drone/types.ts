@@ -2,10 +2,10 @@ import { Drone } from "../../drones/types"
 import { FlightRecord } from "../../flights/api/types"
 import { ComparisonType, FilterType } from "../commonTypes"
 
-export type FilterParameter = keyof Drone | keyof FlightRecord
+export type DroneFilterParameter = keyof Drone | keyof FlightRecord
 
 type DefaultFilter = {
-  parameter: FilterParameter,
+  parameter: DroneFilterParameter,
   comparisonType: ComparisonType
 }
 

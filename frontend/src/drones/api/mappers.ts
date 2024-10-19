@@ -1,4 +1,5 @@
-import { DroneFilter, FilterType, DroneNumberFilter, DroneTextFilter } from "../../filters/drone/types";
+import { FilterType } from "../../filters/commonTypes";
+import { DroneFilter, DroneNumberFilter, DroneTextFilter } from "../../filters/drone/types";
 
 
 interface SeperatedFilters {

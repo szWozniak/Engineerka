@@ -6,8 +6,9 @@ import {
   useState,  
 } from 'react'
 
-import { DroneFilter, FilterType } from '../filters/drone/types';
+import { DroneFilter } from '../filters/drone/types';
 import { defaultFiltersState } from '../filters/drone/useCases/defaultState';
+import { FilterType } from '../filters/commonTypes';
 type AppContextType = {
   filtering: {
     value: DroneFilter[],

@@ -1,7 +1,8 @@
 import { useContext, useState } from "react"
 import { defaultFiltersState } from "./defaultState";
-import { DroneFilter, FilterType, DroneNumberFilter, DroneNumberFilterKey, DroneTextFilter, DroneTextFilterKey } from "../types";
+import { DroneFilter, DroneNumberFilter, DroneNumberFilterKey, DroneTextFilter, DroneTextFilterKey } from "../types";
 import { AppContext } from "../../../context/AppContext";
+import { FilterType } from "../../commonTypes";
 
 const useDroneFilters = () => {
     const [currentFilters, setCurrentFilters] = useState<DroneFilter[]>(structuredClone(defaultFiltersState));

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { MdFlightTakeoff } from "react-icons/md";
 import { MdSearch } from "react-icons/md";
 import useDroneFilters from "../../../filters/drone/useCases/useDroneFilters";
+import { DroneFlightSummary } from "../../../flights/api/types";
 
 interface Props {
   selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
