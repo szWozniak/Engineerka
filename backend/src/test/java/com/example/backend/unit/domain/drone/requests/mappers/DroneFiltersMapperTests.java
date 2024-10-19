@@ -1,8 +1,8 @@
 package com.example.backend.unit.domain.drone.requests.mappers;
 
 import com.example.backend.domain.drone.filtering.IDroneFilter;
-import com.example.backend.domain.drone.filtering.NumberFilter;
-import com.example.backend.domain.drone.filtering.TextFilter;
+import com.example.backend.domain.drone.filtering.DroneNumberFilter;
+import com.example.backend.domain.drone.filtering.DroneTextFilter;
 import com.example.backend.domain.drone.requests.mappers.DroneFiltersMapper;
 import com.example.backend.domain.drone.requests.filters.NumberFilterEntry;
 import com.example.backend.domain.drone.requests.filters.TextFilterEntry;
@@ -25,7 +25,7 @@ public class DroneFiltersMapperTests {
 
         Assertions.assertEquals(1, result.size());
         var filter = result.get(0);
-        Assertions.assertEquals(filter.getClass(), TextFilter.class);
+        Assertions.assertEquals(filter.getClass(), DroneTextFilter.class);
     }
 
     @ParameterizedTest
@@ -47,7 +47,7 @@ public class DroneFiltersMapperTests {
 
         Assertions.assertEquals(1, result.size());
         var filter = result.get(0);
-        Assertions.assertEquals(filter.getClass(), NumberFilter.class);
+        Assertions.assertEquals(filter.getClass(), DroneNumberFilter.class);
     }
 
 

@@ -1,8 +1,5 @@
 package com.example.backend.common.filtering;
 
-import com.example.backend.domain.drone.filtering.ComparisonType;
-import com.example.backend.domain.drone.filtering.FilterType;
-
 import java.util.List;
 
 public class ComparisonTypeForFilterValidator {

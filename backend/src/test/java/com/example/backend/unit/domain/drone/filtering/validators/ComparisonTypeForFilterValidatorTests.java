@@ -1,7 +1,7 @@
 package com.example.backend.unit.domain.drone.filtering.validators;
 
-import com.example.backend.domain.drone.filtering.ComparisonType;
-import com.example.backend.domain.drone.filtering.FilterType;
+import com.example.backend.common.filtering.ComparisonType;
+import com.example.backend.common.filtering.FilterType;
 import com.example.backend.common.filtering.ComparisonTypeForFilterValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,5 +1,7 @@
 package com.example.backend.domain.drone.filtering;
 
+import com.example.backend.common.filtering.ComparisonType;
+import com.example.backend.common.filtering.FilterType;
 import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.common.filtering.ComparisonTypeForFilterValidator;
 import com.example.backend.common.filtering.infrastructure.PredicateCreator;
@@ -16,13 +18,13 @@ import jakarta.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class NumberFilter implements IDroneFilter {
+public class DroneNumberFilter implements IDroneFilter {
     private static final FilterType FILTER_TYPE = FilterType.Number;
     private final String attributeName;
     private final int value;
     private final ComparisonType comparisonType;
 
-    public NumberFilter(String attributeName, int value, ComparisonType comparisonType) {
+    public DroneNumberFilter(String attributeName, int value, ComparisonType comparisonType) {
         validateComparisionType(comparisonType);
         this.attributeName = attributeName;
         this.value = value;

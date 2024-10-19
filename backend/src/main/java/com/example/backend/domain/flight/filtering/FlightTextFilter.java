@@ -1,31 +1,34 @@
-package com.example.backend.domain.drone.filtering;
+package com.example.backend.domain.flight.filtering;
 
-import com.example.backend.domain.drone.DroneEntity;
+import com.example.backend.common.filtering.ComparisonType;
 import com.example.backend.common.filtering.ComparisonTypeForFilterValidator;
+import com.example.backend.common.filtering.FilterType;
 import com.example.backend.common.filtering.infrastructure.PredicateCreator;
 import com.example.backend.common.filtering.infrastructure.PredicateCreatorFactory;
+import com.example.backend.domain.drone.DroneEntity;
+import com.example.backend.domain.flight.FlightEntity;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import org.springframework.data.jpa.domain.Specification;
 import jakarta.persistence.criteria.Root;
+import org.springframework.data.jpa.domain.Specification;
 
-public class TextFilter implements IDroneFilter {
+public class FlightTextFilter implements IFlightFilter{
     private static final FilterType FILTER_TYPE = FilterType.Text;
     private final String attributeName;
     private final String value;
     private final ComparisonType comparisonType;
 
-    public TextFilter(String attributeName, String value, ComparisonType comparisonType) {
+    public FlightTextFilter(String attributeName, String value, ComparisonType comparisonType) {
         validateComparisionType(comparisonType);
         this.attributeName = attributeName;
         this.value = value;
         this.comparisonType = comparisonType;
     }
 
-    //basically untestable
+
     @Override
-    public Specification<DroneEntity> toSpecification() {
-        return (Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
+    public Specification<FlightEntity> toSpecification() {
+        return (Root<FlightEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
             PredicateCreator<String> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
             return predicateCreator.apply(root.get(attributeName), value);
         };

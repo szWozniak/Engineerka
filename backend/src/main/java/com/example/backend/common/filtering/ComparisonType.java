@@ -1,4 +1,4 @@
-package com.example.backend.domain.drone.filtering;
+package com.example.backend.common.filtering;
 
 public enum ComparisonType {
     Equals,
