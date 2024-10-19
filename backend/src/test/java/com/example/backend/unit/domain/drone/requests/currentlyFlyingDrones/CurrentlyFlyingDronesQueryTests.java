@@ -28,7 +28,7 @@ public class CurrentlyFlyingDronesQueryTests {
     @BeforeEach
     public void setUp(){
         sut = new CurrentlyFlyingDronesQuery(droneRepository);
-        SetupDatabase();
+        setupDatabase();
     }
 
     @Test
@@ -69,7 +69,7 @@ public class CurrentlyFlyingDronesQueryTests {
         Assertions.assertEquals("dron1", result.get(0).getRegistrationNumber());
     }
 
-    private void SetupDatabase(){
+    private void setupDatabase(){
         var drone = new DroneEntityFixtureBuilder().withRegistrationNumber("dron1").withIsAirbourne(true).build();
         var drone2 = new DroneEntityFixtureBuilder().withRegistrationNumber("dron2").withIsAirbourne(true).build();
 

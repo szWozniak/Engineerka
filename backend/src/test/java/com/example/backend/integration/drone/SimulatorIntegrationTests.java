@@ -4,6 +4,7 @@ import com.example.backend.domain.drone.DroneRepository;
 import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flight.FlightService;
+import com.example.backend.domain.flight.filtering.IFlightFilter;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.domain.flightRecord.FlightRecordService;
@@ -73,7 +74,8 @@ public class SimulatorIntegrationTests {
         Assertions.assertTrue(droneResult.get(0).isAirborne());
         Assertions.assertEquals("Airborne", droneResult.get(0).getType());
 
-        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber());
+        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>() {
+        });
         Assertions.assertEquals(0, droneFlight.size());
     }
 
@@ -95,7 +97,7 @@ public class SimulatorIntegrationTests {
         Assertions.assertFalse(droneResult.get(0).isAirborne());
         Assertions.assertEquals("Grounded", droneResult.get(0).getType());
 
-        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber());
+        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>());
         Assertions.assertEquals(1, droneFlight.size());
         Assertions.assertFalse(droneFlight.get(0).isDidLanded());
     }
@@ -121,7 +123,7 @@ public class SimulatorIntegrationTests {
         Assertions.assertTrue(droneResult.get(1).isAirborne());
         Assertions.assertEquals("Airborne", droneResult.get(1).getType());
 
-        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber());
+        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>());
         Assertions.assertEquals(1, droneFlight.size());
         Assertions.assertFalse(droneFlight.get(0).isDidLanded());
     }
@@ -145,7 +147,7 @@ public class SimulatorIntegrationTests {
         Assertions.assertEquals("Airborne", droneResult.get(0).getType());
         Assertions.assertEquals(2, droneResult.get(0).getFlightRecords().size());
 
-        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber());
+        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>());
         Assertions.assertEquals(0, droneFlight.size());
     }
 

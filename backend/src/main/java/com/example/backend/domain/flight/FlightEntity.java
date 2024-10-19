@@ -25,22 +25,31 @@ public class FlightEntity {
     @Setter
     private Long Id;
     @Getter
+    @Setter
     private LocalDate startDate;
     @Getter
+    @Setter
     private LocalTime startTime;
     @Getter
+    @Setter
     private LocalDate endDate;
     @Getter
+    @Setter
     private LocalTime endTime;
     @Getter
+    @Setter
     private LocalTime duration;
     @Getter
+    @Setter
     private double averageSpeed;
     @Getter
+    @Setter
     private int elevationGain;
     @Getter
+    @Setter
     private double distance;
     @Getter
+    @Setter
     private boolean didLanded;
 
     @OneToMany
