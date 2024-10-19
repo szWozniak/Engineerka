@@ -1,7 +1,7 @@
 import React from 'react';
-import NumberFilter from '../NumberFilter';
 import { useTranslation } from 'react-i18next';
-import useRefreshKey from '../../../../common/useRefreshKey';
+import useRefreshKey from '../../../../../common/useRefreshKey';
+import NumberFilter from '../../NumberFilter';
 
 interface Props{
     minValue: number | undefined,

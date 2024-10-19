@@ -1,6 +1,6 @@
 import React from 'react';
-import Toggle from '../../../../common/components/Toggle';
 import { useTranslation } from 'react-i18next';
+import Toggle from '../../../../../common/components/Toggle';
 
 interface Props{
     value: string,

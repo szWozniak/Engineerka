@@ -16,16 +16,16 @@ public class ComparisonTypeForFilterValidatorTests {
     }
 
     @ParameterizedTest
-    @EnumSource(value = ComparisonType.class, names = {"GreaterThan", "LesserThan"})
-    public void ShouldReturnFalse_ForInvalidComparisonType_ForTextFilter(ComparisonType type){
-        var result = ComparisonTypeForFilterValidator.isValid(type, FilterType.Text);
-        Assertions.assertFalse(result);
-    }
-
-    @ParameterizedTest
     @EnumSource(value = ComparisonType.class, names = {"Equals", "GreaterThan", "LesserThan"})
     public void ShouldReturnTrue_ForValidComparisonType_ForNumberFilter(ComparisonType type){
         var result = ComparisonTypeForFilterValidator.isValid(type, FilterType.Number);
         Assertions.assertTrue(result);
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = ComparisonType.class, names = {"Contains"})
+    public void ShouldReturnFalse_ForInvalidComparisonType_ForTextFilter(ComparisonType type){
+        var result = ComparisonTypeForFilterValidator.isValid(type, FilterType.Number);
+        Assertions.assertFalse(result);
     }
 }

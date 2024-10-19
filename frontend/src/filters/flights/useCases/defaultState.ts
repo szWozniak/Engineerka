@@ -31,6 +31,27 @@ export const defaultFlightsFiltersState: FlightFilter[] = [
         comparisonType: "Contains"
     },
     {
+        type: FilterType.Text,
+        parameter: "duration",
+        key: "minDuration",
+        value: "",
+        comparisonType: "GreaterThan"
+    },
+    {
+        type: FilterType.Text,
+        parameter: "duration",
+        key: "maxDuration",
+        value: "",
+        comparisonType: "LesserThan"
+    },
+    {
+        type: FilterType.Text,
+        parameter: "endTime",
+        key: "endTime",
+        value: "",
+        comparisonType: "Contains"
+    },
+    {
         type: FilterType.Number,
         parameter: "averageSpeed",
         key: "averageSpeed",

@@ -1,6 +1,6 @@
 import React from 'react';
-import TextFilterField from '../TextFilter';
 import { useTranslation } from 'react-i18next';
+import TextFilterField from '../../TextFilter';
 
 interface Props{
     value: string,

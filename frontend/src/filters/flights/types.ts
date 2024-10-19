@@ -8,9 +8,9 @@ type DefaultFilter = {
     comparisonType: ComparisonType
 }
 
-export type FlightTextFilterKey = "startDate" | "startTime" | "endDate" | "endTime" | "duration"
+export type FlightTextFilterKey = "startDate" | "startTime" | "endDate" | "endTime" | "minDuration" | "maxDuration"
 
-export type FlightNumberFilterKey = "averageSpeed" | "elevationGain" | "distance"
+export type FlightNumberFilterKey = "minAverageSpeed" | "maxAverageSpeed" | "minElevationGain" | "maxElevationGain" | "minDistance" | "maxDistance"
 
 export type FlightBooleanFilterKey = "didLanded"
 
