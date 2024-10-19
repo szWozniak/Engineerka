@@ -2,7 +2,7 @@ import { FilterType } from "../../commonTypes";
 import { DroneFilter } from "../types";
 
 
-export const defaultFiltersState: DroneFilter[] = [
+export const defaultDroneFiltersState: DroneFilter[] = [
     {
       type: FilterType.Text,
       parameter: "registrationNumber",

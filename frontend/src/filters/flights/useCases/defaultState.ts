@@ -1,7 +1,7 @@
 import { FilterType } from "../../commonTypes";
 import { FlightFilter } from "../types";
 
-export const defaultFiltersState: FlightFilter[] = [
+export const defaultFlightsFiltersState: FlightFilter[] = [
     {
         type: FilterType.Text,
         parameter: "startDate",

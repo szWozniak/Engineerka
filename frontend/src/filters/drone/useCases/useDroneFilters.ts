@@ -1,11 +1,11 @@
 import { useContext, useState } from "react"
-import { defaultFiltersState } from "./defaultState";
+import { defaultDroneFiltersState } from "./defaultState";
 import { DroneFilter, DroneNumberFilter, DroneNumberFilterKey, DroneTextFilter, DroneTextFilterKey } from "../types";
 import { AppContext } from "../../../context/AppContext";
 import { FilterType } from "../../commonTypes";
 
 const useDroneFilters = () => {
-    const [currentFilters, setCurrentFilters] = useState<DroneFilter[]>(structuredClone(defaultFiltersState));
+    const [currentFilters, setCurrentFilters] = useState<DroneFilter[]>(structuredClone(defaultDroneFiltersState));
 
     const {filtering} = useContext(AppContext);
 
@@ -73,18 +73,18 @@ const useDroneFilters = () => {
       }
 
     const applyFilters = () => {
-      filtering.changeFilters(currentFilters
+      filtering.drone.changeFilters(currentFilters
         .filter(f => f.value !== "")
         .map(f => structuredClone(f)))
     }
 
     const resetFilters = () => {
-      filtering.changeFilters(structuredClone(defaultFiltersState))
-      setCurrentFilters(structuredClone(defaultFiltersState))
+      filtering.drone.changeFilters(structuredClone(defaultDroneFiltersState))
+      setCurrentFilters(structuredClone(defaultDroneFiltersState))
     }
 
     return {
-        filters: filtering.value,
+        filters: filtering.drone.value,
         bulkFiltersActions: {
           applyFilters,
           resetFilters
