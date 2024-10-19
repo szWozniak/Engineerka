@@ -1,4 +1,4 @@
-package com.example.backend.unit.domain.drone.filtering.validators;
+package com.example.backend.unit.common.filtering;
 
 import com.example.backend.common.filtering.ComparisonType;
 import com.example.backend.common.filtering.FilterType;

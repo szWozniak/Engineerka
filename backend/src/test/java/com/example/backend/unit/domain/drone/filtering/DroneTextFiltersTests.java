@@ -1,4 +1,4 @@
-package com.example.backend.unit.domain.drone.filtering.filters;
+package com.example.backend.unit.domain.drone.filtering;
 
 import com.example.backend.common.filtering.ComparisonType;
 import com.example.backend.domain.drone.filtering.DroneTextFilter;

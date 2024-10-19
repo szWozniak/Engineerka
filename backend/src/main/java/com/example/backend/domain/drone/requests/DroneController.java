@@ -6,7 +6,7 @@ import com.example.backend.domain.drone.dto.DroneDto;
 import com.example.backend.domain.drone.dto.FlyingDroneDto;
 import com.example.backend.domain.drone.dto.FlyingDronesWithTimestampDto;
 import com.example.backend.domain.drone.filtering.IDroneFilter;
-import com.example.backend.domain.drone.requests.Drones.GetDronesRequest;
+import com.example.backend.domain.drone.requests.drones.GetDronesRequest;
 import com.example.backend.domain.drone.requests.currentlyFlyingDrones.GetCurrentlyFlyingDronesRequest;
 import com.example.backend.domain.drone.requests.mappers.DroneFiltersMapper;
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.example.backend.domain.drone.requests.currentlyFlyingDrones;
+package com.example.backend.domain.drone.requests.drones;
 
 import com.example.backend.common.filtering.dtos.NumberFilterEntry;
 import com.example.backend.common.filtering.dtos.TextFilterEntry;
@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record GetCurrentlyFlyingDronesRequest(
+public record GetDronesRequest(
         @NotNull
         @Valid
         List<TextFilterEntry> textFilters,

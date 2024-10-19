@@ -1,4 +1,4 @@
-package com.example.backend.domain.drone.requests.Drones;
+package com.example.backend.domain.drone.requests.drones;
 
 import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.drone.DroneRepository;

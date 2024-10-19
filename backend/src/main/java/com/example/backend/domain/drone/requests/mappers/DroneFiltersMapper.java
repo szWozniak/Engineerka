@@ -4,8 +4,8 @@ import com.example.backend.common.filtering.ComparisonType;
 import com.example.backend.domain.drone.filtering.IDroneFilter;
 import com.example.backend.domain.drone.filtering.DroneNumberFilter;
 import com.example.backend.domain.drone.filtering.DroneTextFilter;
-import com.example.backend.domain.drone.requests.filters.NumberFilterEntry;
-import com.example.backend.domain.drone.requests.filters.TextFilterEntry;
+import com.example.backend.common.filtering.dtos.NumberFilterEntry;
+import com.example.backend.common.filtering.dtos.TextFilterEntry;
 
 import java.util.ArrayList;
 import java.util.List;
