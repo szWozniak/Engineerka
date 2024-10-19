@@ -3,11 +3,11 @@ import { ArrowUpIcon } from '../icons/ArrowUpIcon';
 import { ArrowDownIcon } from '../icons/ArrowDownIcon';
 import BigTable from './bigTable/BigTable';
 import FlightsTable from './flightsTable/FlightsTable';
-import FilterSection from './filters/FilterSection';
 import FlightStatusPanel from './flightsTable/FlightStatusPanel';
 import { useTranslation } from 'react-i18next';
 import { DroneNumberFilter, DroneNumberFilterKey, DroneTextFilter, DroneTextFilterKey } from '../../filters/drone/types';
 import useFlights from '../../flights/useCases/useFlights';
+import DroneFilterSection from './filters/droneFilters/DroneFilterSection';
 
 interface Props{
   areFiltersOpen: boolean
@@ -128,7 +128,7 @@ const BottomMenu: React.FC<Props> = ({
       >
         {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>
-      {areFiltersOpen && <FilterSection 
+      {areFiltersOpen && <DroneFilterSection 
         isOpen={areFiltersOpen}
         applyFilters={applyFilters}
         resetFilters={resetFilters}
