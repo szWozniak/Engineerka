@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
-import { DroneFlightSummary } from "../../../drones/types";
 import { useTranslation } from "react-i18next";
 import { MdFlightTakeoff } from "react-icons/md";
 import { MdSearch } from "react-icons/md";
 import useFilters from "../../../filters/useCases/useFilters";
+import { DroneFlightSummary } from "../../../flights/api/types";
 
 interface Props {
   selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,

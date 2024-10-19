@@ -1,7 +1,7 @@
 import { Color } from "deck.gl"
 import { z } from "zod"
 
-const dronePositionSchema = z.object({
+export const dronePositionSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
   altitude: z.number()
@@ -38,22 +38,6 @@ export const DronesWithTimestampSchema = z.object({
 export type DroneBase = z.infer<typeof DroneBaseSchema>
 export type Drone = z.infer<typeof DroneSchema>;
 export type DronesWithTimestamp = z.infer<typeof DronesWithTimestampSchema>;
-
-export const DroneFlightSummarySchema = z.object({
-  id: z.number(),
-  startDate: z.string(),
-  startTime: z.string(),
-  endDate: z.string(),
-  endTime: z.string(),
-  duration: z.string(),
-  averageSpeed: z.number(),
-  elevationGain: z.number(),
-  distance: z.number(),
-  didLanded: z.boolean(),
-  flightRecords: dronePositionSchema.array()
-})
-
-export type DroneFlightSummary = z.infer<typeof DroneFlightSummarySchema>;
 
 export interface MapDrone extends Drone {
   color: Color

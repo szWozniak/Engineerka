@@ -6,9 +6,7 @@ import com.example.backend.domain.drone.dto.DroneDto;
 import com.example.backend.domain.drone.dto.FlyingDroneDto;
 import com.example.backend.domain.drone.dto.FlyingDronesWithTimestampDto;
 import com.example.backend.domain.drone.filtering.IDroneFilter;
-import com.example.backend.domain.flight.dto.FlightSummaryDto;
 import com.example.backend.domain.drone.requests.Drones.GetDronesRequest;
-import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.domain.drone.requests.currentlyFlyingDrones.GetCurrentlyFlyingDronesRequest;
 import com.example.backend.domain.drone.requests.mappers.DroneFiltersMapper;
 import jakarta.validation.Valid;
@@ -79,14 +77,5 @@ public class DroneController {
         FlyingDroneDto dto = FlyingDroneDto.fromDroneEntity(drone.get());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
-    }
-
-    @GetMapping("/{registrationNumber}/flights")
-    public ResponseEntity<List<FlightSummaryDto>> getFlights(@PathVariable String registrationNumber) {
-        List<FlightEntity> flights = droneService.getDroneFinishedFlights(registrationNumber);
-
-        List<FlightSummaryDto> flightSummaryDtos = flights.stream().map(FlightSummaryDto::fromFlightEntity).toList();
-
-        return new ResponseEntity<>(flightSummaryDtos, HttpStatus.OK);
     }
 }

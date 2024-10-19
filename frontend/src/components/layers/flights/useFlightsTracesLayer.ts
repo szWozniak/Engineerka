@@ -1,7 +1,6 @@
 import { LineLayer } from "deck.gl"
 import { droneTrace } from "../types/lines"
-import { DroneFlight } from "../../../flights/api/types";
-import { DroneFlightSummary } from "../../../drones/types";
+import { DroneFlight, DroneFlightSummary } from "../../../flights/api/types";
 
 interface Props {
   trackedFlight: DroneFlight | null | undefined,

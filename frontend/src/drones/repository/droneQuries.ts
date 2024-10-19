@@ -1,8 +1,7 @@
 
 import { queryOptions, skipToken } from "@tanstack/react-query"
 import { Filter } from "../../filters/types"
-import { getAllDrones, getCurrentDrones, getDroneByRegistration, getDroneFlightSummariesByRegistration } from "../api/api"
-import { FilterOptions } from "mapbox-gl"
+import { getAllDrones, getCurrentDrones, getDroneByRegistration } from "../api/api"
 
 const droneQueries = {
     currentDrones: (filters: Filter[]) => ["current-drones", JSON.stringify(filters)],
@@ -25,12 +24,6 @@ const droneQueries = {
         queryFn: regisrationNumber ? () => getDroneByRegistration(regisrationNumber) : skipToken,
         refetchInterval: 2000
     }),
-
-    selectedDroneFlightsSummaries: (registrationNumber: string | null) => ["selected-drone-flights-summaries", registrationNumber],
-    getSelectedDroneFlightsSummaries: (registrationNumber: string | null) => queryOptions({
-        queryKey: droneQueries.selectedDroneFlightsSummaries(registrationNumber),
-        queryFn: registrationNumber ? () => getDroneFlightSummariesByRegistration(registrationNumber) : skipToken
-    })
 }
 
 export default droneQueries

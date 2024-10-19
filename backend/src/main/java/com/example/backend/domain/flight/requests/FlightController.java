@@ -3,6 +3,7 @@ package com.example.backend.domain.flight.requests;
 import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.domain.flight.FlightService;
 import com.example.backend.domain.flight.dto.FlightDto;
+import com.example.backend.domain.flight.dto.FlightSummaryDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,5 +34,14 @@ public class FlightController {
         FlightDto dto = FlightDto.fromFlightEntity(flight.get());
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @GetMapping("/{droneRegistrationNumber}")
+    public ResponseEntity<List<FlightSummaryDto>> getFlights(@PathVariable String droneRegistrationNumber) {
+        List<FlightEntity> flights = flightService.getDroneFinishedFlights(droneRegistrationNumber);
+
+        List<FlightSummaryDto> flightSummaryDtos = flights.stream().map(FlightSummaryDto::fromFlightEntity).toList();
+
+        return new ResponseEntity<>(flightSummaryDtos, HttpStatus.OK);
     }
 }

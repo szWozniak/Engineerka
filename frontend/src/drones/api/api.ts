@@ -1,6 +1,6 @@
 import { checkForErrors, defaultURL } from "../../common/api/apiHelpers";
 import { Filter } from "../../filters/types";
-import { Drone, DroneBase, DroneBaseSchema, DroneFlightSummary, DroneFlightSummarySchema, DroneSchema, DronesWithTimestamp, DronesWithTimestampSchema } from "../types";
+import { Drone, DroneBase, DroneBaseSchema, DroneSchema, DronesWithTimestamp, DronesWithTimestampSchema } from "../types";
 import mapFilters from "./mappers";
 
 export const getAllDrones = (filters: Filter[]): Promise<DroneBase[]> => {
@@ -36,13 +36,4 @@ export const getDroneByRegistration = (registration: string): Promise<Drone> => 
     .then(checkForErrors)
     .then(r => r.json())
     .then(DroneSchema.parse)
-}
-
-export const getDroneFlightSummariesByRegistration = (registration: string): Promise<DroneFlightSummary[]> => {
-  return fetch(`${defaultURL}/drones/${registration}/flights`, {
-    method: "GET",
-  })
-    .then(checkForErrors)
-    .then(r => r.json())
-    .then(DroneFlightSummarySchema.array().parse)
 }

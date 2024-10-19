@@ -18,6 +18,10 @@ public class FlightService {
         this.flightRecordRepository = flightRecordRepository;
     }
 
+    public List<FlightEntity> getDroneFinishedFlights(String registrationNumber){
+        return flightRepository.findDistinctByFlightRecords_Drone_RegistrationNumberAndFlightRecords_FlightIsNotNull(registrationNumber);
+    }
+
     public void createFlights(List<String> droneRegistrationNumbers, Boolean didLanded){
         List<FlightEntity> flightsToSave = new ArrayList<>();
         List<FlightRecordEntity> flightRecordsToUpdate = new ArrayList<>();

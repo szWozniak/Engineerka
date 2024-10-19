@@ -120,10 +120,6 @@ public class DroneService {
         return result;
     }
 
-    public List<FlightEntity> getDroneFinishedFlights(String registrationNumber){
-        return flightRepository.findDistinctByFlightRecords_Drone_RegistrationNumberAndFlightRecords_FlightIsNotNull(registrationNumber);
-    }
-
     public List<DroneEntity> findAndStopDronesThatShouldStopFlying(List<String> registrationNumbers){
         List<DroneEntity> dronesThatShouldStopFlying;
 
