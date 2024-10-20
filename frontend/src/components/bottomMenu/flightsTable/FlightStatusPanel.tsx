@@ -8,6 +8,8 @@ import { MdFlightTakeoff } from "react-icons/md";
 import { FaListUl } from "react-icons/fa6";
 import { MdBatteryCharging90 } from "react-icons/md";
 import { FaChartLine } from "react-icons/fa";
+import useView from '../../../view/useView';
+import AppView from '../../../view/types';
 
 interface Props {
   selectDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>,
@@ -26,12 +28,14 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
   trackedPoint,
 }) => {
   const {t} = useTranslation();
+  const {changeViewTo} = useView()
   
   return (
     <div className="tableContainer">
       <div className="controls">
         <button
           onClick={() => {
+            changeViewTo(AppView.FlightsSummary)
             selectDroneRegistrationToShowFlightsFor(null)
             selectHighlightedFlightId(null)
             selectFlightId(null)

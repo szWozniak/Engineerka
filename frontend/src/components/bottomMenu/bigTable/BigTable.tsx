@@ -5,11 +5,14 @@ import { useTranslation } from 'react-i18next';
 import { MdBatteryCharging90 } from "react-icons/md";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaListUl } from "react-icons/fa6";
+import useView from "../../../view/useView";
+import AppView from "../../../view/types";
 
 const BigTable = () => {  
   const { t } = useTranslation();
   const {flyingDrones, allDrones, selectDrone} = useDrones();
   const {flightsSummaries} = useFlights()
+  const {changeViewTo} = useView()
   
   return (
     <div className="tableBox">
@@ -67,6 +70,7 @@ const BigTable = () => {
                   ><FaMapMarkerAlt /></button>}
                   <button 
                     onClick={() => {
+                      changeViewTo(AppView.FlightsSummary)
                       flightsSummaries.selectDroneRegistrationToShowFlightsFor(drone.registrationNumber)
                     }}
                     title={t("actions.showFlights")}

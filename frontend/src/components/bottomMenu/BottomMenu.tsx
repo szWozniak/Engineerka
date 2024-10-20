@@ -7,6 +7,9 @@ import FlightStatusPanel from './flightsTable/FlightStatusPanel';
 import { useTranslation } from 'react-i18next';
 import useFlights from '../../flights/useCases/useFlights';
 import DroneFilterSection from './filters/droneFilters/DroneFilterSection';
+import useView from '../../view/useView';
+import AppView from '../../view/types';
+import FlightFilterSection from './filters/flightFilters/FlightFilterSection';
 
 interface Props{
   areFiltersOpen: boolean,
@@ -18,6 +21,8 @@ const BottomMenu: React.FC<Props> = ({
   closeFilters
 }) => {
   const { t } = useTranslation();
+
+  const {currentView} = useView()
 
   const [isOpened, setIsOpened] = useState(false)
   const {detailedFlight, flightsSummaries} = useFlights()
@@ -86,11 +91,15 @@ const BottomMenu: React.FC<Props> = ({
   )
 
   const renderContent = () => {
-    if (detailedFlight.trackedFlight !== undefined){
+    // if (detailedFlight.trackedFlight !== undefined)
+    if(currentView === AppView.Flight)
+    {
       return rednerFlightTrackingView()
     }
 
-    if (flightsSummaries.droneRegistrationToShowFlightsFor !== null){
+    // if (flightsSummaries.droneRegistrationToShowFlightsFor !== null)
+    if (currentView === AppView.FlightsSummary)
+    {
       return renderDroneFlightsView()
     }
 
@@ -107,7 +116,19 @@ const BottomMenu: React.FC<Props> = ({
       return <></>
     }
 
-    
+    if (currentView === AppView.Drones){
+      return <DroneFilterSection
+        isOpen={areFiltersOpen}
+      />
+    }
+
+    if (currentView === AppView.FlightsSummary){
+      return <FlightFilterSection
+        isOpen={areFiltersOpen}
+      />
+    }
+
+    return <></>
   }
 
   return (
@@ -122,9 +143,7 @@ const BottomMenu: React.FC<Props> = ({
       >
         {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>
-      {areFiltersOpen && <DroneFilterSection 
-        isOpen={areFiltersOpen}
-      />}
+      {renderFilters()}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
         {renderContent()}

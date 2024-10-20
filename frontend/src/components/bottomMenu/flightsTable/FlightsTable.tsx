@@ -4,6 +4,8 @@ import { MdFlightTakeoff } from "react-icons/md";
 import { MdSearch } from "react-icons/md";
 import useDroneFilters from "../../../filters/drone/useCases/useDroneFilters";
 import { DroneFlightSummary } from "../../../flights/api/types";
+import useView from "../../../view/useView";
+import AppView from "../../../view/types";
 
 interface Props {
   selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
@@ -22,12 +24,15 @@ const FlightsTable: React.FC<Props> = ({
   }) => { 
   const {t} = useTranslation();
   const {bulkFiltersActions} = useDroneFilters();
+
+  const {changeViewTo} = useView()
   
   return (
     <div className="tableContainer">
       <div className="controls">
         <button
           onClick={() => {
+            changeViewTo(AppView.Drones)
             selectDroneRegistrationToShowFlightsFor(null)
             selectHighlightedFlightId(null)
             selectFlightId(null)
@@ -78,6 +83,7 @@ const FlightsTable: React.FC<Props> = ({
                   <td>
                   <button 
                     onClick={() => {
+                      changeViewTo(AppView.Flight)
                       selectFlightId(flight?.id)
                       closeFilters();
                       bulkFiltersActions.resetFilters();
