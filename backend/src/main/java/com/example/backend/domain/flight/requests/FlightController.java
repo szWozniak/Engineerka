@@ -1,7 +1,5 @@
 package com.example.backend.domain.flight.requests;
 
-import com.example.backend.domain.drone.filtering.IDroneFilter;
-import com.example.backend.domain.drone.requests.mappers.DroneFiltersMapper;
 import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.domain.flight.FlightService;
 import com.example.backend.domain.flight.dto.FlightDto;
@@ -51,7 +49,7 @@ public class FlightController {
         List<IFlightFilter> mappedFilters;
 
         try {
-            mappedFilters = FlightFiltersMapper.map(request.textFilters(), request.numberFilters());
+            mappedFilters = FlightFiltersMapper.map(request.dateAndTimeFilters(), request.numberFilters(), request.booleanFilters());
         } catch(IllegalArgumentException ex){
             throw new BadRequestException(ex.getMessage());
         }

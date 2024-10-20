@@ -1,10 +1,11 @@
 package com.example.backend.unit.domain.flight.requests.mappers;
 
+import com.example.backend.common.filtering.dtos.BooleanFilterEntry;
+import com.example.backend.common.filtering.dtos.DateAndTimeFilterEntry;
 import com.example.backend.common.filtering.dtos.NumberFilterEntry;
-import com.example.backend.common.filtering.dtos.TextFilterEntry;
+import com.example.backend.domain.flight.filtering.FlightBooleanFilter;
+import com.example.backend.domain.flight.filtering.FlightDateAndTimeFilter;
 import com.example.backend.domain.flight.filtering.FlightNumberFilter;
-import com.example.backend.domain.flight.filtering.FlightTextFilter;
-import com.example.backend.domain.flight.filtering.IFlightFilter;
 import com.example.backend.domain.flight.requests.mappers.FlightFiltersMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
@@ -16,47 +17,71 @@ import java.util.List;
 
 public class FlightFiltersMapperTests {
     @ParameterizedTest
-    @ValueSource(strings = {"Equals", "Contains"})
-    public void ShouldProperlyMap_TextFilter(){
-        var textFilterEntry = new TextFilterEntry("registrationNumber", "whatever", "Johnny", "Equals");
-
-        List<IFlightFilter> result = FlightFiltersMapper.map(List.of(textFilterEntry), new ArrayList<>());
-
-        Assertions.assertEquals(1, result.size());
-        var filter = result.get(0);
-        Assertions.assertEquals(filter.getClass(), FlightTextFilter.class);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"GreaterThan", "LesserThan", "ZlyEnum"})
-    public void ShouldThrowException_WhenInvalidTextFilter(String comparisonType){
-        var textFilterEntry = new TextFilterEntry("registrationNumber", "whatever", "Johnny", comparisonType);
-
-        Executable action = () -> FlightFiltersMapper.map(List.of(textFilterEntry), new ArrayList<>());
-
-        Assertions.assertThrows(IllegalArgumentException.class, action);
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {"Equals", "GreaterThan", "LesserThan"})
     public void ShouldProperlyMap_NumberFilter(String comparisonType){
         var numberFilterEntry = new NumberFilterEntry("registrationNumber", "whatever", 69, comparisonType);
 
-        var result = FlightFiltersMapper.map(new ArrayList<>(), List.of(numberFilterEntry));
+        var result = FlightFiltersMapper.map(new ArrayList<>(), List.of(numberFilterEntry), new ArrayList<>());
 
         Assertions.assertEquals(1, result.size());
         var filter = result.get(0);
         Assertions.assertEquals(filter.getClass(), FlightNumberFilter.class);
     }
 
-
-
     @ParameterizedTest
     @ValueSource(strings = {"ZlyEnum", "Contains"})
     public void ShouldThrowException_WhenInvalidNumberFilter(String comparisonType){
         var numberFilterEntry = new NumberFilterEntry("registrationNumber", "whatever", 69, comparisonType);
 
-        Executable action = () -> FlightFiltersMapper.map(new ArrayList<>(), List.of(numberFilterEntry));
+        Executable action = () -> FlightFiltersMapper.map(new ArrayList<>(), List.of(numberFilterEntry), new ArrayList<>());
+
+        Assertions.assertThrows(IllegalArgumentException.class, action);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Equals"})
+    public void ShouldProperlyMap_BooleanFilter(String comparisonType){
+        var booleanFilterEntry = new BooleanFilterEntry("registrationNumber", "whatever", false, comparisonType);
+
+        var result = FlightFiltersMapper.map(new ArrayList<>(), new ArrayList<>(),  List.of(booleanFilterEntry));
+
+        Assertions.assertEquals(1, result.size());
+        var filter = result.get(0);
+        Assertions.assertEquals(filter.getClass(), FlightBooleanFilter.class);
+    }
+
+
+
+    @ParameterizedTest
+    @ValueSource(strings = {"GreaterThan", "Contains", "LesserThan"})
+    public void ShouldThrowException_WhenInvalidBooleanFilter(String comparisonType){
+        var booleanFilterEntry = new BooleanFilterEntry("registrationNumber", "whatever", false, comparisonType);
+
+        Executable action = () -> FlightFiltersMapper.map(new ArrayList<>(), new ArrayList<>(),  List.of(booleanFilterEntry));
+
+        Assertions.assertThrows(IllegalArgumentException.class, action);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"GreaterThan", "LesserThan"})
+    public void ShouldProperlyMap_DateAndTimeFilter(String comparisonType){
+        var dateAndTimeFilterEntry = new DateAndTimeFilterEntry("registrationNumber", "whatever", "whatever", comparisonType);
+
+        var result = FlightFiltersMapper.map(List.of(dateAndTimeFilterEntry), new ArrayList<>(), new ArrayList<>());
+
+        Assertions.assertEquals(1, result.size());
+        var filter = result.get(0);
+        Assertions.assertEquals(filter.getClass(), FlightDateAndTimeFilter.class);
+    }
+
+
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Equals", "Contains"})
+    public void ShouldThrowException_WhenInvalidDateAndTimeFilter(String comparisonType){
+        var dateAndTimeFilterEntry = new DateAndTimeFilterEntry("registrationNumber", "whatever", "whatever", comparisonType);
+
+        Executable action = () -> FlightFiltersMapper.map(List.of(dateAndTimeFilterEntry), new ArrayList<>(), new ArrayList<>());
 
         Assertions.assertThrows(IllegalArgumentException.class, action);
     }

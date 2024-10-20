@@ -2,13 +2,12 @@ import React from "react"
 import { useTranslation } from "react-i18next"
 import useRefreshKey from "../../../../common/useRefreshKey"
 import AverageSpeed from "./concreteFilters/AverageSpeed"
-import DateFilter from "./concreteFilters/DateFilter"
-import TimeFilter from "./concreteFilters/TimeFilter"
 import DistanceFilter from "./concreteFilters/DistanceFilter"
 import DurationFilter from "./concreteFilters/DurationFilter"
 import ElevationGainFilter from "./concreteFilters/ElevationGainFilter"
 import DidLandedFilter from "./concreteFilters/DidLandedFilter"
 import useFlightFilters from "../../../../filters/flights/useCases/useFlightFilters"
+import DateTimeFilter from "./concreteFilters/DateTimeFilter"
 
 interface Props{
     isOpen: boolean,
@@ -20,7 +19,7 @@ const FlightFilterSection: React.FC<Props> = ({
     const {t} = useTranslation();
     const {refreshKey, refresh} = useRefreshKey();
 
-    const {bulkFiltersActions, numberFilters, textFilters, booleanFilters} = useFlightFilters()
+    const {bulkFiltersActions, numberFilters, dateAndTimeFilters: textFilters, booleanFilters} = useFlightFilters()
 
     const onResetFilters = () => {
         bulkFiltersActions.resetFilters()
@@ -32,21 +31,13 @@ const FlightFilterSection: React.FC<Props> = ({
             <div className="filterContainer">
                 <b>{t("general.flightFilters")}</b>
                 <div className="filters" key={refreshKey}>
-                    <DateFilter
-                        minValue={textFilters.get("startDate").value}
-                        maxValue={textFilters.get("endDate").value}
-                        onMaxValueChange={(value) => textFilters.onChange("endDate", value)}
-                        onMaxValueReset={() => textFilters.onReset("endDate")}
-                        onMinValueChange={(value) => textFilters.onChange("startDate", value)}
-                        onMinValueReset={() => textFilters.onReset("startDate")}
-                    />
-                    <TimeFilter
-                        minValue={textFilters.get("startTime").value}
-                        maxValue={textFilters.get("endTime").value}
-                        onMaxValueChange={(value) => textFilters.onChange("endTime", value)}
-                        onMaxValueReset={() => textFilters.onReset("endTime")}
-                        onMinValueChange={(value) => textFilters.onChange("startTime", value)}
-                        onMinValueReset={() => textFilters.onReset("startTime")}
+                    <DateTimeFilter
+                        minValue={textFilters.get("startDateAndTime").value}
+                        maxValue={textFilters.get("endDateAndTime").value}
+                        onMaxValueChange={(value) => textFilters.onChange("endDateAndTime", value)}
+                        onMaxValueReset={() => textFilters.onReset("endDateAndTime")}
+                        onMinValueChange={(value) => textFilters.onChange("startDateAndTime", value)}
+                        onMinValueReset={() => textFilters.onReset("startDateAndTime")}
                     />
                     <DurationFilter
                         maxValue={textFilters.get("maxDuration").value}

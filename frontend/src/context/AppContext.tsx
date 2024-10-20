@@ -124,42 +124,28 @@ export const AppContext = createContext<AppContextType>({
     flight: {
       value: [
         {
-          type: FilterType.Text,
-          parameter: "startDate",
-          key: "startDate",
+          type: FilterType.DateAndTime,
+          parameter: "start",
+          key: "startDateAndTime",
           value: "",
           comparisonType: "GreaterThan"
       },
       {
-          type: FilterType.Text,
-          parameter: "startTime",
-          key: "startTime",
-          value: "",
-          comparisonType: "GreaterThan"
-      },
-      {
-          type: FilterType.Text,
-          parameter: "endDate",
-          key: "endDate",
+          type: FilterType.DateAndTime,
+          parameter: "end",
+          key: "endDateAndTime",
           value: "",
           comparisonType: "LesserThan"
       },
       {
-          type: FilterType.Text,
-          parameter: "endTime",
-          key: "endTime",
-          value: "",
-          comparisonType: "LesserThan"
-      },
-      {
-          type: FilterType.Text,
+          type: FilterType.DateAndTime,
           parameter: "duration",
           key: "minDuration",
           value: "",
           comparisonType: "GreaterThan"
       },
       {
-          type: FilterType.Text,
+          type: FilterType.DateAndTime,
           parameter: "duration",
           key: "maxDuration",
           value: "",

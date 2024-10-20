@@ -7,6 +7,7 @@
   },
   "general": {
     "menu": "Menu Główne",
+    "filters": "Filtry",
     "droneFilters": "Filtry Dronów",
     "flightFilters": "Filtry lotów",
     "flyingDrones": "Latające Drony",
@@ -46,8 +47,6 @@
       "didLanded": "Czy wylądował?",
       "startDate": "Data startu",
       "endDate": "Data końca",
-      "startTime": "Czas startu",
-      "endTime": "Czas końca",
       "duration": "Czas lotu",
       "averageSpeed": "Średnia prędkość",
       "elevationGain": "Nabyta wysokość"

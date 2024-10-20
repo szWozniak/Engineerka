@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FlightBooleanFilterKey, FlightFilter, FlightNumberFilter, FlightNumberFilterKey, FlightTextFilter, FlightTextFilterKey } from "../types";
+import { FlightBooleanFilterKey, FlightDateAndTimeFilter, FlightDateAndTimeFilterKey, FlightFilter, FlightNumberFilter, FlightNumberFilterKey} from "../types";
 import { defaultFlightsFiltersState } from "./defaultState";
 import { AppContext } from "../../../context/AppContext";
 import { FilterType } from "../../commonTypes";
@@ -21,28 +21,28 @@ const useFlightFilters = () => {
         setCurrentFilters(structuredClone(defaultFlightsFiltersState))
     }
 
-    const getTextFilter = (key: FlightTextFilterKey): FlightTextFilter => {
+    const getDateAndTimeFilter = (key: FlightDateAndTimeFilterKey): FlightDateAndTimeFilter => {
         const searchedFilter = currentFilters.find(f => f.key === key);
     
-        if (searchedFilter?.type !== FilterType.Text){
+        if (searchedFilter?.type !== FilterType.DateAndTime){
           throw new Error("Invalid key")
         }
     
         return searchedFilter;
     }
 
-    const onTextFilterChange = (key: FlightTextFilterKey, value: string) => {
+    const onDateAndTimeFilterChange = (key: FlightDateAndTimeFilterKey, value: string) => {
         setCurrentFilters(prev => prev.map(f => {
-          if (f.key === key && f.type === FilterType.Text){
+          if (f.key === key && f.type === FilterType.DateAndTime){
             f.value = value
           }
           return f;
         }))
     }
 
-    const onTextFilterReset = (key: FlightTextFilterKey) => {
+    const onDateAndTimeFilterReset = (key: FlightDateAndTimeFilterKey) => {
         setCurrentFilters(prev => prev.map(f => {
-          if (f.key === key && f.type === FilterType.Text){
+          if (f.key === key && f.type === FilterType.DateAndTime){
             f.value = ""
           }
           return f;
@@ -111,10 +111,10 @@ const useFlightFilters = () => {
           applyFilters,
           resetFilters
         },
-        textFilters: {
-            get: getTextFilter,
-            onChange: onTextFilterChange,
-            onReset: onTextFilterReset
+        dateAndTimeFilters: {
+            get: getDateAndTimeFilter,
+            onChange: onDateAndTimeFilterChange,
+            onReset: onDateAndTimeFilterReset
         },
         numberFilters: {
             get: getNumberFilter,
