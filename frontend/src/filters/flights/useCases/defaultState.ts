@@ -31,14 +31,14 @@ export const defaultFlightsFiltersState: FlightFilter[] = [
         comparisonType: "LesserThanOrEqual"
     },
     {
-        type: FilterType.DateAndTime,
+        type: FilterType.Time,
         parameter: "duration",
         key: "minDuration",
         value: "",
         comparisonType: "GreaterThanOrEqual"
     },
     {
-        type: FilterType.DateAndTime,
+        type: FilterType.Time,
         parameter: "duration",
         key: "maxDuration",
         value: "",

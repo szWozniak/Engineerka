@@ -4,5 +4,6 @@ export enum FilterType{
   Text,
   Number,
   Boolean,
-  DateAndTime
+  DateAndTime,
+  Time,
 }

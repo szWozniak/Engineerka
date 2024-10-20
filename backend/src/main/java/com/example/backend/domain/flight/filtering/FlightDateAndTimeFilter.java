@@ -56,8 +56,7 @@ public class FlightDateAndTimeFilter implements IFlightFilter{
         var dateAndTime = this.value.split("T");
 
         return new DateAndTimeTupple(LocalDate.parse(dateAndTime[0], DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                LocalTime.parse(dateAndTime[1]+":00.0000",
-                        DateTimeFormatter.ofPattern("HH:mm:ss.SSSS")));
+                LocalTime.parse(dateAndTime[1]));
     }
 
     private void validateComparisionType(ComparisonType comparisonType) throws IllegalArgumentException{

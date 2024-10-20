@@ -44,6 +44,20 @@ public class ComparisonTypeForFilterValidatorTests {
     }
 
     @ParameterizedTest
+    @EnumSource(value = ComparisonType.class, names = {"GreaterThanOrEqual", "LesserThanOrEqual"})
+    public void ShouldReturnTrue_ForValidComparisonType_ForTimeFilter(ComparisonType type){
+        var result = ComparisonTypeForFilterValidator.isValid(type, FilterType.Time);
+        Assertions.assertTrue(result);
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = ComparisonType.class, names = {"Contains", "Equals"})
+    public void ShouldReturnFalse_ForInvalidComparisonType_ForTimeFilter(ComparisonType type){
+        var result = ComparisonTypeForFilterValidator.isValid(type, FilterType.Time);
+        Assertions.assertFalse(result);
+    }
+
+    @ParameterizedTest
     @EnumSource(value = ComparisonType.class, names = {"Contains", "GreaterThanOrEqual", "LesserThanOrEqual"})
     public void ShouldReturnFalse_ForInvalidComparisonType_ForBooleanFilter(ComparisonType type){
         var result = ComparisonTypeForFilterValidator.isValid(type, FilterType.Boolean);

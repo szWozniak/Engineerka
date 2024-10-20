@@ -20,7 +20,7 @@ const FlightFilterSection: React.FC<Props> = ({
     const {t} = useTranslation();
     const {refreshKey, refresh} = useRefreshKey();
 
-    const {bulkFiltersActions, numberFilters, dateAndTimeFilters: textFilters, booleanFilters} = useFlightFilters()
+    const {bulkFiltersActions, numberFilters, dateAndTimeFilters, timeFilters, booleanFilters} = useFlightFilters()
 
     const onResetFilters = () => {
         bulkFiltersActions.resetFilters()
@@ -33,28 +33,28 @@ const FlightFilterSection: React.FC<Props> = ({
                 <b>{t("general.flightFilters")}</b>
                 <div className="filters" key={refreshKey}>
                     <StartDateTimeFilter
-                        minValue={textFilters.get("minStartDateAndTime").value}
-                        maxValue={textFilters.get("maxStartDateAndTime").value}
-                        onMaxValueChange={(value) => textFilters.onChange("maxStartDateAndTime", value)}
-                        onMaxValueReset={() => textFilters.onReset("maxStartDateAndTime")}
-                        onMinValueChange={(value) => textFilters.onChange("minStartDateAndTime", value)}
-                        onMinValueReset={() => textFilters.onReset("minStartDateAndTime")}
+                        minValue={dateAndTimeFilters.get("minStartDateAndTime").value}
+                        maxValue={dateAndTimeFilters.get("maxStartDateAndTime").value}
+                        onMaxValueChange={(value) => dateAndTimeFilters.onChange("maxStartDateAndTime", value)}
+                        onMaxValueReset={() => dateAndTimeFilters.onReset("maxStartDateAndTime")}
+                        onMinValueChange={(value) => dateAndTimeFilters.onChange("minStartDateAndTime", value)}
+                        onMinValueReset={() => dateAndTimeFilters.onReset("minStartDateAndTime")}
                     />
                     <EndDateTimeFilter
-                        minValue={textFilters.get("minEndDateAndTime").value}
-                        maxValue={textFilters.get("maxEndDateAndTime").value}
-                        onMaxValueChange={(value) => textFilters.onChange("maxEndDateAndTime", value)}
-                        onMaxValueReset={() => textFilters.onReset("maxEndDateAndTime")}
-                        onMinValueChange={(value) => textFilters.onChange("minEndDateAndTime", value)}
-                        onMinValueReset={() => textFilters.onReset("minEndDateAndTime")}
+                        minValue={dateAndTimeFilters.get("minEndDateAndTime").value}
+                        maxValue={dateAndTimeFilters.get("maxEndDateAndTime").value}
+                        onMaxValueChange={(value) => dateAndTimeFilters.onChange("maxEndDateAndTime", value)}
+                        onMaxValueReset={() => dateAndTimeFilters.onReset("maxEndDateAndTime")}
+                        onMinValueChange={(value) => dateAndTimeFilters.onChange("minEndDateAndTime", value)}
+                        onMinValueReset={() => dateAndTimeFilters.onReset("minEndDateAndTime")}
                     />
                     <DurationFilter
-                        maxValue={textFilters.get("maxDuration").value}
-                        minValue={textFilters.get("minDuration").value}
-                        onMaxValueChange={(value) => textFilters.onChange("maxDuration", value)}
-                        onMaxValueReset={() => textFilters.onReset("maxDuration")}
-                        onMinValueChange={(value) => textFilters.onChange("minDuration", value)}
-                        onMinValueReset={() => textFilters.onReset("minDuration")}
+                        maxValue={timeFilters.get("maxDuration").value}
+                        minValue={timeFilters.get("minDuration").value}
+                        onMaxValueChange={(value) => timeFilters.onChange("maxDuration", value)}
+                        onMaxValueReset={() => timeFilters.onReset("maxDuration")}
+                        onMinValueChange={(value) => timeFilters.onChange("minDuration", value)}
+                        onMinValueReset={() => timeFilters.onReset("minDuration")}
                     />
                     <DistanceFilter
                         maxValue={numberFilters.get("maxDistance").value}

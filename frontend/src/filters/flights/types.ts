@@ -10,11 +10,13 @@ type DefaultFilter = {
 
 // export type FlightTextFilterKey = 
 
-export type FlightDateAndTimeFilterKey = "minStartDateAndTime" | "maxStartDateAndTime" | "minEndDateAndTime" | "maxEndDateAndTime" | "minDuration" | "maxDuration"
+export type FlightDateAndTimeFilterKey = "minStartDateAndTime" | "maxStartDateAndTime" | "minEndDateAndTime" | "maxEndDateAndTime"
 
 export type FlightNumberFilterKey = "minAverageSpeed" | "maxAverageSpeed" | "minElevationGain" | "maxElevationGain" | "minDistance" | "maxDistance"
 
 export type FlightBooleanFilterKey = "didLanded"
+
+export type FlightTimeFilterKey = "minDuration" | "maxDuration"
 
 // export type FlightTextFilter = DefaultFilter & {type: FilterType.Text, value: string, key: FlightTextFilterKey}
 
@@ -24,5 +26,7 @@ export type FlightBooleanFilter = DefaultFilter & {type: FilterType.Boolean, val
 
 export type FlightDateAndTimeFilter = DefaultFilter & {type: FilterType.DateAndTime, value: string, key: FlightDateAndTimeFilterKey}
 
-export type FlightFilter = FlightNumberFilter | FlightBooleanFilter | FlightDateAndTimeFilter
+export type FlightTimeFilter = DefaultFilter & {type: FilterType.Time, value: string, key: FlightTimeFilterKey}
+
+export type FlightFilter = FlightNumberFilter | FlightBooleanFilter | FlightDateAndTimeFilter | FlightTimeFilter
 

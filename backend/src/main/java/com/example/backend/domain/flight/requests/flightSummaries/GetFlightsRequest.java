@@ -3,6 +3,7 @@ package com.example.backend.domain.flight.requests.flightSummaries;
 import com.example.backend.common.filtering.dtos.BooleanFilterEntry;
 import com.example.backend.common.filtering.dtos.DateAndTimeFilterEntry;
 import com.example.backend.common.filtering.dtos.NumberFilterEntry;
+import com.example.backend.common.filtering.dtos.TimeFilterEntry;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,5 +19,9 @@ public record GetFlightsRequest(
 
         @NotNull
         @Valid
-        List<BooleanFilterEntry> booleanFilters
+        List<BooleanFilterEntry> booleanFilters,
+
+        @NotNull
+        @Valid
+        List<TimeFilterEntry> timeFilters
 ) {}

@@ -1,8 +1,9 @@
 import { FilterType } from "../../filters/commonTypes";
-import { FlightBooleanFilter, FlightDateAndTimeFilter, FlightFilter, FlightNumberFilter } from "../../filters/flights/types";
+import { FlightBooleanFilter, FlightDateAndTimeFilter, FlightFilter, FlightNumberFilter, FlightTimeFilter } from "../../filters/flights/types";
 
 interface SeperatedFilters {
     dateAndTimeFilters: FlightDateAndTimeFilter[],
+    timeFilters: FlightTimeFilter[],
     numberFilters: FlightNumberFilter[],
     booleanFilters: FlightBooleanFilter[]
 }
@@ -13,30 +14,14 @@ const mapFlightFilters = (filters: FlightFilter[]): SeperatedFilters => {
         f.value !== undefined &&
         f.value !== 0) as FlightNumberFilter[]
     const booleanFilters: FlightBooleanFilter[] = filters.filter(f => f.type === FilterType.Boolean && f.value !== undefined) as FlightBooleanFilter[]
+    const timeFilters: FlightTimeFilter[] = filters.filter(f => f.type === FilterType.Time && f.value !== "") as FlightTimeFilter[]
 
     return {
         dateAndTimeFilters: dateAndTimeFilters,
+        timeFilters,
         numberFilters,
         booleanFilters
     }
 }
-
-// const parseDateAndTimeToCorrectFormat = (filters: FlightDateAndTimeFilter[]): FlightDateAndTimeFilter[] => {
-//     return filters.map(f => {
-//         const dateAndTime = f.value.split("T")
-
-//         let date = dateAndTime[0]
-//         let time = dateAndTime[1]
-
-//         console.log(date)
-//         console.log(time)
-
-//         const splittedDate = date.split("-")
-//         date = splittedDate[2]+"-"+splittedDate[1]+"-"+splittedDate[0]
-//         f.value = date+'T'+time
-
-//         return f
-//     })
-// }
 
 export default mapFlightFilters

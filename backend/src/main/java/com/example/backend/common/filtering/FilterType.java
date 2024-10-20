@@ -4,5 +4,6 @@ public enum FilterType {
     Text,
     Number,
     Boolean,
-    DateAndTime
+    DateAndTime,
+    Time
 }

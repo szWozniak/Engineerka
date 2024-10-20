@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FlightBooleanFilterKey, FlightDateAndTimeFilter, FlightDateAndTimeFilterKey, FlightFilter, FlightNumberFilter, FlightNumberFilterKey} from "../types";
+import { FlightBooleanFilterKey, FlightDateAndTimeFilter, FlightDateAndTimeFilterKey, FlightFilter, FlightNumberFilter, FlightNumberFilterKey, FlightTimeFilter, FlightTimeFilterKey} from "../types";
 import { defaultFlightsFiltersState } from "./defaultState";
 import { AppContext } from "../../../context/AppContext";
 import { FilterType } from "../../commonTypes";
@@ -43,6 +43,34 @@ const useFlightFilters = () => {
     const onDateAndTimeFilterReset = (key: FlightDateAndTimeFilterKey) => {
         setCurrentFilters(prev => prev.map(f => {
           if (f.key === key && f.type === FilterType.DateAndTime){
+            f.value = ""
+          }
+          return f;
+        }))
+      }
+    
+    const getTimeFilter = (key: FlightTimeFilterKey): FlightTimeFilter => {
+      const searchedFilter = currentFilters.find(f => f.key === key);
+  
+      if (searchedFilter?.type !== FilterType.Time){
+        throw new Error("Invalid key")
+      }
+  
+      return searchedFilter;
+    }
+
+    const onTimeFilterChange = (key: FlightTimeFilterKey, value: string) => {
+        setCurrentFilters(prev => prev.map(f => {
+          if (f.key === key && f.type === FilterType.Time){
+            f.value = value
+          }
+          return f;
+        }))
+    }
+
+    const onTimeFilterReset = (key: FlightTimeFilterKey) => {
+        setCurrentFilters(prev => prev.map(f => {
+          if (f.key === key && f.type === FilterType.Time){
             f.value = ""
           }
           return f;
@@ -115,6 +143,11 @@ const useFlightFilters = () => {
             get: getDateAndTimeFilter,
             onChange: onDateAndTimeFilterChange,
             onReset: onDateAndTimeFilterReset
+        },
+        timeFilters: {
+          get: getTimeFilter,
+          onChange: onTimeFilterChange,
+          onReset: onTimeFilterReset
         },
         numberFilters: {
             get: getNumberFilter,

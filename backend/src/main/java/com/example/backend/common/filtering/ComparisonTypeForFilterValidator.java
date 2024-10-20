@@ -7,6 +7,7 @@ public class ComparisonTypeForFilterValidator {
     private static final List<ComparisonType> LEGAL_NUMBER_FILTER_COMPARISON_TYPES = List.of(ComparisonType.Equals, ComparisonType.GreaterThanOrEqual, ComparisonType.LesserThanOrEqual);
     private static final List<ComparisonType> LEGAL_DATEANDTIME_FILTER_COMPARISON_TYPES = List.of(ComparisonType.GreaterThanOrEqual, ComparisonType.LesserThanOrEqual);
     private static final List<ComparisonType> LEGAL_BOOLEAN_FILTER_COMPARISON_TYPES = List.of(ComparisonType.Equals);
+    private static final List<ComparisonType> LEGAL_TIME_FILTER_COMPARISON_TYPES = List.of(ComparisonType.GreaterThanOrEqual, ComparisonType.LesserThanOrEqual);
 
     public static boolean isValid(ComparisonType comparisonType, FilterType filterType) {
         return switch(filterType){
@@ -14,6 +15,7 @@ public class ComparisonTypeForFilterValidator {
             case Number -> LEGAL_NUMBER_FILTER_COMPARISON_TYPES.contains(comparisonType);
             case Boolean -> LEGAL_BOOLEAN_FILTER_COMPARISON_TYPES.contains(comparisonType);
             case DateAndTime -> LEGAL_DATEANDTIME_FILTER_COMPARISON_TYPES.contains(comparisonType);
+            case Time -> LEGAL_TIME_FILTER_COMPARISON_TYPES.contains(comparisonType);
         };
     }
 }

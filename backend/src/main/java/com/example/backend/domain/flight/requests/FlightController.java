@@ -49,7 +49,7 @@ public class FlightController {
         List<IFlightFilter> mappedFilters;
 
         try {
-            mappedFilters = FlightFiltersMapper.map(request.dateAndTimeFilters(), request.numberFilters(), request.booleanFilters());
+            mappedFilters = FlightFiltersMapper.map(request.dateAndTimeFilters(), request.numberFilters(), request.booleanFilters(), request.timeFilters());
         } catch(IllegalArgumentException ex){
             throw new BadRequestException(ex.getMessage());
         }

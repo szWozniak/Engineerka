@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import useRefreshKey from '../../../../../common/useRefreshKey';
-import TextFilterField from '../../TextFilter';
+import TimeFilter from '../../TimeFilter';
 
 interface Props{
     minValue: string,
@@ -36,13 +36,13 @@ const DurationFilter: React.FC<Props> = (
     
     return (
         <div className='multipleFiltersContainer' key={refreshKey}>
-            <TextFilterField
+            <TimeFilter
                 label={`${t("details.flight.duration")} (${t("filters.min")})`}
                 value={minValue}
                 onChange={onMinValueChange}
                 onReset={resetMinValue}
             />
-            <TextFilterField
+            <TimeFilter
                 label={`${t("details.flight.duration")} (${t("filters.max")})`}
                 value={maxValue}
                 onChange={onMaxValueChange}
