@@ -9,6 +9,7 @@ interface Props {
   selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
   selectDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>
   selectFlightId: Dispatch<SetStateAction<number | null>>
+  closeFilters: () => void
   flightSummaries: DroneFlightSummary[] | undefined
 }
 
@@ -16,10 +17,11 @@ const FlightsTable: React.FC<Props> = ({
     selectDroneRegistrationToShowFlightsFor,
     selectFlightId,
     selectHighlightedFlightId,
+    closeFilters,
     flightSummaries
   }) => { 
   const {t} = useTranslation();
-  const {visibility, bulkFiltersActions} = useDroneFilters();
+  const {bulkFiltersActions} = useDroneFilters();
   
   return (
     <div className="tableContainer">
@@ -77,7 +79,7 @@ const FlightsTable: React.FC<Props> = ({
                   <button 
                     onClick={() => {
                       selectFlightId(flight?.id)
-                      visibility.closeFilters();
+                      closeFilters();
                       bulkFiltersActions.resetFilters();
                     }}
                     onMouseEnter={() => selectHighlightedFlightId(flight?.id)}

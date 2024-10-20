@@ -7,38 +7,24 @@ import LongitudeFilter from './concreteFilters/LongitudeFilter';
 import ModelFilter from './concreteFilters/ModelFilter';
 import OperatorFilter from './concreteFilters/OperatorFilter';
 import TypeFilter from './concreteFilters/TypeFilter';
-import { DroneTextFilterKey, DroneTextFilter, DroneNumberFilterKey, DroneNumberFilter } from '../../../../filters/drone/types';
 import { useTranslation } from 'react-i18next';
 import useRefreshKey from '../../../../common/useRefreshKey';
+import useDroneFilters from '../../../../filters/drone/useCases/useDroneFilters';
 
 interface Props{
     isOpen: boolean,
-    getTextFilter: (filterKey: DroneTextFilterKey) => DroneTextFilter,
-    getNumberFilter: (filterKey: DroneNumberFilterKey) => DroneNumberFilter,
-    onNumberFilterChange: (filterKey: DroneNumberFilterKey, value: number | undefined) => void,
-    onNumberFilterReset: (filterKey: DroneNumberFilterKey) => void,
-    onTextFilterChange: (filterKey: DroneTextFilterKey, value: string) => void,
-    onTextFilterReset: (filterKey: DroneTextFilterKey) => void,
-    applyFilters: () => void
-    resetFilters: () => void
 }
 
 const DroneFilterSection: React.FC<Props> = ({ 
-    isOpen,
-    getNumberFilter,
-    getTextFilter,
-    onNumberFilterChange,
-    onNumberFilterReset,
-    onTextFilterChange,
-    onTextFilterReset,
-    applyFilters,
-    resetFilters
+    isOpen
    }) => {
     const {t} = useTranslation();
     const {refreshKey, refresh} = useRefreshKey();
 
+    const {bulkFiltersActions, numberFilters, textFilters} = useDroneFilters()
+
     const onResetFilters = () => {
-        resetFilters()
+        bulkFiltersActions.resetFilters()
         refresh()
     }
 
@@ -48,61 +34,61 @@ const DroneFilterSection: React.FC<Props> = ({
                 <b>{t("general.filters")}</b>
                 <div className="filters" key={refreshKey}>
                     <RegistrationNumberFilter
-                        value={getTextFilter("registrationNumber").value}
-                        onChange={(value) => onTextFilterChange("registrationNumber", value)}
-                        onReset={() => onTextFilterReset("registrationNumber")}
+                        value={textFilters.get("registrationNumber").value}
+                        onChange={(value) => textFilters.onChange("registrationNumber", value)}
+                        onReset={() => textFilters.onReset("registrationNumber")}
                     />
                     <LatitudeFilter
-                        minValue={getNumberFilter("minLatitude").value}
-                        maxValue={getNumberFilter("maxLatitude").value}
-                        onMinValueChange={(value) => onNumberFilterChange("minLatitude", value)}
-                        onMaxValueChange={(value) => onNumberFilterChange("maxLatitude", value)}
-                        onMinValueReset={() => onNumberFilterReset("minLatitude")}
-                        onMaxValueReset={() => onNumberFilterReset("maxLatitude")}
+                        minValue={numberFilters.get("minLatitude").value}
+                        maxValue={numberFilters.get("maxLatitude").value}
+                        onMinValueChange={(value) => numberFilters.onChange("minLatitude", value)}
+                        onMaxValueChange={(value) => numberFilters.onChange("maxLatitude", value)}
+                        onMinValueReset={() => numberFilters.onReset("minLatitude")}
+                        onMaxValueReset={() => numberFilters.onReset("maxLatitude")}
                     />
                     <LongitudeFilter
-                        minValue={getNumberFilter("minLongitude").value}
-                        maxValue={getNumberFilter("maxLongitude").value}
-                        onMinValueChange={(value) => onNumberFilterChange("minLongitude", value)}
-                        onMaxValueChange={(value) => onNumberFilterChange("maxLongitude", value)}
-                        onMinValueReset={() => onNumberFilterReset("minLongitude")}
-                        onMaxValueReset={() => onNumberFilterReset("maxLongitude")}
+                        minValue={numberFilters.get("minLongitude").value}
+                        maxValue={numberFilters.get("maxLongitude").value}
+                        onMinValueChange={(value) => numberFilters.onChange("minLongitude", value)}
+                        onMaxValueChange={(value) => numberFilters.onChange("maxLongitude", value)}
+                        onMinValueReset={() => numberFilters.onReset("minLongitude")}
+                        onMaxValueReset={() => numberFilters.onReset("maxLongitude")}
                     />
                     <AltitudeFilter
-                        minValue={getNumberFilter("minAltitude").value}
-                        maxValue={getNumberFilter("maxAltitude").value}
+                        minValue={numberFilters.get("minAltitude").value}
+                        maxValue={numberFilters.get("maxAltitude").value}
                         onMinValueChange={(value) => {
-                        onNumberFilterChange("minAltitude", value)
+                            numberFilters.onChange("minAltitude", value)
                         }}
-                        onMaxValueChange={(value) => onNumberFilterChange("maxAltitude", value)}
-                        onMinValueReset={() => onNumberFilterReset("minAltitude")}
-                        onMaxValueReset={() => onNumberFilterReset("maxAltitude")}
+                        onMaxValueChange={(value) => numberFilters.onChange("maxAltitude", value)}
+                        onMinValueReset={() => numberFilters.onReset("minAltitude")}
+                        onMaxValueReset={() => numberFilters.onReset("maxAltitude")}
                     />
                     <OperatorFilter
-                        value={getTextFilter("operator").value}
-                        onChange={(value) => onTextFilterChange("operator", value)}
-                        onReset={() => onTextFilterReset("operator")}
+                        value={textFilters.get("operator").value}
+                        onChange={(value) => textFilters.onChange("operator", value)}
+                        onReset={() => textFilters.onReset("operator")}
                     />
                     <FuelFilter
-                        minValue={getNumberFilter("minFuel").value}
-                        maxValue={getNumberFilter("maxFuel").value}
-                        onMinValueChange={(value) => onNumberFilterChange("minFuel", value)}
-                        onMaxValueChange={(value) => onNumberFilterChange("maxFuel", value)}
-                        onMinValueReset={() => onNumberFilterReset("minFuel")}
-                        onMaxValueReset={() => onNumberFilterReset("maxFuel")}
+                        minValue={numberFilters.get("minFuel").value}
+                        maxValue={numberFilters.get("maxFuel").value}
+                        onMinValueChange={(value) => numberFilters.onChange("minFuel", value)}
+                        onMaxValueChange={(value) => numberFilters.onChange("maxFuel", value)}
+                        onMinValueReset={() => numberFilters.onReset("minFuel")}
+                        onMaxValueReset={() => numberFilters.onReset("maxFuel")}
                     />
                     <ModelFilter
-                        value={getTextFilter("model").value}
-                        onChange={(value) => onTextFilterChange("model", value)}
-                        onReset={() => onTextFilterReset("model")}
+                        value={textFilters.get("model").value}
+                        onChange={(value) => textFilters.onChange("model", value)}
+                        onReset={() => textFilters.onReset("model")}
                     />
                     <TypeFilter
-                        onChange={(value) => onTextFilterChange("type", value)}
-                        value={getTextFilter("type").value}
+                        onChange={(value) => textFilters.onChange("type", value)}
+                        value={textFilters.get("type").value}
                     />
                 </div>
                 <div className="actionContainer">
-                    <button onClick={applyFilters}>{t("filters.apply")}</button>
+                    <button onClick={bulkFiltersActions.applyFilters}>{t("filters.apply")}</button>
                     <button onClick={onResetFilters}>{t("filters.reset")}</button>
                 </div>
             </div>

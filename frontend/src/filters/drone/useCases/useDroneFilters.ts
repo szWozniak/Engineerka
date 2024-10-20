@@ -9,12 +9,6 @@ const useDroneFilters = () => {
 
     const {filtering} = useContext(AppContext);
 
-    const [areFiltersOpen, setAreFiltersOpen] = useState<boolean>(false);
-
-    const toggleFiltersVisibility = () => setAreFiltersOpen(prev => !prev);
-    
-    const closeFilters = () => setAreFiltersOpen(false);
-
     const getTextFilter = (key: DroneTextFilterKey): DroneTextFilter => {
         const searchedFilter = currentFilters.find(f => f.key === key);
     
@@ -88,11 +82,6 @@ const useDroneFilters = () => {
         bulkFiltersActions: {
           applyFilters,
           resetFilters
-        },
-        visibility: {
-          areOpen: areFiltersOpen,
-          toggleVisibility: toggleFiltersVisibility,
-          closeFilters: closeFilters
         },
         textFilters: {
             get: getTextFilter,

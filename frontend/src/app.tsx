@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 //DeckGL
 import DeckGL from '@deck.gl/react';
 //Map
@@ -24,7 +24,8 @@ const App = () => {
   const { layers } = useLayerManager()
 
   const {mapViewState, setMapViewState, getTooltip} = useMapState();
-  const {bulkFiltersActions, numberFilters, textFilters, visibility} = useDroneFilters();
+
+  const [areFiltersOpened, setAreFiltersOpened] = useState<boolean>(false)
 
   useEffect(() => {
     const disableDefaultRightClick = (e: MouseEvent) => {
@@ -40,19 +41,12 @@ const App = () => {
     <div>
       <div className="overlay">
         <Sidebar 
-          areFiltersOpened={visibility.areOpen}
-          toggleFiltersVisibility={visibility.toggleVisibility}
+          areFiltersOpened={areFiltersOpened}
+          toggleFiltersVisibility={() => setAreFiltersOpened(prev => !prev)}
         />
         <BottomMenu 
-          areFiltersOpen={visibility.areOpen}
-          applyFilters={bulkFiltersActions.applyFilters}
-          resetFilters={bulkFiltersActions.resetFilters}
-          getNumberFilter={numberFilters.get}
-          getTextFilter={textFilters.get}
-          onNumberFilterChange={numberFilters.onChange}
-          onNumberFilterReset={numberFilters.onReset}
-          onTextFilterChange={textFilters.onChange}
-          onTextFilterReset={textFilters.onReset}
+          areFiltersOpen={areFiltersOpened}
+          closeFilters={() => setAreFiltersOpened(false)}
         />
       </div>
       <DeckGL

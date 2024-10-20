@@ -119,61 +119,96 @@ export const AppContext = createContext<AppContextType>({
     flight: {
       value: [
         {
-            type: FilterType.Text,
-            parameter: "startDate",
-            key: "startDate",
-            value: "",
-            comparisonType: "Contains"
-        },
-        {
-            type: FilterType.Text,
-            parameter: "startTime",
-            key: "startTime",
-            value: "",
-            comparisonType: "Contains"
-        },
-        {
-            type: FilterType.Text,
-            parameter: "endDate",
-            key: "endDate",
-            value: "",
-            comparisonType: "Contains"
-        },
-        {
-            type: FilterType.Text,
-            parameter: "endTime",
-            key: "endTime",
-            value: "",
-            comparisonType: "Contains"
-        },
-        {
-            type: FilterType.Number,
-            parameter: "averageSpeed",
-            key: "averageSpeed",
-            value: undefined,
-            comparisonType: "Equals"
-        },
-        {
-            type: FilterType.Number,
-            parameter: "elevationGain",
-            key: "elevationGain",
-            value: undefined,
-            comparisonType: "Equals"
-        },
-        {
-            type: FilterType.Number,
-            parameter: "distance",
-            key: "distance",
-            value: undefined,
-            comparisonType: "Equals"
-        },
-        {
-            type: FilterType.Boolean,
-            parameter: "didLanded",
-            key: "didLanded",
-            value: undefined,
-            comparisonType: "Equals"
-        },
+          type: FilterType.Text,
+          parameter: "startDate",
+          key: "startDate",
+          value: "",
+          comparisonType: "GreaterThan"
+      },
+      {
+          type: FilterType.Text,
+          parameter: "startTime",
+          key: "startTime",
+          value: "",
+          comparisonType: "GreaterThan"
+      },
+      {
+          type: FilterType.Text,
+          parameter: "endDate",
+          key: "endDate",
+          value: "",
+          comparisonType: "LesserThan"
+      },
+      {
+          type: FilterType.Text,
+          parameter: "endTime",
+          key: "endTime",
+          value: "",
+          comparisonType: "LesserThan"
+      },
+      {
+          type: FilterType.Text,
+          parameter: "duration",
+          key: "minDuration",
+          value: "",
+          comparisonType: "GreaterThan"
+      },
+      {
+          type: FilterType.Text,
+          parameter: "duration",
+          key: "maxDuration",
+          value: "",
+          comparisonType: "LesserThan"
+      },
+      {
+          type: FilterType.Number,
+          parameter: "averageSpeed",
+          key: "minAverageSpeed",
+          value: undefined,
+          comparisonType: "GreaterThan"
+      },
+      {
+          type: FilterType.Number,
+          parameter: "averageSpeed",
+          key: "maxAverageSpeed",
+          value: undefined,
+          comparisonType: "LesserThan"
+      },
+      {
+          type: FilterType.Number,
+          parameter: "elevationGain",
+          key: "minElevationGain",
+          value: undefined,
+          comparisonType: "GreaterThan"
+      },
+      {
+          type: FilterType.Number,
+          parameter: "elevationGain",
+          key: "maxElevationGain",
+          value: undefined,
+          comparisonType: "LesserThan"
+      },
+      {
+          type: FilterType.Number,
+          parameter: "distance",
+          key: "minDistance",
+          value: undefined,
+          comparisonType: "GreaterThan"
+      },
+      {
+          type: FilterType.Number,
+          parameter: "distance",
+          key: "maxDistance",
+          value: undefined,
+          comparisonType: "LesserThan"
+      },
+      {
+          type: FilterType.Boolean,
+          parameter: "didLanded",
+          key: "didLanded",
+          value: undefined,
+          comparisonType: "Equals"
+      },
     ],
     changeFilters: (_f: FlightFilter[]) => {}
   }

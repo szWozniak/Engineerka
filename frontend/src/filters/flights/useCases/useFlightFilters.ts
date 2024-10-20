@@ -9,8 +9,6 @@ const useFlightFilters = () => {
 
     const {filtering} = useContext(AppContext)
 
-    const [areFiltersOpen, setAreFiltersOpen] = useState<boolean>(false)
-
     const applyFilters = () => {
         filtering.flight.changeFilters(currentFilters
             .filter(f => f.value !== "" && f.value !== undefined)
@@ -22,10 +20,6 @@ const useFlightFilters = () => {
         filtering.flight.changeFilters(structuredClone(defaultFlightsFiltersState))
         setCurrentFilters(structuredClone(defaultFlightsFiltersState))
     }
-
-    const toggleFiltersVisibility = () => setAreFiltersOpen(prev => !prev);
-    
-    const closeFilters = () => setAreFiltersOpen(false);
 
     const getTextFilter = (key: FlightTextFilterKey): FlightTextFilter => {
         const searchedFilter = currentFilters.find(f => f.key === key);
@@ -116,11 +110,6 @@ const useFlightFilters = () => {
         bulkFiltersActions: {
           applyFilters,
           resetFilters
-        },
-        visibility: {
-          areOpen: areFiltersOpen,
-          toggleVisibility: toggleFiltersVisibility,
-          closeFilters: closeFilters
         },
         textFilters: {
             get: getTextFilter,

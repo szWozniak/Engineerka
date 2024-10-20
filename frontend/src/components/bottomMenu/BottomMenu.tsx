@@ -5,32 +5,17 @@ import BigTable from './bigTable/BigTable';
 import FlightsTable from './flightsTable/FlightsTable';
 import FlightStatusPanel from './flightsTable/FlightStatusPanel';
 import { useTranslation } from 'react-i18next';
-import { DroneNumberFilter, DroneNumberFilterKey, DroneTextFilter, DroneTextFilterKey } from '../../filters/drone/types';
 import useFlights from '../../flights/useCases/useFlights';
 import DroneFilterSection from './filters/droneFilters/DroneFilterSection';
 
 interface Props{
-  areFiltersOpen: boolean
-  getTextFilter: (filterKey: DroneTextFilterKey) => DroneTextFilter,
-  getNumberFilter: (filterKey: DroneNumberFilterKey) => DroneNumberFilter,
-  onNumberFilterChange: (filterKey: DroneNumberFilterKey, value: number | undefined) => void,
-  onNumberFilterReset: (filterKey: DroneNumberFilterKey) => void
-  onTextFilterChange: (filterKey: DroneTextFilterKey, value: string) => void,
-  onTextFilterReset: (filterKey: DroneTextFilterKey) => void
-  applyFilters: () => void
-  resetFilters: () => void
+  areFiltersOpen: boolean,
+  closeFilters: () => void
 }
 
 const BottomMenu: React.FC<Props> = ({
   areFiltersOpen,
-  applyFilters,
-  resetFilters,
-  getNumberFilter,
-  getTextFilter,
-  onNumberFilterChange,
-  onNumberFilterReset,
-  onTextFilterChange,
-  onTextFilterReset
+  closeFilters
 }) => {
   const { t } = useTranslation();
 
@@ -95,6 +80,7 @@ const BottomMenu: React.FC<Props> = ({
         selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
         selectFlightId={detailedFlight.selectFlightId}
         selectHighlightedFlightId={flightsSummaries.selectHighlightedFlightId}
+        closeFilters={closeFilters}
       />
     </>
   )
@@ -116,6 +102,10 @@ const BottomMenu: React.FC<Props> = ({
     )
   }
 
+  // const renderFilters = () => {
+  //   if (!areFiltersOpen)
+  // }
+
   return (
     <div 
       className={`bottomMenu ${isOpened && 'opened'}`}
@@ -130,14 +120,6 @@ const BottomMenu: React.FC<Props> = ({
       </div>
       {areFiltersOpen && <DroneFilterSection 
         isOpen={areFiltersOpen}
-        applyFilters={applyFilters}
-        resetFilters={resetFilters}
-        getNumberFilter={getNumberFilter}
-        getTextFilter={getTextFilter}
-        onNumberFilterChange={onNumberFilterChange}
-        onNumberFilterReset={onNumberFilterReset}
-        onTextFilterChange={onTextFilterChange}
-        onTextFilterReset={onTextFilterReset}
       />}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
