@@ -12,7 +12,7 @@ interface Props{
     onMaxValueReset: () => void
 }
 
-const DateTimeFilter: React.FC<Props> = (
+const StartDateTimeFilter: React.FC<Props> = (
     {minValue,
         maxValue,
         onMinValueChange,
@@ -37,13 +37,13 @@ const DateTimeFilter: React.FC<Props> = (
     return (
         <div className='multipleFiltersContainer' key={refreshKey}>
             <DateAndTimeFilter
-                label={`${t("details.flight.startDate")}`}
+                label={`${t("details.flight.startDate")} (${t("filters.min")})`}
                 value={minValue}
                 onChange={onMinValueChange}
                 onReset={resetMinValue}
             />
             <DateAndTimeFilter
-                label={`${t("details.flight.endDate")}`}
+                label={`${t("details.flight.startDate")} (${t("filters.max")})`}
                 value={maxValue}
                 onChange={onMaxValueChange}
                 onReset={resetMaxValue}
@@ -52,4 +52,4 @@ const DateTimeFilter: React.FC<Props> = (
     );
 };
 
-export default DateTimeFilter;
+export default StartDateTimeFilter;

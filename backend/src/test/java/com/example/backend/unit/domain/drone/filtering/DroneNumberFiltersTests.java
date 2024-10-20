@@ -2,7 +2,6 @@ package com.example.backend.unit.domain.drone.filtering;
 
 import com.example.backend.common.filtering.ComparisonType;
 import com.example.backend.domain.drone.filtering.DroneNumberFilter;
-import com.example.backend.domain.drone.filtering.DroneTextFilter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class DroneNumberFiltersTests {
     @ParameterizedTest
-    @ValueSource(strings = {"Equals", "GreaterThan", "LesserThan"})
+    @ValueSource(strings = {"Equals", "GreaterThanOrEqual", "LesserThanOrEqual"})
     public void ShouldCreateNumberFilter(String comparisonType){
         var result = new DroneNumberFilter("attribute", 50, Enum.valueOf(ComparisonType.class, comparisonType));
     }

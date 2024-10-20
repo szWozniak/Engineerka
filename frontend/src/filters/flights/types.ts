@@ -10,7 +10,7 @@ type DefaultFilter = {
 
 // export type FlightTextFilterKey = 
 
-export type FlightDateAndTimeFilterKey = "startDateAndTime" | "endDateAndTime" | "minDuration" | "maxDuration"
+export type FlightDateAndTimeFilterKey = "minStartDateAndTime" | "maxStartDateAndTime" | "minEndDateAndTime" | "maxEndDateAndTime" | "minDuration" | "maxDuration"
 
 export type FlightNumberFilterKey = "minAverageSpeed" | "maxAverageSpeed" | "minElevationGain" | "maxElevationGain" | "minDistance" | "maxDistance"
 

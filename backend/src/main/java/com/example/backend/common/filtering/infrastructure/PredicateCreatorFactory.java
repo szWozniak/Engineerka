@@ -8,8 +8,8 @@ public class PredicateCreatorFactory {
     public static <TValue extends Comparable<? super TValue>> PredicateCreator<TValue> create(CriteriaBuilder builder, ComparisonType type){
         return switch (type){
             case Equals -> builder::equal;
-            case GreaterThan -> builder::greaterThan;
-            case LesserThan -> builder::lessThan;
+            case GreaterThanOrEqual -> builder::greaterThanOrEqualTo;
+            case LesserThanOrEqual -> builder::lessThanOrEqualTo;
             case Contains -> (path, value) -> {
                 if (value instanceof String){
                     return builder.like((Path<String>) path, "%" + value + "%");

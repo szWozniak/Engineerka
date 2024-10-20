@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import useRefreshKey from '../../../../../common/useRefreshKey';
-import TextFilterField from '../../TextFilter';
+import DateAndTimeFilter from '../../DateAndTimeFilter';
 
 interface Props{
     minValue: string,
@@ -12,15 +12,13 @@ interface Props{
     onMaxValueReset: () => void
 }
 
-const DurationFilter: React.FC<Props> = (
-    {minValue,
-        maxValue,
-        onMinValueChange,
-        onMaxValueChange,
-        onMaxValueReset,
-        onMinValueReset
-    }
-) => {
+const EndDateTimeFilter: React.FC<Props> = ({minValue,
+    maxValue,
+    onMinValueChange,
+    onMaxValueChange,
+    onMaxValueReset,
+    onMinValueReset
+}) => {
     const { t } = useTranslation();
     const {refreshKey, refresh} = useRefreshKey();
 
@@ -36,14 +34,14 @@ const DurationFilter: React.FC<Props> = (
     
     return (
         <div className='multipleFiltersContainer' key={refreshKey}>
-            <TextFilterField
-                label={`${t("details.flight.duration")} (${t("filters.min")})`}
+            <DateAndTimeFilter
+                label={`${t("details.flight.endDate")} (${t("filters.min")})`}
                 value={minValue}
                 onChange={onMinValueChange}
                 onReset={resetMinValue}
             />
-            <TextFilterField
-                label={`${t("details.flight.duration")} (${t("filters.max")})`}
+            <DateAndTimeFilter
+                label={`${t("details.flight.endDate")} (${t("filters.max")})`}
                 value={maxValue}
                 onChange={onMaxValueChange}
                 onReset={resetMaxValue}
@@ -52,4 +50,4 @@ const DurationFilter: React.FC<Props> = (
     );
 };
 
-export default DurationFilter;
+export default EndDateTimeFilter;

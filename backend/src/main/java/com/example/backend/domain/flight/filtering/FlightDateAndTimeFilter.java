@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class FlightDateAndTimeFilter implements IFlightFilter{
     private static final FilterType FILTER_TYPE = FilterType.DateAndTime;
@@ -32,11 +33,21 @@ public class FlightDateAndTimeFilter implements IFlightFilter{
         return (Root<FlightEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
             var dateAndTime = splitIntoDateAndTime();
             PredicateCreator<LocalDate> datePredicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
+            PredicateCreator<LocalDate> dateWhenDrawPredicateCreator = PredicateCreatorFactory.create(builder, ComparisonType.Equals);
             PredicateCreator<LocalTime> timePredicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
 
-            return builder.and(
-                    datePredicateCreator.apply(root.get(attributeName+"Date"), dateAndTime.date),
-                    timePredicateCreator.apply(root.get(attributeName+"Time"), dateAndTime.time)
+            System.out.println(dateAndTime.date);
+            System.out.println(dateAndTime.time);
+
+            return builder.or(
+                    builder.and(
+                            datePredicateCreator.apply(root.get(attributeName+"Date"), dateAndTime.date),
+                            builder.not(dateWhenDrawPredicateCreator.apply(root.get(attributeName+"Date"), dateAndTime.date))
+                    ),
+                    builder.and(
+                            dateWhenDrawPredicateCreator.apply(root.get(attributeName+"Date"), dateAndTime.date),
+                            timePredicateCreator.apply(root.get(attributeName+"Time"), dateAndTime.time)
+                    )
             );
         };
     }
@@ -44,7 +55,9 @@ public class FlightDateAndTimeFilter implements IFlightFilter{
     private DateAndTimeTupple splitIntoDateAndTime(){
         var dateAndTime = this.value.split("T");
 
-        return new DateAndTimeTupple(LocalDate.parse(dateAndTime[0]), LocalTime.parse(dateAndTime[1]));
+        return new DateAndTimeTupple(LocalDate.parse(dateAndTime[0], DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                LocalTime.parse(dateAndTime[1]+":00.0000",
+                        DateTimeFormatter.ofPattern("HH:mm:ss.SSSS")));
     }
 
     private void validateComparisionType(ComparisonType comparisonType) throws IllegalArgumentException{

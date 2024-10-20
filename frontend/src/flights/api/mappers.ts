@@ -15,10 +15,28 @@ const mapFlightFilters = (filters: FlightFilter[]): SeperatedFilters => {
     const booleanFilters: FlightBooleanFilter[] = filters.filter(f => f.type === FilterType.Boolean && f.value !== undefined) as FlightBooleanFilter[]
 
     return {
-        dateAndTimeFilters,
+        dateAndTimeFilters: dateAndTimeFilters,
         numberFilters,
         booleanFilters
     }
 }
+
+// const parseDateAndTimeToCorrectFormat = (filters: FlightDateAndTimeFilter[]): FlightDateAndTimeFilter[] => {
+//     return filters.map(f => {
+//         const dateAndTime = f.value.split("T")
+
+//         let date = dateAndTime[0]
+//         let time = dateAndTime[1]
+
+//         console.log(date)
+//         console.log(time)
+
+//         const splittedDate = date.split("-")
+//         date = splittedDate[2]+"-"+splittedDate[1]+"-"+splittedDate[0]
+//         f.value = date+'T'+time
+
+//         return f
+//     })
+// }
 
 export default mapFlightFilters

@@ -7,7 +7,8 @@ import DurationFilter from "./concreteFilters/DurationFilter"
 import ElevationGainFilter from "./concreteFilters/ElevationGainFilter"
 import DidLandedFilter from "./concreteFilters/DidLandedFilter"
 import useFlightFilters from "../../../../filters/flights/useCases/useFlightFilters"
-import DateTimeFilter from "./concreteFilters/DateTimeFilter"
+import StartDateTimeFilter from "./concreteFilters/StartDateTimeFilter"
+import EndDateTimeFilter from "./concreteFilters/EndDateTimeFilter"
 
 interface Props{
     isOpen: boolean,
@@ -31,13 +32,21 @@ const FlightFilterSection: React.FC<Props> = ({
             <div className="filterContainer">
                 <b>{t("general.flightFilters")}</b>
                 <div className="filters" key={refreshKey}>
-                    <DateTimeFilter
-                        minValue={textFilters.get("startDateAndTime").value}
-                        maxValue={textFilters.get("endDateAndTime").value}
-                        onMaxValueChange={(value) => textFilters.onChange("endDateAndTime", value)}
-                        onMaxValueReset={() => textFilters.onReset("endDateAndTime")}
-                        onMinValueChange={(value) => textFilters.onChange("startDateAndTime", value)}
-                        onMinValueReset={() => textFilters.onReset("startDateAndTime")}
+                    <StartDateTimeFilter
+                        minValue={textFilters.get("minStartDateAndTime").value}
+                        maxValue={textFilters.get("maxStartDateAndTime").value}
+                        onMaxValueChange={(value) => textFilters.onChange("maxStartDateAndTime", value)}
+                        onMaxValueReset={() => textFilters.onReset("maxStartDateAndTime")}
+                        onMinValueChange={(value) => textFilters.onChange("minStartDateAndTime", value)}
+                        onMinValueReset={() => textFilters.onReset("minStartDateAndTime")}
+                    />
+                    <EndDateTimeFilter
+                        minValue={textFilters.get("minEndDateAndTime").value}
+                        maxValue={textFilters.get("maxEndDateAndTime").value}
+                        onMaxValueChange={(value) => textFilters.onChange("maxEndDateAndTime", value)}
+                        onMaxValueReset={() => textFilters.onReset("maxEndDateAndTime")}
+                        onMinValueChange={(value) => textFilters.onChange("minEndDateAndTime", value)}
+                        onMinValueReset={() => textFilters.onReset("minEndDateAndTime")}
                     />
                     <DurationFilter
                         maxValue={textFilters.get("maxDuration").value}
@@ -64,20 +73,12 @@ const FlightFilterSection: React.FC<Props> = ({
                         onMinValueReset={() => numberFilters.onReset("minElevationGain")}
                     />
                     <AverageSpeed
-                        maxValue={numberFilters.get("minAverageSpeed").value}
-                        minValue={numberFilters.get("maxAverageSpeed").value}
+                        maxValue={numberFilters.get("maxAverageSpeed").value}
+                        minValue={numberFilters.get("minAverageSpeed").value}
                         onMaxValueChange={(value) => numberFilters.onChange("maxAverageSpeed", value)}
                         onMaxValueReset={() => numberFilters.onReset("maxAverageSpeed")}
                         onMinValueChange={(value) => numberFilters.onChange("minAverageSpeed", value)}
                         onMinValueReset={() => numberFilters.onReset("minAverageSpeed")}
-                    />
-                    <DurationFilter
-                        maxValue={textFilters.get("minDuration").value}
-                        minValue={textFilters.get("maxDuration").value}
-                        onMaxValueChange={(value) => textFilters.onChange("maxDuration", value)}
-                        onMaxValueReset={() => textFilters.onReset("maxDuration")}
-                        onMinValueChange={(value) => textFilters.onChange("minDuration", value)}
-                        onMinValueReset={() => textFilters.onReset("minDuration")}
                     />
                     <DidLandedFilter
                         value={booleanFilters.get("didLanded").value}

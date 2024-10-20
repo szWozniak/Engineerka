@@ -16,7 +16,7 @@ public class DroneTextFiltersTests {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"GreaterThan", "LesserThan"})
+    @ValueSource(strings = {"GreaterThanOrEqual", "LesserThanOrEqual"})
     public void ShouldThrowException_WhenInvalidComparisonType(String comparisonType){
         var enumValue = Enum.valueOf(ComparisonType.class, comparisonType);
         Executable action = () -> new DroneTextFilter("attribute", "johnny", enumValue);

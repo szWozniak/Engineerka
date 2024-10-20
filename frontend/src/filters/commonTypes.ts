@@ -1,4 +1,4 @@
-export type ComparisonType = "Equals" | "GreaterThan" | "LesserThan" | "Contains"
+export type ComparisonType = "Equals" | "GreaterThanOrEqual" | "LesserThanOrEqual" | "Contains"
 
 export enum FilterType{
   Text,

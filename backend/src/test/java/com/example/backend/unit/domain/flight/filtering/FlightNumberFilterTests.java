@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class FlightNumberFilterTests {
     @ParameterizedTest
-    @ValueSource(strings = {"Equals", "GreaterThan", "LesserThan"})
+    @ValueSource(strings = {"Equals", "GreaterThanOrEqual", "LesserThanOrEqual"})
     public void ShouldCreateNumberFilter(String comparisonType){
         var result = new FlightNumberFilter("attribute", 50, Enum.valueOf(ComparisonType.class, comparisonType));
     }

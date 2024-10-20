@@ -5,72 +5,86 @@ export const defaultFlightsFiltersState: FlightFilter[] = [
     {
         type: FilterType.DateAndTime,
         parameter: "start",
-        key: "startDateAndTime",
+        key: "minStartDateAndTime",
         value: "",
-        comparisonType: "GreaterThan"
+        comparisonType: "GreaterThanOrEqual"
+    },
+    {
+        type: FilterType.DateAndTime,
+        parameter: "start",
+        key: "maxStartDateAndTime",
+        value: "",
+        comparisonType: "LesserThanOrEqual"
     },
     {
         type: FilterType.DateAndTime,
         parameter: "end",
-        key: "endDateAndTime",
+        key: "minEndDateAndTime",
         value: "",
-        comparisonType: "LesserThan"
+        comparisonType: "GreaterThanOrEqual"
+    },
+    {
+        type: FilterType.DateAndTime,
+        parameter: "end",
+        key: "maxEndDateAndTime",
+        value: "",
+        comparisonType: "LesserThanOrEqual"
     },
     {
         type: FilterType.DateAndTime,
         parameter: "duration",
         key: "minDuration",
         value: "",
-        comparisonType: "GreaterThan"
+        comparisonType: "GreaterThanOrEqual"
     },
     {
         type: FilterType.DateAndTime,
         parameter: "duration",
         key: "maxDuration",
         value: "",
-        comparisonType: "LesserThan"
+        comparisonType: "LesserThanOrEqual"
     },
     {
         type: FilterType.Number,
         parameter: "averageSpeed",
         key: "minAverageSpeed",
         value: undefined,
-        comparisonType: "GreaterThan"
+        comparisonType: "GreaterThanOrEqual"
     },
     {
         type: FilterType.Number,
         parameter: "averageSpeed",
         key: "maxAverageSpeed",
         value: undefined,
-        comparisonType: "LesserThan"
+        comparisonType: "LesserThanOrEqual"
     },
     {
         type: FilterType.Number,
         parameter: "elevationGain",
         key: "minElevationGain",
         value: undefined,
-        comparisonType: "GreaterThan"
+        comparisonType: "GreaterThanOrEqual"
     },
     {
         type: FilterType.Number,
         parameter: "elevationGain",
         key: "maxElevationGain",
         value: undefined,
-        comparisonType: "LesserThan"
+        comparisonType: "LesserThanOrEqual"
     },
     {
         type: FilterType.Number,
         parameter: "distance",
         key: "minDistance",
         value: undefined,
-        comparisonType: "GreaterThan"
+        comparisonType: "GreaterThanOrEqual"
     },
     {
         type: FilterType.Number,
         parameter: "distance",
         key: "maxDistance",
         value: undefined,
-        comparisonType: "LesserThan"
+        comparisonType: "LesserThanOrEqual"
     },
     {
         type: FilterType.Boolean,

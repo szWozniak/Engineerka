@@ -15,7 +15,7 @@ public class FlightBooleanFilterTests {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Contains", "GreaterThan", "LesserThan"})
+    @ValueSource(strings = {"Contains", "GreaterThanOrEqual", "LesserThanOrEqual"})
     public void ShouldThrowException_WhenInvalidComparisonType(String comparisonType){
         var enumValue = Enum.valueOf(ComparisonType.class, comparisonType);
         Executable action = () -> new FlightBooleanFilter("attribute", true, enumValue);
