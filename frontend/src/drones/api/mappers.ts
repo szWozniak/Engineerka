@@ -7,7 +7,7 @@ interface SeperatedFilters {
   numberFilters: DroneNumberFilter[]
 }
 
-const mapFilters = (filters: DroneFilter[]): SeperatedFilters => {
+const mapDroneFilters = (filters: DroneFilter[]): SeperatedFilters => {
   //ok so webpack has some bug probably or something and it does not recognize discriminated unions
   const textFilters: DroneTextFilter[] = filters.filter(f => f.type === FilterType.Text && f.value !== "") as DroneTextFilter[];
   const numberFilters: DroneNumberFilter[] = filters.filter(f => f.type === FilterType.Number &&
@@ -20,4 +20,4 @@ const mapFilters = (filters: DroneFilter[]): SeperatedFilters => {
   }
 }
 
-export default mapFilters;
+export default mapDroneFilters;

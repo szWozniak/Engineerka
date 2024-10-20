@@ -30,7 +30,7 @@ const FlightFilterSection: React.FC<Props> = ({
     return (
         <div className={`content filterSection ${isOpen && 'opened'}`}>
             <div className="filterContainer">
-                <b>{t("general.filters")}</b>
+                <b>{t("general.flightFilters")}</b>
                 <div className="filters" key={refreshKey}>
                     <DateFilter
                         minValue={textFilters.get("startDate").value}

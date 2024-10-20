@@ -1,7 +1,7 @@
 import { checkForErrors, defaultURL } from "../../common/api/apiHelpers";
 import { DroneFilter } from "../../filters/drone/types";
 import { Drone, DroneBase, DroneBaseSchema, DroneSchema, DronesWithTimestamp, DronesWithTimestampSchema } from "../types";
-import mapFilters from "./mappers";
+import mapDroneFilters from "./mappers";
 
 export const getAllDrones = (filters: DroneFilter[]): Promise<DroneBase[]> => {
   return fetch(`${defaultURL}/drones/`, {
@@ -9,7 +9,7 @@ export const getAllDrones = (filters: DroneFilter[]): Promise<DroneBase[]> => {
     headers: {
       "Content-type": "application/json" 
     },
-    body: JSON.stringify(mapFilters(filters))
+    body: JSON.stringify(mapDroneFilters(filters))
   })
     .then(checkForErrors)
     .then(r => r.json())
@@ -22,7 +22,7 @@ export const getCurrentDrones = (filters: DroneFilter[]): Promise<DronesWithTime
     headers: {
       "Content-type": "application/json" 
     },
-    body: JSON.stringify(mapFilters(filters))
+    body: JSON.stringify(mapDroneFilters(filters))
   })
     .then(checkForErrors)
     .then(r => r.json())

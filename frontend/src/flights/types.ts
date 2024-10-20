@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { dronePositionSchema } from "../../drones/types";
+import { dronePositionSchema } from "../drones/types";
 
 export const FlightRecordSchema = z.object({
   latitude: z.number(),

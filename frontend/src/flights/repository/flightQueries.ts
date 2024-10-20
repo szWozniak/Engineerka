@@ -1,5 +1,6 @@
 import { queryOptions, skipToken } from "@tanstack/react-query"
 import { getDroneFlightSummariesByRegistration, getFlightById } from "../api/api"
+import { FlightFilter } from "../../filters/flights/types"
 
 const flightQueries = {
     flight: (flightId: number | null) => ["flight", flightId],
@@ -8,10 +9,11 @@ const flightQueries = {
         queryFn: flightId ? () => getFlightById(flightId) : skipToken
     }),
 
-    selectedDroneFlightsSummaries: (registrationNumber: string | null) => ["selected-drone-flights-summaries", registrationNumber],
-    getSelectedDroneFlightsSummaries: (registrationNumber: string | null) => queryOptions({
-        queryKey: flightQueries.selectedDroneFlightsSummaries(registrationNumber),
-        queryFn: registrationNumber ? () => getDroneFlightSummariesByRegistration(registrationNumber) : skipToken
+    selectedDroneFlightsSummaries: (registrationNumber: string | null, filters: FlightFilter[]) =>
+         ["selected-drone-flights-summaries", registrationNumber, JSON.stringify(filters)],
+    getSelectedDroneFlightsSummaries: (registrationNumber: string | null, filters: FlightFilter[]) => queryOptions({
+        queryKey: flightQueries.selectedDroneFlightsSummaries(registrationNumber, filters),
+        queryFn: registrationNumber ? () => getDroneFlightSummariesByRegistration(registrationNumber, filters) : skipToken
     })
 }
 

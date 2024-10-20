@@ -1,4 +1,4 @@
-import { DroneFlightSummary } from "../../flights/api/types"
+import { DroneFlightSummary } from "../../flights/types"
 import { ComparisonType, FilterType } from "../commonTypes"
 
 export type FlightFilterParameter = keyof DroneFlightSummary

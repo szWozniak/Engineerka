@@ -31,7 +31,7 @@ const DroneFilterSection: React.FC<Props> = ({
     return (
         <div className={`content filterSection ${isOpen && 'opened'}`}>
             <div className="filterContainer">
-                <b>{t("general.filters")}</b>
+                <b>{t("general.droneFilters")}</b>
                 <div className="filters" key={refreshKey}>
                     <RegistrationNumberFilter
                         value={textFilters.get("registrationNumber").value}
