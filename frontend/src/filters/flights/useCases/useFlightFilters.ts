@@ -106,7 +106,7 @@ const useFlightFilters = () => {
     }
 
     return {
-        filters: filtering.drone.value,
+        filters: filtering.flight.value,
         bulkFiltersActions: {
           applyFilters,
           resetFilters
