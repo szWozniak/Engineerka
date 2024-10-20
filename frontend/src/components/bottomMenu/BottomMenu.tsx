@@ -102,9 +102,13 @@ const BottomMenu: React.FC<Props> = ({
     )
   }
 
-  // const renderFilters = () => {
-  //   if (!areFiltersOpen)
-  // }
+  const renderFilters = () => {
+    if (!areFiltersOpen){
+      return <></>
+    }
+
+    
+  }
 
   return (
     <div 

@@ -11,6 +11,7 @@ import { defaultDroneFiltersState as defaultDronesFiltersState } from '../filter
 import { FilterType } from '../filters/commonTypes';
 import { FlightFilter } from '../filters/flights/types';
 import { defaultFlightsFiltersState } from '../filters/flights/useCases/defaultState';
+import AppView from '../view/types';
 
 type AppContextType = {
   filtering: {
@@ -36,6 +37,10 @@ type AppContextType = {
     setSelectedFlightId: Dispatch<SetStateAction<number | null>>,
     trackedPoint : number,
     setTrackedPoint: Dispatch<SetStateAction<number>>
+  },
+  view: {
+    currentView: AppView,
+    setCurrentView: Dispatch<SetStateAction<AppView>>
   }
 }
 
@@ -227,6 +232,10 @@ export const AppContext = createContext<AppContextType>({
     setSelectedFlightId: () => {},
     trackedPoint: 0,
     setTrackedPoint: () => {}
+  },
+  view: {
+    currentView: AppView.Drones,
+    setCurrentView: () => {}
   }
 
 })
@@ -241,6 +250,7 @@ const AppContextProvider = ({ children }: {
   const [droneRegistrationToShowFlightsFor, setDroneRegistrationToShowFlightsFor] = useState<string | null>(null)
   const [selectedFlightId, setSelectedFlightId] = useState<number | null>(null)
   const [trackedPoint, setTrackedPoint] = useState<number>(0)
+  const [currentView, setCurrentView] = useState<AppView>(AppView.Drones)
   
   return (
     <AppContext.Provider value={{
@@ -267,6 +277,10 @@ const AppContextProvider = ({ children }: {
         setSelectedFlightId,
         trackedPoint,
         setTrackedPoint
+      },
+      view: {
+        currentView,
+        setCurrentView
       }
     }}>
       {children}
