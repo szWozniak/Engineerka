@@ -1,4 +1,6 @@
 import React from 'react';
+import Toggle from '../../../../../common/components/Toggle';
+import { useTranslation } from 'react-i18next';
 
 interface Props{
     value: boolean | undefined
@@ -11,10 +13,14 @@ const DidLandedFilter: React.FC<Props> = ({
     onChange,
     onReset
 }) => {
+    const {t} = useTranslation()
+
     return (
-        <div>
-            
-        </div>
+        <Toggle
+            label={t("details.flight.didLanded")}
+            onChange={onChange}
+            value={value ?? false}
+        />
     );
 };
 
