@@ -25,6 +25,7 @@ public class FlightsQuery {
     public List<FlightEntity> execute(String regNumber, List<Specification<FlightEntity>> specifications){
         specifications.add(createDefaultConstraints(regNumber));
         Specification<FlightEntity> combinedSpecifications = SpecificationHelper.combine(specifications);
+
         return repository.findAll(combinedSpecifications);
     }
 

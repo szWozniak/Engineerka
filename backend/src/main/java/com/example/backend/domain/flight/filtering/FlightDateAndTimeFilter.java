@@ -36,20 +36,33 @@ public class FlightDateAndTimeFilter implements IFlightFilter{
             PredicateCreator<LocalDate> dateWhenDrawPredicateCreator = PredicateCreatorFactory.create(builder, ComparisonType.Equals);
             PredicateCreator<LocalTime> timePredicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
 
-            System.out.println(dateAndTime.date);
-            System.out.println(dateAndTime.time);
-
             return builder.or(
                     builder.and(
-                            datePredicateCreator.apply(root.get(attributeName+"Date"), dateAndTime.date),
-                            builder.not(dateWhenDrawPredicateCreator.apply(root.get(attributeName+"Date"), dateAndTime.date))
+                            datePredicateCreator
+                                    .apply(root
+                                            .get(prependAttributeWithDate()), dateAndTime.date),
+                            builder.not(dateWhenDrawPredicateCreator
+                                    .apply(root
+                                            .get(prependAttributeWithDate()), dateAndTime.date))
                     ),
                     builder.and(
-                            dateWhenDrawPredicateCreator.apply(root.get(attributeName+"Date"), dateAndTime.date),
-                            timePredicateCreator.apply(root.get(attributeName+"Time"), dateAndTime.time)
+                            dateWhenDrawPredicateCreator
+                                    .apply(root
+                                            .get(prependAttributeWithDate()), dateAndTime.date),
+                            timePredicateCreator
+                                    .apply(root
+                                            .get(prependAttributeWithTime()), dateAndTime.time)
                     )
             );
         };
+    }
+
+    private String prependAttributeWithDate(){
+        return attributeName+"Date";
+    }
+
+    private String prependAttributeWithTime(){
+        return attributeName+"Time";
     }
 
     private DateAndTimeTupple splitIntoDateAndTime(){

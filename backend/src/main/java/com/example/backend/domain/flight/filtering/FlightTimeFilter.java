@@ -31,8 +31,12 @@ public class FlightTimeFilter implements IFlightFilter{
     public Specification<FlightEntity> toSpecification() {
         return (Root<FlightEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
             PredicateCreator<LocalTime> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
-            return predicateCreator.apply(root.get(attributeName), LocalTime.parse("00:" + value));
+            return predicateCreator.apply(root.get(attributeName), prepareTimeAttribute());
         };
+    }
+
+    private LocalTime prepareTimeAttribute(){
+        return LocalTime.parse("00:" + value);
     }
 
     private void validateComparisionType(ComparisonType comparisonType) throws IllegalArgumentException{
