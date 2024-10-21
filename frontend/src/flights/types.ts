@@ -29,7 +29,7 @@ export const DroneFlightSummarySchema = z.object({
   averageSpeed: z.number(),
   elevationGain: z.number(),
   distance: z.number(),
-  didLanded: z.boolean(),
+  didLand: z.boolean(),
   flightRecords: dronePositionSchema.array()
 })
 

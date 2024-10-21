@@ -5,18 +5,12 @@ import AverageSpeed from "./concreteFilters/AverageSpeed"
 import DistanceFilter from "./concreteFilters/DistanceFilter"
 import DurationFilter from "./concreteFilters/DurationFilter"
 import ElevationGainFilter from "./concreteFilters/ElevationGainFilter"
-import DidLandedFilter from "./concreteFilters/DidLandedFilter"
 import useFlightFilters from "../../../../filters/flights/useCases/useFlightFilters"
 import StartDateTimeFilter from "./concreteFilters/StartDateTimeFilter"
 import EndDateTimeFilter from "./concreteFilters/EndDateTimeFilter"
+import DidLandFilter from "./concreteFilters/DidLandFilter"
 
-interface Props{
-    isOpen: boolean,
-}
-
-const FlightFilterSection: React.FC<Props> = ({
-    isOpen
-}) => {
+const FlightFilterSection = () => {
     const {t} = useTranslation();
     const {refreshKey, refresh} = useRefreshKey();
 
@@ -28,7 +22,7 @@ const FlightFilterSection: React.FC<Props> = ({
     }
 
     return (
-        <div className={`content filterSection ${isOpen && 'opened'}`}>
+        <div className={`content filterSection opened`}>
             <div className="filterContainer">
                 <b>{t("general.flightFilters")}</b>
                 <div className="filters" key={refreshKey}>
@@ -80,10 +74,10 @@ const FlightFilterSection: React.FC<Props> = ({
                         onMinValueChange={(value) => numberFilters.onChange("minAverageSpeed", value)}
                         onMinValueReset={() => numberFilters.onReset("minAverageSpeed")}
                     />
-                    <DidLandedFilter
-                        value={booleanFilters.get("didLanded").value}
-                        onChange={(value) => booleanFilters.onChange("didLanded", value)}
-                        onReset={() => booleanFilters.onReset("didLanded")}
+                    <DidLandFilter
+                        value={booleanFilters.get("didLand").value}
+                        onChange={(value) => booleanFilters.onChange("didLand", value)}
+                        onReset={() => booleanFilters.onReset("didLand")}
                     />
                 </div>
                 <div className="actionContainer">

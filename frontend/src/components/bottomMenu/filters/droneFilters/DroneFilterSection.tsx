@@ -11,13 +11,8 @@ import { useTranslation } from 'react-i18next';
 import useRefreshKey from '../../../../common/useRefreshKey';
 import useDroneFilters from '../../../../filters/drone/useCases/useDroneFilters';
 
-interface Props{
-    isOpen: boolean,
-}
 
-const DroneFilterSection: React.FC<Props> = ({ 
-    isOpen
-   }) => {
+const DroneFilterSection = () => {
     const {t} = useTranslation();
     const {refreshKey, refresh} = useRefreshKey();
 
@@ -29,7 +24,7 @@ const DroneFilterSection: React.FC<Props> = ({
     }
 
     return (
-        <div className={`content filterSection ${isOpen && 'opened'}`}>
+        <div className={`content filterSection opened`}>
             <div className="filterContainer">
                 <b>{t("general.droneFilters")}</b>
                 <div className="filters" key={refreshKey}>

@@ -12,12 +12,12 @@ import AppView from '../../view/types';
 import FlightFilterSection from './filters/flightFilters/FlightFilterSection';
 
 interface Props{
-  areFiltersOpen: boolean,
+  areFiltersOpened: boolean,
   closeFilters: () => void
 }
 
 const BottomMenu: React.FC<Props> = ({
-  areFiltersOpen,
+  areFiltersOpened,
   closeFilters
 }) => {
   const { t } = useTranslation();
@@ -112,20 +112,16 @@ const BottomMenu: React.FC<Props> = ({
   }
 
   const renderFilters = () => {
-    if (!areFiltersOpen){
+    if (!areFiltersOpened){
       return <></>
     }
 
     if (currentView === AppView.Drones){
-      return <DroneFilterSection
-        isOpen={areFiltersOpen}
-      />
+      return <DroneFilterSection/>
     }
 
     if (currentView === AppView.FlightsSummary){
-      return <FlightFilterSection
-        isOpen={areFiltersOpen}
-      />
+      return <FlightFilterSection/>
     }
 
     return <></>

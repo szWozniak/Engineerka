@@ -49,7 +49,7 @@ const FlightsTable: React.FC<Props> = ({
               <th>{t("details.flight.speed")}</th>
               <th>{t("details.flight.elevation")}</th>
               <th>{t("details.flight.distance")}</th>
-              <th>{t("details.flight.didLanded")}</th>
+              <th>{t("details.flight.didLand")}</th>
               <th>{t("actions.title")}</th>
             </tr>
           </thead>
@@ -78,7 +78,7 @@ const FlightsTable: React.FC<Props> = ({
                     {flight?.distance?.toFixed(4) + "km"}
                   </td>
                   <td>
-                    {flight?.didLanded ? "✅" : "❌"}
+                    {flight?.didLand ? "✅" : "❌"}
                   </td>
                   <td>
                   <button 

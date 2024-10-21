@@ -8,17 +8,14 @@ type DefaultFilter = {
     comparisonType: ComparisonType
 }
 
-// export type FlightTextFilterKey = 
 
 export type FlightDateAndTimeFilterKey = "minStartDateAndTime" | "maxStartDateAndTime" | "minEndDateAndTime" | "maxEndDateAndTime"
 
 export type FlightNumberFilterKey = "minAverageSpeed" | "maxAverageSpeed" | "minElevationGain" | "maxElevationGain" | "minDistance" | "maxDistance"
 
-export type FlightBooleanFilterKey = "didLanded"
+export type FlightBooleanFilterKey = "didLand"
 
 export type FlightTimeFilterKey = "minDuration" | "maxDuration"
-
-// export type FlightTextFilter = DefaultFilter & {type: FilterType.Text, value: string, key: FlightTextFilterKey}
 
 export type FlightNumberFilter = DefaultFilter & {type: FilterType.Number, value: number | undefined, key: FlightNumberFilterKey}
 

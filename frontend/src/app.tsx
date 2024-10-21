@@ -24,7 +24,6 @@ const App = () => {
   const { layers } = useLayerManager()
 
   const {mapViewState, setMapViewState, getTooltip} = useMapState();
-
   const [areFiltersOpened, setAreFiltersOpened] = useState<boolean>(false)
 
   useEffect(() => {
@@ -41,11 +40,11 @@ const App = () => {
     <div>
       <div className="overlay">
         <Sidebar 
-          areFiltersOpened={areFiltersOpened}
+          areFiltersOpened
           toggleFiltersVisibility={() => setAreFiltersOpened(prev => !prev)}
         />
         <BottomMenu 
-          areFiltersOpen={areFiltersOpened}
+          areFiltersOpened
           closeFilters={() => setAreFiltersOpened(false)}
         />
       </div>

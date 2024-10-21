@@ -88,8 +88,8 @@ export const defaultFlightsFiltersState: FlightFilter[] = [
     },
     {
         type: FilterType.Boolean,
-        parameter: "didLanded",
-        key: "didLanded",
+        parameter: "didLand",
+        key: "didLand",
         value: undefined,
         comparisonType: "Equals"
     },

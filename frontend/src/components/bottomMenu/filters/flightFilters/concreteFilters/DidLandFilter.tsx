@@ -8,7 +8,7 @@ interface Props{
     onReset: () => void
 }
 
-const DidLandedFilter: React.FC<Props> = ({
+const DidLandFilter: React.FC<Props> = ({
     value,
     onChange,
     onReset
@@ -17,11 +17,11 @@ const DidLandedFilter: React.FC<Props> = ({
 
     return (
         <Toggle
-            label={t("details.flight.didLanded")}
+            label={t("details.flight.didLand")}
             onChange={onChange}
             value={value ?? false}
         />
     );
 };
 
-export default DidLandedFilter;
+export default DidLandFilter;
