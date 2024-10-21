@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowUpIcon } from '../icons/ArrowUpIcon';
 import { ArrowDownIcon } from '../icons/ArrowDownIcon';
 import BigTable from './bigTable/BigTable';
@@ -109,7 +109,7 @@ const BottomMenu: React.FC<Props> = ({
     )
   }
 
-  const renderFilters = () => {
+  const renderFilters = useCallback(() => {
     if (!areFiltersOpened){
       return <></>
     }
@@ -123,7 +123,10 @@ const BottomMenu: React.FC<Props> = ({
     }
 
     return <></>
-  }
+  }, [areFiltersOpened, currentView])
+
+  const filters = useMemo(() => renderFilters(), 
+  [renderFilters])
 
   return (
     <div 
@@ -137,7 +140,7 @@ const BottomMenu: React.FC<Props> = ({
       >
         {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>
-      {renderFilters()}
+      {filters}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
         {renderContent()}
