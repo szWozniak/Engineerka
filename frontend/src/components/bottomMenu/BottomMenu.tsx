@@ -91,13 +91,11 @@ const BottomMenu: React.FC<Props> = ({
   )
 
   const renderContent = () => {
-    // if (detailedFlight.trackedFlight !== undefined)
     if(currentView === AppView.Flight)
     {
       return rednerFlightTrackingView()
     }
 
-    // if (flightsSummaries.droneRegistrationToShowFlightsFor !== null)
     if (currentView === AppView.FlightsSummary)
     {
       return renderDroneFlightsView()
