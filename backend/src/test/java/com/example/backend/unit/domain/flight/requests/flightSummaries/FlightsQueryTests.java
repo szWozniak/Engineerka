@@ -34,7 +34,11 @@ public class FlightsQueryTests {
         var result = sut.execute("drone1", new ArrayList<>());
 
         Assertions.assertEquals(1, result.size());
-        Assertions.assertEquals(1L, result.get(0).getId());
+        var flightRecords = result.get(0).getFlightRecords();
+
+        for (var flightRecord : flightRecords) {
+            Assertions.assertEquals("drone1", flightRecord.getDrone().getRegistrationNumber());
+        }
     }
 
     private void setupDatabase(){
