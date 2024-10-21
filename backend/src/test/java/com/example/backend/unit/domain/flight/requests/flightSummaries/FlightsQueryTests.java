@@ -39,7 +39,6 @@ public class FlightsQueryTests {
 
     private void setupDatabase(){
         fakeDb.clear();
-
         var drone = new DroneEntityFixtureBuilder().withRegistrationNumber("drone1").withIsAirbourne(true).build();
         var drone2 = new DroneEntityFixtureBuilder().withRegistrationNumber("drone2").withIsAirbourne(true).build();
 
@@ -51,6 +50,11 @@ public class FlightsQueryTests {
         var flightRecordForSecondFlight1 = new FlightRecordEntityFixtureBuilder().withId("flightRecord3").build();
         var flightRecordForSecondFlight2 = new FlightRecordEntityFixtureBuilder().withId("flightRecord4").build();
 
+        flightRecordForFirstFlight1.setDrone(drone);
+        flightRecordForFirstFlight2.setDrone(drone);
+        flightRecordForSecondFlight1.setDrone(drone2);
+        flightRecordForSecondFlight2.setDrone(drone2);
+
         fakeDb.persistAndFlush(flightRecordForFirstFlight1);
         fakeDb.persistAndFlush(flightRecordForFirstFlight2);
         fakeDb.persistAndFlush(flightRecordForSecondFlight1);
@@ -59,17 +63,8 @@ public class FlightsQueryTests {
         drone.setFlightRecords(List.of(flightRecordForFirstFlight1, flightRecordForFirstFlight2));
         drone2.setFlightRecords(List.of(flightRecordForSecondFlight1, flightRecordForSecondFlight2));
 
-        flightRecordForFirstFlight1.setDrone(drone);
-        flightRecordForFirstFlight2.setDrone(drone);
-        flightRecordForSecondFlight1.setDrone(drone2);
-        flightRecordForSecondFlight2.setDrone(drone2);
-
         fakeDb.persistAndFlush(drone);
         fakeDb.persistAndFlush(drone2);
-        fakeDb.persistAndFlush(flightRecordForFirstFlight1);
-        fakeDb.persistAndFlush(flightRecordForFirstFlight2);
-        fakeDb.persistAndFlush(flightRecordForSecondFlight1);
-        fakeDb.persistAndFlush(flightRecordForSecondFlight2);
 
         var flight1 = new FlightEntity();
         var flight2 = new FlightEntity();
