@@ -39,6 +39,7 @@ public class FlightsQueryTests {
 
     private void setupDatabase(){
         fakeDb.clear();
+
         var drone = new DroneEntityFixtureBuilder().withRegistrationNumber("drone1").withIsAirbourne(true).build();
         var drone2 = new DroneEntityFixtureBuilder().withRegistrationNumber("drone2").withIsAirbourne(true).build();
 
