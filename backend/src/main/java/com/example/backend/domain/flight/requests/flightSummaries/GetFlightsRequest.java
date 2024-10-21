@@ -13,6 +13,7 @@ public record GetFlightsRequest(
         @NotNull
         @Valid
         List<DateAndTimeFilterEntry> dateAndTimeFilters,
+
         @NotNull
         @Valid
         List<NumberFilterEntry> numberFilters,

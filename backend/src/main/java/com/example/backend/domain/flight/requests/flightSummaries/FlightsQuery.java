@@ -37,10 +37,7 @@ public class FlightsQuery {
 
             Join<FlightRecordEntity, DroneEntity> droneJoin = flightRecordJoin.join("drone");
 
-            return builder.and(
-                    builder.equal(droneJoin.get("registrationNumber"), regNumber),
-                    builder.isNotNull(flightRecordJoin.get("flight"))
-            );
+            return builder.equal(droneJoin.get("registrationNumber"), regNumber);
         };
     }
 }
