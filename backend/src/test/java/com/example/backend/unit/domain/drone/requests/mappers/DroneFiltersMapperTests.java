@@ -29,7 +29,7 @@ public class DroneFiltersMapperTests {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"GreaterThan", "LesserThan", "ZlyEnum"})
+    @ValueSource(strings = {"GreaterThanOrEqual", "LesserThanOrEqual", "ZlyEnum"})
     public void ShouldThrowException_WhenInvalidTextFilter(String comparisonType){
         var textFilterEntry = new TextFilterEntry("registrationNumber", "whatever", "Johnny", comparisonType);
 
@@ -39,7 +39,7 @@ public class DroneFiltersMapperTests {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Equals", "GreaterThan", "LesserThan"})
+    @ValueSource(strings = {"Equals", "GreaterThanOrEqual", "LesserThanOrEqual"})
     public void ShouldProperlyMap_NumberFilter(String comparisonType){
         var numberFilterEntry = new NumberFilterEntry("registrationNumber", "whatever", 69, comparisonType);
 

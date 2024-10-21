@@ -7,6 +7,7 @@ import com.example.backend.common.filtering.dtos.TimeFilterEntry;
 import com.example.backend.domain.flight.filtering.FlightBooleanFilter;
 import com.example.backend.domain.flight.filtering.FlightDateAndTimeFilter;
 import com.example.backend.domain.flight.filtering.FlightNumberFilter;
+import com.example.backend.domain.flight.filtering.FlightTimeFilter;
 import com.example.backend.domain.flight.requests.mappers.FlightFiltersMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class FlightFiltersMapperTests {
     @ParameterizedTest
-    @ValueSource(strings = {"Equals", "GreaterThan", "LesserThan"})
+    @ValueSource(strings = {"Equals", "GreaterThanOrEqual", "LesserThanOrEqual"})
     public void ShouldProperlyMap_NumberFilter(String comparisonType){
         var numberFilterEntry = new NumberFilterEntry("registrationNumber", "whatever", 69, comparisonType);
 
@@ -54,7 +55,7 @@ public class FlightFiltersMapperTests {
 
 
     @ParameterizedTest
-    @ValueSource(strings = {"GreaterThan", "Contains", "LesserThan"})
+    @ValueSource(strings = {"GreaterThanOrEqual", "Contains", "LesserThanOrEqual"})
     public void ShouldThrowException_WhenInvalidBooleanFilter(String comparisonType){
         var booleanFilterEntry = new BooleanFilterEntry("registrationNumber", "whatever", false, comparisonType);
 
@@ -64,7 +65,7 @@ public class FlightFiltersMapperTests {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"GreaterThan", "LesserThan"})
+    @ValueSource(strings = {"GreaterThanOrEqual", "LesserThanOrEqual"})
     public void ShouldProperlyMap_DateAndTimeFilter(String comparisonType){
         var dateAndTimeFilterEntry = new DateAndTimeFilterEntry("registrationNumber", "whatever", "whatever", comparisonType);
 
@@ -88,7 +89,7 @@ public class FlightFiltersMapperTests {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"GreaterThan", "LesserThan"})
+    @ValueSource(strings = {"GreaterThanOrEqual", "LesserThanOrEqual"})
     public void ShouldProperlyMap_TimeFilter(String comparisonType){
         var timeFilterEntry = new TimeFilterEntry("registrationNumber", "whatever", "whatever", comparisonType);
 
@@ -96,7 +97,7 @@ public class FlightFiltersMapperTests {
 
         Assertions.assertEquals(1, result.size());
         var filter = result.get(0);
-        Assertions.assertEquals(filter.getClass(), FlightDateAndTimeFilter.class);
+        Assertions.assertEquals(filter.getClass(), FlightTimeFilter.class);
     }
 
 

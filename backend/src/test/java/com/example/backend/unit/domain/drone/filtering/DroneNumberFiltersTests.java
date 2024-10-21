@@ -15,7 +15,7 @@ public class DroneNumberFiltersTests {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"contains"})
+    @ValueSource(strings = {"Contains"})
     public void ShouldThrowException_WhenInvalidComparisonType(String comparisonType){
         var enumValue = Enum.valueOf(ComparisonType.class, comparisonType);
         Executable action = () -> new DroneNumberFilter("attribute", 50, enumValue);
