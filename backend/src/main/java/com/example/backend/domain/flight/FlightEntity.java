@@ -50,7 +50,7 @@ public class FlightEntity {
     private double distance;
     @Getter
     @Setter
-    private boolean didLanded;
+    private boolean didLand;
 
     @OneToMany
     @Getter
@@ -59,7 +59,7 @@ public class FlightEntity {
 
     public void summarizeFlight(List<FlightRecordEntity> flightRecords, Boolean didLanded) {
         this.flightRecords = flightRecords;
-        this.didLanded = didLanded;
+        this.didLand = didLanded;
 
         var sortedFlightRecords = flightRecords.stream().sorted(new RecordTimestampsComparator()).toList();
 

@@ -47,7 +47,7 @@ public class FlightSummaryDto {
                 flightEntity.getAverageSpeed(),
                 flightEntity.getElevationGain(),
                 flightEntity.getDistance(),
-                flightEntity.isDidLanded(),
+                flightEntity.isDidLand(),
                 flightEntity.getFlightRecords().stream().map(record -> new PositionDto(record.getLatitude(), record.getLongitude(), record.getAltitude())).toList());
     }
 }

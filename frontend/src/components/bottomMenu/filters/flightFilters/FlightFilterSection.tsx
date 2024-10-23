@@ -50,13 +50,13 @@ const FlightFilterSection = () => {
                         onMinValueChange={(value) => timeFilters.onChange("minDuration", value)}
                         onMinValueReset={() => timeFilters.onReset("minDuration")}
                     />
-                    <DistanceFilter
-                        maxValue={numberFilters.get("maxDistance").value}
-                        minValue={numberFilters.get("minDistance").value}
-                        onMaxValueChange={(value) => numberFilters.onChange("maxDistance", value)}
-                        onMaxValueReset={() => numberFilters.onReset("maxDistance")}
-                        onMinValueChange={(value) => numberFilters.onChange("minDistance", value)}
-                        onMinValueReset={() => numberFilters.onReset("minDistance")}
+                    <AverageSpeed
+                        maxValue={numberFilters.get("maxAverageSpeed").value}
+                        minValue={numberFilters.get("minAverageSpeed").value}
+                        onMaxValueChange={(value) => numberFilters.onChange("maxAverageSpeed", value)}
+                        onMaxValueReset={() => numberFilters.onReset("maxAverageSpeed")}
+                        onMinValueChange={(value) => numberFilters.onChange("minAverageSpeed", value)}
+                        onMinValueReset={() => numberFilters.onReset("minAverageSpeed")}
                     />
                     <ElevationGainFilter
                         maxValue={numberFilters.get("maxElevationGain").value}
@@ -66,13 +66,13 @@ const FlightFilterSection = () => {
                         onMinValueChange={(value) => numberFilters.onChange("minElevationGain", value)}
                         onMinValueReset={() => numberFilters.onReset("minElevationGain")}
                     />
-                    <AverageSpeed
-                        maxValue={numberFilters.get("maxAverageSpeed").value}
-                        minValue={numberFilters.get("minAverageSpeed").value}
-                        onMaxValueChange={(value) => numberFilters.onChange("maxAverageSpeed", value)}
-                        onMaxValueReset={() => numberFilters.onReset("maxAverageSpeed")}
-                        onMinValueChange={(value) => numberFilters.onChange("minAverageSpeed", value)}
-                        onMinValueReset={() => numberFilters.onReset("minAverageSpeed")}
+                    <DistanceFilter
+                        maxValue={numberFilters.get("maxDistance").value}
+                        minValue={numberFilters.get("minDistance").value}
+                        onMaxValueChange={(value) => numberFilters.onChange("maxDistance", value)}
+                        onMaxValueReset={() => numberFilters.onReset("maxDistance")}
+                        onMinValueChange={(value) => numberFilters.onChange("minDistance", value)}
+                        onMinValueReset={() => numberFilters.onReset("minDistance")}
                     />
                     <DidLandFilter
                         value={booleanFilters.get("didLand").value}

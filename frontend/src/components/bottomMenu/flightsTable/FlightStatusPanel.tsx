@@ -35,7 +35,7 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
       <div className="controls">
         <button
           onClick={() => {
-            changeViewTo(AppView.FlightsSummary)
+            changeViewTo(AppView.Drones)
             selectDroneRegistrationToShowFlightsFor(null)
             selectHighlightedFlightId(null)
             selectFlightId(null)
@@ -44,6 +44,7 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
         
         <button
           onClick={() => {
+            changeViewTo(AppView.FlightsSummary)
             selectHighlightedFlightId(null)
             selectFlightId(null)
             selectTrackedPoint(0)

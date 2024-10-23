@@ -4,7 +4,6 @@ import com.example.backend.domain.drone.DroneRepository;
 import com.example.backend.domain.drone.DroneService;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flight.FlightService;
-import com.example.backend.domain.flight.filtering.IFlightFilter;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.domain.flightRecord.FlightRecordService;
@@ -99,7 +98,7 @@ public class SimulatorIntegrationTests {
 
         var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>());
         Assertions.assertEquals(1, droneFlight.size());
-        Assertions.assertFalse(droneFlight.get(0).isDidLanded());
+        Assertions.assertFalse(droneFlight.get(0).isDidLand());
     }
 
     @Test
@@ -125,7 +124,7 @@ public class SimulatorIntegrationTests {
 
         var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>());
         Assertions.assertEquals(1, droneFlight.size());
-        Assertions.assertFalse(droneFlight.get(0).isDidLanded());
+        Assertions.assertFalse(droneFlight.get(0).isDidLand());
     }
 
     @Test
