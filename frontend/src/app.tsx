@@ -14,7 +14,6 @@ import { INITIAL_VIEW_STATE } from './map/config/initialView';
 import './i18n';
 import { lightingEffect } from './map/config/effects';
 import useMapState from './map/useCases/useMap';
-import useDroneFilters from './filters/drone/useCases/useDroneFilters';
 
 registerLoaders([OBJLoader]);
 
@@ -40,11 +39,11 @@ const App = () => {
     <div>
       <div className="overlay">
         <Sidebar 
-          areFiltersOpened
+          areFiltersOpened={areFiltersOpened}
           toggleFiltersVisibility={() => setAreFiltersOpened(prev => !prev)}
         />
         <BottomMenu 
-          areFiltersOpened
+          areFiltersOpened={areFiltersOpened}
           closeFilters={() => setAreFiltersOpened(false)}
         />
       </div>

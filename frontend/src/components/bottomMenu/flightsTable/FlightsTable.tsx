@@ -6,6 +6,7 @@ import useDroneFilters from "../../../filters/drone/useCases/useDroneFilters";
 import { DroneFlightSummary } from "../../../flights/types";
 import useView from "../../../view/useView";
 import AppView from "../../../view/types";
+import useFlightFilters from "../../../filters/flights/useCases/useFlightFilters";
 
 interface Props {
   selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
@@ -23,7 +24,13 @@ const FlightsTable: React.FC<Props> = ({
     flightSummaries
   }) => { 
   const {t} = useTranslation();
-  const {bulkFiltersActions} = useDroneFilters();
+  const droneFilters = useDroneFilters();
+  const flightFilters = useFlightFilters();
+
+  const clearAllFilters = () => {
+    droneFilters.bulkFiltersActions.resetFilters();
+    flightFilters.bulkFiltersActions.resetFilters();
+  }
 
   const {changeViewTo} = useView()
   
@@ -36,6 +43,7 @@ const FlightsTable: React.FC<Props> = ({
             selectDroneRegistrationToShowFlightsFor(null)
             selectHighlightedFlightId(null)
             selectFlightId(null)
+            clearAllFilters()
           }}
         ><MdFlightTakeoff /> {t("actions.backToDrones")}</button>
       </div>
@@ -85,8 +93,8 @@ const FlightsTable: React.FC<Props> = ({
                     onClick={() => {
                       changeViewTo(AppView.Flight)
                       selectFlightId(flight?.id)
-                      closeFilters();
-                      bulkFiltersActions.resetFilters();
+                      closeFilters()
+                      clearAllFilters()
                     }}
                     onMouseEnter={() => selectHighlightedFlightId(flight?.id)}
                     onMouseLeave={() => selectHighlightedFlightId(null)}
