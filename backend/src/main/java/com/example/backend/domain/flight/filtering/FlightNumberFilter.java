@@ -15,10 +15,10 @@ import org.springframework.data.jpa.domain.Specification;
 public class FlightNumberFilter implements IFlightFilter{
     private static final FilterType FILTER_TYPE = FilterType.Number;
     private final String attributeName;
-    private final int value;
+    private final double value;
     private final ComparisonType comparisonType;
 
-    public FlightNumberFilter(String attributeName, int value, ComparisonType comparisonType) {
+    public FlightNumberFilter(String attributeName, double value, ComparisonType comparisonType) {
         validateComparisionType(comparisonType);
         this.attributeName = attributeName;
         this.value = value;
@@ -28,7 +28,7 @@ public class FlightNumberFilter implements IFlightFilter{
     @Override
     public Specification<FlightEntity> toSpecification() {
         return (Root<FlightEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
-            PredicateCreator<Integer> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
+            PredicateCreator<Double> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
             return predicateCreator.apply(root.get(attributeName), value);
         };
     }
