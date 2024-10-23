@@ -7,12 +7,18 @@ import jakarta.persistence.criteria.Path;
 public class PredicateCreatorFactory {
     public static <TValue extends Comparable<? super TValue>> PredicateCreator<TValue> create(CriteriaBuilder builder, ComparisonType type){
         return switch (type){
-            case Equals -> builder::equal;
+            case Equals ->  (path, value) -> {
+                if (value instanceof String){
+                    return builder.equal(builder.lower((Path<String>) path), ((String) value).toLowerCase());
+                } 
+
+                return builder.equal(path, value);
+            };
             case GreaterThanOrEqual -> builder::greaterThanOrEqualTo;
             case LesserThanOrEqual -> builder::lessThanOrEqualTo;
             case Contains -> (path, value) -> {
                 if (value instanceof String){
-                    return builder.like((Path<String>) path, "%" + value + "%");
+                    return builder.like(builder.lower((Path<String>) path), "%" + ((String) value).toLowerCase() + "%");
                 }
                 throw new IllegalArgumentException("Contains can only be applied to string value");
             };
