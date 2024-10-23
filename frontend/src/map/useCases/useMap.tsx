@@ -8,7 +8,7 @@ interface ReturnType{
     mapViewState: MapViewState,
     setMapViewState: any,
     getTooltip: (info: PickingInfo) => any,
-    setViewMode: (viewMode: string) => any
+    setViewMode: (viewMode: "2d" | "3d") => void
 }
 
 const useMapState = (): ReturnType => {

@@ -11,12 +11,11 @@ import { IoClose } from "react-icons/io5";
 import { FiCornerDownRight } from "react-icons/fi";
 import { MdLanguage } from "react-icons/md";
 import { AppContext } from "../../context/AppContext";
-import { MapViewState } from "deck.gl"
 
 interface Props{
   areFiltersOpened: boolean;
   toggleFiltersVisibility: () => void;
-  setViewMode: (viewMode: string) => any;
+  setViewMode: (viewMode: "2d" | "3d") => void;
 }
 
 const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened, setViewMode }) => {
