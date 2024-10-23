@@ -28,7 +28,7 @@ const useMapState = (): ReturnType => {
       );
     }
 
-    function setViewMode(viewMode: string) {
+    function setViewMode(viewMode: "2d" | "3d") {
       let additionalViewStateProps = {}
 
       if(viewMode === "2d") {
