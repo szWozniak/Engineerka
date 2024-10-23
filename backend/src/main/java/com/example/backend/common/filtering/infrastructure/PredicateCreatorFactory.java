@@ -10,7 +10,7 @@ public class PredicateCreatorFactory {
             case Equals ->  (path, value) -> {
                 if (value instanceof String){
                     return builder.equal(builder.lower((Path<String>) path), ((String) value).toLowerCase());
-                } 
+                }
 
                 return builder.equal(path, value);
             };

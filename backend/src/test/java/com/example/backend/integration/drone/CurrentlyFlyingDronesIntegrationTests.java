@@ -180,7 +180,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
         );
 
-        var filter = new DroneTextFilter("registrationNumber", "flyingDroneToBeFound", ComparisonType.Contains);
+        var filter = new DroneTextFilter("registrationNumber", "flyingdronetobefound", ComparisonType.Contains);
         List<IDroneFilter> filters = new ArrayList<>();
         filters.add(filter);
         var result = droneService.getCurrentlyFlyingDrones(filters);
@@ -349,7 +349,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
         );
 
-        var filter = new DroneTextFilter("model", "modelToBeFound", ComparisonType.Contains);
+        var filter = new DroneTextFilter("model", "MODELTOBEFOUND", ComparisonType.Contains);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
@@ -387,7 +387,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
         );
 
-        var filter = new DroneTextFilter("type", "Airborne", ComparisonType.Contains);
+        var filter = new DroneTextFilter("type", "airborne", ComparisonType.Contains);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
