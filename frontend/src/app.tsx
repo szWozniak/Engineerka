@@ -22,7 +22,7 @@ const App = () => {
   const mapRef: any = useRef();
   const { layers } = useLayerManager()
 
-  const {mapViewState, setMapViewState, getTooltip} = useMapState();
+  const {mapViewState, setMapViewState, getTooltip, setViewMode} = useMapState();
   const [areFiltersOpened, setAreFiltersOpened] = useState<boolean>(false)
 
   useEffect(() => {
@@ -41,8 +41,7 @@ const App = () => {
         <Sidebar 
           areFiltersOpened={areFiltersOpened}
           toggleFiltersVisibility={() => setAreFiltersOpened(prev => !prev)}
-          mapViewState={mapViewState}
-          setMapViewState={setMapViewState}
+          setViewMode={setViewMode}
         />
         <BottomMenu 
           areFiltersOpened={areFiltersOpened}

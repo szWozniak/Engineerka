@@ -16,11 +16,10 @@ import { MapViewState } from "deck.gl"
 interface Props{
   areFiltersOpened: boolean;
   toggleFiltersVisibility: () => void;
-  mapViewState: MapViewState;
-  setMapViewState: any;
+  setViewMode: (viewMode: string) => any;
 }
 
-const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened, mapViewState, setMapViewState }) => {
+const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened, setViewMode }) => {
   const {t, i18n} = useTranslation();
 
   const [opened, setOpened] = useState<boolean>(true);
@@ -83,10 +82,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened, m
             </div>
           </div>}
         </div>
-        <Settings 
-          mapViewState={mapViewState}
-          setMapViewState={setMapViewState}
-        />
+        <Settings setViewMode={setViewMode} />
         {selectedDrone && (<div className="container selectedDrone">
           <button className="closeButton" onClick={() => selectDrone(null)}>
             <IoClose />

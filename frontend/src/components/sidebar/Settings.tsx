@@ -3,14 +3,12 @@ import MenuDropdown from './MenuDropdown';
 import { useTranslation } from 'react-i18next';
 import { FaMapLocationDot } from "react-icons/fa6";
 import { FiCornerDownRight } from "react-icons/fi";
-import { MapViewState } from "deck.gl"
 
 interface Props{
-  mapViewState: MapViewState;
-  setMapViewState: any;
+  setViewMode: (viewMode: string) => any
 }
 
-const Settings: React.FC<Props> = ({mapViewState, setMapViewState}) => {
+const Settings: React.FC<Props> = ({setViewMode}) => {
   const { t } = useTranslation();
   const [openedViewModeMenu, setOpenedViewModeMenu] = useState<boolean>(false)
 
@@ -24,23 +22,11 @@ const Settings: React.FC<Props> = ({mapViewState, setMapViewState}) => {
         onClick={() => setOpenedViewModeMenu(prev => !prev)}
       />
       {openedViewModeMenu && <div className="menuEntries">
-        <div className="menuEntry" onClick={() => {
-          setMapViewState({
-            ...mapViewState,
-            pitch: 0,
-            zoom: mapViewState.zoom - 2
-          })
-        }}>
+        <div className="menuEntry" onClick={() => setViewMode("2d")}>
           <FiCornerDownRight />
           <span>2D</span>
         </div>
-        <div className="menuEntry" onClick={() => {
-          setMapViewState({
-            ...mapViewState,
-            pitch: 70,
-            zoom: mapViewState.zoom + 2
-          })
-        }}>
+        <div className="menuEntry" onClick={() => setViewMode("3d")}>
           <FiCornerDownRight />
           <span>3D</span>
         </div>
