@@ -173,14 +173,14 @@ public class CurrentlyFlyingDronesIntegrationTests {
     }
 
     @Test
-    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheRegistrationNumberFilter(){
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheRegistrationNumberFilter_CaseInsensitive(){
         setupDatabase(
                 List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
                 List.of(new FlightRecordEntityFixtureBuilder().withId("2").build()),
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
         );
 
-        var filter = new DroneTextFilter("registrationNumber", "flyingDroneToBeFound", ComparisonType.Contains);
+        var filter = new DroneTextFilter("registrationNumber", "flyingdronetobefound", ComparisonType.Contains);
         List<IDroneFilter> filters = new ArrayList<>();
         filters.add(filter);
         var result = droneService.getCurrentlyFlyingDrones(filters);
@@ -341,7 +341,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
     }
 
     @Test
-    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheModelFilter(){
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheModelFilter_CaseInsensitive(){
         //prepare database
         setupDatabase(
                 List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
@@ -349,7 +349,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
         );
 
-        var filter = new DroneTextFilter("model", "modelToBeFound", ComparisonType.Contains);
+        var filter = new DroneTextFilter("model", "MODELTOBEFOUND", ComparisonType.Contains);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
@@ -360,7 +360,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
     }
 
     @Test
-    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheOperatorFilter(){
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheOperatorFilter_CaseInsensitive(){
         //prepare database
         setupDatabase(
                 List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
@@ -379,7 +379,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
     }
 
     @Test
-    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheTypeFilter(){
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheTypeFilter_CaseInsensitive(){
         //prepare database
         setupDatabase(
                 List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
@@ -387,7 +387,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
         );
 
-        var filter = new DroneTextFilter("type", "Airborne", ComparisonType.Contains);
+        var filter = new DroneTextFilter("type", "airborne", ComparisonType.Contains);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));

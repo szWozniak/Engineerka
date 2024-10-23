@@ -58,8 +58,8 @@ public class CurrentlyFlyingDronesQueryTests {
     }
 
     @Test
-    public void ShouldReturnFilteredDrones(){
-        var filter = new DroneTextFilter("registrationNumber", "dron1", ComparisonType.Equals).toSpecification();
+    public void ShouldReturnFilteredDrones_CaseInsensitive(){
+        var filter = new DroneTextFilter("registrationNumber", "DRON1", ComparisonType.Equals).toSpecification();
         List<Specification<DroneEntity>> filtersList = new ArrayList<>();
         filtersList.add(filter);
 

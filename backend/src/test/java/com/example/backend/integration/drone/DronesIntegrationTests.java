@@ -50,7 +50,7 @@ public class DronesIntegrationTests {
     }
 
     @Test
-    public void ShouldReturnDrones_WithRegisteredPositions_ThatPassTheFilter(){
+    public void ShouldReturnDrones_WithRegisteredPositions_ThatPassTheFilter_CaseInsensitive(){
         var filter = new DroneTextFilter("registrationNumber", "flyingDroneWithRecords", ComparisonType.Equals);
         List<IDroneFilter> filters = new ArrayList<>();
         filters.add(filter);
