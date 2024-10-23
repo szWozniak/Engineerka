@@ -58,16 +58,16 @@ jobs:
       - name: Build Docker image
         working-directory: ./backend
         run: |
-          docker build . --file Dockerfile-dev --tag pejdzor/dronhub_backend_develop
+          docker build . --file Dockerfile-dev --tag dronhub_backend_develop
 
       - name: Tag with commit
-        run: docker image tag pejdzor/dronhub_backend_develop pejdzor/dronhub_backend_develop:${{github.sha}}
+        run: docker image tag dronhub_backend_develop pejdzor/dronhub_backend_develop:${{github.sha}}
 
       - name: Tag with latest
-        run: docker image tag pejdzor/dronhub_backend_develop pejdzor/dronhub_backend_develop:latest
+        run: docker image tag dronhub_backend_develop pejdzor/dronhub_backend_develop:latest
 
       - name: Push docker image
-        run: docker push pejdzor/dronhub_backend_develop:${{github.sha}}
+        run: docker push pejdzor/dronhub_backend_develop:latest
 
   build-backend-production:
     if: github.event.pull_request.merged == true
@@ -98,16 +98,16 @@ jobs:
       - name: Build Docker image
         working-directory: ./backend
         run: |
-          docker build . --file Dockerfile-dev --tag pejdzor/dronhub_backend
+          docker build . --file Dockerfile-dev --tag dronhub_backend
 
       - name: Tag with commit
-        run: docker image tag pejdzor/dronhub_backend pejdzor/dronhub_backend:${{github.sha}}
+        run: docker tag dronhub_backend pejdzor/dronhub_backend:${{github.sha}}
 
       - name: Tag with latest
         run: docker image tag pejdzor/dronhub_backend pejdzor/dronhub_backend:latest
 
       - name: Push docker image
-        run: docker push pejdzor/dronhub_backend:${{github.sha}}
+        run: docker push pejdzor/dronhub_backend:latest
 
   build-frontend:
     if: github.event.pull_request.merged == true
@@ -137,10 +137,39 @@ jobs:
 
       - name: Build Docker image
         working-directory: ./frontend
-        run: docker build . --file Dockerfile --tag pejdzor/dronhub_frontend
+        run: docker build . --file Dockerfile --tag dronhub_frontend
 
-      - name: Tag with commit
-        run: docker image tag pejdzor/dronhub_frontend pejdzor/dronhub_frontend:${{github.sha}}
+      - name: Tag with latest
+        run: docker tag dronhub_frontend pejdzor/dronhub_frontend:latest
+
+      - name: Tag with commit hash
+        run: docker tag dronhub_frontend pejdzor/dronhub_frontend:${{github.sha}}
 
       - name: Push docker image
-        run: docker push pejdzor/dronhub_frontend:${{github.sha}}
+        run: docker push pejdzor/dronhub_frontend:latest
+
+  build-simulator:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Docker login
+        env:
+          DOCKER_USERNAME: ${{ secrets.dockerhub_username }}
+          DOCKER_PASSWORD: ${{ secrets.dockerhub_password }}
+        run: docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" docker.io
+
+      - name: Build Docker image
+        working-directory: ./simulator
+        run: docker build . --file Dockerfile --tag dronhub_simulator
+
+      - name: Tag with latest
+        run: docker tag dronhub_simulator pejdzor/dronhub_simulator:latest
+
+      - name: Tag with commit hash
+        run: docker tag dronhub_simulator pejdzor/dronhub_simulator:${{github.sha}}
+
+      - name: Push docker image
+        run: docker push pejdzor/dronhub_simulator:latest
