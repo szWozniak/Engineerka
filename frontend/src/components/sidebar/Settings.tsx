@@ -5,7 +5,7 @@ import { FaMapLocationDot } from "react-icons/fa6";
 import { FiCornerDownRight } from "react-icons/fi";
 
 interface Props{
-  setViewMode: (viewMode: string) => any
+  setViewMode: (viewMode: "2d" | "3d") => any
 }
 
 const Settings: React.FC<Props> = ({setViewMode}) => {
