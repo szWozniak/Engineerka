@@ -7,7 +7,7 @@ public record NumberFilterEntry(
         String parameter,
         String key,
         @NotNull(message = "filter value cannot be null")
-        int value,
+        double value,
         @NotNull(message = "filter comparison type cannot be null")
         String comparisonType
 ){}

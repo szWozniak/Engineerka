@@ -21,10 +21,10 @@ import java.time.LocalTime;
 public class DroneNumberFilter implements IDroneFilter {
     private static final FilterType FILTER_TYPE = FilterType.Number;
     private final String attributeName;
-    private final int value;
+    private final double value;
     private final ComparisonType comparisonType;
 
-    public DroneNumberFilter(String attributeName, int value, ComparisonType comparisonType) {
+    public DroneNumberFilter(String attributeName, double value, ComparisonType comparisonType) {
         validateComparisionType(comparisonType);
         this.attributeName = attributeName;
         this.value = value;
@@ -42,7 +42,7 @@ public class DroneNumberFilter implements IDroneFilter {
             Subquery<LocalDate> dateSubquery = createDateSubquery(root, query, builder);
             Subquery<LocalTime> timeSubquery = createTimeSubquery(root, query, builder, dateSubquery);
 
-            PredicateCreator<Integer> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
+            PredicateCreator<Double> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
 
             Path<LocalTime> timePath =  droneWithFlightRecords.get("time");
             Path<LocalDate> datePath = droneWithFlightRecords.get("date");
