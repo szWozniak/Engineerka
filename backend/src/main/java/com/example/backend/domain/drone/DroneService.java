@@ -1,10 +1,9 @@
 package com.example.backend.domain.drone;
-import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
+import com.example.backend.domain.drone.filtering.IDroneFilter;
 import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.drone.mappers.DroneEntityWithFlightRecordEntity;
-import com.example.backend.domain.drone.requests.Drones.DronesQuery;
+import com.example.backend.domain.drone.requests.drones.DronesQuery;
 import com.example.backend.domain.drone.requests.currentlyFlyingDrones.CurrentlyFlyingDronesQuery;
-import com.example.backend.domain.flight.FlightEntity;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
@@ -118,10 +117,6 @@ public class DroneService {
         }
 
         return result;
-    }
-
-    public List<FlightEntity> getDroneFinishedFlights(String registrationNumber){
-        return flightRepository.findDistinctByFlightRecords_Drone_RegistrationNumberAndFlightRecords_FlightIsNotNull(registrationNumber);
     }
 
     public List<DroneEntity> findAndStopDronesThatShouldStopFlying(List<String> registrationNumbers){

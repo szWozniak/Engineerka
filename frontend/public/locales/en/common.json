@@ -8,6 +8,8 @@
   "general": {
     "menu": "Main Menu",
     "filters": "Filters",
+    "droneFilters": "Drone filters",
+    "flightFilters": "Flight filters",
     "flyingDrones": "Flying Drones",
     "selectedDrone": "Selected Drone",
     "resetSelection": "Clear Selection",
@@ -32,6 +34,7 @@
       "operator": "Operator",
       "battery": "Battery",
       "model": "Model",
+      "type": "Only flying",
       "state": "Drone Status"
     },
     "flight": {
@@ -41,7 +44,12 @@
       "speed": "Avg. Speed",
       "elevation": "Elevation",
       "distance": "Distance",
-      "didLanded": "Did landed?"
+      "didLand": "Did land?",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "duration": "Duration",
+      "averageSpeed": "Average speed",
+      "elevationGain": "Elevation gain"
     },
     "noData": "n/a"
   },

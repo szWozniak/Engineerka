@@ -6,12 +6,23 @@ import {
   useState,  
 } from 'react'
 
-import { Filter, FilterType } from '../filters/types';
-import { defaultFiltersState } from '../filters/useCases/defaultState';
+import { DroneFilter } from '../filters/drone/types';
+import { defaultDroneFiltersState as defaultDronesFiltersState } from '../filters/drone/useCases/defaultState';
+import { FilterType } from '../filters/commonTypes';
+import { FlightFilter } from '../filters/flights/types';
+import { defaultFlightsFiltersState } from '../filters/flights/useCases/defaultState';
+import AppView from '../view/types';
+
 type AppContextType = {
   filtering: {
-    value: Filter[],
-    changeFilters: (filters: Filter[]) => void
+    drone: {
+      value: DroneFilter[],
+      changeFilters: (filters: DroneFilter[]) => void
+    },
+    flight: {
+      value: FlightFilter[],
+      changeFilters: (filters: FlightFilter[]) => void 
+    }
   },
   drones: {
     selectedDroneRegistration: string | null,
@@ -26,84 +37,187 @@ type AppContextType = {
     setSelectedFlightId: Dispatch<SetStateAction<number | null>>,
     trackedPoint : number,
     setTrackedPoint: Dispatch<SetStateAction<number>>
+  },
+  view: {
+    currentView: AppView,
+    setCurrentView: Dispatch<SetStateAction<AppView>>
   }
 }
 
 export const AppContext = createContext<AppContextType>({
   filtering:{
-    value: [
-      {
-        type: FilterType.Text,
-        parameter: "registrationNumber",
-        key: "registrationNumber",
-        value: "",
-        comparisonType: "Equals"
+    drone: {
+      value: [
+        {
+          type: FilterType.Text,
+          parameter: "registrationNumber",
+          key: "registrationNumber",
+          value: "",
+          comparisonType: "Equals"
+        },
+        {
+          type: FilterType.Number,
+          parameter: "altitude",
+          key: "minAltitude",
+          value: undefined,
+          comparisonType: "GreaterThanOrEqual"
+        },
+        {
+          type: FilterType.Number,
+          parameter: "altitude",
+          key: "maxAltitude",
+          value: undefined,
+          comparisonType: "LesserThanOrEqual"
+        },
+        {
+          type: FilterType.Number,
+          parameter: "longitude",
+          key: "minLongitude",
+          value: undefined,
+          comparisonType: "GreaterThanOrEqual"
+        },
+        {
+          type: FilterType.Number,
+          parameter: "longitude",
+          key: "maxLongitude",
+          value: undefined,
+          comparisonType: "LesserThanOrEqual"
+        },
+        {
+          type: FilterType.Number,
+          parameter: "latitude",
+          key: "minLatitude",
+          value: undefined,
+          comparisonType: "GreaterThanOrEqual"
+        },
+        {
+          type: FilterType.Number,
+          parameter: "latitude",
+          key: "maxLatitude",
+          value: undefined,
+          comparisonType: "LesserThanOrEqual"
+        },
+        {
+          type: FilterType.Number,
+          parameter: "fuel",
+          key: "minFuel",
+          value: undefined,
+          comparisonType: "GreaterThanOrEqual"
+        },
+        {
+          type: FilterType.Number,
+          parameter: "fuel",
+          key: "maxFuel",
+          value: undefined,
+          comparisonType: "LesserThanOrEqual"
+        },
+        {
+          type: FilterType.Text,
+          parameter: "model",
+          key: "model",
+          value: "",
+          comparisonType: "Equals"
+        }
+      ],
+      changeFilters: (_f: DroneFilter[]) => { } 
+    },
+    flight: {
+      value: [
+        {
+          type: FilterType.DateAndTime,
+          parameter: "start",
+          key: "minStartDateAndTime",
+          value: "",
+          comparisonType: "GreaterThanOrEqual"
       },
       {
-        type: FilterType.Number,
-        parameter: "altitude",
-        key: "minAltitude",
-        value: undefined,
-        comparisonType: "GreaterThan"
+          type: FilterType.DateAndTime,
+          parameter: "start",
+          key: "maxStartDateAndTime",
+          value: "",
+          comparisonType: "LesserThanOrEqual"
       },
       {
-        type: FilterType.Number,
-        parameter: "altitude",
-        key: "maxAltitude",
-        value: undefined,
-        comparisonType: "LesserThan"
+          type: FilterType.DateAndTime,
+          parameter: "end",
+          key: "minEndDateAndTime",
+          value: "",
+          comparisonType: "GreaterThanOrEqual"
       },
       {
-        type: FilterType.Number,
-        parameter: "longitude",
-        key: "minLongitude",
-        value: undefined,
-        comparisonType: "GreaterThan"
+          type: FilterType.DateAndTime,
+          parameter: "end",
+          key: "maxEndDateAndTime",
+          value: "",
+          comparisonType: "LesserThanOrEqual"
       },
       {
-        type: FilterType.Number,
-        parameter: "longitude",
-        key: "maxLongitude",
-        value: undefined,
-        comparisonType: "LesserThan"
+          type: FilterType.Time,
+          parameter: "duration",
+          key: "minDuration",
+          value: "",
+          comparisonType: "GreaterThanOrEqual"
       },
       {
-        type: FilterType.Number,
-        parameter: "latitude",
-        key: "minLatitude",
-        value: undefined,
-        comparisonType: "GreaterThan"
+          type: FilterType.Time,
+          parameter: "duration",
+          key: "maxDuration",
+          value: "",
+          comparisonType: "LesserThanOrEqual"
       },
       {
-        type: FilterType.Number,
-        parameter: "latitude",
-        key: "maxLatitude",
-        value: undefined,
-        comparisonType: "LesserThan"
+          type: FilterType.Number,
+          parameter: "averageSpeed",
+          key: "minAverageSpeed",
+          value: undefined,
+          comparisonType: "GreaterThanOrEqual"
       },
       {
-        type: FilterType.Number,
-        parameter: "fuel",
-        key: "minFuel",
-        value: undefined,
-        comparisonType: "GreaterThan"
+          type: FilterType.Number,
+          parameter: "averageSpeed",
+          key: "maxAverageSpeed",
+          value: undefined,
+          comparisonType: "LesserThanOrEqual"
       },
       {
-        type: FilterType.Number,
-        parameter: "fuel",
-        key: "maxFuel",
-        value: undefined,
-        comparisonType: "LesserThan"
+          type: FilterType.Number,
+          parameter: "elevationGain",
+          key: "minElevationGain",
+          value: undefined,
+          comparisonType: "GreaterThanOrEqual"
       },
       {
-        type: FilterType.Text,
-        parameter: "model",
-        key: "model",
-        value: "",
-        comparisonType: "Equals"
-      }
+          type: FilterType.Number,
+          parameter: "elevationGain",
+          key: "maxElevationGain",
+          value: undefined,
+          comparisonType: "LesserThanOrEqual"
+      },
+      {
+          type: FilterType.Number,
+          parameter: "distance",
+          key: "minDistance",
+          value: undefined,
+          comparisonType: "GreaterThanOrEqual"
+      },
+      {
+          type: FilterType.Number,
+          parameter: "distance",
+          key: "maxDistance",
+          value: undefined,
+          comparisonType: "LesserThanOrEqual"
+      },
+      {
+          type: FilterType.Boolean,
+          parameter: "didLand",
+          key: "didLand",
+          value: undefined,
+          comparisonType: "Equals"
+      },
     ],
-    changeFilters: (_f: Filter[]) => { } 
+    changeFilters: (_f: FlightFilter[]) => {}
+  }
+    
   },
   drones: {
     selectedDroneRegistration: null,
@@ -118,6 +232,10 @@ export const AppContext = createContext<AppContextType>({
     setSelectedFlightId: () => {},
     trackedPoint: 0,
     setTrackedPoint: () => {}
+  },
+  view: {
+    currentView: AppView.Drones,
+    setCurrentView: () => {}
   }
 
 })
@@ -125,18 +243,26 @@ export const AppContext = createContext<AppContextType>({
 const AppContextProvider = ({ children }: {
   children: ReactNode
 }) => {
-  const [filters, setFilters] = useState<Filter[]>(defaultFiltersState);
+  const [droneFilters, setDroneFilters] = useState<DroneFilter[]>(defaultDronesFiltersState);
+  const [flightFilters, setFlightFilters] = useState<FlightFilter[]>(defaultFlightsFiltersState);
   const [selectedDroneRegistration, setSelectedDroneRegistration] = useState<string | null>(null)
   const [highlightedFlightId, setHighlightedFlightId] = useState<number | null>(null);
   const [droneRegistrationToShowFlightsFor, setDroneRegistrationToShowFlightsFor] = useState<string | null>(null)
   const [selectedFlightId, setSelectedFlightId] = useState<number | null>(null)
   const [trackedPoint, setTrackedPoint] = useState<number>(0)
+  const [currentView, setCurrentView] = useState<AppView>(AppView.Drones)
   
   return (
     <AppContext.Provider value={{
       filtering:{
-        value: filters,
-        changeFilters: setFilters
+        drone: {
+          value: droneFilters,
+          changeFilters: setDroneFilters
+        },
+        flight: {
+          value: flightFilters,
+          changeFilters: setFlightFilters
+        }
       },
       drones: {
         selectedDroneRegistration: selectedDroneRegistration,
@@ -151,6 +277,10 @@ const AppContextProvider = ({ children }: {
         setSelectedFlightId,
         trackedPoint,
         setTrackedPoint
+      },
+      view: {
+        currentView,
+        setCurrentView
       }
     }}>
       {children}

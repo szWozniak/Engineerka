@@ -1,14 +1,18 @@
 import { Dispatch, SetStateAction } from "react";
-import { DroneFlightSummary } from "../../../drones/types";
 import { useTranslation } from "react-i18next";
 import { MdFlightTakeoff } from "react-icons/md";
 import { MdSearch } from "react-icons/md";
-import useFilters from "../../../filters/useCases/useFilters";
+import useDroneFilters from "../../../filters/drone/useCases/useDroneFilters";
+import { DroneFlightSummary } from "../../../flights/types";
+import useView from "../../../view/useView";
+import AppView from "../../../view/types";
+import useFlightFilters from "../../../filters/flights/useCases/useFlightFilters";
 
 interface Props {
   selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
   selectDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>
   selectFlightId: Dispatch<SetStateAction<number | null>>
+  closeFilters: () => void
   flightSummaries: DroneFlightSummary[] | undefined
 }
 
@@ -16,19 +20,30 @@ const FlightsTable: React.FC<Props> = ({
     selectDroneRegistrationToShowFlightsFor,
     selectFlightId,
     selectHighlightedFlightId,
+    closeFilters,
     flightSummaries
   }) => { 
   const {t} = useTranslation();
-  const {visibility, bulkFiltersActions} = useFilters();
+  const droneFilters = useDroneFilters();
+  const flightFilters = useFlightFilters();
+
+  const clearAllFilters = () => {
+    droneFilters.bulkFiltersActions.resetFilters();
+    flightFilters.bulkFiltersActions.resetFilters();
+  }
+
+  const {changeViewTo} = useView()
   
   return (
     <div className="tableContainer">
       <div className="controls">
         <button
           onClick={() => {
+            changeViewTo(AppView.Drones)
             selectDroneRegistrationToShowFlightsFor(null)
             selectHighlightedFlightId(null)
             selectFlightId(null)
+            clearAllFilters()
           }}
         ><MdFlightTakeoff /> {t("actions.backToDrones")}</button>
       </div>
@@ -42,7 +57,7 @@ const FlightsTable: React.FC<Props> = ({
               <th>{t("details.flight.speed")}</th>
               <th>{t("details.flight.elevation")}</th>
               <th>{t("details.flight.distance")}</th>
-              <th>{t("details.flight.didLanded")}</th>
+              <th>{t("details.flight.didLand")}</th>
               <th>{t("actions.title")}</th>
             </tr>
           </thead>
@@ -71,14 +86,15 @@ const FlightsTable: React.FC<Props> = ({
                     {flight?.distance?.toFixed(4) + "km"}
                   </td>
                   <td>
-                    {flight?.didLanded ? "✅" : "❌"}
+                    {flight?.didLand ? "✅" : "❌"}
                   </td>
                   <td>
                   <button 
                     onClick={() => {
+                      changeViewTo(AppView.Flight)
                       selectFlightId(flight?.id)
-                      visibility.closeFilters();
-                      bulkFiltersActions.resetFilters();
+                      closeFilters()
+                      clearAllFilters()
                     }}
                     onMouseEnter={() => selectHighlightedFlightId(flight?.id)}
                     onMouseLeave={() => selectHighlightedFlightId(null)}

@@ -1,38 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowUpIcon } from '../icons/ArrowUpIcon';
 import { ArrowDownIcon } from '../icons/ArrowDownIcon';
 import BigTable from './bigTable/BigTable';
 import FlightsTable from './flightsTable/FlightsTable';
-import FilterSection from './filters/FilterSection';
 import FlightStatusPanel from './flightsTable/FlightStatusPanel';
 import { useTranslation } from 'react-i18next';
-import { NumberFilter, NumberFilterKey, TextFilter, TextFilterKey } from '../../filters/types';
 import useFlights from '../../flights/useCases/useFlights';
+import DroneFilterSection from './filters/droneFilters/DroneFilterSection';
+import useView from '../../view/useView';
+import AppView from '../../view/types';
+import FlightFilterSection from './filters/flightFilters/FlightFilterSection';
 
 interface Props{
-  areFiltersOpen: boolean
-  getTextFilter: (filterKey: TextFilterKey) => TextFilter,
-  getNumberFilter: (filterKey: NumberFilterKey) => NumberFilter,
-  onNumberFilterChange: (filterKey: NumberFilterKey, value: number | undefined) => void,
-  onNumberFilterReset: (filterKey: NumberFilterKey) => void
-  onTextFilterChange: (filterKey: TextFilterKey, value: string) => void,
-  onTextFilterReset: (filterKey: TextFilterKey) => void
-  applyFilters: () => void
-  resetFilters: () => void
+  areFiltersOpened: boolean,
+  closeFilters: () => void
 }
 
 const BottomMenu: React.FC<Props> = ({
-  areFiltersOpen,
-  applyFilters,
-  resetFilters,
-  getNumberFilter,
-  getTextFilter,
-  onNumberFilterChange,
-  onNumberFilterReset,
-  onTextFilterChange,
-  onTextFilterReset
+  areFiltersOpened,
+  closeFilters
 }) => {
   const { t } = useTranslation();
+
+  const {currentView} = useView()
 
   const [isOpened, setIsOpened] = useState(false)
   const {detailedFlight, flightsSummaries} = useFlights()
@@ -95,16 +85,19 @@ const BottomMenu: React.FC<Props> = ({
         selectDroneRegistrationToShowFlightsFor={flightsSummaries.selectDroneRegistrationToShowFlightsFor}
         selectFlightId={detailedFlight.selectFlightId}
         selectHighlightedFlightId={flightsSummaries.selectHighlightedFlightId}
+        closeFilters={closeFilters}
       />
     </>
   )
 
   const renderContent = () => {
-    if (detailedFlight.trackedFlight !== undefined){
+    if(currentView === AppView.Flight)
+    {
       return rednerFlightTrackingView()
     }
 
-    if (flightsSummaries.droneRegistrationToShowFlightsFor !== null){
+    if (currentView === AppView.FlightsSummary)
+    {
       return renderDroneFlightsView()
     }
 
@@ -115,6 +108,25 @@ const BottomMenu: React.FC<Props> = ({
       </>
     )
   }
+
+  const renderFilters = useCallback(() => {
+    if (!areFiltersOpened){
+      return <></>
+    }
+
+    if (currentView === AppView.Drones){
+      return <DroneFilterSection/>
+    }
+
+    if (currentView === AppView.FlightsSummary){
+      return <FlightFilterSection/>
+    }
+
+    return <></>
+  }, [areFiltersOpened, currentView])
+
+  const filters = useMemo(() => renderFilters(), 
+  [renderFilters])
 
   return (
     <div 
@@ -128,17 +140,7 @@ const BottomMenu: React.FC<Props> = ({
       >
         {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>
-      {areFiltersOpen && <FilterSection 
-        isOpen={areFiltersOpen}
-        applyFilters={applyFilters}
-        resetFilters={resetFilters}
-        getNumberFilter={getNumberFilter}
-        getTextFilter={getTextFilter}
-        onNumberFilterChange={onNumberFilterChange}
-        onNumberFilterReset={onNumberFilterReset}
-        onTextFilterChange={onTextFilterChange}
-        onTextFilterReset={onTextFilterReset}
-      />}
+      {filters}
       <div className="content" style={{"height": size}}>
         <div className="resizer" onMouseDown={handleMouseDown}></div>
         {renderContent()}

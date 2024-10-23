@@ -6,10 +6,12 @@
     "direction": "Kierunek"
   },
   "general": {
-    "menu": "Menu Główne",
+    "menu": "Menu główne",
     "filters": "Filtry",
-    "flyingDrones": "Latające Drony",
-    "selectedDrone": "Wybrany Dron",
+    "droneFilters": "Filtry dronów",
+    "flightFilters": "Filtry lotów",
+    "flyingDrones": "Latające drony",
+    "selectedDrone": "Wybrany dron",
     "resetSelection": "Usuń zaznaczenie",
     "domain": "DronHub.pl",
     "recordUpdate": "Odświeżono",
@@ -42,7 +44,12 @@
       "speed": "Śr. prędkość",
       "elevation": "Przewyższenie",
       "distance": "Dystans",
-      "didLanded": "Czy wylądował?"
+      "didLand": "Czy wylądował?",
+      "startDate": "Data startu",
+      "endDate": "Data końca",
+      "duration": "Czas lotu",
+      "averageSpeed": "Średnia prędkość",
+      "elevationGain": "Nabyta wysokość"
     },
     "noData": "b/d"
   },

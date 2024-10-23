@@ -1,11 +1,12 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import flightQueries from "../repository/flightQueries"
 import { useQuery } from "@tanstack/react-query"
-import droneQueries from "../../drones/repository/droneQuries"
 import { AppContext } from "../../context/AppContext"
+import useFlightFilters from "../../filters/flights/useCases/useFlightFilters"
 
 const useFlights = () => {
     const { flights } = useContext(AppContext);
+    const {filters} = useFlightFilters();
 
     const {droneRegistrationToShowFlightsFor, setDroneRegistrationToShowFlightsFor} = flights
 
@@ -14,7 +15,7 @@ const useFlights = () => {
     )
 
     const { data: flightsSummaries } = useQuery(
-        droneQueries.getSelectedDroneFlightsSummaries(droneRegistrationToShowFlightsFor)
+        flightQueries.getSelectedDroneFlightsSummaries(droneRegistrationToShowFlightsFor, filters)
     )
 
     return {

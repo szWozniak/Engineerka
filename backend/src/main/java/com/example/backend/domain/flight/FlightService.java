@@ -1,12 +1,18 @@
 package com.example.backend.domain.flight;
 
+import com.example.backend.domain.drone.DroneEntity;
+import com.example.backend.domain.drone.filtering.IDroneFilter;
+import com.example.backend.domain.flight.filtering.IFlightFilter;
+import com.example.backend.domain.flight.requests.flightSummaries.FlightsQuery;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FlightService {
@@ -16,6 +22,14 @@ public class FlightService {
     public FlightService(FlightRepository flightRepository, FlightRecordRepository flightRecordRepository) {
         this.flightRepository = flightRepository;
         this.flightRecordRepository = flightRecordRepository;
+    }
+
+    public List<FlightEntity> getDroneFinishedFlights(String registrationNumber, List<IFlightFilter> filters){
+        List<Specification<FlightEntity>> specifications = filters.stream()
+                .map(IFlightFilter::toSpecification)
+                .collect(Collectors.toList());
+
+        return new FlightsQuery(flightRepository).execute(registrationNumber, specifications);
     }
 
     public void createFlights(List<String> droneRegistrationNumbers, Boolean didLanded){

@@ -2,8 +2,8 @@ package com.example.backend.unit.domain.drone.requests.currentlyFlyingDrones;
 
 import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.drone.DroneRepository;
-import com.example.backend.domain.drone.filtering.filters.ComparisonType;
-import com.example.backend.domain.drone.filtering.filters.TextFilter;
+import com.example.backend.common.filtering.ComparisonType;
+import com.example.backend.domain.drone.filtering.DroneTextFilter;
 import com.example.backend.domain.drone.requests.currentlyFlyingDrones.CurrentlyFlyingDronesQuery;
 import com.example.backend.unit.domain.drone.DroneEntityFixtureBuilder;
 import org.junit.jupiter.api.Assertions;
@@ -28,7 +28,7 @@ public class CurrentlyFlyingDronesQueryTests {
     @BeforeEach
     public void setUp(){
         sut = new CurrentlyFlyingDronesQuery(droneRepository);
-        SetupDatabase();
+        setupDatabase();
     }
 
     @Test
@@ -59,7 +59,7 @@ public class CurrentlyFlyingDronesQueryTests {
 
     @Test
     public void ShouldReturnFilteredDrones(){
-        var filter = new TextFilter("registrationNumber", "dron1", ComparisonType.Equals).toSpecification();
+        var filter = new DroneTextFilter("registrationNumber", "dron1", ComparisonType.Equals).toSpecification();
         List<Specification<DroneEntity>> filtersList = new ArrayList<>();
         filtersList.add(filter);
 
@@ -69,7 +69,7 @@ public class CurrentlyFlyingDronesQueryTests {
         Assertions.assertEquals("dron1", result.get(0).getRegistrationNumber());
     }
 
-    private void SetupDatabase(){
+    private void setupDatabase(){
         var drone = new DroneEntityFixtureBuilder().withRegistrationNumber("dron1").withIsAirbourne(true).build();
         var drone2 = new DroneEntityFixtureBuilder().withRegistrationNumber("dron2").withIsAirbourne(true).build();
 

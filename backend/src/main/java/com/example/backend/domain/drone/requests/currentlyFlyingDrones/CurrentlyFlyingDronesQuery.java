@@ -2,7 +2,7 @@ package com.example.backend.domain.drone.requests.currentlyFlyingDrones;
 
 import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.drone.DroneRepository;
-import com.example.backend.domain.drone.filtering.infrastructure.SpecificationHelper;
+import com.example.backend.common.filtering.infrastructure.SpecificationHelper;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,12 +18,12 @@ public class CurrentlyFlyingDronesQuery {
     }
 
     public List<DroneEntity> execute(List<Specification<DroneEntity>> specifications){
-        specifications.add(createConstraints());
+        specifications.add(createDefaultConstraints());
         Specification<DroneEntity> combinedSpecifications = SpecificationHelper.combine(specifications);
         return repository.findAll(combinedSpecifications);
     }
 
-    private Specification<DroneEntity> createConstraints(){
+    private Specification<DroneEntity> createDefaultConstraints(){
         return (Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> builder.isTrue(root.get("isAirborne"));
     }
 }

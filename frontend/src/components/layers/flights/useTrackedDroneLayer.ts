@@ -1,7 +1,7 @@
 import { SimpleMeshLayer } from 'deck.gl';
 import MESH_URL from '../../../map/config/model';
 import { theme } from '../../../map/config/theme';
-import { DroneFlight } from '../../../flights/api/types';
+import { DroneFlight } from '../../../flights/types';
 
 interface Props {
   trackedFlight: DroneFlight | null | undefined

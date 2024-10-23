@@ -1,11 +1,11 @@
 package com.example.backend.unit.domain.drone.requests.mappers;
 
-import com.example.backend.domain.drone.filtering.filters.IDroneFilter;
-import com.example.backend.domain.drone.filtering.filters.NumberFilter;
-import com.example.backend.domain.drone.filtering.filters.TextFilter;
+import com.example.backend.domain.drone.filtering.IDroneFilter;
+import com.example.backend.domain.drone.filtering.DroneNumberFilter;
+import com.example.backend.domain.drone.filtering.DroneTextFilter;
 import com.example.backend.domain.drone.requests.mappers.DroneFiltersMapper;
-import com.example.backend.domain.drone.requests.filters.NumberFilterEntry;
-import com.example.backend.domain.drone.requests.filters.TextFilterEntry;
+import com.example.backend.common.filtering.dtos.NumberFilterEntry;
+import com.example.backend.common.filtering.dtos.TextFilterEntry;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,11 +25,11 @@ public class DroneFiltersMapperTests {
 
         Assertions.assertEquals(1, result.size());
         var filter = result.get(0);
-        Assertions.assertEquals(filter.getClass(), TextFilter.class);
+        Assertions.assertEquals(filter.getClass(), DroneTextFilter.class);
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"GreaterThan", "LesserThan", "ZlyEnum"})
+    @ValueSource(strings = {"GreaterThanOrEqual", "LesserThanOrEqual", "ZlyEnum"})
     public void ShouldThrowException_WhenInvalidTextFilter(String comparisonType){
         var textFilterEntry = new TextFilterEntry("registrationNumber", "whatever", "Johnny", comparisonType);
 
@@ -39,7 +39,7 @@ public class DroneFiltersMapperTests {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Equals", "GreaterThan", "LesserThan"})
+    @ValueSource(strings = {"Equals", "GreaterThanOrEqual", "LesserThanOrEqual"})
     public void ShouldProperlyMap_NumberFilter(String comparisonType){
         var numberFilterEntry = new NumberFilterEntry("registrationNumber", "whatever", 69, comparisonType);
 
@@ -47,7 +47,7 @@ public class DroneFiltersMapperTests {
 
         Assertions.assertEquals(1, result.size());
         var filter = result.get(0);
-        Assertions.assertEquals(filter.getClass(), NumberFilter.class);
+        Assertions.assertEquals(filter.getClass(), DroneNumberFilter.class);
     }
 
 

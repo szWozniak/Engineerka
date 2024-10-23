@@ -25,23 +25,32 @@ public class FlightEntity {
     @Setter
     private Long Id;
     @Getter
+    @Setter
     private LocalDate startDate;
     @Getter
+    @Setter
     private LocalTime startTime;
     @Getter
+    @Setter
     private LocalDate endDate;
     @Getter
+    @Setter
     private LocalTime endTime;
     @Getter
+    @Setter
     private LocalTime duration;
     @Getter
+    @Setter
     private double averageSpeed;
     @Getter
+    @Setter
     private int elevationGain;
     @Getter
+    @Setter
     private double distance;
     @Getter
-    private boolean didLanded;
+    @Setter
+    private boolean didLand;
 
     @OneToMany
     @Getter
@@ -50,7 +59,7 @@ public class FlightEntity {
 
     public void summarizeFlight(List<FlightRecordEntity> flightRecords, Boolean didLanded) {
         this.flightRecords = flightRecords;
-        this.didLanded = didLanded;
+        this.didLand = didLanded;
 
         var sortedFlightRecords = flightRecords.stream().sorted(new RecordTimestampsComparator()).toList();
 

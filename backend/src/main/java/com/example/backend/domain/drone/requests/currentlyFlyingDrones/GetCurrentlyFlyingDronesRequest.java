@@ -1,7 +1,7 @@
 package com.example.backend.domain.drone.requests.currentlyFlyingDrones;
 
-import com.example.backend.domain.drone.requests.filters.NumberFilterEntry;
-import com.example.backend.domain.drone.requests.filters.TextFilterEntry;
+import com.example.backend.common.filtering.dtos.NumberFilterEntry;
+import com.example.backend.common.filtering.dtos.TextFilterEntry;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 

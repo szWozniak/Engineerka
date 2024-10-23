@@ -2,12 +2,14 @@ import { Dispatch, SetStateAction } from 'react';
 import { LineChart, Line, XAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { TooltipProps, LegendProps } from 'recharts';
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
-import { DroneFlight } from '../../../flights/api/types';
+import { DroneFlight } from '../../../flights/types';
 import { useTranslation } from 'react-i18next';
 import { MdFlightTakeoff } from "react-icons/md";
 import { FaListUl } from "react-icons/fa6";
 import { MdBatteryCharging90 } from "react-icons/md";
 import { FaChartLine } from "react-icons/fa";
+import useView from '../../../view/useView';
+import AppView from '../../../view/types';
 
 interface Props {
   selectDroneRegistrationToShowFlightsFor: Dispatch<SetStateAction<string | null>>,
@@ -26,12 +28,14 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
   trackedPoint,
 }) => {
   const {t} = useTranslation();
+  const {changeViewTo} = useView()
   
   return (
     <div className="tableContainer">
       <div className="controls">
         <button
           onClick={() => {
+            changeViewTo(AppView.Drones)
             selectDroneRegistrationToShowFlightsFor(null)
             selectHighlightedFlightId(null)
             selectFlightId(null)
@@ -40,6 +44,7 @@ const FlightStatusPanel: React.FC<Props> = ({selectDroneRegistrationToShowFlight
         
         <button
           onClick={() => {
+            changeViewTo(AppView.FlightsSummary)
             selectHighlightedFlightId(null)
             selectFlightId(null)
             selectTrackedPoint(0)
