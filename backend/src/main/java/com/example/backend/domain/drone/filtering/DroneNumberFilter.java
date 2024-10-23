@@ -12,9 +12,6 @@ import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import jakarta.persistence.criteria.Root;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 public class DroneNumberFilter implements IDroneFilter {
     private static final FilterType FILTER_TYPE = FilterType.Number;
     private final String attributeName;
@@ -29,8 +26,7 @@ public class DroneNumberFilter implements IDroneFilter {
     }
 
     //WARNING
-    //There is silent agreement that number fields are applied ONLY to flightRecords
-    //If it for any reason is applied for DroneEntity, then this class nededs to be changed
+    //There is silent agreement that number fields are applied ONLY to flying drones
     @Override
     public Specification<DroneEntity> toSpecification() {
         return (Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
