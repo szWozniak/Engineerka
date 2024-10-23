@@ -7,7 +7,8 @@ import { useTranslation } from "react-i18next";
 interface ReturnType{
     mapViewState: MapViewState,
     setMapViewState: any,
-    getTooltip: (info: PickingInfo) => any
+    getTooltip: (info: PickingInfo) => any,
+    setViewMode: (viewMode: "2d" | "3d") => void
 }
 
 const useMapState = (): ReturnType => {
@@ -25,6 +26,27 @@ const useMapState = (): ReturnType => {
       ${t("details.drone.model")}: ${object?.model}
       `
       );
+    }
+
+    function setViewMode(viewMode: "2d" | "3d") {
+      let additionalViewStateProps = {}
+
+      if(viewMode === "2d") {
+        additionalViewStateProps = {
+          pitch: 0,
+          zoom: mapViewState.zoom - 2
+        }
+      } else if(viewMode === "3d") {
+        additionalViewStateProps = {
+          pitch: 70,
+          zoom: mapViewState.zoom + 2
+        }
+      }
+
+      setMapViewState({
+        ...mapViewState,
+        ...additionalViewStateProps
+      })
     }
 
     useEffect(() => { //this might not work
@@ -46,7 +68,8 @@ const useMapState = (): ReturnType => {
     return {
       mapViewState,
       setMapViewState,
-      getTooltip
+      getTooltip,
+      setViewMode
     }
 }
 

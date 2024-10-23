@@ -7,7 +7,9 @@
   },
   "general": {
     "menu": "Menu główne",
+    "settings": "Ustawienia",
     "filters": "Filtry",
+    "viewmode": "Tryb Widoku",
     "droneFilters": "Filtry dronów",
     "flightFilters": "Filtry lotów",
     "flyingDrones": "Latające drony",

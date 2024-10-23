@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Drone } from '../../drones/types'
 import MenuDropdown from './MenuDropdown';
+import Settings from './Settings';
 import useDrones from '../../drones/useCases/useDrones';
 import { useTranslation } from 'react-i18next';
 import { MdCloseFullscreen } from "react-icons/md";
@@ -12,11 +13,12 @@ import { MdLanguage } from "react-icons/md";
 import { AppContext } from "../../context/AppContext";
 
 interface Props{
-  areFiltersOpened: boolean
+  areFiltersOpened: boolean;
   toggleFiltersVisibility: () => void;
+  setViewMode: (viewMode: "2d" | "3d") => void;
 }
 
-const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened }) => {
+const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened, setViewMode }) => {
   const {t, i18n} = useTranslation();
 
   const [opened, setOpened] = useState<boolean>(true);
@@ -79,6 +81,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened })
             </div>
           </div>}
         </div>
+        <Settings setViewMode={setViewMode} />
         {selectedDrone && (<div className="container selectedDrone">
           <button className="closeButton" onClick={() => selectDrone(null)}>
             <IoClose />
