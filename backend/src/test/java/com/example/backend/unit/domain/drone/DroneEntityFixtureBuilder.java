@@ -16,7 +16,13 @@ public class DroneEntityFixtureBuilder {
                 "pink",
                 "model",
                 "znak",
-                "fasd"
+                "fasd",
+                10,
+                10,
+                10,
+                10,
+                10,
+                10
     );
 
     public DroneEntityFixtureBuilder withRegistrationNumber(String registrationNumber){
@@ -56,7 +62,21 @@ public class DroneEntityFixtureBuilder {
 
     public DroneEntityFixtureBuilder withFlyingRecords(List<FlightRecordEntity> flyingRecords){
         defaultDrone.setFlightRecords(flyingRecords);
+
+        var lastFlyingRecord = defaultDrone.getFlightRecords().get(0);
+
+        updateDroneRecentRecord(defaultDrone, lastFlyingRecord);
+
         return this;
+    }
+
+    private void updateDroneRecentRecord(DroneEntity droneEntity, FlightRecordEntity flightRecordEntity){
+        droneEntity.setRecentLatitude(flightRecordEntity.getLatitude());
+        droneEntity.setRecentLongitude(flightRecordEntity.getLongitude());
+        droneEntity.setRecentHeading(flightRecordEntity.getHeading());
+        droneEntity.setRecentSpeed(flightRecordEntity.getSpeed());
+        droneEntity.setRecentAltitude(flightRecordEntity.getAltitude());
+        droneEntity.setRecentFuel(flightRecordEntity.getFuel());
     }
 
     public DroneEntity build(){

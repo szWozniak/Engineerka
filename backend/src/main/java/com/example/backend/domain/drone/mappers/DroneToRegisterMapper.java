@@ -36,6 +36,12 @@ public class DroneToRegisterMapper {
         droneEntity.getFlightRecords().add(flightRecordEntity);
         droneEntity.setAirborne(RegistrationFlag.mapToAirborne(drone.getFlightRecord().getFlag()));
         droneEntity.setType(RegistrationFlag.mapToType(drone.getFlightRecord().getFlag()));
+        droneEntity.setRecentLatitude(flightRecordEntity.getLatitude());
+        droneEntity.setRecentLongitude(flightRecordEntity.getLongitude());
+        droneEntity.setRecentHeading(flightRecordEntity.getHeading());
+        droneEntity.setRecentSpeed(flightRecordEntity.getSpeed());
+        droneEntity.setRecentAltitude(flightRecordEntity.getAltitude());
+        droneEntity.setRecentFuel(flightRecordEntity.getFuel());
 
         return new DroneEntityWithFlightRecordEntity(droneEntity, flightRecordEntity);
     }

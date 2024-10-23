@@ -39,7 +39,6 @@ public class FlyingDroneDto {
 
     public static FlyingDroneDto fromDroneEntity(DroneEntity entity){
         var positions = entity.getFlightRecords();
-        var currentPosition = positions.get(0);
         var trace = positions
                 .subList(1 , positions.size())
                 .stream().map(position -> new PositionDto(position.getLatitude(),
@@ -47,19 +46,19 @@ public class FlyingDroneDto {
                         position.getAltitude()))
                 .toList();
 
-         return new FlyingDroneDto(
-                 entity.getRegistrationNumber(),
-                 entity.getCountry(),
-                 entity.getOperator(),
-                 entity.getIdentification(),
-                 entity.getModel(),
-                 entity.getSign(),
-                 entity.getType(),
-                currentPosition.getHeading(),
-                currentPosition.getSpeed(),
-                currentPosition.getFuel(),
-                new PositionDto(currentPosition.getLatitude(), currentPosition.getLongitude(),
-                        currentPosition.getAltitude()),
+        return new FlyingDroneDto(
+                entity.getRegistrationNumber(),
+                entity.getCountry(),
+                entity.getOperator(),
+                entity.getIdentification(),
+                entity.getModel(),
+                entity.getSign(),
+                entity.getType(),
+                entity.getRecentHeading(),
+                entity.getRecentSpeed(),
+                entity.getRecentFuel(),
+                new PositionDto(entity.getRecentLatitude(), entity.getRecentLongitude(),
+                        entity.getRecentAltitude()),
                 trace
         );
     }

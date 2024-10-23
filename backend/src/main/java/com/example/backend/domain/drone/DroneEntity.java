@@ -47,6 +47,24 @@ public class DroneEntity {
     @Getter
     @Setter
     private String type;
+    @Getter
+    @Setter
+    private double recentLatitude;
+    @Getter
+    @Setter
+    private double recentLongitude;
+    @Getter
+    @Setter
+    private int recentHeading;
+    @Getter
+    @Setter
+    private int recentSpeed;
+    @Getter
+    @Setter
+    private int recentAltitude;
+    @Getter
+    @Setter
+    private int recentFuel;
 
     @OneToMany
     @Getter
@@ -59,7 +77,8 @@ public class DroneEntity {
                        boolean isAirborne, String country,
                        String operator, int identification,
                        String identificationLabel, String model, String sign,
-                       String type){
+                       String type, double latitude, double longitude, int heading,
+                       int speed, int altitude, int fuel){
         this.registrationNumber = registrationNumber;
         this.isAirborne = isAirborne;
         this.country = country;
@@ -69,6 +88,12 @@ public class DroneEntity {
         this.model = model;
         this.sign = sign;
         this.type = type;
+        this.recentLatitude = latitude;
+        this.recentLongitude = longitude;
+        this.recentHeading = heading;
+        this.recentSpeed = speed;
+        this.recentAltitude = altitude;
+        this.recentFuel = fuel;
         this.flightRecords = new ArrayList<>();
     }
 
@@ -81,6 +106,12 @@ public class DroneEntity {
                 drone.getIdentificationLabel(),
                 drone.getModel(),
                 drone.getSign(),
-                RegistrationFlag.mapToType(drone.getFlightRecord().getFlag()));
+                RegistrationFlag.mapToType(drone.getFlightRecord().getFlag()),
+                drone.getFlightRecord().getLatitude().getValue(),
+                drone.getFlightRecord().getLongitude().getValue(),
+                drone.getFlightRecord().getHeading().getValue(),
+                drone.getFlightRecord().getSpeed(),
+                drone.getFlightRecord().getAltitude(),
+                drone.getFlightRecord().getFuel());
     }
 }

@@ -71,7 +71,13 @@ public class FlightServiceTests {
                 "pink",
                 "szybcior",
                 "znak",
-                "fasd"
+                "fasd",
+                existingFlightRecord.getLatitude(),
+                existingFlightRecord.getLongitude(),
+                existingFlightRecord.getHeading(),
+                existingFlightRecord.getSpeed(),
+                existingFlightRecord.getAltitude(),
+                existingFlightRecord.getFuel()
         );
 
         fakeDb.persistAndFlush(existingFlightRecord);
