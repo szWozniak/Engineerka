@@ -10,6 +10,7 @@ import DroneFilterSection from './filters/droneFilters/DroneFilterSection';
 import useView from '../../view/useView';
 import AppView from '../../view/types';
 import FlightFilterSection from './filters/flightFilters/FlightFilterSection';
+import useDrones from '../../drones/useCases/useDrones';
 
 interface Props{
   areFiltersOpened: boolean,
@@ -32,6 +33,8 @@ const BottomMenu: React.FC<Props> = ({
   const [size, setSize] = useState(430)
 
   const isResizing = useRef(false)
+
+  const { timestamp } = useDrones();
 
   const handleMouseDown = (e: React.MouseEvent) => {
     isResizing.current = true
@@ -103,7 +106,10 @@ const BottomMenu: React.FC<Props> = ({
 
     return (
       <>
-        <span><b>{t("general.headers.list")}</b></span>
+        <div className="bottomMenuHeader">
+          <span><b>{t("general.headers.list")}</b></span>
+          <span className="recordUpdate">{t("general.recordUpdate")}: {timestamp?.date} {timestamp?.time}</span>
+        </div>
         <BigTable />
       </>
     )
