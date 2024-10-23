@@ -105,7 +105,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         );
 
         //prepare filter
-        var filter = new DroneNumberFilter("altitude", 10, ComparisonType.GreaterThanOrEqual);
+        var filter = new DroneNumberFilter("recentAltitude", 10, ComparisonType.GreaterThanOrEqual);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
@@ -164,7 +164,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 )
         );
 
-        var filter = new DroneNumberFilter("altitude", 10, ComparisonType.GreaterThanOrEqual);
+        var filter = new DroneNumberFilter("recentAltitude", 10, ComparisonType.GreaterThanOrEqual);
 
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
 
@@ -198,7 +198,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").withAltitude(30).build())
         );
 
-        var filter = new DroneNumberFilter("altitude", 10, ComparisonType.GreaterThanOrEqual);
+        var filter = new DroneNumberFilter("recentAltitude", 10, ComparisonType.GreaterThanOrEqual);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
@@ -217,7 +217,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").withAltitude(5).build())
         );
 
-        var filter = new DroneNumberFilter("altitude", 10, ComparisonType.LesserThanOrEqual);
+        var filter = new DroneNumberFilter("recentAltitude", 10, ComparisonType.LesserThanOrEqual);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
@@ -235,7 +235,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").withLatitude(30).build())
         );
 
-        var filter = new DroneNumberFilter("latitude", 10, ComparisonType.GreaterThanOrEqual);
+        var filter = new DroneNumberFilter("recentLatitude", 10, ComparisonType.GreaterThanOrEqual);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
@@ -254,7 +254,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").withLatitude(5).build())
         );
 
-        var filter = new DroneNumberFilter("latitude", 10, ComparisonType.LesserThanOrEqual);
+        var filter = new DroneNumberFilter("recentLatitude", 10, ComparisonType.LesserThanOrEqual);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
@@ -273,7 +273,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").withLongitude(10.88).build())
         );
 
-        var filter = new DroneNumberFilter("longitude", 10.88, ComparisonType.GreaterThanOrEqual);
+        var filter = new DroneNumberFilter("recentLongitude", 10.88, ComparisonType.GreaterThanOrEqual);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
@@ -292,7 +292,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").withLongitude(5.5).build())
         );
 
-        var filter = new DroneNumberFilter("longitude", 5.5, ComparisonType.LesserThanOrEqual);
+        var filter = new DroneNumberFilter("recentLongitude", 5.5, ComparisonType.LesserThanOrEqual);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
@@ -311,7 +311,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").withFuel(30).build())
         );
 
-        var filter = new DroneNumberFilter("fuel", 10, ComparisonType.GreaterThanOrEqual);
+        var filter = new DroneNumberFilter("recentFuel", 10, ComparisonType.GreaterThanOrEqual);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
@@ -330,7 +330,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").withFuel(5).build())
         );
 
-        var filter = new DroneNumberFilter("fuel", 10, ComparisonType.LesserThanOrEqual);
+        var filter = new DroneNumberFilter("recentFuel", 10, ComparisonType.LesserThanOrEqual);
 
         //act
         var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
@@ -432,6 +432,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
                 .withOperator(operator)
                 .withType(type)
                 .build();
+
         fakeDb.persistAndFlush(drone);
 
         for (var flightRecord : flightRecords){

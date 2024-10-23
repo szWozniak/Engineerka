@@ -12,42 +12,42 @@ export const defaultDroneFiltersState: DroneFilter[] = [
     },
     {
       type: FilterType.Number,
-      parameter: "altitude",
+      parameter: "recentAltitude",
       key: "minAltitude",
       value: undefined,
       comparisonType: "GreaterThanOrEqual"
     },
     {
       type: FilterType.Number,
-      parameter: "altitude",
+      parameter: "recentAltitude",
       key: "maxAltitude",
       value: undefined,
       comparisonType: "LesserThanOrEqual"
     },
     {
       type: FilterType.Number,
-      parameter: "longitude",
+      parameter: "recentLongitude",
       key: "minLongitude",
       value: undefined,
       comparisonType: "GreaterThanOrEqual"
     },
     {
       type: FilterType.Number,
-      parameter: "longitude",
+      parameter: "recentLongitude",
       key: "maxLongitude",
       value: undefined,
       comparisonType: "LesserThanOrEqual"
     },
     {
       type: FilterType.Number,
-      parameter: "latitude",
+      parameter: "recentLatitude",
       key: "minLatitude",
       value: undefined,
       comparisonType: "GreaterThanOrEqual"
     },
     {
       type: FilterType.Number,
-      parameter: "latitude",
+      parameter: "recentLatitude",
       key: "maxLatitude",
       value: undefined,
       comparisonType: "LesserThanOrEqual"
@@ -61,14 +61,14 @@ export const defaultDroneFiltersState: DroneFilter[] = [
     },
     {
       type: FilterType.Number,
-      parameter: "fuel",
+      parameter: "recentFuel",
       key: "minFuel",
       value: undefined,
       comparisonType: "GreaterThanOrEqual"
     },
     {
       type: FilterType.Number,
-      parameter: "fuel",
+      parameter: "recentFuel",
       key: "maxFuel",
       value: undefined,
       comparisonType: "LesserThanOrEqual"

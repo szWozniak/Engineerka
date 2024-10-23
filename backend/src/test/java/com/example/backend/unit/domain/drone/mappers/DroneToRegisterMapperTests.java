@@ -127,7 +127,13 @@ public class DroneToRegisterMapperTests {
                 "czarny",
                 "fajny",
                 "znak",
-                "Airborne");
+                "Airborne",
+                10,
+                10,
+                10,
+                10,
+                10,
+                10);
 
         List<DroneEntityWithFlightRecordEntity> result = DroneToRegisterMapper.mapToEntities(List.of(droneToRegister),
                 List.of(existingDrone));

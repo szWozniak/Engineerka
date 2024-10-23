@@ -198,7 +198,13 @@ public class DroneServiceTests {
                 "yellow",
                 "najlepszy",
                 "yes",
-                "Grounded"
+                "Grounded",
+                10,
+                10,
+                10,
+                10,
+                10,
+                10
         );
         droneEntity.setFlightRecords(flightRecords);
 
@@ -238,7 +244,13 @@ public class DroneServiceTests {
                 "pink",
                 "szybcior",
                 "znak",
-                "Airborne"
+                "Airborne",
+                10,
+                10,
+                10,
+                10,
+                10,
+                10
         );
         droneEntity.setFlightRecords(flightRecords);
 
