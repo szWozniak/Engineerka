@@ -173,7 +173,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
     }
 
     @Test
-    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheRegistrationNumberFilter(){
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheRegistrationNumberFilter_CaseInsensitive(){
         setupDatabase(
                 List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
                 List.of(new FlightRecordEntityFixtureBuilder().withId("2").build()),
@@ -341,7 +341,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
     }
 
     @Test
-    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheModelFilter(){
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheModelFilter_CaseInsensitive(){
         //prepare database
         setupDatabase(
                 List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
@@ -360,7 +360,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
     }
 
     @Test
-    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheOperatorFilter(){
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheOperatorFilter_CaseInsensitive(){
         //prepare database
         setupDatabase(
                 List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
@@ -379,7 +379,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
     }
 
     @Test
-    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheTypeFilter(){
+    public void ShouldReturnCurrentlyFlyingDrones_WithRegisteredPositions_ThatPassTheTypeFilter_CaseInsensitive(){
         //prepare database
         setupDatabase(
                 List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
