@@ -15,10 +15,10 @@ import jakarta.persistence.criteria.Root;
 public class DroneNumberFilter implements IDroneFilter {
     private static final FilterType FILTER_TYPE = FilterType.Number;
     private final String attributeName;
-    private final int value;
+    private final double value;
     private final ComparisonType comparisonType;
 
-    public DroneNumberFilter(String attributeName, int value, ComparisonType comparisonType) {
+    public DroneNumberFilter(String attributeName, double value, ComparisonType comparisonType) {
         validateComparisionType(comparisonType);
         this.attributeName = attributeName;
         this.value = value;
@@ -32,7 +32,7 @@ public class DroneNumberFilter implements IDroneFilter {
         return (Root<DroneEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
             Predicate isAirbornePredicate = builder.isTrue(root.get("isAirborne"));
 
-            PredicateCreator<Integer> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
+            PredicateCreator<Double> predicateCreator = PredicateCreatorFactory.create(builder, comparisonType);
 
             return builder.and(
                     isAirbornePredicate,
