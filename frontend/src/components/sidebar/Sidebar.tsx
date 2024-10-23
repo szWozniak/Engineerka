@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Drone } from '../../drones/types'
 import MenuDropdown from './MenuDropdown';
+import Settings from './Settings';
 import useDrones from '../../drones/useCases/useDrones';
 import { useTranslation } from 'react-i18next';
 import { MdCloseFullscreen } from "react-icons/md";
@@ -10,13 +11,16 @@ import { IoClose } from "react-icons/io5";
 import { FiCornerDownRight } from "react-icons/fi";
 import { MdLanguage } from "react-icons/md";
 import { AppContext } from "../../context/AppContext";
+import { MapViewState } from "deck.gl"
 
 interface Props{
-  areFiltersOpened: boolean
+  areFiltersOpened: boolean;
   toggleFiltersVisibility: () => void;
+  mapViewState: MapViewState;
+  setMapViewState: any;
 }
 
-const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened }) => {
+const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened, mapViewState, setMapViewState }) => {
   const {t, i18n} = useTranslation();
 
   const [opened, setOpened] = useState<boolean>(true);
@@ -79,6 +83,10 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened })
             </div>
           </div>}
         </div>
+        <Settings 
+          mapViewState={mapViewState}
+          setMapViewState={setMapViewState}
+        />
         {selectedDrone && (<div className="container selectedDrone">
           <button className="closeButton" onClick={() => selectDrone(null)}>
             <IoClose />

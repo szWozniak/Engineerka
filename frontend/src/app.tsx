@@ -41,6 +41,8 @@ const App = () => {
         <Sidebar 
           areFiltersOpened={areFiltersOpened}
           toggleFiltersVisibility={() => setAreFiltersOpened(prev => !prev)}
+          mapViewState={mapViewState}
+          setMapViewState={setMapViewState}
         />
         <BottomMenu 
           areFiltersOpened={areFiltersOpened}
