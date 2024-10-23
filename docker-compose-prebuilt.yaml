@@ -30,7 +30,7 @@ services:
 
   backend:
     restart: on-failure
-    image: pejdzior/dronhub_backend_develop:latest
+    image: pejdzor/dronhub_backend_develop:latest
     depends_on:
       - mysql
       - rabbitmq
