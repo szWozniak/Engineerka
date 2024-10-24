@@ -24,7 +24,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened, s
   const [opened, setOpened] = useState<boolean>(true);
   const [openedFlyingDrones, setOpenedFlyingDrones] = useState<boolean>(false);
   const [openedLanguageMenu, setOpenedLanguageMenu] = useState<boolean>(false);
-  const {flyingDrones, timestamp, selectedDrone, selectDrone} = useDrones();
+  const {flyingDrones, selectedDrone, selectDrone} = useDrones();
   const {flights} = useContext(AppContext);
 
   return (
@@ -98,7 +98,6 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened, s
       </div>
       <footer className="container">
         <span>{t("general.domain")} &copy; 2024</span>
-        <span className="recordUpdate">{t("general.recordUpdate")}: {timestamp?.date} {timestamp?.time}</span>
       </footer>
     </div>
   );

@@ -21,10 +21,10 @@ const DateAndTimeFilter: React.FC<Props> = ({
             {label}
             <div className='actionContainer'>
                 <input type="datetime-local" onChange={(e) => onChange(e.target.value)} value={displayValue} className="concreteFilter"/>
+                <button className="clear-icon" onClick={onReset}>
+                    <IoClose />
+                </button>
             </div>
-            <button className="clear-icon" onClick={onReset}>
-                <IoClose />
-            </button>
         </div>
     );
 };

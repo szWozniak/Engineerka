@@ -323,3 +323,14 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.bottomMenuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  & .recordUpdate {
+    font-size: 10px;
+    margin-left: auto;
+  }
+}
