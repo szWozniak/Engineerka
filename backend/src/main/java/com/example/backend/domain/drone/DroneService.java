@@ -4,6 +4,7 @@ import com.example.backend.domain.drone.mappers.DroneToRegisterMapper;
 import com.example.backend.domain.drone.mappers.DroneEntityWithFlightRecordEntity;
 import com.example.backend.domain.drone.requests.drones.DronesQuery;
 import com.example.backend.domain.drone.requests.currentlyFlyingDrones.CurrentlyFlyingDronesQuery;
+import com.example.backend.domain.drone.sorting.IDroneSort;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.events.recordRegistration.model.DroneRecordToRegister;
@@ -27,18 +28,22 @@ public class DroneService {
         this.flightRepository = flightRepository;
     }
 
-    public List<DroneEntity> getDrones(List<IDroneFilter> filters){
+    public List<DroneEntity> getDrones(List<IDroneFilter> filters, Optional<IDroneSort> droneSort){
         List<Specification<DroneEntity>> specifications = filters.stream()
                 .map(IDroneFilter::toSpecification)
                 .collect(Collectors.toList());
+
+        droneSort.ifPresent(iDroneSort -> specifications.add(iDroneSort.toSpecification()));
 
         return new DronesQuery(droneRepository).execute(specifications);
     }
 
-    public List<DroneEntity> getCurrentlyFlyingDrones(List<IDroneFilter> filters){
+    public List<DroneEntity> getCurrentlyFlyingDrones(List<IDroneFilter> filters, Optional<IDroneSort> droneSort){
         List<Specification<DroneEntity>> specifications = filters.stream()
                 .map(IDroneFilter::toSpecification)
                 .collect(Collectors.toList());
+
+        droneSort.ifPresent(iDroneSort -> specifications.add(iDroneSort.toSpecification()));
 
         var drones = new CurrentlyFlyingDronesQuery(droneRepository).execute(specifications);
 

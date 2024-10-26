@@ -7,6 +7,8 @@ import com.example.backend.domain.flight.dto.FlightSummaryDto;
 import com.example.backend.domain.flight.filtering.IFlightFilter;
 import com.example.backend.domain.flight.requests.flightSummaries.GetFlightsRequest;
 import com.example.backend.domain.flight.requests.mappers.FlightFiltersMapper;
+import com.example.backend.domain.flight.requests.mappers.FlightSortMapper;
+import com.example.backend.domain.flight.sorting.IFlightSort;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
@@ -54,7 +56,9 @@ public class FlightController {
             throw new BadRequestException(ex.getMessage());
         }
 
-        List<FlightEntity> flights = flightService.getDroneFinishedFlights(droneRegistrationNumber, mappedFilters);
+        Optional<IFlightSort> mappedSort = FlightSortMapper.map(request.sort());
+
+        List<FlightEntity> flights = flightService.getDroneFinishedFlights(droneRegistrationNumber, mappedFilters, mappedSort);
 
         List<FlightSummaryDto> flightSummaryDtos = flights.stream().map(FlightSummaryDto::fromFlightEntity).toList();
 

@@ -4,6 +4,7 @@ import com.example.backend.common.filtering.dtos.BooleanFilterEntry;
 import com.example.backend.common.filtering.dtos.DateAndTimeFilterEntry;
 import com.example.backend.common.filtering.dtos.NumberFilterEntry;
 import com.example.backend.common.filtering.dtos.TimeFilterEntry;
+import com.example.backend.common.sorting.dtos.SortEntry;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -24,5 +25,8 @@ public record GetFlightsRequest(
 
         @NotNull
         @Valid
-        List<TimeFilterEntry> timeFilters
+        List<TimeFilterEntry> timeFilters,
+
+        @Valid
+        SortEntry sort
 ) {}

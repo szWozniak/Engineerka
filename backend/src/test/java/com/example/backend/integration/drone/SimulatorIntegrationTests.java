@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 public class SimulatorIntegrationTests {
@@ -66,7 +67,7 @@ public class SimulatorIntegrationTests {
         sut.send(saveCommand);
         sut.send(checkCommand);
 
-        var droneResult = droneService.getDrones(new ArrayList<>());
+        var droneResult = droneService.getDrones(new ArrayList<>(), Optional.empty());
 
         Assertions.assertEquals(1, droneResult.size());
         Assertions.assertEquals("420-69-2137", droneResult.get(0).getRegistrationNumber());
@@ -74,7 +75,7 @@ public class SimulatorIntegrationTests {
         Assertions.assertEquals("Airborne", droneResult.get(0).getType());
 
         var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>() {
-        });
+        }, Optional.empty());
         Assertions.assertEquals(0, droneFlight.size());
     }
 
@@ -89,14 +90,14 @@ public class SimulatorIntegrationTests {
         sut.send(saveCommand);
         sut.send(checkCommand);
 
-        var droneResult = droneService.getDrones(new ArrayList<>());
+        var droneResult = droneService.getDrones(new ArrayList<>(), Optional.empty());
 
         Assertions.assertEquals(1, droneResult.size());
         Assertions.assertEquals("flyingDroneWithRecords", droneResult.get(0).getRegistrationNumber());
         Assertions.assertFalse(droneResult.get(0).isAirborne());
         Assertions.assertEquals("Grounded", droneResult.get(0).getType());
 
-        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>());
+        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>(),Optional.empty());
         Assertions.assertEquals(1, droneFlight.size());
         Assertions.assertFalse(droneFlight.get(0).isDidLand());
     }
@@ -112,7 +113,7 @@ public class SimulatorIntegrationTests {
         sut.send(saveCommand);
         sut.send(checkCommand);
 
-        var droneResult = droneService.getDrones(new ArrayList<>());
+        var droneResult = droneService.getDrones(new ArrayList<>(), Optional.empty());
 
         Assertions.assertEquals(2, droneResult.size());
         Assertions.assertEquals("flyingDroneWithRecords", droneResult.get(0).getRegistrationNumber());
@@ -122,7 +123,7 @@ public class SimulatorIntegrationTests {
         Assertions.assertTrue(droneResult.get(1).isAirborne());
         Assertions.assertEquals("Airborne", droneResult.get(1).getType());
 
-        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>());
+        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>(),Optional.empty());
         Assertions.assertEquals(1, droneFlight.size());
         Assertions.assertFalse(droneFlight.get(0).isDidLand());
     }
@@ -138,7 +139,7 @@ public class SimulatorIntegrationTests {
         sut.send(saveCommand);
         sut.send(checkCommand);
 
-        var droneResult = droneService.getDrones(new ArrayList<>());
+        var droneResult = droneService.getDrones(new ArrayList<>(), Optional.empty());
 
         Assertions.assertEquals(1, droneResult.size());
         Assertions.assertEquals("flyingDroneWithRecords", droneResult.get(0).getRegistrationNumber());
@@ -146,7 +147,7 @@ public class SimulatorIntegrationTests {
         Assertions.assertEquals("Airborne", droneResult.get(0).getType());
         Assertions.assertEquals(2, droneResult.get(0).getFlightRecords().size());
 
-        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>());
+        var droneFlight = flightService.getDroneFinishedFlights(droneResult.get(0).getRegistrationNumber(), new ArrayList<>(), Optional.empty());
         Assertions.assertEquals(0, droneFlight.size());
     }
 
