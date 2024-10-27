@@ -2,6 +2,7 @@ package com.example.backend.domain.drone.requests.currentlyFlyingDrones;
 
 import com.example.backend.common.filtering.dtos.NumberFilterEntry;
 import com.example.backend.common.filtering.dtos.TextFilterEntry;
+import com.example.backend.common.sorting.dtos.SortEntry;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,5 +14,7 @@ public record GetCurrentlyFlyingDronesRequest(
         List<TextFilterEntry> textFilters,
         @NotNull
         @Valid
-        List<NumberFilterEntry> numberFilters
+        List<NumberFilterEntry> numberFilters,
+        @Valid
+        SortEntry sort
 ){}

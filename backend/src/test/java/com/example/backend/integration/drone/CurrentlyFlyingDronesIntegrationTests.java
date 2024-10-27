@@ -1,11 +1,13 @@
 package com.example.backend.integration.drone;
 
+import com.example.backend.common.sorting.OrderType;
 import com.example.backend.domain.drone.DroneRepository;
 import com.example.backend.domain.drone.DroneService;
 import com.example.backend.common.filtering.ComparisonType;
 import com.example.backend.domain.drone.filtering.IDroneFilter;
 import com.example.backend.domain.drone.filtering.DroneNumberFilter;
 import com.example.backend.domain.drone.filtering.DroneTextFilter;
+import com.example.backend.domain.drone.sorting.DroneSort;
 import com.example.backend.domain.flight.FlightRepository;
 import com.example.backend.domain.flightRecord.FlightRecordEntity;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
@@ -22,6 +24,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 public class CurrentlyFlyingDronesIntegrationTests {
@@ -42,13 +45,69 @@ public class CurrentlyFlyingDronesIntegrationTests {
     }
 
     @Test
-    public void ShouldReturnAllCurrentlyFlyingDrones_WithRegisteredPositions_WhenNoFiltersApplied(){
+    public void ShouldReturnAllCurrentlyFlyingDrones_WithRegisteredPositions_WhenNoFiltersAndSortApplied(){
         setupDatabase(
                 List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
                 List.of(new FlightRecordEntityFixtureBuilder().withId("2").build()),
                 List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
         );
-        var result = droneService.getCurrentlyFlyingDrones(new ArrayList<>());
+        var result = droneService.getCurrentlyFlyingDrones(new ArrayList<>(), Optional.empty());
+
+        Assertions.assertEquals(2, result.size());
+        Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
+        Assertions.assertEquals("flyingDroneNotToBeFound", result.get(1).getRegistrationNumber());
+    }
+
+    @Test
+    public void ShouldReturnAllCurrentlyFlyingDrones_WithRegisteredPositions_ASC_WhenTextSortApplied(){
+        setupDatabase(
+                List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("2").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
+        );
+        var result = droneService.getCurrentlyFlyingDrones(new ArrayList<>(), Optional.of(new DroneSort("registrationNumber", OrderType.ASC)));
+
+        Assertions.assertEquals(2, result.size());
+        Assertions.assertEquals("flyingDroneNotToBeFound", result.get(0).getRegistrationNumber());
+        Assertions.assertEquals("flyingDroneToBeFound", result.get(1).getRegistrationNumber());
+    }
+
+    @Test
+    public void ShouldReturnAllCurrentlyFlyingDrones_WithRegisteredPositions_DESC_WhenTextSortApplied(){
+        setupDatabase(
+                List.of(new FlightRecordEntityFixtureBuilder().withId("1").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("2").build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
+        );
+        var result = droneService.getCurrentlyFlyingDrones(new ArrayList<>(), Optional.of(new DroneSort("registrationNumber", OrderType.DESC)));
+
+        Assertions.assertEquals(2, result.size());
+        Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
+        Assertions.assertEquals("flyingDroneNotToBeFound", result.get(1).getRegistrationNumber());
+    }
+
+    @Test
+    public void ShouldReturnAllCurrentlyFlyingDrones_WithRegisteredPositions_ASC_WhenNumberSortApplied(){
+        setupDatabase(
+                List.of(new FlightRecordEntityFixtureBuilder().withId("1").withAltitude(100).build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("2").withAltitude(10).build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
+        );
+        var result = droneService.getCurrentlyFlyingDrones(new ArrayList<>(), Optional.of(new DroneSort("recentAltitude", OrderType.ASC)));
+
+        Assertions.assertEquals(2, result.size());
+        Assertions.assertEquals("flyingDroneNotToBeFound", result.get(0).getRegistrationNumber());
+        Assertions.assertEquals("flyingDroneToBeFound", result.get(1).getRegistrationNumber());
+    }
+
+    @Test
+    public void ShouldReturnAllCurrentlyFlyingDrones_WithRegisteredPositions_DESC_WhenNumberSortApplied(){
+        setupDatabase(
+                List.of(new FlightRecordEntityFixtureBuilder().withId("1").withAltitude(100).build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("2").withAltitude(10).build()),
+                List.of(new FlightRecordEntityFixtureBuilder().withId("3").build())
+        );
+        var result = droneService.getCurrentlyFlyingDrones(new ArrayList<>(), Optional.of(new DroneSort("recentAltitude", OrderType.DESC)));
 
         Assertions.assertEquals(2, result.size());
         Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
@@ -108,7 +167,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneNumberFilter("recentAltitude", 10, ComparisonType.GreaterThanOrEqual);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());
@@ -166,7 +225,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
 
         var filter = new DroneNumberFilter("recentAltitude", 10, ComparisonType.GreaterThanOrEqual);
 
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
@@ -183,7 +242,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneTextFilter("registrationNumber", "flyingdronetobefound", ComparisonType.Contains);
         List<IDroneFilter> filters = new ArrayList<>();
         filters.add(filter);
-        var result = droneService.getCurrentlyFlyingDrones(filters);
+        var result = droneService.getCurrentlyFlyingDrones(filters, Optional.empty());
 
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals("flyingDroneToBeFound", result.get(0).getRegistrationNumber());
@@ -201,7 +260,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneNumberFilter("recentAltitude", 10, ComparisonType.GreaterThanOrEqual);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());
@@ -220,7 +279,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneNumberFilter("recentAltitude", 10, ComparisonType.LesserThanOrEqual);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());
@@ -238,7 +297,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneNumberFilter("recentLatitude", 10, ComparisonType.GreaterThanOrEqual);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());
@@ -257,7 +316,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneNumberFilter("recentLatitude", 10, ComparisonType.LesserThanOrEqual);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());
@@ -276,7 +335,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneNumberFilter("recentLongitude", 10.88, ComparisonType.GreaterThanOrEqual);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());
@@ -295,7 +354,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneNumberFilter("recentLongitude", 5.5, ComparisonType.LesserThanOrEqual);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());
@@ -314,7 +373,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneNumberFilter("recentFuel", 10, ComparisonType.GreaterThanOrEqual);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());
@@ -333,7 +392,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneNumberFilter("recentFuel", 10, ComparisonType.LesserThanOrEqual);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());
@@ -352,7 +411,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneTextFilter("model", "MODELTOBEFOUND", ComparisonType.Contains);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());
@@ -371,7 +430,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneTextFilter("operator", "operatorToBeFound", ComparisonType.Contains);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());
@@ -390,7 +449,7 @@ public class CurrentlyFlyingDronesIntegrationTests {
         var filter = new DroneTextFilter("type", "airborne", ComparisonType.Contains);
 
         //act
-        var result = droneService.getCurrentlyFlyingDrones(List.of(filter));
+        var result = droneService.getCurrentlyFlyingDrones(List.of(filter), Optional.empty());
 
         //assert
         Assertions.assertEquals(1, result.size());

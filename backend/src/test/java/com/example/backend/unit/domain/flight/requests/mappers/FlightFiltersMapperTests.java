@@ -52,8 +52,6 @@ public class FlightFiltersMapperTests {
         Assertions.assertEquals(filter.getClass(), FlightBooleanFilter.class);
     }
 
-
-
     @ParameterizedTest
     @ValueSource(strings = {"GreaterThanOrEqual", "Contains", "LesserThanOrEqual"})
     public void ShouldThrowException_WhenInvalidBooleanFilter(String comparisonType){
@@ -76,8 +74,6 @@ public class FlightFiltersMapperTests {
         Assertions.assertEquals(filter.getClass(), FlightDateAndTimeFilter.class);
     }
 
-
-
     @ParameterizedTest
     @ValueSource(strings = {"Equals", "Contains"})
     public void ShouldThrowException_WhenInvalidDateAndTimeFilter(String comparisonType){
@@ -99,8 +95,6 @@ public class FlightFiltersMapperTests {
         var filter = result.get(0);
         Assertions.assertEquals(filter.getClass(), FlightTimeFilter.class);
     }
-
-
 
     @ParameterizedTest
     @ValueSource(strings = {"Equals", "Contains"})

@@ -9,6 +9,8 @@ import com.example.backend.domain.drone.filtering.IDroneFilter;
 import com.example.backend.domain.drone.requests.currentlyFlyingDrones.GetCurrentlyFlyingDronesRequest;
 import com.example.backend.domain.drone.requests.drones.GetDronesRequest;
 import com.example.backend.domain.drone.requests.mappers.DroneFiltersMapper;
+import com.example.backend.domain.drone.requests.mappers.DroneSortMapper;
+import com.example.backend.domain.drone.sorting.IDroneSort;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
@@ -39,7 +41,9 @@ public class DroneController {
             throw new BadRequestException(ex.getMessage());
         }
 
-        var drones = droneService.getDrones(mappedFilters);
+        Optional<IDroneSort> mappedSort = DroneSortMapper.map(request.sort());
+
+        var drones = droneService.getDrones(mappedFilters, mappedSort);
 
         var dtos = drones.stream().map(DroneDto::fromDroneEntity).toList();
 
@@ -49,13 +53,16 @@ public class DroneController {
     @PostMapping("/currentlyFlying")
     public ResponseEntity<FlyingDronesWithTimestampDto> getCurrentlyFlyingDrones(@Valid @RequestBody GetCurrentlyFlyingDronesRequest request) throws BadRequestException{
         List<IDroneFilter> mappedFilters;
+
         try{
             mappedFilters = DroneFiltersMapper.map(request.textFilters(), request.numberFilters());
         }catch(IllegalArgumentException ex){
             throw new BadRequestException(ex.getMessage());
         }
 
-        var flyingDrones = droneService.getCurrentlyFlyingDrones(mappedFilters);
+        Optional<IDroneSort> mappedSort = DroneSortMapper.map(request.sort());
+
+        var flyingDrones = droneService.getCurrentlyFlyingDrones(mappedFilters, mappedSort);
 
         var flyingDroneDtos = flyingDrones.stream().map(FlyingDroneDto::fromDroneEntity).toList();
         var date = LocalDate.now();
