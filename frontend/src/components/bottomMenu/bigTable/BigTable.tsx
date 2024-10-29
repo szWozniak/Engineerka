@@ -7,6 +7,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaListUl } from "react-icons/fa6";
 import useView from "../../../view/useView";
 import AppView from "../../../view/types";
+import SortableHeader from "./SortableHeader";
 
 const BigTable = () => {  
   const { t } = useTranslation();
@@ -19,18 +20,18 @@ const BigTable = () => {
       <table className="droneTable">
         <thead>
           <tr>
-            <th rowSpan={2}>{t("details.drone.registration")}</th>
+            <SortableHeader rowSpan={2} dataKey="registrationNumber" label={t("details.drone.registration")} />
             <th colSpan={3}>{t("details.drone.geoData")}</th>
-            <th rowSpan={2}>{t("details.drone.operator")}</th>
-            <th rowSpan={2}>{t("details.drone.battery")}</th>
-            <th rowSpan={2}>{t("details.drone.model")}</th>
-            <th rowSpan={2}>{t("details.drone.state")}</th>
+            <SortableHeader rowSpan={2} dataKey="operator" label={t("details.drone.operator")} />
+            <SortableHeader rowSpan={2} dataKey="recentFuel" label={t("details.drone.battery")} />
+            <SortableHeader rowSpan={2} dataKey="model" label={t("details.drone.model")} />
+            <SortableHeader rowSpan={2} dataKey="type" label={t("details.drone.state")} />
             <th rowSpan={2}>{t("actions.title")}</th>
           </tr>
           <tr>
-            <th>{t("geo.latitude")}</th>
-            <th>{t("geo.longitude")}</th>
-            <th>{t("geo.altitude")}</th>
+            <SortableHeader dataKey="recentLatitude" label={t("geo.latitude")} />
+            <SortableHeader dataKey="recentLongitude" label={t("geo.longitude")} />
+            <SortableHeader dataKey="recentAltitude" label={t("geo.altitude")} />
           </tr>
         </thead>
         <tbody>

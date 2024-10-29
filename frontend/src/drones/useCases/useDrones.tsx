@@ -5,7 +5,7 @@ import { AppContext } from "../../context/AppContext";
 import useDroneFilters from "../../filters/drone/useCases/useDroneFilters";
 
 const useDrones = () => {
-    const {drones} = useContext(AppContext);
+    const {drones, sorting: { sortingOptions }} = useContext(AppContext);
     const {filters} = useDroneFilters()
     
     const { data: flyingDronesWithTimestamp } = useQuery(
@@ -13,7 +13,7 @@ const useDrones = () => {
     )
     
     const { data: allDrones } = useQuery(
-        droneQueries.getAllDrones(filters)
+        droneQueries.getAllDrones(filters, sortingOptions)
     )
 
     const { data: selectedDrone } = useQuery(

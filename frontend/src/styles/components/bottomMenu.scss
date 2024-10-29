@@ -334,3 +334,38 @@ input[type="number"]::-webkit-outer-spin-button {
     margin-left: auto;
   }
 }
+
+.sortableColumn {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  user-select: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+  
+  & .sortControls {
+    display: flex;
+    flex-direction: column;
+
+    & svg {
+      color: rgba(255, 255, 255, 0.2);
+      &:last-child {
+        margin-top: -10px;
+      }
+    }
+
+    &.sortAsc {
+      & svg:first-child {
+        color: white;
+      }
+    }
+
+    &.sortDesc {
+      & svg:last-child {
+        color: white;
+      }
+    }
+  }
+}
