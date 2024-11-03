@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { TiArrowSortedUp } from "react-icons/ti";
 import { TiArrowSortedDown } from "react-icons/ti";
-import { AppContext } from '../../../context/AppContext';
 import { SortingMode } from '../../../sorting/commonTypes';
+import useSorting from '../../../sorting/useCases/useSorting';
 
 interface Props{
   label: string
@@ -15,13 +15,7 @@ const SortableHeader: React.FC<Props> = ({
   dataKey,
   rowSpan = 1
 }) => {
-  const { sorting: 
-    { 
-      sortingOptions: { mode, key }, 
-      changeSortingOptions
-    }
-  } = useContext(AppContext);
-
+  const {sortingOptions: { mode, key }, onSortableColumnClicked} = useSorting();
   let sortcontrolsClass = "sortControls"
 
   if(mode === SortingMode.ASC && key === dataKey) sortcontrolsClass += " sortAsc"
@@ -29,13 +23,7 @@ const SortableHeader: React.FC<Props> = ({
 
   return (
     <th rowSpan={rowSpan}>
-      <div className="sortableColumn" onClick={() => {
-        if(mode === SortingMode.UNSORTED || key !== dataKey) 
-          return changeSortingOptions(dataKey, SortingMode.ASC)
-        if(mode === SortingMode.ASC) 
-          return changeSortingOptions(dataKey, SortingMode.DESC)
-        return changeSortingOptions(null, SortingMode.UNSORTED)
-      }}>
+      <div className="sortableColumn" onClick={() => onSortableColumnClicked(dataKey)}>
         {label}
 
         <div className={sortcontrolsClass}>

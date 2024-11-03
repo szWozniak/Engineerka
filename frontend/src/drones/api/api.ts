@@ -5,8 +5,6 @@ import { Drone, DroneBase, DroneBaseSchema, DroneSchema, DronesWithTimestamp, Dr
 import { mapDroneFilters, mapDroneSorting } from "./mappers";
 
 export const getAllDrones = (filters: DroneFilter[], sorting: SortingOptions): Promise<DroneBase[]> => {
-  console.log(mapDroneFilters(filters))
-
   return fetch(`${defaultURL}/drones/`, {
     method: "POST",
     headers: {

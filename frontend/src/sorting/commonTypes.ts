@@ -1,7 +1,7 @@
 export enum SortingMode {
-  UNSORTED,
-  ASC,
-  DESC
+  UNSORTED = "",
+  ASC = "ASC",
+  DESC = "DESC"
 }
 
 export type SortingOptions = {

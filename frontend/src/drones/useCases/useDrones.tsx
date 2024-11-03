@@ -3,9 +3,12 @@ import droneQueries from "../repository/droneQuries";
 import { useContext, useEffect } from "react";
 import { AppContext } from "../../context/AppContext";
 import useDroneFilters from "../../filters/drone/useCases/useDroneFilters";
+import useSorting from "../../sorting/useCases/useSorting";
 
 const useDrones = () => {
-    const {drones, sorting: { sortingOptions }} = useContext(AppContext);
+    const {drones} = useContext(AppContext)
+    const {sortingOptions} = useSorting();
+    
     const {filters} = useDroneFilters()
     
     const { data: flyingDronesWithTimestamp } = useQuery(

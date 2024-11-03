@@ -32,7 +32,7 @@ export const mapDroneSorting = (sorting: SortingOptions): SeparatedSorting => {
 
   return {
     sort: {
-      orderType: sorting.mode === SortingMode.ASC ? "ASC" : "DESC",
+      orderType: sorting.mode,
       parameter: sorting.key || ""
     }
   }
