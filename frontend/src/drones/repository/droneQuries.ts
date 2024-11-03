@@ -2,6 +2,7 @@
 import { queryOptions, skipToken } from "@tanstack/react-query"
 import { DroneFilter } from "../../filters/drone/types"
 import { getAllDrones, getCurrentDrones, getDroneByRegistration } from "../api/api"
+import { SortingOptions } from "../../sorting/commonTypes"
 
 const droneQueries = {
     currentDrones: (filters: DroneFilter[]) => ["current-drones", JSON.stringify(filters)],
@@ -11,10 +12,11 @@ const droneQueries = {
         refetchInterval: 2000,
     }),
 
-    allDrones: (filters: DroneFilter[]) => ["all-drones", JSON.stringify(filters)],
-    getAllDrones: (filters: DroneFilter[]) => queryOptions({
-        queryKey: droneQueries.allDrones(filters),
-        queryFn: () => getAllDrones(filters),
+    allDrones: (filters: DroneFilter[], sorting: SortingOptions) => 
+        ["all-drones", JSON.stringify(filters), JSON.stringify(sorting)],
+    getAllDrones: (filters: DroneFilter[], sorting: SortingOptions) => queryOptions({
+        queryKey: droneQueries.allDrones(filters, sorting),
+        queryFn: () => getAllDrones(filters, sorting),
         refetchInterval: 2000,
     }),
 

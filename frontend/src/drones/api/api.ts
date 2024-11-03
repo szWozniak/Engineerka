@@ -1,15 +1,19 @@
 import { checkForErrors, defaultURL } from "../../common/api/apiHelpers";
 import { DroneFilter } from "../../filters/drone/types";
+import { SortingOptions } from "../../sorting/commonTypes";
 import { Drone, DroneBase, DroneBaseSchema, DroneSchema, DronesWithTimestamp, DronesWithTimestampSchema } from "../types";
-import mapDroneFilters from "./mappers";
+import { mapDroneFilters, mapDroneSorting } from "./mappers";
 
-export const getAllDrones = (filters: DroneFilter[]): Promise<DroneBase[]> => {
+export const getAllDrones = (filters: DroneFilter[], sorting: SortingOptions): Promise<DroneBase[]> => {
   return fetch(`${defaultURL}/drones/`, {
     method: "POST",
     headers: {
       "Content-type": "application/json" 
     },
-    body: JSON.stringify(mapDroneFilters(filters))
+    body: JSON.stringify({
+      ...mapDroneFilters(filters),
+      ...mapDroneSorting(sorting)
+    })
   })
     .then(checkForErrors)
     .then(r => r.json())

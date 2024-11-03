@@ -12,6 +12,7 @@ import { FilterType } from '../filters/commonTypes';
 import { FlightFilter } from '../filters/flights/types';
 import { defaultFlightsFiltersState } from '../filters/flights/useCases/defaultState';
 import AppView from '../view/types';
+import { SortingMode } from '../sorting/commonTypes';
 
 type AppContextType = {
   filtering: {
@@ -23,6 +24,12 @@ type AppContextType = {
       value: FlightFilter[],
       changeFilters: (filters: FlightFilter[]) => void 
     }
+  },
+  sorting: {
+    sortingMode: SortingMode,
+    setSortingMode: Dispatch<SetStateAction<SortingMode>>,
+    sortingKey: string | null,
+    setSortingKey: Dispatch<SetStateAction<string | null>>
   },
   drones: {
     selectedDroneRegistration: string | null,
@@ -219,6 +226,12 @@ export const AppContext = createContext<AppContextType>({
   }
     
   },
+  sorting: {
+    sortingMode: SortingMode.UNSORTED,
+    setSortingMode: () => {},
+    sortingKey: null,
+    setSortingKey: () => {}
+  },
   drones: {
     selectedDroneRegistration: null,
     selectDroneRegistration: (_d: string | null) => {} 
@@ -251,6 +264,9 @@ const AppContextProvider = ({ children }: {
   const [selectedFlightId, setSelectedFlightId] = useState<number | null>(null)
   const [trackedPoint, setTrackedPoint] = useState<number>(0)
   const [currentView, setCurrentView] = useState<AppView>(AppView.Drones)
+  const [sortingMode, setSortingMode] = useState<SortingMode>(SortingMode.UNSORTED)
+  const [sortingKey, setSortingKey] = useState<string | null>(null)
+  
   
   return (
     <AppContext.Provider value={{
@@ -263,6 +279,12 @@ const AppContextProvider = ({ children }: {
           value: flightFilters,
           changeFilters: setFlightFilters
         }
+      },
+      sorting: {
+        sortingMode,
+        setSortingMode,
+        sortingKey,
+        setSortingKey
       },
       drones: {
         selectedDroneRegistration: selectedDroneRegistration,
