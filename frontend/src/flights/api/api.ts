@@ -14,8 +14,6 @@ export const getFlightById = (flightId: number): Promise<DroneFlight> => {
   }
 
 export const getDroneFlightSummariesByRegistration = (registration: string, filters: FlightFilter[], sorting: SortingOptions): Promise<DroneFlightSummary[]> => {
-  console.log("SIPSKO", sorting)
-  
   return fetch(`${defaultURL}/flights/${registration}`, {
     method: "POST",
     headers: {
