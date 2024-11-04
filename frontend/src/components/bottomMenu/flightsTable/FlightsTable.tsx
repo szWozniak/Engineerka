@@ -7,6 +7,12 @@ import { DroneFlightSummary } from "../../../flights/types";
 import useView from "../../../view/useView";
 import AppView from "../../../view/types";
 import useFlightFilters from "../../../filters/flights/useCases/useFlightFilters";
+import SortableHeader, { SortableHeaderProps } from "../bigTable/SortableHeader";
+import { SortingTable } from "../../../sorting/commonTypes";
+
+const FlightsSortableHeader = (props: SortableHeaderProps) => {
+  return <SortableHeader table={SortingTable.FLIGHTS} {...props} />
+} 
 
 interface Props {
   selectHighlightedFlightId: Dispatch<SetStateAction<number | null>>,
@@ -51,12 +57,12 @@ const FlightsTable: React.FC<Props> = ({
         <table className="droneTable">
           <thead>
             <tr>
-              <th>{t("details.flight.takeoff")}</th>
-              <th>{t("details.flight.landing")}</th>
-              <th>{t("details.flight.time")}</th>
-              <th>{t("details.flight.speed")}</th>
-              <th>{t("details.flight.elevation")}</th>
-              <th>{t("details.flight.distance")}</th>
+              <FlightsSortableHeader dataKey="start" label={t("details.flight.takeoff")} />
+              <FlightsSortableHeader dataKey="end" label={t("details.flight.landing")} />
+              <FlightsSortableHeader dataKey="duration" label={t("details.flight.time")} />
+              <FlightsSortableHeader dataKey="averageSpeed" label={t("details.flight.speed")} />
+              <FlightsSortableHeader dataKey="elevationGain" label={t("details.flight.elevation")} />
+              <FlightsSortableHeader dataKey="distance" label={t("details.flight.distance")} />
               <th>{t("details.flight.didLand")}</th>
               <th>{t("actions.title")}</th>
             </tr>
