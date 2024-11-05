@@ -23,7 +23,7 @@ const useDronesLayer = () => {
     getColor: d => d.color,
     getOrientation: d => [0, d.heading, 90],
     material: theme.material,
-    sizeScale: 2,
+    sizeScale: 10,
     pickable: true,
     visible: true,
     onClick: handleMouseClick,
