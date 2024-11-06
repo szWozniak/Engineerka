@@ -35,7 +35,6 @@
     pointer-events: all;
     display: flex;
     flex-direction: column;
-    gap: 10px;
     color: white;
     font-size: 18px;
     text-align: center;
@@ -53,6 +52,22 @@
   
       &:hover {
         background-color: rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    & select {
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 0, 0, 0.6);
+      margin: 5px;
+      padding: 8px;
+      border-radius: 5px;
+      color: white;
+      outline: none;
+
+      &:hover, &:focus {
+        background-color: rgba(0, 0, 0, 0.7);
+        cursor: pointer;
+        outline: none;
       }
     }
   }

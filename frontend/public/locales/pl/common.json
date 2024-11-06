@@ -68,5 +68,10 @@
     "max": "Max",
     "apply": "Zastosuj",
     "reset": "Wyczyść"
+  },
+  "mapStyles": {
+    "dark": "Ciemny",
+    "light": "Jasny",
+    "standard": "Budynki"
   }
 }

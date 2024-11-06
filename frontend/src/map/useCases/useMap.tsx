@@ -1,19 +1,23 @@
 import { MapViewState, PickingInfo } from "deck.gl"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { INITIAL_VIEW_STATE } from "../config/initialView"
 import useDrones from "../../drones/useCases/useDrones"
 import { useTranslation } from "react-i18next";
+import { MapStyle, mapStyles } from "../commonTypes";
 
 interface ReturnType{
     mapViewState: MapViewState,
     setMapViewState: any,
+    mapStyle: MapStyle,
     getTooltip: (info: PickingInfo) => any,
-    setViewMode: (viewMode: "2d" | "3d") => void
+    setViewMode: (viewMode: "2d" | "3d") => void,
+    setMapStyle: Dispatch<SetStateAction<MapStyle>>
 }
 
 const useMapState = (): ReturnType => {
     const [mapViewState, setMapViewState] = useState<MapViewState>(INITIAL_VIEW_STATE)
     const [isMapUpdated, setIsMapUpdated] = useState<boolean>(false)
+    const [mapStyle, setMapStyle] = useState<MapStyle>(mapStyles[0])
 
     const { selectedDrone } = useDrones();
     const {t} = useTranslation();
@@ -67,9 +71,11 @@ const useMapState = (): ReturnType => {
 
     return {
       mapViewState,
+      mapStyle,
       setMapViewState,
       getTooltip,
-      setViewMode
+      setViewMode,
+      setMapStyle
     }
 }
 
