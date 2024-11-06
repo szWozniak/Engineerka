@@ -11,6 +11,7 @@ import com.example.backend.domain.flight.filtering.FlightDateAndTimeFilter;
 import com.example.backend.domain.flight.filtering.FlightNumberFilter;
 import com.example.backend.domain.flight.filtering.FlightTimeFilter;
 import com.example.backend.domain.flight.filtering.IFlightFilter;
+import com.example.backend.domain.flight.sorting.FlightDateAndTimeSort;
 import com.example.backend.domain.flight.sorting.FlightSort;
 import com.example.backend.domain.flightRecord.FlightRecordRepository;
 import com.example.backend.unit.domain.drone.DroneEntityFixtureBuilder;
@@ -54,20 +55,24 @@ public class FlightsIntegrationTests {
 
     @Test
     public void ShouldReturnAllDroneFlights_ASC_WhenDateAndTimeSortApplied(){
-        var result = flightService.getDroneFinishedFlights("drone1", new ArrayList<>(), Optional.of(new FlightSort("startDate", OrderType.ASC)));
+        var result = flightService.getDroneFinishedFlights("drone1", new ArrayList<>(), Optional.of(new FlightDateAndTimeSort("start", OrderType.ASC)));
 
         Assertions.assertEquals(2, result.size());
         Assertions.assertEquals(LocalDate.of(2024,10,26), result.get(0).getStartDate());
-        Assertions.assertEquals(LocalDate.of(2024,10,27), result.get(1).getStartDate());
+        Assertions.assertEquals(LocalDate.of(2024,10,26), result.get(1).getStartDate());
+        Assertions.assertEquals(LocalTime.of(10,30,0), result.get(0).getStartTime());
+        Assertions.assertEquals(LocalTime.of(14,11,0), result.get(1).getStartTime());
     }
 
     @Test
     public void ShouldReturnAllDroneFlights_DESC_WhenDateAndTimeSortApplied(){
-        var result = flightService.getDroneFinishedFlights("drone1", new ArrayList<>(), Optional.of(new FlightSort("startDate", OrderType.DESC)));
+        var result = flightService.getDroneFinishedFlights("drone1", new ArrayList<>(), Optional.of(new FlightDateAndTimeSort("start", OrderType.DESC)));
 
         Assertions.assertEquals(2, result.size());
-        Assertions.assertEquals(LocalDate.of(2024,10,27), result.get(0).getStartDate());
+        Assertions.assertEquals(LocalDate.of(2024,10,26), result.get(0).getStartDate());
         Assertions.assertEquals(LocalDate.of(2024,10,26), result.get(1).getStartDate());
+        Assertions.assertEquals(LocalTime.of(14,11,0), result.get(0).getStartTime());
+        Assertions.assertEquals(LocalTime.of(10,30,0), result.get(1).getStartTime());
     }
 
     @Test
@@ -108,13 +113,13 @@ public class FlightsIntegrationTests {
 
     @Test
     public void ShouldReturnDroneFlights_ThatPassTheDateAndTimeFilter(){
-        var filter = new FlightDateAndTimeFilter("start", "2024-10-27T14:11", ComparisonType.GreaterThanOrEqual);
+        var filter = new FlightDateAndTimeFilter("start", "2024-10-26T14:11", ComparisonType.GreaterThanOrEqual);
         List<IFlightFilter> filters = new ArrayList<>();
         filters.add(filter);
         var result = flightService.getDroneFinishedFlights("drone1", filters, Optional.empty());
 
         Assertions.assertEquals(1, result.size());
-        Assertions.assertEquals(LocalDate.of(2024,10,27), result.get(0).getStartDate());
+        Assertions.assertEquals(LocalDate.of(2024,10,26), result.get(0).getStartDate());
     }
 
     @Test
@@ -169,12 +174,12 @@ public class FlightsIntegrationTests {
         var flightRecordForSecondFlight1 = new FlightRecordEntityFixtureBuilder()
                 .withId("flightRecord3")
                 .withAltitude(1)
-                .withDateAndTime(LocalDate.of(2024,10,27),LocalTime.of(14,11,0))
+                .withDateAndTime(LocalDate.of(2024,10,26),LocalTime.of(14,11,0))
                 .build();
         var flightRecordForSecondFlight2 = new FlightRecordEntityFixtureBuilder()
                 .withId("flightRecord4")
                 .withAltitude(1)
-                .withDateAndTime(LocalDate.of(2024,10,27),LocalTime.of(14,21,0))
+                .withDateAndTime(LocalDate.of(2024,10,26),LocalTime.of(14,21,0))
                 .build();
 
         flightRecordForFirstFlight1.setDrone(drone);

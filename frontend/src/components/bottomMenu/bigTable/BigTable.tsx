@@ -7,7 +7,12 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaListUl } from "react-icons/fa6";
 import useView from "../../../view/useView";
 import AppView from "../../../view/types";
-import SortableHeader from "./SortableHeader";
+import SortableHeader, { SortableHeaderProps } from "./SortableHeader";
+import { TableBeingSorted } from "../../../sorting/commonTypes";
+
+const DronesSortableHeader = (props: SortableHeaderProps) => {
+  return <SortableHeader table={TableBeingSorted.DRONES} {...props} />
+} 
 
 const BigTable = () => {  
   const { t } = useTranslation();
@@ -20,18 +25,18 @@ const BigTable = () => {
       <table className="droneTable">
         <thead>
           <tr>
-            <SortableHeader rowSpan={2} dataKey="registrationNumber" label={t("details.drone.registration")} />
+            <DronesSortableHeader rowSpan={2} dataKey="registrationNumber" label={t("details.drone.registration")} />
             <th colSpan={3}>{t("details.drone.geoData")}</th>
-            <SortableHeader rowSpan={2} dataKey="operator" label={t("details.drone.operator")} />
-            <SortableHeader rowSpan={2} dataKey="recentFuel" label={t("details.drone.battery")} />
-            <SortableHeader rowSpan={2} dataKey="model" label={t("details.drone.model")} />
-            <SortableHeader rowSpan={2} dataKey="type" label={t("details.drone.state")} />
+            <DronesSortableHeader rowSpan={2} dataKey="operator" label={t("details.drone.operator")} />
+            <DronesSortableHeader rowSpan={2} dataKey="recentFuel" label={t("details.drone.battery")} />
+            <DronesSortableHeader rowSpan={2} dataKey="model" label={t("details.drone.model")} />
+            <DronesSortableHeader rowSpan={2} dataKey="type" label={t("details.drone.state")} />
             <th rowSpan={2}>{t("actions.title")}</th>
           </tr>
           <tr>
-            <SortableHeader dataKey="recentLatitude" label={t("geo.latitude")} />
-            <SortableHeader dataKey="recentLongitude" label={t("geo.longitude")} />
-            <SortableHeader dataKey="recentAltitude" label={t("geo.altitude")} />
+            <DronesSortableHeader dataKey="recentLatitude" label={t("geo.latitude")} />
+            <DronesSortableHeader dataKey="recentLongitude" label={t("geo.longitude")} />
+            <DronesSortableHeader dataKey="recentAltitude" label={t("geo.altitude")} />
           </tr>
         </thead>
         <tbody>
