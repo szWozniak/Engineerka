@@ -8,10 +8,10 @@ import useView from "../../../view/useView";
 import AppView from "../../../view/types";
 import useFlightFilters from "../../../filters/flights/useCases/useFlightFilters";
 import SortableHeader, { SortableHeaderProps } from "../bigTable/SortableHeader";
-import { SortingTable } from "../../../sorting/commonTypes";
+import { TableBeingSorted } from "../../../sorting/commonTypes";
 
 const FlightsSortableHeader = (props: SortableHeaderProps) => {
-  return <SortableHeader table={SortingTable.FLIGHTS} {...props} />
+  return <SortableHeader table={TableBeingSorted.FLIGHTS} {...props} />
 } 
 
 interface Props {

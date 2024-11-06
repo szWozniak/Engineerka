@@ -8,10 +8,10 @@ import { FaListUl } from "react-icons/fa6";
 import useView from "../../../view/useView";
 import AppView from "../../../view/types";
 import SortableHeader, { SortableHeaderProps } from "./SortableHeader";
-import { SortingTable } from "../../../sorting/commonTypes";
+import { TableBeingSorted } from "../../../sorting/commonTypes";
 
 const DronesSortableHeader = (props: SortableHeaderProps) => {
-  return <SortableHeader table={SortingTable.DRONES} {...props} />
+  return <SortableHeader table={TableBeingSorted.DRONES} {...props} />
 } 
 
 const BigTable = () => {  

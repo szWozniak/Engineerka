@@ -7,11 +7,11 @@ export enum SortingMode {
 export type SortingOptions = {
   key: string | null,
   mode: SortingMode,
-  table: SortingTable
+  table: TableBeingSorted
 }
 
-export enum SortingTable {
-  NONE = "",
-  DRONES = "DRONES",
-  FLIGHTS = "FLIGHTS"
+export enum TableBeingSorted {
+  NONE,
+  DRONES,
+  FLIGHTS
 }

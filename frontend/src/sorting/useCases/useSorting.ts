@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { SortingMode, SortingTable } from '../commonTypes';
+import { SortingMode, TableBeingSorted } from '../commonTypes';
 import { AppContext } from "../../context/AppContext";
 
 const useSorting = () => {
   const { sorting: { 
-    sortingMode, sortingKey, sortingTable, 
-    setSortingMode, setSortingKey, setSortingTable 
+    sortingMode, sortingKey, tableBeingSorted, 
+    setSortingMode, setSortingKey, setTableBeingSorted 
   }} = useContext(AppContext);
 
   const changeSortingOptions = (key: string | null, mode: SortingMode) => {
@@ -13,8 +13,8 @@ const useSorting = () => {
     setSortingMode(mode)
   }
 
-  const onSortableColumnClicked = (dataKey: string, table: SortingTable) => {
-    setSortingTable(table)
+  const onSortableColumnClicked = (dataKey: string, table: TableBeingSorted) => {
+    setTableBeingSorted(table)
     
     if(sortingMode === SortingMode.UNSORTED || sortingKey !== dataKey) 
       return changeSortingOptions(dataKey, SortingMode.ASC)
@@ -27,7 +27,7 @@ const useSorting = () => {
     sortingOptions: {
       mode: sortingMode,
       key: sortingKey,
-      table: sortingTable
+      table: tableBeingSorted
     },
     onSortableColumnClicked
   }

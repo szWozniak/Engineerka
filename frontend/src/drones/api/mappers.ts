@@ -1,13 +1,13 @@
 import { FilterType } from "../../filters/commonTypes";
 import { DroneFilter, DroneNumberFilter, DroneTextFilter } from "../../filters/drone/types";
-import { SortingMode, SortingOptions, SortingTable } from "../../sorting/commonTypes";
+import { SortingMode, SortingOptions, TableBeingSorted } from "../../sorting/commonTypes";
 
 interface SeperatedFilters {
   textFilters: DroneTextFilter[],
   numberFilters: DroneNumberFilter[]
 }
 
-interface SeparatedSorting {
+interface SortDto {
   sort?: {
     orderType: string,
     parameter: string
@@ -27,8 +27,8 @@ export const mapDroneFilters = (filters: DroneFilter[]): SeperatedFilters => {
   }
 }
 
-export const mapDroneSorting = (sorting: SortingOptions): SeparatedSorting => {
-  if(sorting.mode === SortingMode.UNSORTED || sorting.table !== SortingTable.DRONES) return {}
+export const mapDroneSorting = (sorting: SortingOptions): SortDto => {
+  if(sorting.mode === SortingMode.UNSORTED || sorting.table !== TableBeingSorted.DRONES) return {}
 
   return {
     sort: {

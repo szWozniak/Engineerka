@@ -1,6 +1,6 @@
 import { FilterType } from "../../filters/commonTypes";
 import { FlightBooleanFilter, FlightDateAndTimeFilter, FlightFilter, FlightNumberFilter, FlightTimeFilter } from "../../filters/flights/types";
-import { SortingMode, SortingOptions, SortingTable } from "../../sorting/commonTypes";
+import { SortingMode, SortingOptions, TableBeingSorted } from "../../sorting/commonTypes";
 
 interface SeperatedFilters {
     dateAndTimeFilters: FlightDateAndTimeFilter[],
@@ -9,7 +9,7 @@ interface SeperatedFilters {
     booleanFilters: FlightBooleanFilter[]
 }
 
-interface SeparatedSorting {
+interface SortDto {
     sort?: {
       orderType: string,
       parameter: string
@@ -32,8 +32,8 @@ export const mapFlightFilters = (filters: FlightFilter[]): SeperatedFilters => {
     }
 }
 
-export const mapFlightSorting = (sorting: SortingOptions): SeparatedSorting => {
-    if(sorting.mode === SortingMode.UNSORTED || sorting.table !== SortingTable.FLIGHTS) return {}
+export const mapFlightSorting = (sorting: SortingOptions): SortDto => {
+    if(sorting.mode === SortingMode.UNSORTED || sorting.table !== TableBeingSorted.FLIGHTS) return {}
   
     return {
       sort: {
