@@ -12,7 +12,7 @@ import { FilterType } from '../filters/commonTypes';
 import { FlightFilter } from '../filters/flights/types';
 import { defaultFlightsFiltersState } from '../filters/flights/useCases/defaultState';
 import AppView from '../view/types';
-import { SortingMode } from '../sorting/commonTypes';
+import { SortingMode, TableBeingSorted } from '../sorting/commonTypes';
 
 type AppContextType = {
   filtering: {
@@ -29,7 +29,9 @@ type AppContextType = {
     sortingMode: SortingMode,
     setSortingMode: Dispatch<SetStateAction<SortingMode>>,
     sortingKey: string | null,
-    setSortingKey: Dispatch<SetStateAction<string | null>>
+    setSortingKey: Dispatch<SetStateAction<string | null>>,
+    tableBeingSorted: TableBeingSorted,
+    setTableBeingSorted: Dispatch<SetStateAction<TableBeingSorted>>
   },
   drones: {
     selectedDroneRegistration: string | null,
@@ -230,7 +232,9 @@ export const AppContext = createContext<AppContextType>({
     sortingMode: SortingMode.UNSORTED,
     setSortingMode: () => {},
     sortingKey: null,
-    setSortingKey: () => {}
+    setSortingKey: () => {},
+    tableBeingSorted: TableBeingSorted.NONE,
+    setTableBeingSorted: () => {}
   },
   drones: {
     selectedDroneRegistration: null,
@@ -266,6 +270,7 @@ const AppContextProvider = ({ children }: {
   const [currentView, setCurrentView] = useState<AppView>(AppView.Drones)
   const [sortingMode, setSortingMode] = useState<SortingMode>(SortingMode.UNSORTED)
   const [sortingKey, setSortingKey] = useState<string | null>(null)
+  const [tableBeingSorted, setTableBeingSorted] = useState<TableBeingSorted>(TableBeingSorted.NONE)
   
   
   return (
@@ -284,7 +289,9 @@ const AppContextProvider = ({ children }: {
         sortingMode,
         setSortingMode,
         sortingKey,
-        setSortingKey
+        setSortingKey,
+        tableBeingSorted,
+        setTableBeingSorted
       },
       drones: {
         selectedDroneRegistration: selectedDroneRegistration,

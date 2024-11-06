@@ -1,7 +1,6 @@
 package com.example.backend.domain.flight.sorting;
 
 import com.example.backend.common.sorting.OrderType;
-import com.example.backend.domain.drone.DroneEntity;
 import com.example.backend.domain.flight.FlightEntity;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -30,5 +29,4 @@ public class FlightSort implements IFlightSort {
             return null;
         };
     }
-
 }

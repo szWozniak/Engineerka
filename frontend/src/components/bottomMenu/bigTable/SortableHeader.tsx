@@ -1,18 +1,20 @@
 import React from 'react';
 import { TiArrowSortedUp } from "react-icons/ti";
 import { TiArrowSortedDown } from "react-icons/ti";
-import { SortingMode } from '../../../sorting/commonTypes';
+import { SortingMode, TableBeingSorted } from '../../../sorting/commonTypes';
 import useSorting from '../../../sorting/useCases/useSorting';
 
-interface Props{
+export interface SortableHeaderProps {
   label: string
   dataKey: string
+  table?: TableBeingSorted
   rowSpan?: number
 }
 
-const SortableHeader: React.FC<Props> = ({
+const SortableHeader: React.FC<SortableHeaderProps> = ({
   label,
   dataKey,
+  table = TableBeingSorted.NONE,
   rowSpan = 1
 }) => {
   const {sortingOptions: { mode, key }, onSortableColumnClicked} = useSorting();
@@ -23,7 +25,7 @@ const SortableHeader: React.FC<Props> = ({
 
   return (
     <th rowSpan={rowSpan}>
-      <div className="sortableColumn" onClick={() => onSortableColumnClicked(dataKey)}>
+      <div className="sortableColumn" onClick={() => onSortableColumnClicked(dataKey, table)}>
         {label}
 
         <div className={sortcontrolsClass}>
