@@ -41,11 +41,11 @@ const App = () => {
         <Sidebar 
           areFiltersOpened={areFiltersOpened}
           toggleFiltersVisibility={() => setAreFiltersOpened(prev => !prev)}
-          setViewMode={setViewMode}
         />
         <BottomMenu 
           areFiltersOpened={areFiltersOpened}
           closeFilters={() => setAreFiltersOpened(false)}
+          setViewMode={setViewMode}
         />
       </div>
       <DeckGL

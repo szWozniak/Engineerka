@@ -1,0 +1,57 @@
+.settingsPopupToggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: white;
+  font-size: 35px;
+  line-height: 35px;
+  padding: 12px;
+  background-color: rgba(125, 125, 125, 0.25);
+  border: 1px solid rgba(125, 125, 125, 0.4);
+  border-radius: 15px;
+  pointer-events: all;
+
+  &:hover {
+    background-color: rgba(125, 125, 125, 0.35);
+    border: 1px solid rgba(125, 125, 125, 0.5);
+    cursor: pointer;
+  }
+}
+
+.settingsPopupOverlay {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 100px;
+  text-align: center;
+  background-color: rgba(125, 125, 125, 0.45);
+  border: 1px solid rgba(125, 125, 125, 0.6);
+  padding: 12px;
+  width: fit-content;
+  z-index: 5000;
+  border-radius: 15px;
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: white;
+  font-size: 20px;
+  user-select: none;
+
+  & .selectView {
+    padding: 40px;
+    margin: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    user-select: none;
+    color: white;
+    font-weight: bold;
+    font-size: 40px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  }
+}
