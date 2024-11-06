@@ -13,7 +13,7 @@ const SettingsPopup: React.FC<Props> = ({
   const [isVisible, setIsVisible] = useState<boolean>(false)
 
   return (
-    <>
+    <div className="settingsPopup">
       <div className="settingsPopupToggle" onClick={() => setIsVisible(prev => !prev)}>
         <IoSettingsOutline />
       </div>
@@ -32,7 +32,7 @@ const SettingsPopup: React.FC<Props> = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

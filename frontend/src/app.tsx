@@ -14,6 +14,7 @@ import { INITIAL_VIEW_STATE } from './map/config/initialView';
 import './i18n';
 import { lightingEffect } from './map/config/effects';
 import useMapState from './map/useCases/useMap';
+import SettingsPopup from './components/settingsPopup/SettingsPopup';
 
 registerLoaders([OBJLoader]);
 
@@ -45,8 +46,8 @@ const App = () => {
         <BottomMenu 
           areFiltersOpened={areFiltersOpened}
           closeFilters={() => setAreFiltersOpened(false)}
-          setViewMode={setViewMode}
         />
+        <SettingsPopup setViewMode={setViewMode} />
       </div>
       <DeckGL
         layers={layers}

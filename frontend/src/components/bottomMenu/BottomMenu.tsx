@@ -11,18 +11,15 @@ import useView from '../../view/useView';
 import AppView from '../../view/types';
 import FlightFilterSection from './filters/flightFilters/FlightFilterSection';
 import useDrones from '../../drones/useCases/useDrones';
-import SettingsPopup from '../settingsPopup/SettingsPopup';
 
 interface Props{
   areFiltersOpened: boolean,
   closeFilters: () => void
-  setViewMode: (viewMode: "2d" | "3d") => void;
 }
 
 const BottomMenu: React.FC<Props> = ({
   areFiltersOpened,
-  closeFilters,
-  setViewMode
+  closeFilters
 }) => {
   const { t } = useTranslation();
 
@@ -138,25 +135,22 @@ const BottomMenu: React.FC<Props> = ({
   [renderFilters])
 
   return (
-    <div className="mainContainer">
+    <div 
+      className={`bottomMenu ${isOpened && 'opened'}`}
+      style={{"transform": `translateY(${isOpened ? 0 : size}px)`}}
+    >
       <div 
-        className={`bottomMenu ${isOpened && 'opened'}`}
-        style={{"transform": `translateY(${isOpened ? 0 : size}px)`}}
+        className="shadowArea" 
+        style={{"height": size }} 
+        onClick={() => setIsOpened(prev => !prev)}
       >
-        <div 
-          className="shadowArea" 
-          style={{"height": size }} 
-          onClick={() => setIsOpened(prev => !prev)}
-        >
-          {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
-        </div>
-        {filters}
-        <div className="content" style={{"height": size}}>
-          <div className="resizer" onMouseDown={handleMouseDown}></div>
-          {renderContent()}
-        </div>
+        {isOpened ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </div>
-      <SettingsPopup setViewMode={setViewMode} />
+      {filters}
+      <div className="content" style={{"height": size}}>
+        <div className="resizer" onMouseDown={handleMouseDown}></div>
+        {renderContent()}
+      </div>
     </div>
   );
 };
