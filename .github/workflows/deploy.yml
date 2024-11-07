@@ -49,25 +49,31 @@ jobs:
         working-directory: ./backend
         run: ./gradlew clean build
 
+      - name: Set up QEMU for cross-platform builds
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Docker login
         env:
           DOCKER_USERNAME: ${{ secrets.dockerhub_username }}
           DOCKER_PASSWORD: ${{ secrets.dockerhub_password }}
         run: docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" docker.io
 
-      - name: Build Docker image
+      - name: Extract commit hash
+        id: vars
+        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Build and push multi-architecture image
         working-directory: ./backend
         run: |
-          docker build . --file Dockerfile-dev --tag dronhub_backend_develop
-
-      - name: Tag with commit
-        run: docker image tag dronhub_backend_develop pejdzor/dronhub_backend_develop:${{github.sha}}
-
-      - name: Tag with latest
-        run: docker image tag dronhub_backend_develop pejdzor/dronhub_backend_develop:latest
-
-      - name: Push docker image
-        run: docker push pejdzor/dronhub_backend_develop:latest
+          docker buildx build --platform linux/amd64,linux/arm64 \
+            -t pejdzor/dronhub_backend_develop:latest \
+            -t pejdzor/dronhub_backend_develop:${{ env.COMMIT_HASH }} \
+            --push .
+      
+      
 
   build-backend-production:
     if: github.event.pull_request.merged == true
@@ -89,25 +95,29 @@ jobs:
         working-directory: ./backend
         run: ./gradlew clean build
 
+      - name: Set up QEMU for cross-platform builds
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Docker login
         env:
           DOCKER_USERNAME: ${{ secrets.dockerhub_username }}
           DOCKER_PASSWORD: ${{ secrets.dockerhub_password }}
         run: docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" docker.io
 
-      - name: Build Docker image
+      - name: Extract commit hash
+        id: vars
+        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Build and push multi-architecture image
         working-directory: ./backend
         run: |
-          docker build . --file Dockerfile-dev --tag dronhub_backend
-
-      - name: Tag with commit
-        run: docker tag dronhub_backend pejdzor/dronhub_backend:${{github.sha}}
-
-      - name: Tag with latest
-        run: docker image tag dronhub_backend pejdzor/dronhub_backend:latest
-
-      - name: Push docker image
-        run: docker push pejdzor/dronhub_backend:latest
+          docker buildx build --platform linux/amd64,linux/arm64 \
+            -t pejdzor/dronhub_backend:latest \
+            -t pejdzor/dronhub_backend:${{ env.COMMIT_HASH }} \
+            --push .
 
   build-frontend:
     if: github.event.pull_request.merged == true
@@ -129,24 +139,29 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
+      - name: Set up QEMU for cross-platform builds
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Docker login
         env:
           DOCKER_USERNAME: ${{ secrets.dockerhub_username }}
           DOCKER_PASSWORD: ${{ secrets.dockerhub_password }}
         run: docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" docker.io
 
-      - name: Build Docker image
+      - name: Extract commit hash
+        id: vars
+        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Build and push multi-architecture image
         working-directory: ./frontend
-        run: docker build . --file Dockerfile --tag dronhub_frontend
-
-      - name: Tag with latest
-        run: docker tag dronhub_frontend pejdzor/dronhub_frontend:latest
-
-      - name: Tag with commit hash
-        run: docker tag dronhub_frontend pejdzor/dronhub_frontend:${{github.sha}}
-
-      - name: Push docker image
-        run: docker push pejdzor/dronhub_frontend:latest
+        run: |
+          docker buildx build --platform linux/amd64,linux/arm64 \
+            -t pejdzor/dronhub_frontend:latest \
+            -t pejdzor/dronhub_frontend:${{ env.COMMIT_HASH }} \
+            --push .
 
   build-simulator:
     if: github.event.pull_request.merged == true
@@ -155,21 +170,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up QEMU for cross-platform builds
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Docker login
         env:
           DOCKER_USERNAME: ${{ secrets.dockerhub_username }}
           DOCKER_PASSWORD: ${{ secrets.dockerhub_password }}
         run: docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" docker.io
 
-      - name: Build Docker image
+      - name: Extract commit hash
+        id: vars
+        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Build and push multi-architecture image
         working-directory: ./simulator
-        run: docker build . --file Dockerfile --tag dronhub_simulator
-
-      - name: Tag with latest
-        run: docker tag dronhub_simulator pejdzor/dronhub_simulator:latest
-
-      - name: Tag with commit hash
-        run: docker tag dronhub_simulator pejdzor/dronhub_simulator:${{github.sha}}
-
-      - name: Push docker image
-        run: docker push pejdzor/dronhub_simulator:latest
+        run: |
+          docker buildx build --platform linux/amd64,linux/arm64 \
+            -t pejdzor/dronhub_simulator:latest \
+            -t pejdzor/dronhub_simulator:${{ env.COMMIT_HASH }} \
+            --push .
