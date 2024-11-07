@@ -68,7 +68,7 @@ jobs:
       - name: Build and push multi-architecture image
         working-directory: ./backend
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 \
+          docker buildx build -f Dockerfile-dev --platform linux/amd64,linux/arm64 \
             -t pejdzor/dronhub_backend_develop:latest \
             -t pejdzor/dronhub_backend_develop:${{ env.COMMIT_HASH }} \
             --push .
@@ -114,7 +114,7 @@ jobs:
       - name: Build and push multi-architecture image
         working-directory: ./backend
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 \
+          docker buildx build -f Dockerfile-prod --platform linux/amd64,linux/arm64 \
             -t pejdzor/dronhub_backend:latest \
             -t pejdzor/dronhub_backend:${{ env.COMMIT_HASH }} \
             --push .
@@ -189,7 +189,7 @@ jobs:
       - name: Build and push multi-architecture image
         working-directory: ./simulator
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 \
+          docker buildx build -f --platform linux/amd64,linux/arm64 \
             -t pejdzor/dronhub_simulator:latest \
             -t pejdzor/dronhub_simulator:${{ env.COMMIT_HASH }} \
             --push .
