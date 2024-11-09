@@ -30,6 +30,8 @@ services:
 
   backend:
     restart: on-failure
+    logging:
+      driver: "none"
     build:
       context: backend
       dockerfile: Dockerfile-dev
@@ -52,6 +54,8 @@ services:
       - shared_directory:/usr/shared_directory
 
   simulator:
+    logging:
+      driver: "none"
     restart: on-failure
     build:
       context: simulator
@@ -64,6 +68,8 @@ services:
       - shared_directory:/usr/shared_directory
 
   frontend:
+    logging:
+      driver: "none"
     build:
       context: frontend
       dockerfile: Dockerfile

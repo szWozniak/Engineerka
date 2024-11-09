@@ -1,7 +1,11 @@
 FROM node:19-bullseye
 
-COPY ./build /usr/frontend
+COPY . /usr/frontend
 WORKDIR /usr/frontend
-RUN npm install serve
+RUN npm install &&\
+    npm install serve &&\
+    npm run build &&\
+    rm -rf ./node_modules ./public ./src
 
-CMD ["npx", "serve", "-s", ".", "-l", "80"]
+
+CMD ["npx", "serve", "-s", "./build", "-l", "80"]

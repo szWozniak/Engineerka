@@ -21,33 +21,19 @@ Użycie docker-compose z tym plikiem spowoduje pobranie najnowszych udostępnion
 ### 2. Samodzielna budowa obrazów z kodu źródłowego:
 
 Wymagania:
- - Java 17
- - Gradle
- - npm
+ - ~~Java 17~~
+ - ~~Gradle~~
+ - ~~npm~~
  - docker-compose
 
-Żeby zbudować obrazy z kodu źródłowego musimy przygotować zbudowane komponenty aplikacji: 
+~~Żeby zbudować obrazy z kodu źródłowego musimy przygotować zbudowane komponenty aplikacji~~ Już nie musimy. Teraz kod przygotowuję sie w Dockerfilach, na poziomie obrazu.
 
-Frontend:
-```shell
-cd ./frontend
-
-npm install && npm run build
-```
-
-Backend:
-```shell
-cd ./backend
-./gradlew build
-```
-
-I uruchamiamy docker-compose który zbuduje obrazy ze zbudowanych komponentów
 ```shell
 docker-compose -f docker-compose-scratch.yaml up -d
 ```
 
 ---
-### 3. Uruchamianie w trybie developmentu
+### 3. Uruchamianie w trybie developmentu (każdy komponent osobno)
 
 Wymagania:
 - uruchomiony brocker RabbitMQ
@@ -89,13 +75,30 @@ pip3 install -r ./requirements.txt // Jeżeli nie mamy zainstalowanych modułów
 python3 simulator.py
 ```
 
-
 W ostatnim frontend:
 ```shell
 cd ./frontend
 npm start --port 80
 ```
-
 ---
 
+### 4. Tryb produkcyjny
+Co to znaczy? Że podpinamy sami bazę danych (MariaDB) i SpringBoot nie czyści jej po zakończeniu działania. Dane zostają na stałe
+Wymagania:
+- zmienny środowiskowe z danymi do bazy MariaDB
+- docker-compose
+
+Ustawienie zmiennych środowiskowych (na przykładzie macOS):
+```shell
+export DATABASE_URL=jdbc:mariadb://localhost:3306/<nazwa_bazy_danych>
+export DATABASE_USERNAME=<uzytkownik_bazy>
+export DATBASE_PASSWORD=<haslo_do_bazy>
+```
+
+Uruchamiamy aplikację:
+```shell
+docker-compose -f docker-compose-prod.yaml up -d
+```
+---
 ### Po każdej z tych ścieżek, aplikacja powinna być dostępna pod adresem http://127.0.0.1
+

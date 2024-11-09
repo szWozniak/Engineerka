@@ -1,8 +1,10 @@
-FROM openjdk:17
+FROM gradle:7.2.0-jdk17
 
-COPY ./build/ /usr/dronhub
+COPY . /usr/dronhub
 
 WORKDIR /usr/dronhub
 
-CMD ["java", "-Dspring.profiles.active=prod" ,"-jar", "./libs/dronhub_backend-0.0.1-SNAPSHOT.jar"]
+RUN ./gradlew build -x test
+
+CMD ["java", "-Dspring.profiles.active=prod" ,"-jar", "./libs/dronhub_backend-0.0.1-SNAPSHOT.jar", ">", "/dev/null"]
 EXPOSE 8080
