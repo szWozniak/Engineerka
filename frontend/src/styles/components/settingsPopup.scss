@@ -1,0 +1,74 @@
+.settingsPopup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+
+  & .settingsPopupToggle {
+    color: white;
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    background-color: rgba(125, 125, 125, 0.35);
+    border: 1px solid rgba(125, 125, 125, 0.45);
+    border-radius: 15px;
+    pointer-events: all;
+  
+    &:hover {
+      background-color: rgba(125, 125, 125, 0.45);
+      border: 1px solid rgba(125, 125, 125, 0.6);
+      cursor: pointer;
+    }
+  }
+  
+  & .settingsPopupOverlay {
+    background-color: rgba(125, 125, 125, 0.35);
+    border: 1px solid rgba(125, 125, 125, 0.45);
+    padding: 12px;
+    width: fit-content;
+    z-index: 5000;
+    border-radius: 15px;
+    pointer-events: all;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    user-select: none;
+  
+    & .selectView {
+      padding: 20px;
+      margin: 5px;
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 0, 0, 0.6);
+      user-select: none;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+  
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    & select {
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 0, 0, 0.6);
+      margin: 5px;
+      padding: 8px;
+      border-radius: 5px;
+      color: white;
+      outline: none;
+
+      &:hover, &:focus {
+        background-color: rgba(0, 0, 0, 0.7);
+        cursor: pointer;
+        outline: none;
+      }
+    }
+  }
+}

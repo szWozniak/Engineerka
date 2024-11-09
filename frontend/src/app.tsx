@@ -14,6 +14,7 @@ import { INITIAL_VIEW_STATE } from './map/config/initialView';
 import './i18n';
 import { lightingEffect } from './map/config/effects';
 import useMapState from './map/useCases/useMap';
+import SettingsPopup from './components/settingsPopup/SettingsPopup';
 
 registerLoaders([OBJLoader]);
 
@@ -22,7 +23,9 @@ const App = () => {
   const mapRef: any = useRef();
   const { layers } = useLayerManager()
 
-  const {mapViewState, setMapViewState, getTooltip, setViewMode} = useMapState();
+  const {
+    mapViewState, setMapViewState, getTooltip, setViewMode, mapStyle, setMapStyle
+  } = useMapState();
   const [areFiltersOpened, setAreFiltersOpened] = useState<boolean>(false)
 
   useEffect(() => {
@@ -41,11 +44,15 @@ const App = () => {
         <Sidebar 
           areFiltersOpened={areFiltersOpened}
           toggleFiltersVisibility={() => setAreFiltersOpened(prev => !prev)}
-          setViewMode={setViewMode}
         />
         <BottomMenu 
           areFiltersOpened={areFiltersOpened}
           closeFilters={() => setAreFiltersOpened(false)}
+        />
+        <SettingsPopup 
+          setViewMode={setViewMode}
+          mapStyle={mapStyle}
+          setMapStyle={setMapStyle}
         />
       </div>
       <DeckGL
@@ -68,7 +75,7 @@ const App = () => {
           }}
           maxPitch={85}
           //mapStyle={MAP_STYLE}
-          mapStyle={"mapbox://styles/mapbox/dark-v11"}
+          mapStyle={mapStyle.url}
           mapboxAccessToken={"pk.eyJ1Ijoic3p3b3puaWFrIiwiYSI6ImNsdWg1dXFtdzFxYW0yanBrZGZ4Mm8yd2MifQ.LPRSA5OB7Zts77Zpt9GsDw"}
         >
         </Map>
