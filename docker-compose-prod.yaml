@@ -1,21 +1,6 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:8.0
-    environment:
-      MYSQL_DATABASE: dronhub
-      MYSQL_USER: dronhub
-      MYSQL_PASSWORD: passwd
-      MYSQL_ROOT_PASSWORD: passwd
-    restart: always
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - app-network
-
   rabbitmq:
     image: rabbitmq:3-management
     restart: always
@@ -29,19 +14,16 @@ services:
       - app-network
 
   backend:
-    restart: on-failure
     logging:
       driver: "none"
-    build:
-      context: backend
-      dockerfile: Dockerfile-dev
+    restart: on-failure
+    image: pejdzor/dronhub_backend:latest
     depends_on:
-      - mysql
       - rabbitmq
     environment:
-      DATABASE_URL: jdbc:mysql://mysql:3306/dronhub
-      DATABASE_USERNAME: dronhub
-      DATABASE_PASSWORD: passwd
+      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_RABBITMQ_PORT: 5672
       SPRING_RABBITMQ_USERNAME: guest
@@ -57,9 +39,7 @@ services:
     logging:
       driver: "none"
     restart: on-failure
-    build:
-      context: simulator
-      dockerfile: Dockerfile
+    image: pejdzor/dronhub_simulator:latest
     environment:
       RABBITMQ_HOST: "rabbitmq"
     networks:
@@ -70,9 +50,7 @@ services:
   frontend:
     logging:
       driver: "none"
-    build:
-      context: frontend
-      dockerfile: Dockerfile
+    image: pejdzor/dronhub_frontend:latest
     ports:
       - "80:80"
     networks:
