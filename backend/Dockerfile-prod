@@ -6,5 +6,5 @@ WORKDIR /usr/dronhub
 
 RUN ./gradlew build -x test
 
-CMD ["java", "-Dspring.profiles.active=prod" ,"-jar", "./libs/dronhub_backend-0.0.1-SNAPSHOT.jar", ">", "/dev/null"]
+CMD ["java", "-Dspring.profiles.active=prod" ,"-jar", "./build/libs/dronhub_backend-0.0.1-SNAPSHOT.jar"]
 EXPOSE 8080
