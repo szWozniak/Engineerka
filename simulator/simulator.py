@@ -257,7 +257,7 @@ def close_connection():
 
 if __name__ == "__main__":
     try:
-        file = open("config.txt")
+        file = open("../config/simulator/config.txt")
 
         CONFIG = parse_config_file(file)
         print("Loaded custom conifg")
