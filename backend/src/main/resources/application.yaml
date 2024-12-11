@@ -42,3 +42,10 @@ spring:
     port: 5672
     username: guest
     password: guest
+springdoc:
+  api-docs:
+    enabled: true
+    path: '/api-docs'
+  swagger-ui:
+    enabled: true
+    path: '/swagger-ui.html'
