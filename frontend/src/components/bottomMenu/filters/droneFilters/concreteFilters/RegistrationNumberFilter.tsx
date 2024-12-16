@@ -17,6 +17,7 @@ const RegistrationNumberFilter: React.FC<Props> = ({value, onChange, onReset}) =
             onChange={onChange}
             value={value}
             onReset={onReset}
+            testId="registration-filter"
         />
     );
 };
