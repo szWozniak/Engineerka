@@ -54,7 +54,10 @@ def generate_drone_data(i, drones_data):
     identification = random.randint(1, 16)
     identification_label = const.IDENTIFICATION_LABELS[identification-1]
     model = random.choice(const.MODELS)
-    registration_number = "TEST123"
+    if i == 0:
+        registration_number = "TEST123"
+    else:
+        registration_number = generate_random_registration_number()
     sign = operator + registration_number
 
     drones_data[i] = {'country': country, 'operator': operator, 'identification': identification, 'identification_label': identification_label, 'model': model, 'registration_number': registration_number, 'sign': sign, 'flight': None}
@@ -105,8 +108,12 @@ def haversine_distance(lat1, lon1, lat2, lon2):
 
     return distance_2d
 
-def generate_flight_ticks(starting_latitude, starting_longitude):
+def generate_flight_ticks(starting_latitude, starting_longitude, is_test_drone):
     number_of_points = random.randint(CONFIG['MINIMUM_FLIGHT_LENGTH'], CONFIG['MAXIMUM_FLIGHT_LENGTH'])
+
+    if is_test_drone:
+            number_of_points = 1000000
+            
     latitudes = [0 for _ in range(number_of_points)]
     longitudes = [0 for _ in range(number_of_points)]
     headings = np.zeros(number_of_points)
@@ -145,7 +152,8 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
         if i == number_of_points-1:
             altitudes[i] = 1
 
-        altitudes[i] = 500
+        if is_test_drone:
+            altitudes[i] = 500
 
         distance_2d = haversine_distance(lat_before, lon_before, latitudes[i], longitudes[i])
         distance_3d = np.sqrt(distance_2d**2 + ((altitudes[i] - alt_before)/1000)**2)
@@ -156,6 +164,9 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
             fuel[i] = fuel_before - distance_3d*fuel_distance_multiplier*fuel_elevation_gain_multiplier
         else:
             fuel[i] = fuel_before - distance_3d*fuel_distance_multiplier
+
+        if is_test_drone:
+            fuel[i] = 50
 
         lat_before = latitudes[i]
         lon_before = longitudes[i]
@@ -184,18 +195,20 @@ def random_point_in_sensor_range(sensor_lat, sensor_lon):
     
     return new_latitude, new_longitude
 
-def generate_drone_flight_data():
+def generate_drone_flight_data(is_test_drone):
     sensor = random.choice(SENSORS)
     starting_latitude, starting_longitude = random_point_in_sensor_range(sensor['latitude'], sensor['longitude'])
 
-    number_of_points, latitudes, longitudes, headings, altitudes, fuel, speeds = generate_flight_ticks(starting_latitude, starting_longitude)
+    number_of_points, latitudes, longitudes, headings, altitudes, fuel, speeds = generate_flight_ticks(starting_latitude, starting_longitude, is_test_drone)
     
     return {'number_of_points': number_of_points, 'sensor': sensor, 'latitudes': latitudes, 'longitudes': longitudes, 'headings': headings, 'speeds': speeds, 'altitudes': altitudes, 'fuel': fuel}
 
 def generate_drones():
     drones_data = [None for _ in range(CONFIG['NUMBER_OF_DRONES'])]
 
-    for i in range(CONFIG['NUMBER_OF_DRONES']):
+    generate_drone_data(0, drones_data)
+
+    for i in range(1, CONFIG['NUMBER_OF_DRONES']):
         generate_drone_data(i, drones_data)
     
     return drones_data
@@ -304,7 +317,10 @@ if __name__ == "__main__":
 
             if index == 0:
                 flag = "BEG"
-                drones[i]['flight'] = generate_drone_flight_data()
+                if i == 0:
+                    drones[i]['flight'] = generate_drone_flight_data(True)
+                else:    
+                    drones[i]['flight'] = generate_drone_flight_data(False)
             elif index == drones[i]['flight']['number_of_points'] - 1:
                 flag = "DROP"
                 drones_tick_indexes[i] = 0
