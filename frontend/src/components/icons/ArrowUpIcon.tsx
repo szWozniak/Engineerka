@@ -9,6 +9,7 @@ export const ArrowUpIcon = () => (
     style={{
       width: "30px"
     }}
+    data-testid="big-table-arrow-up-icon"
   >
     <path fill="current" d="M9 .9l9 9L15.9 12 9 5.1 2.1 12 0 9.9l9-9Z" />
   </svg>

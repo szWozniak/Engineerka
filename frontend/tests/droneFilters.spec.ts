@@ -11,9 +11,15 @@ test('registration filter works', async ({ page }) => {
 
   await page.getByTestId("apply-drone-filters").click();
 
-  await page.getByTestId("big-table-toggle").click()
+  await page.getByTestId("big-table-arrow-up-icon").click()
 
-  //expect
+  const bigTable = page.getByTestId("big-table");
+  
+  const allRows = bigTable.locator('tr') 
+
+  await expect(allRows).toHaveCount(1);
+
+  await expect(allRows.first()).toContainText("TEST123");
 });
 
 test('altitude filter works', async ({ page }) => {
@@ -25,15 +31,24 @@ test('altitude filter works', async ({ page }) => {
 
   await page.getByTestId("apply-drone-filters").click();
 
-  await page.getByTestId("big-table-toggle").click()
+  await page.getByTestId("big-table-arrow-up-icon").click()
 
-  //expect
+  const bigTable = page.getByTestId("big-table");
+  const allRows = bigTable.locator('tr') 
+  
+  await expect(allRows).toHaveCount(1);
+  await expect(allRows.first()).toContainText("TEST123");
 
   await page.getByTestId("altitude-filter-max").fill("495");
+  await page.getByTestId("apply-drone-filters").click();
 
-  //expect
+  await expect(bigTable.locator('tr')).toHaveCount(0);
 
   await page.getByTestId("altitude-filter-max").fill("550");
+  await page.getByTestId("apply-drone-filters").click();
 
-  //expect
+  const newAllRows = bigTable.locator('tr') 
+  
+  await expect(newAllRows).toHaveCount(1);
+  await expect(newAllRows.first()).toContainText("TEST123");
 });

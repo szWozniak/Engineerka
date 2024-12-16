@@ -11,15 +11,9 @@ test('registration filter works', async ({ page }) => {
 
   await page.getByTestId("apply-drone-filters").click();
 
-  await page.getByTestId("big-table-toggle").click()
+  await page.getByTestId("big-table-arrow-up-icon").click()
 
-  const bigTable = page.getByTestId("big-table");
   
-  const allRows = bigTable.locator('tr') 
-
-  await expect(allRows).toHaveCount(1);
-
-  await expect(allRows.first()).toContainText("TEST123");
 });
 
 test('altitude filter works', async ({ page }) => {
@@ -31,7 +25,7 @@ test('altitude filter works', async ({ page }) => {
 
   await page.getByTestId("apply-drone-filters").click();
 
-  await page.getByTestId("big-table-toggle").click()
+  await page.getByTestId("big-table-arrow-up-icon").click()
 
   const bigTable = page.getByTestId("big-table");
   const allRows = bigTable.locator('tr') 
