@@ -54,7 +54,7 @@ def generate_drone_data(i, drones_data):
     identification = random.randint(1, 16)
     identification_label = const.IDENTIFICATION_LABELS[identification-1]
     model = random.choice(const.MODELS)
-    registration_number = generate_random_registration_number()
+    registration_number = "TEST123"
     sign = operator + registration_number
 
     drones_data[i] = {'country': country, 'operator': operator, 'identification': identification, 'identification_label': identification_label, 'model': model, 'registration_number': registration_number, 'sign': sign, 'flight': None}

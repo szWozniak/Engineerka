@@ -28,10 +28,10 @@ COUNTRIES = ["Poland", "Germany", "France", "Spain", "Italy", "Great Britain", "
 OPERATORS = ["PL", "DE", "FR", "ES", "IT", "GB", "NL", "BE", "AT", "SE", "NO", "DK", "FI", "CH", "CZ", "HU", "GR", "PT", "IE"]
 IDENTIFICATION_LABELS = ["Dark Red", "Red", "Gold", "Yellow", "Dark Green", "Green", "Aqua", "Dark Aqua", "Dark Blue", "Blue", "Light Purple", "Dark Purple", "White", "Gray", "Dark Gray", "Black"]
 MODELS = ["DJI Mini 4 Pro", "DJI Mini 3", "DJI Air 3", "DJI Mavic 3 Pro", "DJI Air 2S rival", "DJI Mavic 3 Classic", "DJI Phantom 4 Pro V2.0", "DJI Mavic Air 2", "DJI FPV Combo", "DJI Inspire 2", "DJI Matrice 300 RTK", "DJI Mini 2", "DJI Mavic 2 Pro", "DJI Spark", "DJI Mavic Air", "DJI Phantom 4", "DJI Matrice 200", "DJI Mavic 2 Zoom", "DJI Phantom 3 Professional", "DJI Phantom 3 Standard", "DJI Matrice 600 Pro"]
-CONFIG_CONSTRAINTS = {'NUMBER_OF_DRONES': {'min_value': 10, 'max_value': 100},
+CONFIG_CONSTRAINTS = {'NUMBER_OF_DRONES': {'min_value': 1, 'max_value': 1000},
                       'NUMBER_OF_SENSORS': {'min_value': 1, 'max_value': 1},
-                      'MINIMUM_FLIGHT_LENGTH': {'min_value': 10, 'max_value': 100},
-                      'MAXIMUM_FLIGHT_LENGTH': {'min_value': 10, 'max_value': 100},
+                      'MINIMUM_FLIGHT_LENGTH': {'min_value': 10, 'max_value': 2147483647},
+                      'MAXIMUM_FLIGHT_LENGTH': {'min_value': 10, 'max_value': 2147483647},
                       'MINIMUM_FLIGHT_STOP_LENGTH': {'min_value': 1, 'max_value': 20},
                       'MAXIMUM_FLIGHT_STOP_LENGTH': {'min_value': 1, 'max_value': 20}}
 DEFAULT_CONFIG = {'NUMBER_OF_DRONES': 10,
