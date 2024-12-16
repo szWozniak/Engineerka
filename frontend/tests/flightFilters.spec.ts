@@ -1,48 +1,60 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import { test, expect } from '@playwright/test';
-import { PAGE_URL } from './constants';
+import { PAGE_URL, TEST_DRONE_NAME } from './constants';
+import { thereIsAFlight } from './testHelpers';
 
-test('registration filter works', async ({ page }) => {
+test('gained elevation filter works', async ({ page }) => {
+  await thereIsAFlight();
+
   await page.goto(PAGE_URL);
-  
+
+  await page.getByTestId("big-table-arrow-up-icon").click();
+
+  await page.getByTestId(`show-flights-${TEST_DRONE_NAME}`).click()
+
   await page.getByTestId("toggle-filter").click();
 
-  await page.getByTestId("registration-filter").fill("TEST123");
+  await page.getByTestId("elevation-gained-filter-min").fill("700")
+  await page.getByTestId("apply-flights-filters").click();
 
-  await page.getByTestId("apply-drone-filters").click();
+  const bigTable = page.getByTestId("flights-table");
 
-  await page.getByTestId("big-table-arrow-up-icon").click()
+  await expect(bigTable.locator('tr')).toHaveCount(1);
 
-  
-});
-
-test('altitude filter works', async ({ page }) => {
-  await page.goto(PAGE_URL);
-  
-  await page.getByTestId("toggle-filter").click();
-
-  await page.getByTestId("altitude-filter-min").fill("490");
-
-  await page.getByTestId("apply-drone-filters").click();
-
-  await page.getByTestId("big-table-arrow-up-icon").click()
-
-  const bigTable = page.getByTestId("big-table");
-  const allRows = bigTable.locator('tr') 
-  
-  await expect(allRows).toHaveCount(1);
-  await expect(allRows.first()).toContainText("TEST123");
-
-  await page.getByTestId("altitude-filter-max").fill("495");
-  await page.getByTestId("apply-drone-filters").click();
+  await page.getByTestId("elevation-gained-filter-max").fill("800")
+  await page.getByTestId("apply-flights-filters").click();
 
   await expect(bigTable.locator('tr')).toHaveCount(0);
 
-  await page.getByTestId("altitude-filter-max").fill("550");
-  await page.getByTestId("apply-drone-filters").click();
+  await page.getByTestId("elevation-gained-filter-max").fill("2000")
+  await page.getByTestId("apply-flights-filters").click();
 
-  const newAllRows = bigTable.locator('tr') 
-  
-  await expect(newAllRows).toHaveCount(1);
-  await expect(newAllRows.first()).toContainText("TEST123");
+  await expect(bigTable.locator('tr')).toHaveCount(1);
+});
+
+test('did landed toggle filter works', async ({ page }) => {
+  await thereIsAFlight();
+
+  await page.goto(PAGE_URL);
+
+  await page.getByTestId("big-table-arrow-up-icon").click();
+
+  await page.getByTestId(`show-flights-${TEST_DRONE_NAME}`).click()
+
+  await page.getByTestId("toggle-filter").click();
+
+  await page.getByTestId("apply-flights-filters").click();
+
+  const bigTable = page.getByTestId("flights-table");
+  await expect(bigTable.locator('tr')).toHaveCount(1);
+
+  await page.getByTestId("did-landed-toggle").click();
+  await page.getByTestId("apply-flights-filters").click();
+
+  await expect(bigTable.locator('tr')).toHaveCount(1);
+
+  await page.getByTestId("did-landed-toggle").click();
+  await page.getByTestId("apply-flights-filters").click();
+
+  await expect(bigTable.locator('tr')).toHaveCount(0);
 });

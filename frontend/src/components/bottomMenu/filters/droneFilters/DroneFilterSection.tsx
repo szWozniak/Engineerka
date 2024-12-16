@@ -83,7 +83,7 @@ const DroneFilterSection = () => {
                     />
                 </div>
                 <div className="actionContainer">
-                    <button onClick={bulkFiltersActions.applyFilters} data-testid="apply- drone-filters">{t("filters.apply")}</button>
+                    <button onClick={bulkFiltersActions.applyFilters} data-testid="apply-drones-filters">{t("filters.apply")}</button>
                     <button onClick={onResetFilters} data-testid="reset-drone-filters">{t("filters.reset")}</button>
                 </div>
             </div>

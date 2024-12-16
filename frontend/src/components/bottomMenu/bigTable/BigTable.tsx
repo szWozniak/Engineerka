@@ -80,6 +80,7 @@ const BigTable = () => {
                       flightsSummaries.selectDroneRegistrationToShowFlightsFor(drone.registrationNumber)
                     }}
                     title={t("actions.showFlights")}
+                    data-testid={`show-flights-${drone.registrationNumber}`}
                   ><FaListUl /></button>
                 </td>
               </tr>

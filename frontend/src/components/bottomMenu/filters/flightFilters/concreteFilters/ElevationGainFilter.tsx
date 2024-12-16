@@ -44,6 +44,7 @@ const ElevationGainFilter: React.FC<Props> = (
                     onMinValueChange(value)
                 }}
                 onReset={resetMinValue}
+                testId='elevation-gained-filter-min'
             />
             <NumberFilter
                 label={`${t("details.flight.elevationGain")} (${t("filters.max")})`}
@@ -53,6 +54,7 @@ const ElevationGainFilter: React.FC<Props> = (
                     onMaxValueChange(value)
                 }}
                 onReset={resetMaxValue}
+                testId='elevation-gained-filter-max'
             />
         </div>
     );
