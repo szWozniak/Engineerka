@@ -43,6 +43,7 @@ const AltitudeFilter: React.FC<Props> = ({minValue,
                     onMinValueChange(value)
                 }}
                 onReset={resetMinValue}
+                testId="altitude-filter-min"
             />
             <NumberFilter
                 label={`${t("geo.altitude")} (${t("filters.max")})`}
@@ -52,6 +53,7 @@ const AltitudeFilter: React.FC<Props> = ({minValue,
                     onMaxValueChange(value)
                 }}
                 onReset={resetMaxValue}
+                testId="altitude-filter-max"
             />
         </div>
     );

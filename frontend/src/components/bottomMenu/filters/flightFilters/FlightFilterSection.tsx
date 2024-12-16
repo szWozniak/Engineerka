@@ -81,7 +81,7 @@ const FlightFilterSection = () => {
                     />
                 </div>
                 <div className="actionContainer">
-                    <button onClick={bulkFiltersActions.applyFilters}>{t("filters.apply")}</button>
+                    <button onClick={bulkFiltersActions.applyFilters} data-testid={"apply-flights-filters"}>{t("filters.apply")}</button>
                     <button onClick={onResetFilters}>{t("filters.reset")}</button>
                 </div>
             </div>

@@ -39,7 +39,7 @@ const BigTable = () => {
             <DronesSortableHeader dataKey="recentAltitude" label={t("geo.altitude")} />
           </tr>
         </thead>
-        <tbody>
+        <tbody data-testid="big-table">
           {allDrones?.map((drone: DroneBase, index) => {
             const flyingDrone = flyingDrones?.find(d => d.registrationNumber === drone.registrationNumber)
 
@@ -80,6 +80,7 @@ const BigTable = () => {
                       flightsSummaries.selectDroneRegistrationToShowFlightsFor(drone.registrationNumber)
                     }}
                     title={t("actions.showFlights")}
+                    data-testid={`show-flights-${drone.registrationNumber}`}
                   ><FaListUl /></button>
                 </td>
               </tr>

@@ -67,7 +67,7 @@ const FlightsTable: React.FC<Props> = ({
               <th>{t("actions.title")}</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody data-testid = {"flights-table"}>
             {flightSummaries?.map((flight, index) => {
               return (
                 <tr key={index}>
