@@ -145,6 +145,8 @@ def generate_flight_ticks(starting_latitude, starting_longitude):
         if i == number_of_points-1:
             altitudes[i] = 1
 
+        altitudes[i] = 500
+
         distance_2d = haversine_distance(lat_before, lon_before, latitudes[i], longitudes[i])
         distance_3d = np.sqrt(distance_2d**2 + ((altitudes[i] - alt_before)/1000)**2)
         
