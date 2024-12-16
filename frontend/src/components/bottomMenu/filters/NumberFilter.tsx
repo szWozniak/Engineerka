@@ -6,9 +6,10 @@ interface Props{
   value: number | undefined,
   onChange: (value: number | undefined) => void
   onReset: () => void
+  testId?: string
 }
 
-const NumberFilter: React.FC<Props> = ({label, value, onChange, onReset}) => {
+const NumberFilter: React.FC<Props> = ({label, value, onChange, onReset, testId}) => {
   const changeValue = (value: string) => {
     let numberValue: number | undefined = Number(value)
 
@@ -29,7 +30,7 @@ const NumberFilter: React.FC<Props> = ({label, value, onChange, onReset}) => {
     <div className="filterContent">
       {label}
       <div className="actionContainer">
-        <input type="number" onChange={(e) => changeValue(e.target.value)} value={displayValue} className="concreteFilter"/>
+        <input type="number" onChange={(e) => changeValue(e.target.value)} value={displayValue} className="concreteFilter" data-testid={testId}/>
         <button className="clear-icon" onClick={onReset}>
           <IoClose />
         </button>

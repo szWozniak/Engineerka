@@ -3,7 +3,8 @@ type MenuDropdownProps = {
   icon: JSX.Element
   opened: boolean,
   disabled?: boolean,
-  onClick: () => void
+  onClick: () => void,
+  testId?: string
 }
 
 const MenuDropdown = ({
@@ -11,10 +12,13 @@ const MenuDropdown = ({
   icon,
   opened,
   disabled = false,
-  onClick
+  onClick,
+  testId
 }: MenuDropdownProps) => {
   return (
-    <div className={`menuDropdown${opened ? " menuActive" : ""}${disabled ? " disabled" : ""}`} onClick={!disabled ? onClick : undefined}>
+    <div className={`menuDropdown${opened ? " menuActive" : ""}${disabled ? " disabled" : ""}`} onClick={!disabled ? onClick : undefined}
+      data-testid={testId}
+    >
       {icon}
       <span className="label">{label}</span>
     </div>

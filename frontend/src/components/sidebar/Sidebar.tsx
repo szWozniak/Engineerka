@@ -42,6 +42,7 @@ const Sidebar: React.FC<Props> = ({ toggleFiltersVisibility, areFiltersOpened })
             opened={areFiltersOpened}
             disabled={flights.selectedFlightId !== null}
             onClick={toggleFiltersVisibility}
+            testId="toggle-filter"
           />
           <MenuDropdown
             icon={<MdFlightTakeoff />}
